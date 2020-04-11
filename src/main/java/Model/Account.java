@@ -8,6 +8,7 @@ public class Account extends Person {
     private String firstName;
     private String lastName;
     private String phoneID;
+    
     private String eMail;
     private String passWord;
     private ArrayList<Discount> discounts ;
