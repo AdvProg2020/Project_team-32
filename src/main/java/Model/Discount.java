@@ -10,5 +10,4 @@ public class Discount {
     private Date exposeDate;
     private String discountPercentAndMaxValue;
     private int useCount;
-    private ArrayList<Customer> 
 }
