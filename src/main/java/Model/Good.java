@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Good {
+    private static ArrayList<Good> allGoods;
+
     private String goodID;
     private String goodStatus;
     private HashMap<String,Integer > sellerAndPrices =new HashMap<String, Integer>();
