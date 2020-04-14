@@ -1,7 +1,6 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public abstract class Person {
@@ -12,13 +11,17 @@ public abstract class Person {
     
     private String eMail;
     private String passWord;
-    private ArrayList<Discount> discounts ;
+    private ArrayList<Discount> discounts;
     private int credit;
     private ArrayList<String> buyLogs;
     private ArrayList<String> sellLogs;
 
 
-    public void informationEditor(){
+    public void informationEditor() {
+
+    }
+
+    public Person() {
 
     }
 
@@ -31,5 +34,10 @@ public abstract class Person {
         this.phoneID = phoneID;
         this.eMail = eMail;
         this.passWord = passWord;
+    }
+
+    //yasin
+    private void register() {
+
     }
 }

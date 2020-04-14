@@ -28,4 +28,8 @@ public class Good {
     public void setSellerAndPrices(HashMap<String, Integer> sellerAndPrices) {
         this.sellerAndPrices = sellerAndPrices;
     }
+
+    private void managePoint(int point) {
+
+    }
 }

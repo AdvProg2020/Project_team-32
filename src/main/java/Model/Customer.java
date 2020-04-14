@@ -16,4 +16,5 @@ public class Customer extends Person {
         this.shoppingBasket = new ShoppingBasket(shoppingBasket);
         //-----------------------------------
     }
+
 }
