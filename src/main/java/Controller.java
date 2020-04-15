@@ -2,15 +2,10 @@ import Menus.*;
 import Model.Customer;
 
 public class Controller {
-    private GuestMenu guestMenu;
-    private CustomerMenu customerMenu;
-    private SellerMenu sellerMenu;
-    private GoodsMenu goodsMenu;
-    private OffMenu offMenu;
-    private LoginMenu loginMenu;
-    private RegisterMenu registerMenu;
-
-    public static void main(String[] args) {
-
+    private Menu currentMenu;
+    public void login(){
+        if(currentMenu instanceof LoginMenu){
+            ((LoginMenu) currentMenu).login();
+        }
     }
 }

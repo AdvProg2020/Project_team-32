@@ -32,4 +32,14 @@ public class Good {
     private void managePoint(int point) {
 
     }
+
+    public static ArrayList<Good> selectWithCategory(Category category){
+        ArrayList<Good> selectedGoods = new ArrayList<Good>();
+        for (Good good : allGoods) {
+            if(good.category.equals(category)){
+                selectedGoods.add(good);
+            }
+        }
+        return selectedGoods;
+    }
 }
