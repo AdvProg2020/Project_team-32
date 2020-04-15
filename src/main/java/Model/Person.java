@@ -37,7 +37,8 @@ public abstract class Person {
     }
 
     //yasin
-    private void register() {
+    private void register(String userName, String passWord) {
 
     }
+
 }

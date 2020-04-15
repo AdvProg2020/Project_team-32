@@ -6,6 +6,7 @@ public class Boss extends Person {
         super(userName, firstName, lastName, phoneID, eMail, passWord, credit);
     }
 
+
     private void manageRequests() {
 
     }

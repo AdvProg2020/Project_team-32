@@ -13,10 +13,18 @@ public class Seller extends Person {
 
     public void makeOff() {
 
-
     }
 
     public void editOff(Off off) {
 
     }
+
+    public void selling(Good good) {
+
+    }
+
+    public void makeGoodEditRequest(Good good) {
+
+    }
+
 }

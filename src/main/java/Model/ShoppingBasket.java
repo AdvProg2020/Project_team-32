@@ -3,13 +3,13 @@ package Model;
 import java.util.HashMap;
 
 public class ShoppingBasket {
-    private HashMap<Good,Seller> shoppingBasket;
+    private HashMap<Good, Seller> shoppingBasket;
 
-    public ShoppingBasket(HashMap<Good, Seller> shoppingBasket) {
-        this.shoppingBasket = shoppingBasket;
+    public ShoppingBasket() {
+        this.shoppingBasket = new HashMap<Good, Seller>();
     }
 
-    public void selectingGood(Good good){
+    public void selectingGood(Good good, Seller seller) {
 
     }
 }
