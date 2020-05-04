@@ -1,6 +1,8 @@
 import Menus.*;
 import Model.Customer;
 
+import java.util.Scanner;
+
 public class Controller {
     private GuestMenu guestMenu;
     private CustomerMenu customerMenu;

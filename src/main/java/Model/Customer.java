@@ -10,10 +10,10 @@ public class Customer extends Person {
     //-------------------------------------- Ali Sharifi's changes
     private ShoppingBasket shoppingBasket;
 
-    public Customer(HashMap<Good, Seller> shoppingBasket, String userName, String firstName, String lastName, String phoneID, String eMail, String passWord, int credit) {
-        super(userName, firstName, lastName, phoneID, eMail, passWord, credit);
+    public Customer (String userName, String passWord) {
+        super(userName, passWord);
         //----------------------------------- Ali Sharifi's changes
-        this.shoppingBasket = new ShoppingBasket(shoppingBasket);
+        this.shoppingBasket = new ShoppingBasket();
         //-----------------------------------
     }
 }
