@@ -16,4 +16,14 @@ public class Customer extends Person {
         this.shoppingBasket = new ShoppingBasket();
         //-----------------------------------
     }
+
+    public void copyShoppingBasket(Customer guest){
+        shoppingBasket = new ShoppingBasket(guest.shoppingBasket);
+        guest.makeShoppingBasketEmpty();
+    }
+
+    private void makeShoppingBasketEmpty() {
+        shoppingBasket = new ShoppingBasket();
+    }
+
 }

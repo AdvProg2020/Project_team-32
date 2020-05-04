@@ -17,6 +17,16 @@ public abstract class Person {
     private ArrayList<String> buyLogs;
     private ArrayList<String> sellLogs;
 
+    public static Person login(String userName, String passWord) {
+        Person person;
+        person = getPersonByUserName(userName);
+        if(person == null)
+            return null;
+        if(!person.passWord.equals(passWord))
+            return null;
+        return person;
+    }
+
 
     public void informationEditor(){
 
@@ -58,6 +68,5 @@ public abstract class Person {
         }
         return null;
     }
-
 
 }
