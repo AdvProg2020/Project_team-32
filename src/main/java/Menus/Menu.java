@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 abstract public class Menu {
-
-    protected BossMenu bossMenu;
-    protected GuestMenu guestMenu;
-    protected CustomerMenu customerMenu;
-    protected SellerMenu sellerMenu;
-    private GoodsMenu goodsMenu;
-    private OffMenu offMenu;
-    private LoginMenu loginMenu;
-    private RegisterMenu registerMenu;
+    //this methods should be static
+    protected static BossMenu bossMenu;
+    protected static GuestMenu guestMenu;
+    protected static CustomerMenu customerMenu;
+    protected static SellerMenu sellerMenu;
+    private static GoodsMenu goodsMenu;
+    private static OffMenu offMenu;
+    private static LoginMenu loginMenu;
+    private static RegisterMenu registerMenu;
 
 
     protected ArrayList<Menu> subMenu;
