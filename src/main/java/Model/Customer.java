@@ -9,6 +9,23 @@ public class Customer extends Person {
     //-------------------------------------- Ali Sharifi's changes
     private ShoppingBasket shoppingBasket;
 
+    public Customer (String userName, String passWord) {
+        super(userName, passWord);
+        //----------------------------------- Ali Sharifi's changes
+        this.shoppingBasket = new ShoppingBasket();
+        //-----------------------------------
+    }
+
+    public void copyShoppingBasket(Customer guest){
+        shoppingBasket = new ShoppingBasket(guest.shoppingBasket);
+        guest.makeShoppingBasketEmpty();
+    }
+
+    private void makeShoppingBasketEmpty() {
+        shoppingBasket = new ShoppingBasket();
+    }
+
+
     public Customer(ShoppingBasket shoppingBasket, String userName, String firstName, String lastName, String phoneID, String eMail, String passWord, int credit) {
         super(userName, firstName, lastName, phoneID, eMail, passWord, credit);
         //----------------------------------- Ali Sharifi's changes
