@@ -18,7 +18,5 @@ public class Category {
         this.subCategory.add(category);
     }
 
-    public void JustForTry() {
 
-    }
 }

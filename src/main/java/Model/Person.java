@@ -4,17 +4,22 @@ import java.util.ArrayList;
 
 
 public abstract class Person {
-    private static ArrayList<Person> allPersons = new ArrayList<Person>();
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String phoneID;
-    private String eMail;
-    private String passWord;
+
+  
+    protected static ArrayList<Person> allPersons = new ArrayList<Person>();
+    protected String userName;
+    protected String firstName;
+    protected String lastName;
+    protected String phoneID;
+
+    protected String eMail;
+    protected String passWord;
+
+  
     private ArrayList<Discount> discounts;
-    private int credit;
-    private ArrayList<String> buyLogs;
-    private ArrayList<String> sellLogs;
+    protected int credit;
+    protected ArrayList<BuyLog> buyLogs;
+    protected ArrayList<SellLog> sellLogs;
 
     public static Person login(String userName, String passWord) {
         Person person;
@@ -41,6 +46,13 @@ public abstract class Person {
         this.passWord = passWord;
     }
 
+    public ArrayList<BuyLog> getBuyLogs() {
+        return buyLogs;
+    }
+
+    public ArrayList<SellLog> getSellLogs() {
+        return sellLogs;
+    }
     public static boolean register(String userName, String accountType, String passWord){
         if(getPersonByUserName(userName) != null){
             if(accountType.equals("boss")){

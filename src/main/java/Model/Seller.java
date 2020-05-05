@@ -4,10 +4,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Seller extends Person {
-    private ArrayList<Logs> sellingGoods;
+    private ArrayList<Good> sellingGoods = new ArrayList<Good>();
     private String factoryName;
     public Seller(String userName, String password) {
         super(userName, password);
+    }
+
+    public String getFactoryName() {
+        return factoryName;
+    }
+
+    public ArrayList<Good> getSellingGoods() {
+        return sellingGoods;
+    }
+
+    public Good getGoodByID(String goodID) {
+        for (Good sellingGood : sellingGoods) {
+            if (sellingGood.getGoodID().equals(goodID)) return sellingGood;
+        }
+        return null;
+    }
+
+    public String viewIndividualProduct(Good good) {
+        return good.toString();
+    }
+
+    public void viewIndividualProductsBuyers(Good good) {
+
     }
 
     public void makeOff() {
