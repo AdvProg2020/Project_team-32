@@ -1,5 +1,4 @@
 import Menus.*;
-import Model.Customer;
 
 import java.util.Scanner;
 

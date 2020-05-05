@@ -1,15 +1,25 @@
 package Model;
 
-import Model.Good;
-import Model.Person;
-import Model.Seller;
-
-import java.util.HashMap;
-
 public class Boss extends Person {
 
     public Boss(String userName, String passWord) {
         super(userName, passWord);
     }
 
+
+    private void manageRequests() {
+
+    }
+
+    private void manageCategory() {
+
+    }
+
+    private void createDiscount() {
+
+    }
+
+    private void editDiscount(Discount discount) {
+
+    }
 }

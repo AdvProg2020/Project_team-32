@@ -25,7 +25,28 @@ public class Good {
         this.explanation = explanation;
     }
 
+    public static String compare(Good firstGood, Good secondGood) {
+
+    }
+
     public void setSellerAndPrices(HashMap<String, Integer> sellerAndPrices) {
         this.sellerAndPrices = sellerAndPrices;
     }
+
+    private void managePoint(int point) {
+
+    }
+
+    public static ArrayList<Good> selectWithCategory(ArrayList<Good> allGoods, HashMap<String, String> filtersAndValues) {
+
+    }
+
+    private void editInformation(String goodStatus, String companyName, String stockStatus, Category category, String explanation) {
+
+    }
+
+    public void addComment(String comment, Person person) {
+
+    }
+
 }

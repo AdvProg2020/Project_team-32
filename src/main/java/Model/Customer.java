@@ -1,7 +1,6 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Customer extends Person {
     private ArrayList<BuyLog> allBuyLogs;
@@ -24,6 +23,14 @@ public class Customer extends Person {
 
     private void makeShoppingBasketEmpty() {
         shoppingBasket = new ShoppingBasket();
+    }
+
+
+    public Customer(ShoppingBasket shoppingBasket, String userName, String firstName, String lastName, String phoneID, String eMail, String passWord, int credit) {
+        super(userName, firstName, lastName, phoneID, eMail, passWord, credit);
+        //----------------------------------- Ali Sharifi's changes
+        this.shoppingBasket = shoppingBasket;
+        //-----------------------------------
     }
 
 }

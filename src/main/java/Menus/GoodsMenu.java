@@ -1,6 +1,7 @@
 package Menus;
 
 import Model.Category;
+import Model.Good;
 
 import java.util.ArrayList;
 
@@ -17,4 +18,5 @@ public class GoodsMenu extends Menu {
         this.currentCategory = category;
     }
 
+    private ArrayList<Good> goodsWithCurrentCategory = Good.selectWithCategory(currentCategory);
 }

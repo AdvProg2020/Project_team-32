@@ -20,6 +20,7 @@ abstract public class Menu {
     protected String name;
     protected static Scanner scanner = new Scanner(System.in);
 
+
     public Menu(String name,ArrayList<Menu> subMenu) {
         this.subMenu = subMenu;
     }

@@ -12,6 +12,7 @@ public class RegisterMenu extends Menu{
         super(name, subMenu);
     }
 
+
     @Override
     protected void show() {
         System.out.println("Please use this format to register:\ncreate account [type] [username] [password]");
@@ -42,4 +43,5 @@ public class RegisterMenu extends Menu{
     private boolean commandValidation(String command) {
         return command.matches("create account (\\S+) (\\S+) (\\S+)");
     }
+
 }

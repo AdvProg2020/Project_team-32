@@ -8,9 +8,10 @@ import Model.Seller;
 import java.util.ArrayList;
 
 public class LoginMenu extends Menu{
-    public LoginMenu(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public LoginMenu(String name) {
+        super(name, null);
     }
+
 
     @Override
     protected void show() {
@@ -62,4 +63,10 @@ public class LoginMenu extends Menu{
     private boolean commandValidation(String command) {
         return command.matches("login \\S+ \\S+");
     }
+  
+    public void login(){
+        String username = scanner.nextLine();
+        String password = scanner.nextLine();
+    }
+
 }
