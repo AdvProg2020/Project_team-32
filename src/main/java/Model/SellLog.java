@@ -15,4 +15,17 @@ public class SellLog extends Logs {
         this.buyerUserNmae = buyerUserNmae;
         this.postStatus = postStatus;
     }
+
+    @Override
+    public String toString() {
+        return "SellLog{" +
+                "amountReducedForOff=" + amountReducedForOff +
+                ", soldGood=" + soldGood +
+                ", buyerUserNmae='" + buyerUserNmae + '\'' +
+                ", postStatus='" + postStatus + '\'' +
+                ", logID='" + logID + '\'' +
+                ", date=" + date +
+                ", pricePaid=" + pricePaid +
+                '}';
+    }
 }

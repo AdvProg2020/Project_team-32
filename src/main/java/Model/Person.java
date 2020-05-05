@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 
 public abstract class Person {
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String phoneID;
-    
-    private String eMail;
-    private String passWord;
+    protected String userName;
+    protected String firstName;
+    protected String lastName;
+    protected String phoneID;
+
+    protected String eMail;
+    protected String passWord;
     private ArrayList<Discount> discounts;
-    private int credit;
-    private ArrayList<String> buyLogs;
-    private ArrayList<String> sellLogs;
+    protected int credit;
+    protected ArrayList<BuyLog> buyLogs;
+    protected ArrayList<SellLog> sellLogs;
 
 
     public void informationEditor() {
@@ -34,6 +34,14 @@ public abstract class Person {
         this.phoneID = phoneID;
         this.eMail = eMail;
         this.passWord = passWord;
+    }
+
+    public ArrayList<BuyLog> getBuyLogs() {
+        return buyLogs;
+    }
+
+    public ArrayList<SellLog> getSellLogs() {
+        return sellLogs;
     }
 
     //yasin
