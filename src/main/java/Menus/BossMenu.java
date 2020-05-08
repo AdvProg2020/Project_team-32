@@ -18,4 +18,8 @@ public class BossMenu extends Menu {
     public void setUser(Boss user) {
         this.user = user;
     }
+
+    public Boss getUser() {
+        return user;
+    }
 }

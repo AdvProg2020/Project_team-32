@@ -6,9 +6,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class RegisterMenu extends Menu{
+public class RegisterCommand extends Menu{
 
-    public RegisterMenu(String name, ArrayList<Menu> subMenu) {
+    public RegisterCommand(String name, ArrayList<Menu> subMenu) {
         super(name, subMenu);
     }
 
@@ -24,7 +24,8 @@ public class RegisterMenu extends Menu{
         if(commandValidation(command)){
             if(canRegister(command.split(" "))){
                 System.out.println("user registered successfully");
-                // a menu should call here
+                parentMenu.show();
+                parentMenu.execute();
             }
             else {
                 System.out.println("can not register this user");

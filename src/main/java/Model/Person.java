@@ -32,8 +32,12 @@ public abstract class Person {
     }
 
 
-    public void informationEditor() {
-
+    public void informationEditor(String password,String firstName, String lastName, String phoneId, String email) {
+        this.passWord = password;
+        this.firstName= firstName;
+        this.lastName = lastName;
+        this.phoneID = phoneId;
+        this.eMail = email;
     }
 
     public Person() {
@@ -44,6 +48,9 @@ public abstract class Person {
         //super(shoppingBasket);
         this.userName = userName;
         this.passWord = passWord;
+        discounts = new ArrayList<Discount>();
+        buyLogs = new ArrayList<BuyLog>();
+        sellLogs = new ArrayList<SellLog>();
     }
 
     public ArrayList<BuyLog> getBuyLogs() {
@@ -77,10 +84,24 @@ public abstract class Person {
 
     private static Person getPersonByUserName(String userName) {
         for (Person person : allPersons) {
-            if(person.userName.equals(userName)) {
+            if (person.userName.equals(userName)) {
                 return person;
             }
         }
         return null;
+    }
+
+
+    public String informationDisplay() {
+        return
+                "user name=" + userName + '\n' +
+                        "first name=" + firstName + '\n' +
+                        "last name=" + lastName + '\n' +
+                        "phone number=" + phoneID + '\n' +
+                        "email=" + eMail + '\n' +
+                        "password=" + passWord + '\n' +
+                        "credit=" + credit ;
+
+    }
 
 }

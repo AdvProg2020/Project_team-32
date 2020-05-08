@@ -15,4 +15,8 @@ public class SellerMenu extends Menu{
     public void setUser(Seller user) {
         this.user = user;
     }
+
+    public Seller getUser() {
+        return user;
+    }
 }

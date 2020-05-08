@@ -23,4 +23,7 @@ public class CustomerMenu extends Menu {
         this.user = user;
     }
 
+    public Customer getUser() {
+        return user;
+    }
 }

@@ -7,8 +7,8 @@ import Model.Seller;
 
 import java.util.ArrayList;
 
-public class LoginMenu extends Menu{
-    public LoginMenu(String name) {
+public class LoginCommand extends Menu{
+    public LoginCommand(String name) {
         super(name, null);
     }
 

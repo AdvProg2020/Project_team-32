@@ -25,4 +25,5 @@ public class GuestMenu extends Menu {
         this.user = user;
     }
 
+
 }

@@ -1,5 +1,8 @@
 package Menus;
 
+import Model.Person;
+import Model.Seller;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,8 +14,8 @@ abstract public class Menu {
     protected static SellerMenu sellerMenu;
     private static GoodsMenu goodsMenu;
     private static OffMenu offMenu;
-    private static LoginMenu loginMenu;
-    private static RegisterMenu registerMenu;
+    private static LoginCommand loginCommand;
+    private static RegisterCommand registerCommand;
 
 
     protected ArrayList<Menu> subMenu;
@@ -44,6 +47,17 @@ abstract public class Menu {
             subMenu.get(command).execute();
         }
     }
+
+    protected static Person getUserRecursively(Menu menu){
+        if(menu instanceof BossMenu)
+            return ((BossMenu) menu).getUser();
+        if(menu instanceof CustomerMenu)
+            return ((CustomerMenu) menu).getUser();
+        if(menu instanceof SellerMenu)
+            return ((SellerMenu) menu).getUser();
+        return getUserRecursively(menu.parentMenu);
+    }
+
 
     @Override
     public String toString() {
