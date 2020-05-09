@@ -21,6 +21,20 @@ public abstract class Person {
     protected ArrayList<BuyLog> buyLogs;
     protected ArrayList<SellLog> sellLogs;
 
+    public int getCredit() {
+        return credit;
+    }
+
+    public Person(String userName, String firstName, String lastName, String phoneID, String eMail, String passWord, int credit) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneID = phoneID;
+        this.eMail = eMail;
+        this.passWord = passWord;
+        this.credit = credit;
+    }
+
     public static Person login(String userName, String passWord) {
         Person person;
         person = getPersonByUserName(userName);
@@ -60,6 +74,7 @@ public abstract class Person {
     public ArrayList<SellLog> getSellLogs() {
         return sellLogs;
     }
+
     public static boolean register(String userName, String accountType, String passWord){
         if(getPersonByUserName(userName) != null){
             if(accountType.equals("boss")){

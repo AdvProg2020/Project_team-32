@@ -2,9 +2,9 @@ package Menus;
 
 import java.util.ArrayList;
 
-public class ShowOrder extends Menu{
+public class ShowOrderCommand extends Menu{
 
-    public ShowOrder(String name, ArrayList<Menu> subMenu) {
+    public ShowOrderCommand(String name, ArrayList<Menu> subMenu) {
         super(name, subMenu);
     }
 
