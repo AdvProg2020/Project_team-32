@@ -40,17 +40,8 @@ public class LoginCommand extends Menu{
         }
     }
 
-    private Person getPerson(String[] command) {
-        return Person.login(command[1], command[2]);
-    }
-
     private boolean commandValidation(String command) {
         return command.matches("login \\S+ \\S+");
-    }
-  
-    public void login(){
-        String username = scanner.nextLine();
-        String password = scanner.nextLine();
     }
 
 }

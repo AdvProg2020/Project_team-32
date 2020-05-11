@@ -9,11 +9,11 @@ public class InformationDisplayCommand extends Menu {
 
     @Override
     protected void show() {
+        System.out.println(getUserRecursively(this).informationDisplay());
     }
 
     @Override
     protected void execute() {
-        System.out.println(getUserRecursively(this).informationDisplay());
         parentMenu.show();
         parentMenu.execute();
     }
