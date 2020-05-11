@@ -13,4 +13,8 @@ public class Logs {
         this.pricePaid = pricePaid;
     }
 
+
+    public String getLogID() {
+        return logID;
+    }
 }
