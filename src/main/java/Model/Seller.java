@@ -6,6 +6,13 @@ import java.util.HashMap;
 public class Seller extends Person {
     private ArrayList<Good> sellingGoods = new ArrayList<Good>();
     private String factoryName;
+
+    private ArrayList<SellLog> allSellingLogs;
+
+    public ArrayList<SellLog> getAllSellingLogs() {
+        return allSellingLogs;
+    }
+
     public Seller(String userName, String password) {
         super(userName, password);
     }
@@ -24,6 +31,8 @@ public class Seller extends Person {
         }
         return null;
     }
+
+
 
     public String viewIndividualProduct(Good good) {
         return good.toString();

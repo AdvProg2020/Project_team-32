@@ -18,8 +18,9 @@ public abstract class Person {
   
     private ArrayList<Discount> discounts;
     protected int credit;
-    protected ArrayList<BuyLog> buyLogs;
-    protected ArrayList<SellLog> sellLogs;
+
+    //protected ArrayList<BuyLog> buyLogs;
+    //protected ArrayList<SellLog> sellLogs;
 
     public static Person login(String userName, String passWord) {
         Person person;
@@ -54,13 +55,13 @@ public abstract class Person {
         sellLogs = new ArrayList<SellLog>();
     }
 
-    public ArrayList<BuyLog> getBuyLogs() {
+    /*public ArrayList<BuyLog> getBuyLogs() {
         return buyLogs;
     }
 
     public ArrayList<SellLog> getSellLogs() {
         return sellLogs;
-    }
+    }*/
 
     public String getPassWord() {
         return passWord;
