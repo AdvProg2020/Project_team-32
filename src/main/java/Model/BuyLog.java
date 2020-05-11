@@ -16,4 +16,14 @@ public class BuyLog extends Logs {
         this.sellerUserName = sellerUserName;
         this.deliveryStatus = deliveryStatus;
     }
+
+    @Override
+    public String toString() {
+        return "BuyLog{" +
+                "discountMade='" + discountMade + '\'' +
+                ", goodsBought=" + goodsBought +
+                ", sellerUserName='" + sellerUserName + '\'' +
+                ", deliveryStatus='" + deliveryStatus + '\'' +
+                '}';
+    }
 }
