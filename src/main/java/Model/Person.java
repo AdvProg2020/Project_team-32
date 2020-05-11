@@ -119,4 +119,7 @@ public abstract class Person {
 
     }
 
+    public ArrayList<Discount> getDiscounts() {
+        return discounts;
+    }
 }

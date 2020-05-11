@@ -18,5 +18,8 @@ public class GoodsMenu extends Menu {
         this.currentCategory = category;
     }
 
-    private ArrayList<Good> goodsWithCurrentCategory = Good.selectWithCategory(currentCategory);
+    private ArrayList<Good> goodsWithCurrentCategory;// = Good.selectWithCategory(currentCategory);
+
+
 }
+//filtering is a submenu of this one
