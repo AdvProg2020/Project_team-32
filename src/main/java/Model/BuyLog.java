@@ -26,4 +26,8 @@ public class BuyLog extends Logs {
                 ", deliveryStatus='" + deliveryStatus + '\'' +
                 '}';
     }
+
+    public ArrayList<Good> getGoodsBought() {
+        return goodsBought;
+    }
 }

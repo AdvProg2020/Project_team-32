@@ -14,7 +14,8 @@ public class Good {
     private String stockStatus;
     private Category category;
     private String explanation;
-    private float point;
+    //private float point;
+    private int point;
     private ArrayList<Comment> allComments;
 
     public Good(String name, String goodID, String goodStatus, String companyName, String stockStatus, Category category, String explanation) {
@@ -58,12 +59,16 @@ public class Good {
         this.sellerAndPrices = sellerAndPrices;
     }
 
-    private void managePoint(int point) {
+    /*private void managePoint(int point) {
 
-    }
+    }*/
 
     public static ArrayList<Good> selectWithCategory(ArrayList<Good> allGoods, HashMap<String, String> filtersAndValues) {
 
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
     }
 
     private void editInformation(String goodStatus, String companyName, String stockStatus, Category category, String explanation) {

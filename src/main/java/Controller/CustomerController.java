@@ -2,6 +2,7 @@ package Controller;
 
 import Model.BuyLog;
 import Model.Customer;
+import Model.Good;
 
 public class CustomerController {
 
@@ -14,7 +15,18 @@ public class CustomerController {
         throw new Exception();
     }
 
-    public static void rateProduct(String goodId, Customer customer){
+    public static void rateProduct(String goodId ,int point , Customer customer) throws Exception {
 
+
+        for (BuyLog log : customer.getAllBuyLogs()) {
+            for (Good good : log.getGoodsBought()) {
+                if(good.getGoodID().equals(goodId)){
+                    good.setPoint(point);
+                    return;
+                }
+            }
+        }
+
+        throw new Exception();
     }
 }
