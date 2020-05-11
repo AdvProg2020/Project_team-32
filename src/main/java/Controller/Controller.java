@@ -1,3 +1,5 @@
+package Controller;
+
 import Menus.*;
 
 import java.util.Scanner;

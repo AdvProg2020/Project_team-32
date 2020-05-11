@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public abstract class Person {
 
   
-    protected static ArrayList<Person> allPersons = new ArrayList<Person>();
+    public static ArrayList<Person> allPersons = new ArrayList<Person>();
     protected String userName;
     protected String firstName;
     protected String lastName;
@@ -48,6 +48,7 @@ public abstract class Person {
         //super(shoppingBasket);
         this.userName = userName;
         this.passWord = passWord;
+        allPersons.add(this);
         discounts = new ArrayList<Discount>();
         buyLogs = new ArrayList<BuyLog>();
         sellLogs = new ArrayList<SellLog>();
@@ -60,29 +61,12 @@ public abstract class Person {
     public ArrayList<SellLog> getSellLogs() {
         return sellLogs;
     }
-    public static boolean register(String userName, String accountType, String passWord){
-        if(getPersonByUserName(userName) != null){
-            if(accountType.equals("boss")){
-                new Boss(userName, passWord);
-            }
-            else if(accountType.equals("customer")){
-                new Customer(userName, passWord);
-            }
-            else if(accountType.equals("seller")){
-                new Seller(userName , passWord);
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-        // a method should call for changing file
-        return true;
+
+    public String getPassWord() {
+        return passWord;
     }
 
-    private static Person getPersonByUserName(String userName) {
+    public static Person getPersonByUserName(String userName) {
         for (Person person : allPersons) {
             if (person.userName.equals(userName)) {
                 return person;

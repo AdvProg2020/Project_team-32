@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 abstract public class Menu {
     //this methods should be static
-    protected static BossMenu bossMenu;
-    protected static GuestMenu guestMenu;
-    protected static CustomerMenu customerMenu;
-    protected static SellerMenu sellerMenu;
+    public static BossMenu bossMenu;
+    public static GuestMenu guestMenu;
+    public static CustomerMenu customerMenu;
+    public static SellerMenu sellerMenu;
     private static GoodsMenu goodsMenu;
     private static OffMenu offMenu;
     private static LoginCommand loginCommand;

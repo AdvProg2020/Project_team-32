@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.AccountController;
 import Model.Person;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class RegisterCommand extends Menu{
     protected void execute() {
         String command = scanner.nextLine();
         if(commandValidation(command)){
-            if(canRegister(command.split(" "))){
+            if(AccountController.canRegister(command.split(" "))){
                 System.out.println("user registered successfully");
                 parentMenu.show();
                 parentMenu.execute();
@@ -35,10 +36,6 @@ public class RegisterCommand extends Menu{
             this.show();
             this.execute();
         }
-    }
-
-    private boolean canRegister(String[] command) {
-        return Person.register(command[3],command[2],command[4]);
     }
 
     private boolean commandValidation(String command) {

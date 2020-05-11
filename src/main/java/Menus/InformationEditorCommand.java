@@ -9,7 +9,7 @@ public class InformationEditorCommand extends Menu {
 
     @Override
     protected void show() {
-        System.out.println("Please edit your information:\n");
+        System.out.println("Please edit your information:");
     }
 
     @Override

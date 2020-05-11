@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.AccountController;
 import Model.Boss;
 import Model.Customer;
 import Model.Person;
@@ -23,37 +24,20 @@ public class LoginCommand extends Menu{
         String command = scanner.nextLine();
         Person person;
         if(commandValidation(command)){
-            if((person = getPerson(command.split(" ")))!=null){
+            if((person = AccountController.login(command.split(" ")))!=null){
                 System.out.println("Login successfully done");
-                callRelativeMenu(person);
+                Menu menu = AccountController.getRelativeMenuForLogin(person);
+                menu.show();
+                menu.execute();
             }
             else {
                 System.out.println("username or password is not correct");
             }
         }
         else {
-            this.show();
-            this.execute();
+            parentMenu.show();
+            parentMenu.execute();
         }
-    }
-
-    private void callRelativeMenu(Person person) {
-        if(person instanceof Boss){
-            bossMenu.setUser((Boss) person);
-            bossMenu.show();
-            bossMenu.execute();
-        }
-        else if (person instanceof Customer){
-            customerMenu.setUser((Customer) person);
-            customerMenu.show();
-            customerMenu.execute();
-        }
-        else if (person instanceof Seller){
-            sellerMenu.setUser((Seller) person);
-            sellerMenu.show();
-            sellerMenu.execute();
-        }
-
     }
 
     private Person getPerson(String[] command) {
