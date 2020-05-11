@@ -49,4 +49,7 @@ public class Seller extends Person {
 
     }
 
+    public void deleteGood(Good good) {
+        sellingGoods.remove(good);
+    }
 }

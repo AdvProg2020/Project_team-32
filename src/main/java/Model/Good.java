@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Good {
-    private static ArrayList<Good> allGoods;
+    public static ArrayList<Good> allGoods;
     private String name;
     private String goodID;
     private String goodStatus;
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
+    private ArrayList<Seller> sellers;
     private String companyName;
     private String stockStatus;
     private Category category;
@@ -24,6 +25,7 @@ public class Good {
         this.stockStatus = stockStatus;
         this.category = category;
         this.explanation = explanation;
+        sellers = new ArrayList<Seller>();
     }
 //
 //    public Good(String goodID, String goodStatus, String companyName, String stockStatus, Category category, String explanation) {
@@ -34,6 +36,19 @@ public class Good {
 //        this.category = category;
 //        this.explanation = explanation;
 //    }
+
+    public static Good getGoodById(String Id){
+        for (Good good : allGoods) {
+            if(good.goodID.equals(Id)){
+                return good;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Seller> getSellers(){
+        return sellers;
+    }
 
     public static String compare(Good firstGood, Good secondGood) {
 
