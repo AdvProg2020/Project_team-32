@@ -26,7 +26,7 @@ abstract public class Menu {
 
     public Menu(String name,ArrayList<Menu> subMenu) {
         this.subMenu = subMenu;
-    }
+        }
 
     protected void show(){
         for(int i=0 ; i < subMenu.size() ; i++) {
