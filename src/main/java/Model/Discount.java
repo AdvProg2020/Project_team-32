@@ -10,4 +10,15 @@ public class Discount {
     private Date exposeDate;
     private String discountPercentAndMaxValue;
     private int useCount;
+
+    @Override
+    public String toString() {
+        return "Discount{" +
+                "discountID='" + discountID + '\'' +
+                ", initialDate=" + initialDate +
+                ", exposeDate=" + exposeDate +
+                ", discountPercentAndMaxValue='" + discountPercentAndMaxValue + '\'' +
+                ", useCount=" + useCount +
+                '}';
+    }
 }
