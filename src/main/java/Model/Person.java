@@ -1,6 +1,6 @@
 package Model;
 
-import Controller.Exeptions.UserDontExistException;
+import Controller.Exeptions.UserDoesNotExistException;
 
 import java.util.ArrayList;
 
@@ -65,13 +65,13 @@ public abstract class Person {
         return passWord;
     }
 
-    public static Person getPersonByUserName(String userName) throws UserDontExistException {
+    public static Person getPersonByUserName(String userName) throws UserDoesNotExistException {
         for (Person person : allPersons) {
             if (person.userName.equals(userName)) {
                 return person;
             }
         }
-        throw new UserDontExistException();
+        throw new UserDoesNotExistException();
     }
 
     public String getUserName() {

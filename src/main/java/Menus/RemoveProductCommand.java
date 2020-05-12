@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.Exeptions.GoodDoesNotExistException;
 import Controller.GoodController;
 
 import java.util.ArrayList;
@@ -17,6 +18,10 @@ public class RemoveProductCommand extends Menu {
     @Override
     protected void execute() {
         String Id = scanner.nextLine();
-        GoodController.deleteGoodById(Id);
+        try {
+            GoodController.deleteGoodById(Id);
+        } catch (GoodDoesNotExistException exception) {
+            System.out.println("product does not exist");
+        }
     }
 }

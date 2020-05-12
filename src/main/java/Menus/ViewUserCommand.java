@@ -1,7 +1,7 @@
 package Menus;
 
 import Controller.AccountController;
-import Controller.Exeptions.UserDontExistException;
+import Controller.Exeptions.UserDoesNotExistException;
 import Model.Person;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class ViewUserCommand extends Menu {
             System.out.println("-------------------------------\n"
                     + person.informationDisplay()
                     + "\n-------------------------------");
-        } catch (UserDontExistException exception) {
+        } catch (UserDoesNotExistException exception) {
             System.out.println("username is not correct");
         }
         parentMenu.show();

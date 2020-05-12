@@ -3,7 +3,7 @@ package Controller;
 import Controller.Exeptions.WrongPasswordException;
 import Controller.Exeptions.DuplicateBossException;
 import Controller.Exeptions.DuplicateUsernameException;
-import Controller.Exeptions.UserDontExistException;
+import Controller.Exeptions.UserDoesNotExistException;
 import Menus.Menu;
 import Model.*;
 
@@ -36,7 +36,7 @@ public class AccountController {
     }
 
 
-    public static Person login(String[] command) throws WrongPasswordException,UserDontExistException {
+    public static Person login(String[] command) throws WrongPasswordException, UserDoesNotExistException {
         Person person;
         person = Person.getPersonByUserName(command[1]);
         if(!person.getPassWord().equals(command[2]))
@@ -60,7 +60,7 @@ public class AccountController {
         return null;
     }
 
-    public static void deleteUser(String username) throws UserDontExistException{
+    public static void deleteUser(String username) throws UserDoesNotExistException {
         Person person = Person.getPersonByUserName(username);
         Person.allPersons.remove(person);
         if(person instanceof Seller){
@@ -71,7 +71,7 @@ public class AccountController {
         }
     }
 
-    public static Person getUser(String username) throws UserDontExistException {
+    public static Person getUser(String username) throws UserDoesNotExistException {
         return Person.getPersonByUserName(username);
     }
 }

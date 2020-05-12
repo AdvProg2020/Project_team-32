@@ -2,7 +2,7 @@ package Menus;
 
 import Controller.AccountController;
 import Controller.Exeptions.WrongPasswordException;
-import Controller.Exeptions.UserDontExistException;
+import Controller.Exeptions.UserDoesNotExistException;
 import Model.Person;
 
 public class LoginCommand extends Menu {
@@ -29,7 +29,7 @@ public class LoginCommand extends Menu {
                 menu.execute();
             } catch (WrongPasswordException exception) {
                 System.out.println("username or password is not correct");
-            } catch (UserDontExistException exception) {
+            } catch (UserDoesNotExistException exception) {
                 System.out.println("username or password is not correct");
             }
         } else {
