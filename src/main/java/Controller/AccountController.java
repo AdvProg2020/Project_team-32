@@ -1,21 +1,20 @@
 package Controller;
 
-import Controller.Exeptions.CanNotLoginException;
+import Controller.Exeptions.WrongPasswordException;
 import Controller.Exeptions.DuplicateBossException;
 import Controller.Exeptions.DuplicateUsernameException;
+import Controller.Exeptions.UserDontExistException;
 import Menus.Menu;
-import Model.Boss;
-import Model.Customer;
-import Model.Person;
-import Model.Seller;
-import com.sun.jdi.InvalidTypeException;
+import Model.*;
+
+import java.util.ArrayList;
 
 public class AccountController {
 
     public static boolean isBossCreated = false;
 
     public static void register(String userName, String accountType, String passWord) throws DuplicateUsernameException, DuplicateBossException {
-        if(Person.getPersonByUserName(userName) != null){
+        if(!Person.hasPersonByUserName(userName)){
             if(accountType.equals("boss") && !isBossCreated){
                 new Boss(userName, passWord);
                 isBossCreated = true;
@@ -37,13 +36,11 @@ public class AccountController {
     }
 
 
-    public static Person login(String[] command) throws CanNotLoginException {
+    public static Person login(String[] command) throws WrongPasswordException,UserDontExistException {
         Person person;
         person = Person.getPersonByUserName(command[1]);
-        if(person == null)
-            throw new CanNotLoginException();
         if(!person.getPassWord().equals(command[2]))
-            throw new CanNotLoginException();
+            throw new WrongPasswordException();
         return person;
     }
 
@@ -63,11 +60,18 @@ public class AccountController {
         return null;
     }
 
-    public static void deleteUser(String username) {
-        Person.allPersons.remove(Person.getPersonByUserName(username));
+    public static void deleteUser(String username) throws UserDontExistException{
+        Person person = Person.getPersonByUserName(username);
+        Person.allPersons.remove(person);
+        if(person instanceof Seller){
+            ArrayList<Good> goods= ((Seller) person).getSellingGoods();
+            for (Good good : goods) {
+                good.removeSeller((Seller) person);
+            }
+        }
     }
 
-    public static Person getUser(String username) {
+    public static Person getUser(String username) throws UserDontExistException {
         return Person.getPersonByUserName(username);
     }
 }
