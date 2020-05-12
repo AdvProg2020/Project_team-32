@@ -89,4 +89,7 @@ public abstract class Person {
 
     }
 
+    public int getCredit() {
+        return credit;
+    }
 }
