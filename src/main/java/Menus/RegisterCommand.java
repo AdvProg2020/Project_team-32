@@ -1,11 +1,11 @@
 package Menus;
 
 import Controller.AccountController;
-import Model.Person;
+import Controller.Exeptions.DuplicateBossException;
+import Controller.Exeptions.DuplicateUsernameException;
+import com.sun.jdi.InvalidTypeException;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class RegisterCommand extends Menu{
 
@@ -16,30 +16,35 @@ public class RegisterCommand extends Menu{
 
     @Override
     protected void show() {
-        System.out.println("Please use this format to register:\ncreate account [type] [username] [password]");
+        System.out.println("Please use this format to register:\ncreate account [manager|costumer|seller] [username] [password]");
     }
 
     @Override
     protected void execute() {
         String command = scanner.nextLine();
         if(commandValidation(command)){
-            if(AccountController.canRegister(command.split(" "))){
+            try{
+                AccountController.register(command.split(" ")[3],command.split(" ")[2],command.split(" ")[4]);
                 System.out.println("user registered successfully");
-                parentMenu.show();
-                parentMenu.execute();
             }
-            else {
-                System.out.println("can not register this user");
+            catch (DuplicateUsernameException exception){
+                System.out.println("this username is already exist");
             }
+            catch (DuplicateBossException exception) {
+                System.out.println("boss is already registered");
+            }
+            parentMenu.show();
+            parentMenu.execute();
         }
         else {
+            System.out.println("invalid command.");
             this.show();
             this.execute();
         }
     }
 
     private boolean commandValidation(String command) {
-        return command.matches("create account (\\S+) (\\S+) (\\S+)");
+        return command.matches("create account (manager|costumer|seller) (\\S+) (\\S+)");
     }
 
 }
