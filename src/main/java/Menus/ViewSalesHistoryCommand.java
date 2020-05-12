@@ -17,7 +17,7 @@ public class ViewSalesHistoryCommand extends Menu {
         @Override
         protected void execute() {
             for (SellLog allSellingLog : ((Seller) getUserRecursively(this)).getAllSellingLogs()) {
-                System.out.println(allSellingLog.toString()+"\n"+);
+                System.out.println(allSellingLog.toString()+"\n");
             }
             parentMenu.show();
             parentMenu.execute();
