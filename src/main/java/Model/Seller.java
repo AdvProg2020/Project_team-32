@@ -15,6 +15,7 @@ public class Seller extends Person {
 
     public Seller(String userName, String password) {
         super(userName, password);
+        this.allSellingLogs = new ArrayList<SellLog>();
     }
 
     public String getFactoryName() {

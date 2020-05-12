@@ -16,6 +16,8 @@ public class Customer extends Person {
         //----------------------------------- Ali Sharifi's changes
         this.shoppingBasket = new ShoppingBasket();
         //-----------------------------------
+
+        this.allBuyLogs = new ArrayList<BuyLog>();
     }
 
     public void copyShoppingBasket(Customer guest){

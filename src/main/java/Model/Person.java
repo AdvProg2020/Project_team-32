@@ -51,8 +51,6 @@ public abstract class Person {
         this.passWord = passWord;
         allPersons.add(this);
         discounts = new ArrayList<Discount>();
-        buyLogs = new ArrayList<BuyLog>();
-        sellLogs = new ArrayList<SellLog>();
     }
 
     /*public ArrayList<BuyLog> getBuyLogs() {

@@ -9,6 +9,8 @@ public class CustomerMenu extends Menu {
     private Customer user;
     //edited by ali sharifi
     //removing second argument from constructor
+
+
     public CustomerMenu(String name) {
         ArrayList<Menu> subMenu = new ArrayList<Menu>();
         subMenu.add(new Menu(){
@@ -26,4 +28,5 @@ public class CustomerMenu extends Menu {
     public Customer getUser() {
         return user;
     }
+
 }
