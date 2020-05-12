@@ -1,6 +1,7 @@
 package Menus;
 
 import Controller.AccountController;
+import Controller.Exeptions.CanNotLoginException;
 import Model.Boss;
 import Model.Customer;
 import Model.Person;
@@ -8,7 +9,7 @@ import Model.Seller;
 
 import java.util.ArrayList;
 
-public class LoginCommand extends Menu{
+public class LoginCommand extends Menu {
     public LoginCommand(String name) {
         super(name, null);
     }
@@ -23,18 +24,17 @@ public class LoginCommand extends Menu{
     protected void execute() {
         String command = scanner.nextLine();
         Person person;
-        if(commandValidation(command)){
-            if((person = AccountController.login(command.split(" ")))!=null){
+        if (commandValidation(command)) {
+            try {
+                person = AccountController.login(command.split(" "));
                 System.out.println("Login successfully done");
-                Menu menu = AccountController.getRelativeMenuForLogin(person);
+                Menu menu = AccountController.getRelativeMenuForLoginAndSetPerson(person);
                 menu.show();
                 menu.execute();
-            }
-            else {
+            } catch (CanNotLoginException exception) {
                 System.out.println("username or password is not correct");
             }
-        }
-        else {
+        } else {
             parentMenu.show();
             parentMenu.execute();
         }
