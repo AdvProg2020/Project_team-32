@@ -7,7 +7,7 @@ import com.sun.jdi.InvalidTypeException;
 
 import java.util.ArrayList;
 
-public class RegisterCommand extends Menu{
+public class RegisterCommand extends Menu {
 
     public RegisterCommand(String name, ArrayList<Menu> subMenu) {
         super(name, subMenu);
@@ -22,21 +22,18 @@ public class RegisterCommand extends Menu{
     @Override
     protected void execute() {
         String command = scanner.nextLine();
-        if(commandValidation(command)){
-            try{
-                AccountController.register(command.split(" ")[3],command.split(" ")[2],command.split(" ")[4]);
+        if (commandValidation(command)) {
+            try {
+                AccountController.register(command.split(" ")[3], command.split(" ")[2], command.split(" ")[4]);
                 System.out.println("user registered successfully");
-            }
-            catch (DuplicateUsernameException exception){
+            } catch (DuplicateUsernameException exception) {
                 System.out.println("this username is already exist");
-            }
-            catch (DuplicateBossException exception) {
+            } catch (DuplicateBossException exception) {
                 System.out.println("boss is already registered");
             }
             parentMenu.show();
             parentMenu.execute();
-        }
-        else {
+        } else {
             System.out.println("invalid command.");
             this.show();
             this.execute();

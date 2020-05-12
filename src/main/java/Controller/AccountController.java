@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Exeptions.CanNotLoginException;
 import Controller.Exeptions.DuplicateBossException;
 import Controller.Exeptions.DuplicateUsernameException;
 import Menus.Menu;
@@ -36,24 +37,27 @@ public class AccountController {
     }
 
 
-    public static Person login(String[] command) {
+    public static Person login(String[] command) throws CanNotLoginException {
         Person person;
         person = Person.getPersonByUserName(command[1]);
         if(person == null)
-            return null;
+            throw new CanNotLoginException();
         if(!person.getPassWord().equals(command[2]))
-            return null;
+            throw new CanNotLoginException();
         return person;
     }
 
-    public static Menu getRelativeMenuForLogin(Person person) {
+    public static Menu getRelativeMenuForLoginAndSetPerson(Person person) {
         if(person instanceof Boss){
+            Menu.bossMenu.setUser((Boss) person);
             return Menu.bossMenu;
         }
         else if (person instanceof Customer){
+            Menu.customerMenu.setUser((Customer) person);
             return Menu.customerMenu;
         }
         else if (person instanceof Seller){
+            Menu.sellerMenu.setUser((Seller) person);
             return Menu.sellerMenu;
         }
         return null;
