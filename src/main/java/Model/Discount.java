@@ -8,17 +8,18 @@ public class Discount {
     private String discountID;
     private Date initialDate;
     private Date exposeDate;
-    private String discountPercentAndMaxValue;
+    private int discountPercent;
+    private int maxAmount;
     private int useCount;
 
-    @Override
-    public String toString() {
-        return "Discount{" +
-                "discountID='" + discountID + '\'' +
-                ", initialDate=" + initialDate +
-                ", exposeDate=" + exposeDate +
-                ", discountPercentAndMaxValue='" + discountPercentAndMaxValue + '\'' +
-                ", useCount=" + useCount +
-                '}';
+    public Discount(String discountID, Date exposeDate, int discountPercent, int maxAmount) {
+        this.discountID = discountID;
+        this.initialDate = new Date();
+        this.exposeDate = exposeDate;
+        this.discountPercent = discountPercent;
+        this.maxAmount = maxAmount;
+        this.useCount = 0;
     }
+
+
 }

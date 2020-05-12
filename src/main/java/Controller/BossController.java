@@ -3,9 +3,17 @@ package Controller;
 import Controller.Exeptions.DuplicateBossException;
 import Controller.Exeptions.DuplicateUsernameException;
 import Model.Boss;
+import Model.Discount;
 import Model.Person;
 
+import java.net.Inet4Address;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class BossController {
+
+    private static ArrayList<Discount> allDiscount = new ArrayList<Discount>();
 
     public static void createManager(String[] command) throws DuplicateUsernameException {
         if(!Person.hasPersonByUserName(command[1])){
@@ -16,4 +24,9 @@ public class BossController {
         }
     }
 
+    public static void createDiscount(String[] command) {
+        String[] exposeDateString = command[1].split(",");
+        Date exposeDate = new Date(Integer.parseInt(exposeDateString[0]),Integer.parseInt(exposeDateString[1]),Integer.parseInt(exposeDateString[2]));
+        allDiscount.add(new Discount(command[0], exposeDate, Integer.parseInt(command[2]), Integer.parseInt(command[3])));
+    }
 }
