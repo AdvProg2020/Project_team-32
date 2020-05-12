@@ -17,12 +17,7 @@ public class ManageProducts extends Menu {
             System.out.println(i+": "+sellingGood.getName()+" / ID:" +sellingGood.getGoodID());
             i++;
         }
-
-        for( i=0 ; i < subMenu.size() ; i++) {
-            System.out.println("" + i + "." + subMenu.get(i));
-        }
-        System.out.println(""+ subMenu.size() + ".Back");
-        System.out.println("Please select a number:");
+        super.show();
     }
 
     @Override
