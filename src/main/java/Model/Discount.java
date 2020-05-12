@@ -21,5 +21,7 @@ public class Discount {
         this.useCount = 0;
     }
 
-
+    public String getDiscountID() {
+        return discountID;
+    }
 }
