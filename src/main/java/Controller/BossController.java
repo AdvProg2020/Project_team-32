@@ -43,4 +43,17 @@ public class BossController {
         }
         throw new DiscountDoesNotExistException();
     }
+
+    public static void editDiscount(String[] command, Discount discount) {
+        String[] exposeDateString = command[1].split(",");
+        Date exposeDate = new Date(Integer.parseInt(exposeDateString[0]),Integer.parseInt(exposeDateString[1]),Integer.parseInt(exposeDateString[2]));
+        discount.setDiscountID(command[0]);
+        discount.setExposeDate(exposeDate);
+        discount.setDiscountPercent(Integer.parseInt(command[2]));
+        discount.setMaxAmount(Integer.parseInt(command[3]));
+    }
+
+    public static void removeDiscount(Discount discount) {
+        allDiscount.remove(discount);
+    }
 }

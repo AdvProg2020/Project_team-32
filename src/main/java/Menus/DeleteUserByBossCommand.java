@@ -5,8 +5,8 @@ import Controller.Exeptions.UserDoesNotExistException;
 
 import java.util.ArrayList;
 
-public class DeleteUserCommand extends Menu {
-    public DeleteUserCommand(String name, ArrayList<Menu> subMenu) {
+public class DeleteUserByBossCommand extends Menu {
+    public DeleteUserByBossCommand(String name, ArrayList<Menu> subMenu) {
         super(name, subMenu);
     }
 

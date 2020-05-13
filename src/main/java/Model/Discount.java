@@ -24,4 +24,33 @@ public class Discount {
     public String getDiscountID() {
         return discountID;
     }
+
+    @Override
+    public String toString() {
+        return "Discount{" +
+                "discountID='" + discountID + '\'' +
+                ", initialDate=" + initialDate +
+                ", exposeDate=" + exposeDate +
+                ", discountPercent=" + discountPercent +
+                ", maxAmount=" + maxAmount +
+                ", useCount=" + useCount +
+                '}';
+    }
+
+    public void setDiscountID(String discountID) {
+        this.discountID = discountID;
+    }
+
+    public void setExposeDate(Date exposeDate) {
+        this.exposeDate = exposeDate;
+    }
+
+    public void setDiscountPercent(int discountPercent) {
+        this.discountPercent = discountPercent;
+    }
+
+    public void setMaxAmount(int maxAmount) {
+        this.maxAmount = maxAmount;
+    }
+
 }

@@ -2,18 +2,20 @@ package Menus;
 
 import Controller.BossController;
 import Controller.Exeptions.DiscountDoesNotExistException;
+import Model.Boss;
 import Model.Discount;
 
+import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 
-public class DiscountViewCommand extends Menu {
-    public DiscountViewCommand(String name, ArrayList<Menu> subMenu) {
+public class DiscountRemoveCommand extends Menu {
+    public DiscountRemoveCommand(String name, ArrayList<Menu> subMenu) {
         super(name, subMenu);
     }
 
     @Override
     protected void show() {
-        System.out.println("enter a discountId to show its information:");
+        System.out.println("enter a discountId to remove:");
     }
 
     @Override
@@ -21,11 +23,10 @@ public class DiscountViewCommand extends Menu {
         String discountId = scanner.nextLine();
         try {
             Discount discount = BossController.getDiscountById(discountId);
-            System.out.println(discount);
+            BossController.removeDiscount(discount);
         } catch (DiscountDoesNotExistException exception) {
             System.out.println("discountId does not exist.");
         }
-        parentMenu.show();
-        parentMenu.execute();
     }
+
 }
