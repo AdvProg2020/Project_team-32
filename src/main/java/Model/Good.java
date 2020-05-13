@@ -18,7 +18,11 @@ public class Good {
     private int point;
     private ArrayList<Comment> allComments;
 
-    public Good(String name, String goodID, String goodStatus, String companyName, String stockStatus, Category category, String explanation) {
+
+    private HashMap<String , String> properties;
+
+    public Good(String name, String goodID, String goodStatus, String companyName, String stockStatus, Category category
+            , String explanation, HashMap<String , String > properties) {
         this.name = name;
         this.goodID = goodID;
         this.goodStatus = goodStatus;
@@ -27,6 +31,8 @@ public class Good {
         this.category = category;
         this.explanation = explanation;
         sellers = new ArrayList<Seller>();
+
+        this.properties = properties;
     }
 
     public HashMap<String, Integer> getSellerAndPrices() {
