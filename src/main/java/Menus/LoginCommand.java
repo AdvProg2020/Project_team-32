@@ -1,13 +1,9 @@
 package Menus;
 
 import Controller.AccountController;
-import Controller.Exeptions.CanNotLoginException;
-import Model.Boss;
-import Model.Customer;
+import Controller.Exeptions.WrongPasswordException;
+import Controller.Exeptions.UserDoesNotExistException;
 import Model.Person;
-import Model.Seller;
-
-import java.util.ArrayList;
 
 public class LoginCommand extends Menu {
     public LoginCommand(String name) {
@@ -31,7 +27,9 @@ public class LoginCommand extends Menu {
                 Menu menu = AccountController.getRelativeMenuForLoginAndSetPerson(person);
                 menu.show();
                 menu.execute();
-            } catch (CanNotLoginException exception) {
+            } catch (WrongPasswordException exception) {
+                System.out.println("username or password is not correct");
+            } catch (UserDoesNotExistException exception) {
                 System.out.println("username or password is not correct");
             }
         } else {

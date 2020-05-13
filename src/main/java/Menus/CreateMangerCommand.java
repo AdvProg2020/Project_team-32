@@ -1,6 +1,7 @@
 package Menus;
 
 import Controller.BossController;
+import Controller.Exeptions.DuplicateUsernameException;
 import com.sun.org.apache.xerces.internal.utils.XMLLimitAnalyzer;
 
 import java.util.ArrayList;
@@ -18,6 +19,11 @@ public class CreateMangerCommand extends Menu {
     @Override
     protected void execute() {
         String command = scanner.nextLine();
-        BossController.createManager(command.split(" "));
+        try {
+            BossController.createManager(command.split(" "));
+            System.out.println("manger created successfully");
+        } catch (DuplicateUsernameException exception) {
+            System.out.println("this username is already exist");
+        }
     }
 }

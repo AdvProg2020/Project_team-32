@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.Exeptions.UserDoesNotExistException;
+
 import java.util.ArrayList;
 
 
@@ -19,19 +21,17 @@ public abstract class Person {
     private ArrayList<Discount> discounts;
     protected int credit;
 
-    //protected ArrayList<BuyLog> buyLogs;
-    //protected ArrayList<SellLog> sellLogs;
-
-    public static Person login(String userName, String passWord) {
-        Person person;
-        person = getPersonByUserName(userName);
-        if(person == null)
-            return null;
-        if(!person.passWord.equals(passWord))
-            return null;
-        return person;
+    public static boolean hasPersonByUserName(String userName) {
+        for (Person person : allPersons) {
+            if (person.userName.equals(userName)) {
+                return true;
+            }
+        }
+       return false;
     }
 
+    //protected ArrayList<BuyLog> buyLogs;
+    //protected ArrayList<SellLog> sellLogs;
 
     public void informationEditor(String password,String firstName, String lastName, String phoneId, String email) {
         this.passWord = password;
@@ -65,15 +65,18 @@ public abstract class Person {
         return passWord;
     }
 
-    public static Person getPersonByUserName(String userName) {
+    public static Person getPersonByUserName(String userName) throws UserDoesNotExistException {
         for (Person person : allPersons) {
             if (person.userName.equals(userName)) {
                 return person;
             }
         }
-        return null;
+        throw new UserDoesNotExistException();
     }
 
+    public String getUserName() {
+        return userName;
+    }
 
     public String informationDisplay() {
         return

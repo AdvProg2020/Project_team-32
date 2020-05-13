@@ -100,4 +100,9 @@ public class Good {
                 ", allComments=" + allComments +
                 '}';
     }
+
+    public void removeSeller(Seller person) {
+        sellerAndPrices.remove(person.getUserName());
+        sellers.remove(person);
+    }
 }

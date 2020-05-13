@@ -1,6 +1,7 @@
 package Menus;
 
 import Controller.AccountController;
+import Controller.Exeptions.UserDoesNotExistException;
 
 import java.util.ArrayList;
 
@@ -17,8 +18,12 @@ public class DeleteUserCommand extends Menu {
     @Override
     protected void execute() {
         String username = scanner.nextLine();
-        AccountController.deleteUser(username);
-        System.out.println("user is deleted successfully");
+        try {
+            AccountController.deleteUser(username);
+            System.out.println("user is deleted successfully");
+        } catch (UserDoesNotExistException exception) {
+            System.out.println("username is not correct");
+        }
         parentMenu.show();
         parentMenu.execute();
     }
