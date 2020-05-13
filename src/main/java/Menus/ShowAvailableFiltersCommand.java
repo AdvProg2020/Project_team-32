@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.GoodController;
 import Model.Category;
 import Model.Good;
 
@@ -19,7 +20,7 @@ public class ShowAvailableFiltersCommand extends Menu {
             System.out.println(property);
         }
         System.out.println("Special Properties:");
-        for (String property : GoodsMenu.getCurrentCategory().getSpecialProperties()) {
+        for (String property : GoodController.getCurrentCategory().getSpecialProperties()) {
             System.out.println(property);
         }
     }
