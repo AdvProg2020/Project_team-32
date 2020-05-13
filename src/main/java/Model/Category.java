@@ -29,7 +29,7 @@ public class Category {
         generalProperties.add("price");
         generalProperties.add("seller");
     }
-    private static ArrayList<String> specialProperties;
+    private ArrayList<String> specialProperties;
     public Category(String name, ArrayList<String> specialProperty) {
         this.name = name;
         this.specialProperties = specialProperty;
@@ -46,7 +46,6 @@ public class Category {
         allCategories.add(this);
     }
     */
-     */
 
     public void addCategory(Category category) {
         this.subCategory.add(category);
@@ -57,5 +56,11 @@ public class Category {
         return allCategories;
     }
 
+    public static ArrayList<String> getGeneralProperties() {
+        return generalProperties;
+    }
 
+    public ArrayList<String> getSpecialProperties() {
+        return specialProperties;
+    }
 }

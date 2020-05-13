@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.Exeptions.GoodDoesNotExistException;
+import Model.Category;
 import Model.Good;
 import Model.Seller;
 
@@ -8,7 +9,10 @@ import java.util.ArrayList;
 
 public class GoodController {
 
-    private ArrayList<Good> allGoods;
+
+    private static Category currentCategory;
+
+    private ArrayList<Good> selectedGoods;
 
 
     public static void deleteGoodById(String Id) throws GoodDoesNotExistException {
@@ -22,5 +26,11 @@ public class GoodController {
         }
     }
 
+    public static void setCurrentCategory(Category currentCategory) {
+        GoodController.currentCategory = currentCategory;
+    }
 
+    public static Category getCurrentCategory() {
+        return currentCategory;
+    }
 }
