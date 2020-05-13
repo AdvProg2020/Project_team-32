@@ -12,7 +12,7 @@ public class GoodController {
 
     private static Category currentCategory;
 
-    private ArrayList<Good> selectedGoods;
+    private static ArrayList<Good> selectedGoods;
 
 
     public static void deleteGoodById(String Id) throws GoodDoesNotExistException {
@@ -32,5 +32,15 @@ public class GoodController {
 
     public static Category getCurrentCategory() {
         return currentCategory;
+    }
+
+    public static void filter(final String filter, final String value){
+        ArrayList<Good> newSelectedGoods = new ArrayList<Good>();
+        for (Good good : selectedGoods) {
+            if(good.hasProperty(filter, value)){
+                newSelectedGoods.add(good);
+            }
+        }
+        selectedGoods = newSelectedGoods;
     }
 }
