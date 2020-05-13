@@ -39,6 +39,10 @@ public class Good {
         return sellerAndPrices;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     public static Good getGoodById(String Id){
         for (Good good : allGoods) {
             if(good.goodID.equals(Id)){
