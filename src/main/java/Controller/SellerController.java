@@ -62,4 +62,13 @@ public class SellerController {
         }
         return categories;
     }
+    public static String showInddividualOff(Seller seller , int n) throws NumberOutOfBoundException{
+        if (seller.getOffs().size() >= n - 1) {
+            return seller.getOffs().get(n).toString();
+        }throw new NumberOutOfBoundException();
+
+    }
+    public static int addGoodToOff( Se){
+
+    }
 }

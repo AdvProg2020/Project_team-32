@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Seller extends Person {
     private ArrayList<Good> sellingGoods = new ArrayList<Good>();
     private String factoryName;
-
+    private ArrayList<Off> offs= new ArrayList<>();
     private ArrayList<SellLog> allSellingLogs;
 
     public ArrayList<SellLog> getAllSellingLogs() {
@@ -16,6 +16,10 @@ public class Seller extends Person {
     public Seller(String userName, String password) {
         super(userName, password);
         this.allSellingLogs = new ArrayList<SellLog>();
+    }
+
+    public ArrayList<Off> getOffs() {
+        return offs;
     }
 
     public String getFactoryName() {

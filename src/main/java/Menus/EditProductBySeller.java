@@ -6,7 +6,7 @@ import Model.Seller;
 
 import java.util.ArrayList;
 
-public class EditProductBySeller extends ManageProducts {
+public class EditProductBySeller extends Menu {
     public EditProductBySeller(String name, ArrayList<Menu> subMenu) {
         super(name, subMenu);
     }

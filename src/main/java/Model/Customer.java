@@ -36,6 +36,10 @@ public class Customer extends Person {
         //-----------------------------------
     }
 
+    public ShoppingBasket getShoppingBasket() {
+        return shoppingBasket;
+    }
+
     public ArrayList<BuyLog> getAllBuyLogs() {
         return allBuyLogs;
     }

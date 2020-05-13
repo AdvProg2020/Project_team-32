@@ -6,8 +6,9 @@ import Model.Seller;
 
 import java.util.ArrayList;
 
-public class ViewBuyersForProducts extends Menu {
-    public ViewBuyersForProducts(String name, ArrayList<Menu> subMenu) {
+public class ViewIndividualOffCommand extends  Menu{
+
+    public ViewIndividualOffCommand(String name, ArrayList<Menu> subMenu) {
         super(name, subMenu);
     }
 
@@ -18,11 +19,12 @@ public class ViewBuyersForProducts extends Menu {
 
     @Override
     protected void execute() {
-        try {
-            System.out.println(SellerController.viewProductBuyers(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
+        try{
+            System.out.println(SellerController.showInddividualOff(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
         }
-        catch(NumberOutOfBoundException e){
-            System.out.println("number is not acceptable , please enter another number");
+        catch (NumberOutOfBoundException e){
+            System.out.println("number is out of bound");
+            this.show();
             this.execute();
         }
         parentMenu.show();

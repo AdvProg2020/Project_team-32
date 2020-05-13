@@ -13,6 +13,10 @@ public class ShoppingBasket {
         this.basketGoods = new HashMap<Good, Seller>(copyShoppingBasket.basketGoods);
     }
 
+    public HashMap<Good, Seller> getBasketGoods() {
+        return basketGoods;
+    }
+
     public void addGood(Good good){
 
     }

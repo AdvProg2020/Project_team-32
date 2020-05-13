@@ -8,4 +8,7 @@ public class Guest extends Person {
         this.shoppingBasket = shoppingBasket;
     }
 
+    public ShoppingBasket getShoppingBasket() {
+        return shoppingBasket;
+    }
 }

@@ -1,8 +1,6 @@
 package Controller;
 
-import Model.BuyLog;
-import Model.Customer;
-import Model.Good;
+import Model.*;
 
 public class CustomerController {
 
@@ -28,5 +26,19 @@ public class CustomerController {
         }
 
         throw new Exception();
+    }
+    public static String showProducts(Person person ){
+        String outut = null;
+        if(person instanceof Guest){
+            for (Good good : ((Guest) person).getShoppingBasket().getBasketGoods().keySet()) {
+                outut+=good.getGoodID()+"\n";
+            }
+        }
+        else if(person instanceof Customer){
+            for (Good good : ((Customer) person).getShoppingBasket().getBasketGoods().keySet()) {
+                outut+=good.getGoodID()+"\n";
+            }
+        }
+
     }
 }
