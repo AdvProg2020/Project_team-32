@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class GoodsMenu extends Menu {
 
-    private Category currentCategory;
+    private static Category currentCategory;
 
     public GoodsMenu(String name, ArrayList<Menu> subMenu, Category rootCategory) {
         super(name, subMenu);
@@ -18,5 +18,7 @@ public class GoodsMenu extends Menu {
         this.currentCategory = category;
     }
 
-    private ArrayList<Good> goodsWithCurrentCategory = Good.selectWithCategory(currentCategory);
+    public static Category getCurrentCategory() {
+        return currentCategory;
+    }
 }
