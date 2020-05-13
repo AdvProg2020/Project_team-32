@@ -1,5 +1,9 @@
 package Menus;
 
+import Controller.CustomerController;
+import Controller.Exeptions.InvalidIDException;
+import Model.Good;
+
 import java.util.ArrayList;
 
 public class ViewProductInCard extends Menu {
@@ -16,7 +20,15 @@ public class ViewProductInCard extends Menu {
 
     @Override
     protected void execute() {
-
+        try {
+           Good good =  CustomerController.checkID(getUserRecursively(this),scanner.nextLine());
+            //call good page menu
+        }
+        catch (InvalidIDException e){
+            System.out.println("ID is incorrect");
+            this.show();
+            this.execute();
+        }
         parentMenu.show();
         parentMenu.execute();
     }
