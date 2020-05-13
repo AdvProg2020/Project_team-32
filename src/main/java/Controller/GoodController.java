@@ -50,4 +50,13 @@ public class GoodController {
             System.out.println("Filter: " + s + "Value: " +currentFilters.get(s));
         }
     }
+
+    public static void disableFilter(String filter) throws Exception{
+        currentFilters.remove(filter);
+
+        for (String s : currentFilters.keySet()) {
+            filter(s, currentFilters.get(s));
+        }
+
+    }
 }
