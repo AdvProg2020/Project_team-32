@@ -8,7 +8,7 @@ public class Category {
     private static ArrayList<Category> allCategories = new ArrayList<Category>();
 
     private String name;
-
+    private Category parentCategory;
 
     /*
     //----------------------------------------------------------------------------
@@ -39,6 +39,10 @@ public class Category {
 
     private ArrayList<Category> subCategory = new ArrayList<Category>();
     private ArrayList<Good> allGoods;
+
+    public String getName() {
+        return name;
+    }
     /*
     public Category(String name, HashMap<String, String> specialProperty) {
         this.name = name;
