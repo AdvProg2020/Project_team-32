@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.Exeptions.NumberOutOfBoundException;
 import Controller.SellerController;
 import Model.Seller;
 
@@ -21,7 +22,7 @@ public class ViewForProductCommand extends ManageProducts {
         try {
             System.out.println(SellerController.viewProduct(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
         }
-        catch(Exception e){
+        catch(NumberOutOfBoundException e){
             System.out.println("number is not acceptable , please enter another number");
             this.execute();
         }

@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.Exeptions.NumberOutOfBoundException;
 import Controller.SellerController;
 import Model.Seller;
 
@@ -18,9 +19,13 @@ public class EditProductBySeller extends ManageProducts {
     @Override
     protected void execute() {
         try {
-            System.out.println(SellerController.viewProduct(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
+            ُُint n = Integer.parseInt(scanner.nextLine())
+            System.out.println("please enter new price for yor good");
+            int price = Integer.parseInt(scanner.nextLine());
+            SellerController.editProducts(((Seller)getUserRecursively(this)),n,price);
+            System.out.println("product editedd succesfully");
         }
-        catch(Exception e){
+        catch(NumberOutOfBoundException e){
             System.out.println("number is not acceptable , please enter another number");
             this.execute();
         }

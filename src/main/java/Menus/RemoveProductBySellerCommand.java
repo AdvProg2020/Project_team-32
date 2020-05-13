@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.Exeptions.NumberOutOfBoundException;
 import Controller.SellerController;
 import Model.Good;
 import Model.Seller;
@@ -22,7 +23,7 @@ public class RemoveProductBySellerCommand extends Menu {
         try{
             SellerController.removeProduct(( (Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine()));
         }
-        catch (Exception e){
+        catch (NumberOutOfBoundException e){
             System.out.println("number is not acceptable , please enter another number");
             this.execute();
         }
