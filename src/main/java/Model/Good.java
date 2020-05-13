@@ -28,15 +28,10 @@ public class Good {
         this.explanation = explanation;
         sellers = new ArrayList<Seller>();
     }
-//
-//    public Good(String goodID, String goodStatus, String companyName, String stockStatus, Category category, String explanation) {
-//        this.goodID = goodID;
-//        this.goodStatus = goodStatus;
-//        this.companyName = companyName;
-//        this.stockStatus = stockStatus;
-//        this.category = category;
-//        this.explanation = explanation;
-//    }
+
+    public HashMap<String, Integer> getSellerAndPrices() {
+        return sellerAndPrices;
+    }
 
     public static Good getGoodById(String Id){
         for (Good good : allGoods) {

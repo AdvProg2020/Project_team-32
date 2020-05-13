@@ -23,4 +23,11 @@ public class SellerController {
 
 
     }
+    public static void addProduct(){
+
+    }
+    public static void removeProduct(Seller seller, int n){
+        seller.getSellingGoods().get(n).getSellers().remove(seller);
+        seller.getSellingGoods().get(n).getSellerAndPrices().remove(seller.getUserName());
+    }
 }
