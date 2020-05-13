@@ -16,8 +16,8 @@ public class Good {
     private String explanation;
     //private float point;
     private int point;
-    private ArrayList<Comment> allComments;
 
+    private ArrayList<Comment> allComments;
 
     private HashMap<String , String> properties;
 
@@ -109,5 +109,16 @@ public class Good {
     public void removeSeller(Seller person) {
         sellerAndPrices.remove(person.getUserName());
         sellers.remove(person);
+    }
+
+    public boolean hasProperty(String property, String value){
+        if(properties.containsKey(property)){
+            if(properties.get(property).equals(value)){
+                return true;
+            }
+        }
+
+        return false;
+
     }
 }
