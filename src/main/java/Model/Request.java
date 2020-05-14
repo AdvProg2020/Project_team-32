@@ -5,24 +5,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Request {
-    private static ArrayList<Request> allRequests = new ArrayList<Request>();
+
     private String request;
-    private Pattern pattern;
+    private RequestPattern requestPattern;
+    private Matcher matcher;
 
-    public Request(String request) {
+    public Request(String request, RequestPattern requestPattern) {
         this.request = request;
-        allRequests.add(this);
+        this.requestPattern = requestPattern;
+        matcher =  requestPattern.pattern.matcher(request);
     }
 
-    public static void deleteRequest(Request request) {
-
-    }
-
-    private Matcher getMatcher(String command, String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(command);
-        matcher.matches();
+    public Matcher getMatcher() {
         return matcher;
     }
 
+    public String getRequestType() {
+        return requestPattern.type;
+    }
+
+    public String getRequest() {
+        return request;
+    }
 }
