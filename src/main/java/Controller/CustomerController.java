@@ -3,6 +3,7 @@ package Controller;
 import Controller.Exeptions.InvalidID;
 import Controller.Exeptions.InvalidIDException;
 import Model.*;
+import org.graalvm.compiler.nodes.extended.OSRStartNode;
 
 import java.util.ArrayList;
 
@@ -35,34 +36,90 @@ public class CustomerController {
     public static String showProducts(Person person) {
         String outut = null;
         if (person instanceof Guest) {
-            for (Good good : ((Guest) person).getShoppingBasket().getBasketGoods().keySet()) {
-                outut += good.getGoodID() + "\n";
+            for (ShoppingBasket shoppingBasket : ((Guest) person).getShoppingBaskets()) {
+                outut += shoppingBasket.getGood().getGoodID() + "\n";
             }
         } else if (person instanceof Customer) {
-            for (Good good : ((Customer) person).getShoppingBasket().getBasketGoods().keySet()) {
-                outut += good.getGoodID() + "\n";
+            for (ShoppingBasket shoppingBasket : ((Customer) person).getShoppingBaskets()) {
+                outut += shoppingBasket.getGood().getGoodID() + "\n";
             }
         }
+
 
     }
 
     public static Good checkID(Person person, String ID) throws InvalidIDException {
         if (person instanceof Guest) {
-            ArrayList<Good> s = new ArrayList<>(((Guest) person).getShoppingBasket().getBasketGoods().keySet());
-            for (Good good : s) {
-                if (good.getGoodID().equals(ID)) {
-                    return good;
-                }
+            for (ShoppingBasket shoppingBasket : ((Guest) person).getShoppingBaskets()) {
+                if (shoppingBasket.getGood().getGoodID().equals(ID))
+                    return shoppingBasket.getGood();
             }
             throw new InvalidIDException();
         } else if (person instanceof Customer) {
-            ArrayList<Good> s = new ArrayList<>(((Customer) person).getShoppingBasket().getBasketGoods().keySet());
-            for (Good good : s) {
-                if (good.getGoodID().equals(ID)) {
-                    return good;
-                }
+            for (ShoppingBasket shoppingBasket : ((Customer) person).getShoppingBaskets()) {
+                if (shoppingBasket.getGood().getGoodID().equals(ID))
+                    return shoppingBasket.getGood();
             }
             throw new InvalidIDException();
+        }
+    }
+    public static void Increase(Person person,String ID)throws InvalidIDException{
+        if(person instanceof Guest){
+            for (ShoppingBasket shoppingBasket : ((Guest) person).getShoppingBaskets()) {
+                if(shoppingBasket.getGood().getGoodID().equals(ID)){
+                    shoppingBasket.setQuantity(shoppingBasket.getQuantity()+1);
+                    return;
+                }
+            }throw new InvalidIDException();
+        }else if( person instanceof Customer){
+
+            for (ShoppingBasket shoppingBasket : ((Customer) person).getShoppingBaskets()) {
+                if(shoppingBasket.getGood().getGoodID().equals(ID)){
+                    shoppingBasket.setQuantity(shoppingBasket.getQuantity()+1);
+                    return;
+                }
+            }throw new InvalidIDException();
+        }
+    }
+    public static int decrease(Person person,String ID)throws InvalidIDException{
+        ShoppingBasket shoppingBasketToRemove= null;
+        int check=0;
+        if(person instanceof Guest){
+            for (ShoppingBasket shoppingBasket : ((Guest) person).getShoppingBaskets()) {
+                if(shoppingBasket.getGood().getGoodID().equals(ID)){
+                    shoppingBasket.setQuantity(shoppingBasket.getQuantity()-1);
+                    check=1;
+                    if(shoppingBasket.getQuantity()==0){
+                        shoppingBasketToRemove=shoppingBasket;
+                    }
+                    break;
+                }
+            }
+            if(check==1){
+                if(shoppingBasketToRemove!=null){
+                    ((Guest) person).getShoppingBaskets().remove(shoppingBasketToRemove);
+                    return 1;
+                }else return 2;
+            }
+            else throw new InvalidIDException();
+        }else if( person instanceof Customer){
+            for (ShoppingBasket shoppingBasket : ((Customer) person).getShoppingBaskets()) {
+                if(shoppingBasket.getGood().getGoodID().equals(ID)){
+                    shoppingBasket.setQuantity(shoppingBasket.getQuantity()-1);
+                    check=1;
+                    if(shoppingBasket.getQuantity()==0){
+                        shoppingBasketToRemove=shoppingBasket;
+                    }
+                    break;
+                }
+            }
+            if(check==1){
+                if(shoppingBasketToRemove!=null){
+                    ((Customer) person).getShoppingBaskets().remove(shoppingBasketToRemove);
+                    return 1;
+                }else return 2;
+            }
+            else throw new InvalidIDException();
         }
     }
 }

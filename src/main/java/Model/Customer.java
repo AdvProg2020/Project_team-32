@@ -10,7 +10,7 @@ public class Customer extends Person {
 
     //-------------------------------------- Ali Sharifi's changes
     private ShoppingBasket shoppingBasket;
-
+    private ArrayList<ShoppingBasket> shoppingBaskets = new ArrayList<ShoppingBasket>();
     public Customer (String userName, String passWord) {
         super(userName, passWord);
         //----------------------------------- Ali Sharifi's changes
@@ -23,6 +23,14 @@ public class Customer extends Person {
     public void copyShoppingBasket(Customer guest){
         shoppingBasket = new ShoppingBasket(guest.shoppingBasket);
         guest.makeShoppingBasketEmpty();
+    }
+
+    public ArrayList<ShoppingBasket> getShoppingBaskets() {
+        return shoppingBaskets;
+    }
+
+    public void setShoppingBaskets(ArrayList<ShoppingBasket> shoppingBaskets) {
+        this.shoppingBaskets = shoppingBaskets;
     }
 
     private void makeShoppingBasketEmpty() {
