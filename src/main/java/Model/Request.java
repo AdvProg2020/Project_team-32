@@ -9,8 +9,10 @@ public class Request {
     private String request;
     private RequestPattern requestPattern;
     private Matcher matcher;
+    private Seller seller;
 
-    public Request(String request, RequestPattern requestPattern) {
+    public Request(String request, RequestPattern requestPattern, Seller seller) {
+        this.seller = seller;
         this.request = request;
         this.requestPattern = requestPattern;
         matcher =  requestPattern.pattern.matcher(request);
