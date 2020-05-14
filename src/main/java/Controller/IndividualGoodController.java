@@ -1,13 +1,17 @@
 package Controller;
 
-public class IndividualGoodController {
-    private static String goodId;
+import Model.Good;
+import Model.Person;
 
-    public static String getGoodId() {
-        return goodId;
-    }
+public class IndividualGoodController {
+
+    private static Good good;
 
     public static void setGoodId(String goodId) {
-        goodId = goodId;
+        good = Good.getGoodById(goodId);
+    }
+
+    public static void addToCart(Person person){
+        
     }
 }

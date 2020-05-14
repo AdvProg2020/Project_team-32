@@ -13,7 +13,7 @@ public class Guest extends Person {
 //    public ShoppingBasket getShoppingBasket() {
 //        return shoppingBasket;
 //    }
-    private ArrayList<ShoppingBasket> shoppingBaskets=new ArrayList<ShoppingBasket>();
+    private ArrayList<ShoppingBasket> shoppingBaskets = new ArrayList<ShoppingBasket>();
 
     public Guest(ArrayList<ShoppingBasket> shoppingBaskets) {
         this.shoppingBaskets = shoppingBaskets;
