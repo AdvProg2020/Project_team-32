@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.IndividualGoodController;
 import Model.Good;
 
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ public class ShowProductCommand extends Menu {
 
     @Override
     protected void execute() {
-        if(Good.getGoodById(scanner.next()) == null){
+        String id = scanner.next();
+        if(Good.getGoodById(id) == null){
             System.out.println("Good is not valid");
         } else {
+            IndividualGoodController.setGoodId(id);
             individualGoodMenu.show();
             individualGoodMenu.execute();
         }

@@ -1,6 +1,7 @@
 package Model;
 
 public class ShoppingBasket {
+
 //    private HashMap<Good,Seller> basketGoods;
 //
 //    public ShoppingBasket(){
@@ -18,6 +19,7 @@ public class ShoppingBasket {
 //    public void addGood(Good good){
 //
 //    }
+
     private Good good;
     private Seller seller;
     private int quantity;
@@ -25,7 +27,7 @@ public class ShoppingBasket {
     public ShoppingBasket(Good good, Seller seller) {
         this.good = good;
         this.seller = seller;
-        this.quantity =1
+        this.quantity = 1;
     }
 
     public Good getGood() {
