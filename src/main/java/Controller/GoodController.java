@@ -1,11 +1,14 @@
 package Controller;
 
 import Controller.Exeptions.GoodDoesNotExistException;
+import Controller.Sort.SortByNumberOfView;
+import Controller.Sort.SortByPoint;
 import Model.Category;
 import Model.Good;
 import Model.Seller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class GoodController {
@@ -14,6 +17,7 @@ public class GoodController {
     private static Category currentCategory;
     private static ArrayList<Good> selectedGoods;
     private static HashMap<String , String> currentFilters = new HashMap<>();
+    private static int currentSort;
 
     public static void deleteGoodById(String Id) throws GoodDoesNotExistException {
         Good good = Good.getGoodById(Id);
@@ -60,4 +64,19 @@ public class GoodController {
 
     }
 
+    public static void sort(int sort) throws Exception {
+        if(sort == 1){
+
+        } else if(sort == 2){
+            Collections.sort(selectedGoods, new SortByPoint());
+        } else if(sort == 3){
+            Collections.sort(selectedGoods, new SortByNumberOfView());
+        } else {
+            throw new Exception();
+        }
+    }
+
+    public static int getCurrentSort() {
+        return currentSort;
+    }
 }

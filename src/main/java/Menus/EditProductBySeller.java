@@ -19,7 +19,7 @@ public class EditProductBySeller extends Menu {
     @Override
     protected void execute() {
         try {
-            ُُint n = Integer.parseInt(scanner.nextLine())
+            int n = Integer.parseInt(scanner.nextLine());
             System.out.println("please enter new price for yor good");
             int price = Integer.parseInt(scanner.nextLine());
             SellerController.editProducts(((Seller)getUserRecursively(this)),n,price);

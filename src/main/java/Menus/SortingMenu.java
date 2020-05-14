@@ -8,6 +8,4 @@ public class SortingMenu extends Menu {
         super(name, subMenu);
     }
 
-
 }
-//subMenu of GoodsMenu

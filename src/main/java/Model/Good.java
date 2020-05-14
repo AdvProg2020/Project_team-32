@@ -17,6 +17,15 @@ public class Good {
     //private float point;
     private int point;
 
+    //------------------------------------------------------------
+    private int numberOfViews; //this should set after any view
+
+    public int getNumberOfViews() {
+        return numberOfViews;
+    }
+    //------------------------------------------------------------
+
+
     private ArrayList<Comment> allComments;
 
     private HashMap<String , String> properties;
@@ -120,5 +129,9 @@ public class Good {
 
         return false;
 
+    }
+
+    public int getPoint() {
+        return point;
     }
 }
