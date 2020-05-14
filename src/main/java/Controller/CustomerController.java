@@ -122,4 +122,17 @@ public class CustomerController {
             else throw new InvalidIDException();
         }
     }
+    public static int showTotalPrices(Person person){
+        int totalPrice=0;
+        if(person instanceof Guest){
+            for (ShoppingBasket shoppingBasket : ((Guest) person).getShoppingBaskets()) {
+                totalPrice+= shoppingBasket.getGood().getSellerAndPrices().get(shoppingBasket.getSeller().getUserName()) * shoppingBasket.getQuantity();
+            }
+        }else if(person instanceof Customer){
+            for (ShoppingBasket shoppingBasket : ((Customer) person).getShoppingBaskets()) {
+                totalPrice+= shoppingBasket.getGood().getSellerAndPrices().get(shoppingBasket.getSeller().getUserName()) * shoppingBasket.getQuantity();
+            }
+        }
+        return totalPrice;
+    }
 }
