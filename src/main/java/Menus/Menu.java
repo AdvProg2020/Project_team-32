@@ -16,7 +16,7 @@ abstract public class Menu {
     private static OffMenu offMenu;
     private static LoginCommand loginCommand;
     private static RegisterCommand registerCommand;
-
+    public static IndividualGoodMenu individualGoodMenu;
 
     protected ArrayList<Menu> subMenu;
     protected Menu parentMenu;

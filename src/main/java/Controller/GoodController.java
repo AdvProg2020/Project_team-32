@@ -79,4 +79,8 @@ public class GoodController {
     public static int getCurrentSort() {
         return currentSort;
     }
+
+    public static ArrayList<Good> getSelectedGoods() {
+        return selectedGoods;
+    }
 }
