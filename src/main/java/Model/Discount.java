@@ -25,6 +25,18 @@ public class Discount {
         return discountID;
     }
 
+    public int getDiscountPercent() {
+        return discountPercent;
+    }
+
+    public int getUseCount() {
+        return useCount;
+    }
+
+    public void setUseCount(int useCount) {
+        this.useCount = useCount;
+    }
+
     @Override
     public String toString() {
         return "Discount{" +

@@ -19,7 +19,7 @@ public abstract class Person {
 
   
     private ArrayList<Discount> discounts;
-    protected int credit;
+    protected float credit;
 
     public static boolean hasPersonByUserName(String userName) {
         for (Person person : allPersons) {
@@ -45,6 +45,10 @@ public abstract class Person {
 
     }
 
+    public void setCredit(float credit) {
+        this.credit = credit;
+    }
+
     public Person(String userName, String passWord) {
         //super(shoppingBasket);
         this.userName = userName;
@@ -52,14 +56,6 @@ public abstract class Person {
         allPersons.add(this);
         discounts = new ArrayList<Discount>();
     }
-
-    /*public ArrayList<BuyLog> getBuyLogs() {
-        return buyLogs;
-    }
-
-    public ArrayList<SellLog> getSellLogs() {
-        return sellLogs;
-    }*/
 
     public String getPassWord() {
         return passWord;
@@ -90,7 +86,7 @@ public abstract class Person {
 
     }
 
-    public int getCredit() {
+    public float getCredit() {
         return credit;
     }
 

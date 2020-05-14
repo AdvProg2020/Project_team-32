@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class BuyLog extends Logs {
-    private String discountMade;
-    private ArrayList<Good> goodsBought;
+    private float discountMade;
+    private Good goodsBought;
     private String sellerUserName;
     private String deliveryStatus;
 
-    public BuyLog(String logID, Date date, int pricePaid, String discountMade, ArrayList<Good> goodsBought, String sellerUserName, String deliveryStatus) {
+    public BuyLog(String logID, Date date, float pricePaid, float discountMade, Good goodsBought, String sellerUserName, String deliveryStatus) {
         super(logID, date, pricePaid);
         this.discountMade = discountMade;
         this.goodsBought = goodsBought;
@@ -27,7 +27,19 @@ public class BuyLog extends Logs {
                 '}';
     }
 
-    public ArrayList<Good> getGoodsBought() {
+    public float getDiscountMade() {
+        return discountMade;
+    }
+
+    public Good getGoodsBought() {
         return goodsBought;
+    }
+
+    public String getSellerUserName() {
+        return sellerUserName;
+    }
+
+    public String getDeliveryStatus() {
+        return deliveryStatus;
     }
 }

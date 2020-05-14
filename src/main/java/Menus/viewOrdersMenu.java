@@ -11,7 +11,7 @@ public class viewOrdersMenu extends Menu {
     public viewOrdersMenu(String name, ArrayList<Menu> subMenu) {
         super(name, subMenu);
     }
-    /*
+
     @Override
     protected void show() {
         for (BuyLog log : ((Customer)getUserRecursively(this)).getAllBuyLogs()) {
@@ -23,7 +23,7 @@ public class viewOrdersMenu extends Menu {
     protected void execute() {
         parentMenu.show();
         parentMenu.execute();
-    }*/
+    }
 
     //showOrderCommand and rateCommand are submenus of this menu
 
