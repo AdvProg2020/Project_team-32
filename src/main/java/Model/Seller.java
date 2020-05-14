@@ -47,8 +47,8 @@ public class Seller extends Person {
 
     }
 
-    public void makeOff() {
-
+    public void makeOff(Off off) {
+        offs.add(off);
     }
 
     public void editOff(Off off) {

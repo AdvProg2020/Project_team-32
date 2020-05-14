@@ -7,16 +7,22 @@ public class Off {
     private String offID;
     private ArrayList<Good> goodsForOff;
     private OffStatus offStatus;
-    private enum OffStatus { creating,editing,confirmed};
+    private enum OffStatus {creating,editing,confirmed};
     private Date initialDate;
     private Date exposeDate;
     private int discountPercent;
 
-    public Off(String offID, ArrayList<Good> goodsForOff, OffStatus offStatusValue, Date initialDate, Date exposeDate, int discountPercent) {
+    public void editInformation(ArrayList<Good> goods, Date exposeDate, int discountPercent) {
+        this.goodsForOff = goods;
+        this.exposeDate = exposeDate;
+        this.discountPercent = discountPercent;
+    }
+
+    public Off(String offID, ArrayList<Good> goodsForOff, Date exposeDate, int discountPercent) {
         this.offID = offID;
         this.goodsForOff = goodsForOff;
-        this.offStatus = offStatusValue;
-        this.initialDate = initialDate;
+        this.offStatus = OffStatus.confirmed;
+        this.initialDate = new Date();
         this.exposeDate = exposeDate;
         this.discountPercent = discountPercent;
     }
@@ -27,10 +33,6 @@ public class Off {
 
     public ArrayList<Good> getGoodsForOff() {
         return goodsForOff;
-    }
-
-    public String getOffStatus() {
-        return OffStatus;
     }
 
     public Date getInitialDate() {
@@ -49,7 +51,6 @@ public class Off {
     public String toString() {
         String output = "Off{" +
                 "offID='" + offID + '\'' +
-                ", offStatus='" + OffStatus + '\'' +
                 ", initialDate=" + initialDate +
                 ", exposeDate=" + exposeDate +
                 ", discountPercent=" + discountPercent

@@ -15,11 +15,20 @@ public class Request {
         this.seller = seller;
         this.request = request;
         this.requestPattern = requestPattern;
-        matcher =  requestPattern.pattern.matcher(request);
+        matcher = requestPattern.pattern.matcher(request);
     }
 
     public Matcher getMatcher() {
+        matcher.matches();
         return matcher;
+    }
+
+    public RequestPattern getRequestPattern() {
+        return requestPattern;
+    }
+
+    public Seller getSeller() {
+        return seller;
     }
 
     public String getRequestType() {

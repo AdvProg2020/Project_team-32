@@ -67,10 +67,6 @@ public class Good {
         return sellers;
     }
 
-    public static String compare(Good firstGood, Good secondGood) {
-
-    }
-
     public void setSellerAndPrices(HashMap<String, Integer> sellerAndPrices) {
         this.sellerAndPrices = sellerAndPrices;
     }
@@ -78,10 +74,6 @@ public class Good {
     /*private void managePoint(int point) {
 
     }*/
-
-    public static ArrayList<Good> selectWithCategory(ArrayList<Good> allGoods, HashMap<String, String> filtersAndValues) {
-
-    }
 
     public void setPoint(int point) {
         this.point = point;
