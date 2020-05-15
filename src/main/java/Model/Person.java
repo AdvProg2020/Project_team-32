@@ -9,6 +9,8 @@ public abstract class Person {
 
   
     public static ArrayList<Person> allPersons = new ArrayList<Person>();
+
+
     protected String userName;
     protected String firstName;
     protected String lastName;

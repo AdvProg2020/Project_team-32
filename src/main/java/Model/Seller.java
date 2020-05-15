@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Seller extends Person {
+
     private ArrayList<Good> sellingGoods = new ArrayList<Good>();
     private String factoryName;
     private ArrayList<Off> offs= new ArrayList<>();

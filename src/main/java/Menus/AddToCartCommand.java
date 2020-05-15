@@ -1,5 +1,9 @@
 package Menus;
 
+import Controller.IndividualGoodController;
+import Model.Customer;
+import Model.Person;
+
 import java.util.ArrayList;
 
 public class AddToCartCommand extends Menu {
@@ -15,6 +19,12 @@ public class AddToCartCommand extends Menu {
 
     @Override
     protected void execute() {
-
+        try {
+            IndividualGoodController.addToCart(Menu.getUserRecursively(this));
+        } catch (Exception e) {
+            System.out.println("Seller is not selected");
+        }
+        parentMenu.show();
+        parentMenu.execute();
     }
 }

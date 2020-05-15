@@ -48,4 +48,14 @@ public class Customer extends Person {
     public ArrayList<BuyLog> getAllBuyLogs() {
         return allBuyLogs;
     }
+
+
+    public boolean boughtGood(Good good){
+        for (BuyLog log : allBuyLogs) {
+            if(log.getGoodsBought().equals(good)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

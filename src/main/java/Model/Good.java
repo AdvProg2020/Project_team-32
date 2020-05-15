@@ -83,8 +83,9 @@ public class Good {
 
     }
 
-    public void addComment(String comment, Person person) {
-
+    public void addComment(String userName, Good good, String commentString, String commentStatus, String title){
+        Comment comment = new Comment(userName, good, commentString, commentStatus, title);
+        allComments.add(comment);
     }
 
     public String getName() {
@@ -127,5 +128,20 @@ public class Good {
 
     public int getPoint() {
         return point;
+    }
+
+    public boolean hasSeller(String seller){
+        if(sellerAndPrices.containsKey(seller)){
+            return true;
+        }
+        return false;
+    }
+
+    public String getProperty(String property){
+        return properties.get(property);
+    }
+
+    public ArrayList<Comment> getAllComments() {
+        return allComments;
     }
 }
