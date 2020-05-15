@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Good {
-    public static ArrayList<Good> allGoods;
+    public static ArrayList<Good> confirmedGoods;
     private String name;
     private String goodID;
     private String goodStatus;
@@ -55,7 +55,7 @@ public class Good {
     }
 
     public static Good getGoodById(String Id){
-        for (Good good : allGoods) {
+        for (Good good : confirmedGoods) {
             if(good.goodID.equals(Id)){
                 return good;
             }

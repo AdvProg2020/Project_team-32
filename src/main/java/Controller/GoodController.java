@@ -28,7 +28,7 @@ public class GoodController {
     }
 
     public static void deleteGood(Good good){
-        Good.allGoods.remove(good);
+        Good.confirmedGoods.remove(good);
         for (Seller seller : good.getSellers()) {
             seller.deleteGood(good);
         }
