@@ -22,8 +22,12 @@ public class GoodController {
     public static void deleteGoodById(String Id) throws GoodDoesNotExistException {
         Good good = Good.getGoodById(Id);
         if(good == null){
-            throw new  GoodDoesNotExistException();
+            throw new GoodDoesNotExistException();
         }
+        deleteGood(good);
+    }
+
+    public static void deleteGood(Good good){
         Good.allGoods.remove(good);
         for (Seller seller : good.getSellers()) {
             seller.deleteGood(good);

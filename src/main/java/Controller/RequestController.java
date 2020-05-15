@@ -54,7 +54,13 @@ public class RequestController {
     }
 
     private static void createProduct(Request request) {
-        //TODO
+       /* String[] fields = request.getRequest().split(" ");
+        String goodId = fields[0];
+        String name = fields[]
+        int price = Integer.parseInt(matcher.group(3));
+        String companyName = matcher.group(3);
+        String explanation = matcher.group(5);*///TODO
+
     }
 
     private static void editOff(Request request) throws Exception {
@@ -63,6 +69,8 @@ public class RequestController {
         String[] goodIds = matcher.group(2).split(",");
         String[] date = matcher.group(3).split(",");
         Date exposeDate = new Date(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2]));
+        date = matcher.group(4).split(",");
+        Date initialDate = new Date(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2]));
         ArrayList<Good> goods = new ArrayList<>();
         for (String goodId : goodIds) {
             Good good = Good.getGoodById(goodId);
@@ -70,8 +78,8 @@ public class RequestController {
                 throw new Exception();
             goods.add(good);
         }
-        int offPercent = Integer.parseInt(matcher.group(4));
-        off.editInformation(goods,exposeDate,offPercent);
+        int offPercent = Integer.parseInt(matcher.group(5));
+        off.editInformation(goods,exposeDate,initialDate,offPercent);
     }
 
     private static Off getOffFromId(String offId,Request request) throws Exception {
@@ -89,6 +97,8 @@ public class RequestController {
         String[] goodIds = matcher.group(2).split(",");
         String[] date = matcher.group(3).split(",");
         Date exposeDate = new Date(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2]));
+        date = matcher.group(4).split(",");
+        Date initialDate = new Date(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2]));
         ArrayList<Good> goods = new ArrayList<>();
         for (String goodId : goodIds) {
             Good good = Good.getGoodById(goodId);
@@ -96,7 +106,7 @@ public class RequestController {
                 throw new Exception();
             goods.add(good);
         }
-        int offPercent = Integer.parseInt(matcher.group(4));
-        request.getSeller().makeOff(new Off(offId,goods,exposeDate,offPercent));
+        int offPercent = Integer.parseInt(matcher.group(5));
+        request.getSeller().makeOff(new Off(offId,goods,exposeDate,initialDate,offPercent));
     }
 }
