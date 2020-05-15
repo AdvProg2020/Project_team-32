@@ -1,7 +1,12 @@
 package Menus;
 
+import Controller.Exeptions.InvalidIDException;
+import Controller.Exeptions.InvalidPatternException;
 import Controller.Exeptions.NumberOutOfBoundException;
+import Controller.RequestController;
 import Controller.SellerController;
+import Model.Good;
+import Model.Off;
 import Model.Seller;
 
 import java.util.ArrayList;
@@ -13,23 +18,39 @@ public class EditProductBySeller extends Menu {
 
     @Override
     protected void show() {
-        System.out.println("please enter the number you chosed");
+        System.out.println("please enter GoodID ");
     }
 
     @Override
     protected void execute() {
-        try {
-            int n = Integer.parseInt(scanner.nextLine());
-            System.out.println("please enter new price for yor good");
-            int price = Integer.parseInt(scanner.nextLine());
-            SellerController.editProducts(((Seller)getUserRecursively(this)),n,price);
-            System.out.println("product editedd succesfully");
+        try{
+            Good good = SellerController.checkGoodID(((Seller)getUserRecursively(this)).getSellingGoods(),scanner.nextLine());
+            System.out.println("please enter goodName,price,CompanyName,properties,explanations in this order:(without brackets)\n "+
+                    "[name] [price] [companyName] [properties] [explanation]\n"+
+                    "note that properties must be in this order color:black,pattern:polkadot,... \n"+
+                    "note about spaces between obj");
+            String input = scanner.nextLine();
+            try{
+                String request = SellerController.makeRequest(good.getGoodID(),input.trim(),"^(\\S+) (\\d+) (\\S+) (\\S+:\\S+,)+ (.+)$");
+                RequestController.addEditProductRequest(request,(Seller)getUserRecursively(this));
+                System.out.println("requseet sent succesfully");
+                parentMenu.show();
+                parentMenu.execute();
+
+            }catch(InvalidPatternException e){
+                System.out.println("pattern is invalid \n"+
+                        "note price must be in number \n"+
+                        "[name] [price] [companyName] [properties] [explanation]\n"+
+                        "note that properties must be in this order color:black,pattern:polkadot,... \n"
+                        "note about commas and spaces between obj");
+                this.show();
+                this.execute();
+            }
         }
-        catch(NumberOutOfBoundException e){
-            System.out.println("number is not acceptable , please enter another number");
+        catch (InvalidIDException e){
+            System.out.println("Invalid ID");
+            this.show();
             this.execute();
         }
-        parentMenu.show();
-        parentMenu.execute();
     }
 }

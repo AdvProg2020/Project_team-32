@@ -1,11 +1,13 @@
 package Menus;
 
-import Controller.Exeptions.InvalidCommandException;
-import Model.Good;
-import org.w3c.dom.ls.LSOutput;
+import Controller.Exeptions.InvalidIDException;
+import Controller.Exeptions.InvalidPatternException;
+import Controller.RequestController;
+import Controller.SellerController;
+import Model.Off;
+import Model.Seller;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class EditOffCommand extends Menu {
 
@@ -15,56 +17,36 @@ public class EditOffCommand extends Menu {
 
     @Override
     protected void show() {
-        System.out.println("please enter number you chose");
+        System.out.println("please enter offID ");
     }
 
     @Override
     protected void execute() {
-        int n = Integer.parseInt(scanner.nextLine());
         try{
+            Off off= SellerController.checkOffID(((Seller)getUserRecursively(this)).getOffs(),scanner.nextLine());
+            System.out.println("pleasse enter GoodIDs and initial date and end date and offPercent in this order:\n "+
+                    "[GoodId1,goodid2,..] [year,month,day] [year,month,day] [offPercent]"+
+                    "not about commas and spaces between obj");
+            String input = scanner.nextLine();
+            try{
+                String request = SellerController.makeRequest(off.getOffID(),input.trim(),"^(\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)$");
+                RequestController.addEditOffRequest(request,(Seller)getUserRecursively(this));
+                System.out.println("requseet sent succesfully");
+                parentMenu.show();
+                parentMenu.execute();
 
-        }
-        catch ()
-
-
-
-
-
-        System.out.println("please enter new expose date in this format year/month/day");
-        String exposeDate = scanner.nextLine();
-        try{
-
-        }catch (){
-
-        }
-
-        System.out.println("please enter new discount percentage ");
-        try{
-
-        }catch (){
-
-        }
-
-        while (true) {
-            System.out.println("add or delete or exit ");
-            String command = scanner.nextLine();
-            if(command.trim().matches("add")){
-                System.out.println("please enter GoodID");
-                String ID =scanner.nextLine();
-
-            }else if(command.trim().matches("delete")){
-
-            }else if(command.trim().matches("exit")){
-                break;
+            }catch(InvalidPatternException e){
+                System.out.println("pattern is invalid \n"+
+                        "note that dates and offPercent must be numbers\n"+
+                        "not about commas and spaces between obj");
+                this.show();
+                this.execute();
             }
-            else System.out.println("invalid command");
         }
-//        private String offID;
-//        private ArrayList<Good> goodsForOff;
-//        private String offStatus;
-//        private Date initialDate;
-//        private Date exposeDate;
-//        private int discountPercent;
-
+        catch (InvalidIDException e){
+            System.out.println("Invalid ID");
+            this.show();
+            this.execute();
+        }
     }
 }

@@ -1,12 +1,14 @@
 package Controller;
 
+import Controller.Exeptions.InvalidIDException;
+import Controller.Exeptions.InvalidPatternException;
 import Controller.Exeptions.NumberOutOfBoundException;
-import Model.Category;
-import Model.Good;
-import Model.SellLog;
-import Model.Seller;
+import Model.*;
 
+import java.io.StringReader;
+import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class SellerController {
     public static String viewProduct(Seller seller, int n) throws NumberOutOfBoundException {
@@ -68,7 +70,22 @@ public class SellerController {
         }throw new NumberOutOfBoundException();
 
     }
-    public static int addGoodToOff( Se){
+    public static Off checkOffID(ArrayList<Off> offs , String offID) throws InvalidIDException {
+        for (Off off : offs) {
+            if(off.getOffID().equals(offID)) return off;
+        }throw new InvalidIDException();
+    }
+    public static Good checkGoodID(ArrayList<Good> goods , String goodID) throws InvalidIDException{
+        for (Good good : goods) {
+            if(good.getGoodID().equals(goodID)) return good;
+        }throw new InvalidIDException();
 
     }
+    public static String makeRequest(String request ,String input , String pattern) throws InvalidPatternException{
+        if(Pattern.compile(pattern).matcher(input).matches()) {
+            return request+" "+input;
+        }
+        else throw new InvalidPatternException();
+    }
+
 }
