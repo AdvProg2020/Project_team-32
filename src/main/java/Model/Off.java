@@ -1,5 +1,7 @@
 package Model;
 
+import jdk.tools.jlink.internal.DirArchive;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,20 +14,22 @@ public class Off {
     private Date exposeDate;
     private int discountPercent;
 
-    public void editInformation(ArrayList<Good> goods, Date exposeDate, int discountPercent) {
+    public void editInformation(ArrayList<Good> goods, Date exposeDate, Date initialDate, int discountPercent) {
         this.goodsForOff = goods;
+        this.exposeDate = exposeDate;
+        this.discountPercent = discountPercent;
+        this.initialDate = initialDate;
+    }
+
+    public Off(String offID, ArrayList<Good> goodsForOff, Date exposeDate, Date initialDate, int discountPercent) {
+        this.offID = offID;
+        this.goodsForOff = goodsForOff;
+        this.offStatus = OffStatus.confirmed;
+        this.initialDate = initialDate;
         this.exposeDate = exposeDate;
         this.discountPercent = discountPercent;
     }
 
-    public Off(String offID, ArrayList<Good> goodsForOff, Date exposeDate, int discountPercent) {
-        this.offID = offID;
-        this.goodsForOff = goodsForOff;
-        this.offStatus = OffStatus.confirmed;
-        this.initialDate = new Date();
-        this.exposeDate = exposeDate;
-        this.discountPercent = discountPercent;
-    }
 
     public String getOffID() {
         return offID;

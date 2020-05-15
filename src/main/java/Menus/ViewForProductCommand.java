@@ -6,7 +6,8 @@ import Model.Seller;
 
 import java.util.ArrayList;
 
-public class ViewForProductCommand extends Menu {
+public class
+ViewForProductCommand extends Menu {
 
     public ViewForProductCommand(String name, ArrayList<Menu> subMenu) {
         super(name, subMenu);

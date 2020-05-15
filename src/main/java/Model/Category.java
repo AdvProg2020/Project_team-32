@@ -23,21 +23,18 @@ public class Category {
 
 
     private static ArrayList<String> generalProperties;
-
     static {
         generalProperties.add("name");
         generalProperties.add("category");
         generalProperties.add("price");
         generalProperties.add("seller");
     }
-
     private ArrayList<String> specialProperties;
     public Category(String name, ArrayList<String> specialProperty) {
         this.name = name;
         this.specialProperties = specialProperty;
         allCategories.add(this);
     }
-
 
 
     private ArrayList<Category> subCategory = new ArrayList<Category>();
