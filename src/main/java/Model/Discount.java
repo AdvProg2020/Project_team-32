@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public class
 Discount {
+
     private String discountID;
     private Date initialDate;
     private Date exposeDate;

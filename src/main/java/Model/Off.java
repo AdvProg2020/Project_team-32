@@ -30,6 +30,7 @@ public class Off {
         this.discountPercent = discountPercent;
     }
 
+
     public String getOffID() {
         return offID;
     }
