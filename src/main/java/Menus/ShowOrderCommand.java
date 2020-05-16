@@ -1,14 +1,15 @@
 package Menus;
 
 import Controller.CustomerController;
+import Controller.Exeptions.InvalidIDException;
 import Model.Customer;
 
 import java.util.ArrayList;
 
 public class ShowOrderCommand extends Menu {
-
-    public ShowOrderCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ShowOrderCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name="Show Individual Command";
     }
 
     @Override
@@ -22,8 +23,8 @@ public class ShowOrderCommand extends Menu {
         try{
             System.out.println(CustomerController.getBugLogWithId(scanner.nextLine(), (Customer) getUserRecursively(this)));
         }
-        catch (Exception e){
-            System.out.println("buy log with this id doesn't exist.");
+        catch (InvalidIDException e){
+            System.out.println("Invalid ID");
         }
 
         parentMenu.show();

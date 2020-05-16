@@ -8,9 +8,9 @@ import Model.Good;
 import java.util.ArrayList;
 
 public class IncreaseCommand extends  Menu {
-
-    public IncreaseCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public IncreaseCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name="Increase Command";
     }
 
     @Override

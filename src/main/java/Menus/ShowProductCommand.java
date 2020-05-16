@@ -6,8 +6,9 @@ import Model.Good;
 import java.util.ArrayList;
 
 public class ShowProductCommand extends Menu {
-    public ShowProductCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ShowProductCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name="show individual product";
     }
 
     @Override

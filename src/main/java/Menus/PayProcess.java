@@ -10,10 +10,10 @@ import org.w3c.dom.ls.LSOutput;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RecieverInformationCommand extends Menu {
-
-    public RecieverInformationCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+public class PayProcess extends Menu {
+    public PayProcess(Menu parentMenu) {
+        super(parentMenu);
+        this.name="Receiver Information";
     }
 
     @Override

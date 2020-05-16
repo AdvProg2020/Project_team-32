@@ -4,10 +4,11 @@ import Controller.CustomerController;
 
 import java.util.ArrayList;
 
-public class showProducts extends  Menu {
+public class showProductsCard extends  Menu {
 
-    public showProducts(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public showProductsCard(Menu parentMenu) {
+        super(parentMenu);
+        this.name="Show Product (Card)";
     }
 
     @Override

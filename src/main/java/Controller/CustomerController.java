@@ -8,27 +8,22 @@ import java.util.ArrayList;
 
 public class CustomerController {
 
-    public static BuyLog getBugLogWithId(String id, Customer customer) throws Exception {
+    public static BuyLog getBugLogWithId(String id, Customer customer) throws InvalidIDException {
         for (BuyLog log : customer.getAllBuyLogs()) {
             if (log.getLogID().equals(id)) {
                 return log;
             }
         }
-        throw new Exception();
+        throw new InvalidIDException();
     }
 
     public static void rateProduct(String goodId, int point, Customer customer) throws Exception {
-
-
         for (BuyLog log : customer.getAllBuyLogs()) {
-            for (Good good : log.getGoodsBought()) {
-                if (good.getGoodID().equals(goodId)) {
-                    good.setPoint(point);
-                    return;
-                }
+            if(log.getGoodsBought().getGoodID().equals(goodId) && point>0 && point<6){
+                log.getGoodsBought().setPoint(point);
+                return;
             }
         }
-
         throw new Exception();
     }
 

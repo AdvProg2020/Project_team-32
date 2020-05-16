@@ -15,8 +15,7 @@ public class Good {
     private String companyName;
     private Category category;
     private String explanation;
-    //private float point;
-    private int point;
+    private float point;
     private HashMap<String , String> properties;
 
     //------------------------------------------------------------
@@ -29,6 +28,10 @@ public class Good {
 
     //------------------------------------------------------------
 
+
+    public void setPoint(float point) {
+        this.point = point;
+    }
 
     private ArrayList<Comment> allComments;
 
@@ -92,9 +95,6 @@ public class Good {
 
     }*/
 
-    public void setPoint(int point) {
-        this.point = point;
-    }
 
     private void editInformation(String goodStatus, String companyName, String stockStatus, Category category, String explanation) {
 
@@ -142,7 +142,7 @@ public class Good {
 
     }
 
-    public int getPoint() {
+    public float getPoint() {
         return point;
     }
 
