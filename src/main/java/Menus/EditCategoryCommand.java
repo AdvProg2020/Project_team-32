@@ -1,7 +1,7 @@
 package Menus;
 
 import Controller.Exeptions.CategoryNotFindException;
-import Controller.Sort.CategoryController;
+import Controller.CategoryController;
 import Model.Category;
 
 import java.util.ArrayList;

@@ -1,10 +1,12 @@
 package Controller;
 
+import Controller.Exeptions.DuplicateGoodException;
 import Controller.Exeptions.GoodDoesNotExistException;
 import Controller.Sort.SortByNumberOfView;
 import Controller.Sort.SortByPoint;
 import Model.Category;
 import Model.Good;
+import Model.Person;
 import Model.Seller;
 
 import java.util.ArrayList;
@@ -12,7 +14,6 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class GoodController {
-
 
     private static Category currentCategory;
     private static ArrayList<Good> selectedGoods;
@@ -86,5 +87,10 @@ public class GoodController {
 
     public static ArrayList<Good> getSelectedGoods() {
         return selectedGoods;
+    }
+
+    public static void AddProduct(String productId, String name, String companyName, int price, String explanation, HashMap<String, String> properties, Person seller,Category category) {
+        new Good(name,productId,(Seller) seller,companyName,category,explanation,properties,price);
+        RequestController.addProductRequest(productId,(Seller)seller);
     }
 }

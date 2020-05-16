@@ -30,10 +30,12 @@ public class Category {
         this.name = name;
         this.specialProperties = specialProperty;
         this.parentCategory = parentCategory;
+        this.subCategory = new ArrayList<>();
+        this.categoryProduct = new ArrayList<>();
         allCategories.add(this);
     }
 
-    private ArrayList<Category> subCategory = new ArrayList<>();
+    private ArrayList<Category> subCategory;
     private ArrayList<Good> categoryProduct;
 
     public String getName() {
@@ -46,6 +48,10 @@ public class Category {
         allCategories.add(this);
     }
     */
+
+    public void addProduct(Good good){
+        this.categoryProduct.add(good);
+    }
 
     public void addSubCategory(Category category) {
         this.subCategory.add(category);

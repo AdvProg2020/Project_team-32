@@ -1,4 +1,4 @@
-package Controller.Sort;
+package Controller;
 
 import Controller.BossController;
 import Controller.Exeptions.CategoryNotFindException;

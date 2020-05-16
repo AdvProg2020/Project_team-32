@@ -2,8 +2,7 @@ package Menus;
 
 import Controller.Exeptions.CategoryNotFindException;
 import Controller.Exeptions.DuplicateCategoryException;
-import Controller.Sort.CategoryController;
-import Model.Category;
+import Controller.CategoryController;
 
 import java.util.ArrayList;
 import java.util.Collections;

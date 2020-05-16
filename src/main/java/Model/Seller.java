@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Seller extends Person {
-    private ArrayList<Good> sellingGoods = new ArrayList<Good>();
+    private ArrayList<Good> sellingGoods;
     private String factoryName;
-    private ArrayList<Off> offs= new ArrayList<>();
+    private ArrayList<Off> offs;
     private ArrayList<SellLog> allSellingLogs;
 
     public ArrayList<SellLog> getAllSellingLogs() {
@@ -15,6 +15,8 @@ public class Seller extends Person {
 
     public Seller(String userName, String password) {
         super(userName, password);
+        this.sellingGoods = new ArrayList<Good>();
+        this.offs= new ArrayList<>();
         this.allSellingLogs = new ArrayList<SellLog>();
     }
 
@@ -37,14 +39,16 @@ public class Seller extends Person {
         return null;
     }
 
-
-
     public String viewIndividualProduct(Good good) {
         return good.toString();
     }
 
     public void viewIndividualProductsBuyers(Good good) {
 
+    }
+
+    public void addProduct(Good good){
+        sellingGoods.add(good);
     }
 
     public void makeOff(Off off) {

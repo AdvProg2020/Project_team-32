@@ -54,13 +54,10 @@ public class RequestController {
     }
 
     private static void createProduct(Request request) {
-       /* String[] fields = request.getRequest().split(" ");
-        String goodId = fields[0];
-        String name = fields[]
-        int price = Integer.parseInt(matcher.group(3));
-        String companyName = matcher.group(3);
-        String explanation = matcher.group(5);*///TODO
-
+       Good good = Good.getGoodFromAllGoods(request.getMatcher().group(1));
+       good.confirmStatus();
+       good.getCategory().addProduct(good);
+       request.getSeller().addProduct(good);
     }
 
     private static void editOff(Request request) throws Exception {

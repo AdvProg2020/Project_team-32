@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Good {
-    public static ArrayList<Good> confirmedGoods;
+    public static ArrayList<Good> confirmedGoods = new ArrayList<>();
+    private static ArrayList<Good> allGoods = new ArrayList<>();
     private String name;
     private String goodID;
-    private String goodStatus;
+    private Status goodStatus;
+    private enum Status {MAKE_REQUEST,EDIT_REQUEST,CONFIRMED}
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
     private ArrayList<Seller> sellers;
     private String companyName;
-    private String stockStatus;
     private Category category;
     private String explanation;
     //private float point;
     private int point;
+    private HashMap<String , String> properties;
 
     //------------------------------------------------------------
     private int numberOfViews; //this should set after any view
@@ -30,20 +32,22 @@ public class Good {
 
     private ArrayList<Comment> allComments;
 
-    private HashMap<String , String> properties;
 
-    public Good(String name, String goodID, String goodStatus, String companyName, String stockStatus, Category category
-            , String explanation, HashMap<String , String > properties) {
+
+    public Good(String name, String goodID, Seller seller, String companyName, Category category
+            , String explanation, HashMap<String , String > properties,int price) {
         this.name = name;
         this.goodID = goodID;
-        this.goodStatus = goodStatus;
+        this.goodStatus = Status.MAKE_REQUEST;
         this.companyName = companyName;
-        this.stockStatus = stockStatus;
         this.category = category;
         this.explanation = explanation;
-        sellers = new ArrayList<Seller>();
-
         this.properties = properties;
+        this.sellerAndPrices = new HashMap<>();
+        this.sellerAndPrices.put(seller.getUserName(), price);
+        this.sellers = new ArrayList<Seller>();
+        this.sellers.add(seller);
+        allGoods.add(this);
     }
 
     public HashMap<String, Integer> getSellerAndPrices() {
@@ -52,6 +56,15 @@ public class Good {
 
     public Category getCategory() {
         return category;
+    }
+
+    public static Good getGoodFromAllGoods(String goodID){
+        for (Good good : allGoods) {
+            if(good.goodID.equals(goodID)){
+                return good;
+            }
+        }
+        return null;
     }
 
     public static Good getGoodById(String Id){
@@ -67,8 +80,12 @@ public class Good {
         return sellers;
     }
 
-    public void setSellerAndPrices(HashMap<String, Integer> sellerAndPrices) {
-        this.sellerAndPrices = sellerAndPrices;
+    public void addSellerAndPrice(String sellerUserName, int price) {
+        this.sellerAndPrices.put(sellerUserName,price);
+    }
+
+    public void confirmStatus() {
+        goodStatus = Status.CONFIRMED;
     }
 
     /*private void managePoint(int point) {
@@ -102,7 +119,6 @@ public class Good {
                 "name='" + name + '\'' +
                 ", goodID='" + goodID + '\'' +
                 ", goodStatus='" + goodStatus + '\'' +
-                ", stockStatus='" + stockStatus + '\'' +
                 ", category=" + category +
                 ", explanation='" + explanation + '\'' +
                 ", point=" + point +
