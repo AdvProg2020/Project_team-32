@@ -9,8 +9,9 @@ import java.util.ArrayList;
 
 public class RemoveProductBySellerCommand extends Menu {
 
-    public RemoveProductBySellerCommand(String name , ArrayList<Menu> subMenu){
-        super(name, subMenu);
+    public RemoveProductBySellerCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name="Remove Product";
     }
 
     @Override

@@ -6,9 +6,9 @@ import Model.Seller;
 import java.util.ArrayList;
 
 public class ViewCompanyInformaionCommand extends Menu{
-
-    public ViewCompanyInformaionCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ViewCompanyInformaionCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name ="View Company Information";
     }
 
     @Override

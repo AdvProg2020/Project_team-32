@@ -9,4 +9,14 @@ public class InformationMenu extends Menu {
         subMenu.add(new InformationDisplayCommand(this));
         subMenu.add(new InformationEditorCommand(this));
     }
+
+    @Override
+    protected void show() {
+        super.show();
+    }
+
+    @Override
+    protected void execute() {
+        super.execute();
+    }
 }

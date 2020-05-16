@@ -7,8 +7,9 @@ import Model.Seller;
 import java.util.ArrayList;
 
 public class ShowCategoryCommandBySeller extends  Menu {
-    public ShowCategoryCommandBySeller(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ShowCategoryCommandBySeller(Menu parentMenu) {
+        super(parentMenu);
+        this.name="Show Categories (Seller)";
     }
 
     @Override

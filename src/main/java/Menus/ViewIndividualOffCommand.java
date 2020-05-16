@@ -7,9 +7,9 @@ import Model.Seller;
 import java.util.ArrayList;
 
 public class ViewIndividualOffCommand extends  Menu{
-
-    public ViewIndividualOffCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ViewIndividualOffCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name= "View individual Off";
     }
 
     @Override

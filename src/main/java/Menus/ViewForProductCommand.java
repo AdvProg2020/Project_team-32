@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class
 ViewForProductCommand extends Menu {
-
-    public ViewForProductCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ViewForProductCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name="View individual Product";
     }
 
     @Override

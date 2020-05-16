@@ -6,11 +6,12 @@ import Model.Seller;
 import java.util.ArrayList;
 
 public class ViewSalesHistoryCommand extends Menu {
-        public ViewSalesHistoryCommand(String name, ArrayList<Menu> subMenu) {
-            super(name, subMenu);
-        }
+    public ViewSalesHistoryCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name="View Sales History";
+    }
 
-        @Override
+    @Override
         protected void show() {
         }
 

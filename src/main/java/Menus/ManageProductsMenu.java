@@ -9,6 +9,10 @@ public class ManageProductsMenu extends Menu {
 
     public ManageProductsMenu(Menu parentMenu) {
         super(parentMenu);
+        this.name="Manage Product";
+        subMenu.add(new ViewForProductCommand(this));
+        subMenu.add(new ViewBuyersForProducts(this));
+        //subMenu.add(new (this)); edit product muzzi
     }
 
     @Override

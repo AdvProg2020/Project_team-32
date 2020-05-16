@@ -13,8 +13,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddProductCommand extends Menu {
-    public AddProductCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public AddProductCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name="Add product";
     }
 
     @Override

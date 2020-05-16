@@ -8,8 +8,18 @@ public class SellerMenu extends Menu{
 
     private Seller user;
 
-    public SellerMenu(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public SellerMenu(Menu parentMenu) {
+        super(parentMenu);
+        this.name ="Seller Menu";
+        subMenu.add(new InformationMenu( this));
+        subMenu.add(new ViewCompanyInformaionCommand( this));
+        subMenu.add(new ViewSalesHistoryCommand( this));
+        subMenu.add(new ManageProductsMenu( this));
+        subMenu.add(new RemoveProductBySellerCommand( this));
+        subMenu.add(new AddProductCommand( this));
+        subMenu.add(new ShowCategoryCommandBySeller( this));
+        subMenu.add(new ViewOffCommand( this));
+        subMenu.add(new ViewBalanceCommand( this));
     }
 
     @Override

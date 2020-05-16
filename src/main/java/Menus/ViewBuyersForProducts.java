@@ -7,8 +7,9 @@ import Model.Seller;
 import java.util.ArrayList;
 
 public class ViewBuyersForProducts extends Menu {
-    public ViewBuyersForProducts(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ViewBuyersForProducts(Menu parentMenu) {
+        super(parentMenu);
+        this.name= "View Buyers";
     }
 
     @Override

@@ -10,9 +10,9 @@ import Model.Seller;
 import java.util.ArrayList;
 
 public class EditOffCommand extends Menu {
-
-    public EditOffCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public EditOffCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name=" Edit Off";
     }
 
     @Override
