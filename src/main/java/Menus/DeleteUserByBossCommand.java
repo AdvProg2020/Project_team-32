@@ -2,12 +2,15 @@ package Menus;
 
 import Controller.AccountController;
 import Controller.Exeptions.UserDoesNotExistException;
+import Menus.Menu;
 
 import java.util.ArrayList;
 
 public class DeleteUserByBossCommand extends Menu {
-    public DeleteUserByBossCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public DeleteUserByBossCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "delete user";
     }
 
     @Override

@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class AddCategoryCommand extends Menu {
-    public AddCategoryCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public AddCategoryCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "add";
     }
 
     @Override

@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class EditCategoryCommand extends Menu {
-    public EditCategoryCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public EditCategoryCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "edit";
     }
 
     @Override
@@ -26,12 +28,12 @@ public class EditCategoryCommand extends Menu {
             category.setName(scanner.nextLine());
             System.out.println("enter properties:(property1 property2 ...)");
             String[] properties = scanner.nextLine().split(" ");
-            ArrayList<String> list = new ArrayList<String>();
+            ArrayList<String> list = new ArrayList<>();
             Collections.addAll(list, properties);
             category.setSpecialProperties(list);
             System.out.println("category is changed successfully.");
         } catch (CategoryNotFindException e) {
-            System.out.println("can not find the category.");;
+            System.out.println("can not find the category.");
         }
         parentMenu.show();
         parentMenu.execute();

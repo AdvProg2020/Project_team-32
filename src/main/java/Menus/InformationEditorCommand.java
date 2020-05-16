@@ -3,8 +3,10 @@ package Menus;
 import java.util.ArrayList;
 
 public class InformationEditorCommand extends Menu {
-    public InformationEditorCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public InformationEditorCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "edit information";
     }
 
     @Override

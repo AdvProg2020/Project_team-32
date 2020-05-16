@@ -2,13 +2,16 @@ package Menus;
 
 import Controller.BossController;
 import Controller.Exeptions.DuplicateUsernameException;
+import Menus.Menu;
 import com.sun.org.apache.xerces.internal.utils.XMLLimitAnalyzer;
 
 import java.util.ArrayList;
 
 public class CreateMangerCommand extends Menu {
-    public CreateMangerCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public CreateMangerCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name="create manager profile";
     }
 
     @Override

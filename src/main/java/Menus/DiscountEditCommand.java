@@ -8,8 +8,10 @@ import Model.Discount;
 import java.util.ArrayList;
 
 public class DiscountEditCommand extends Menu {
-    public DiscountEditCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public DiscountEditCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "edit discount code";
     }
 
     @Override

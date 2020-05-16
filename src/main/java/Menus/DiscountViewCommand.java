@@ -7,8 +7,10 @@ import Model.Discount;
 import java.util.ArrayList;
 
 public class DiscountViewCommand extends Menu {
-    public DiscountViewCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public DiscountViewCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "view discount code";
     }
 
     @Override

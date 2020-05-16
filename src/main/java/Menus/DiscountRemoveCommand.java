@@ -9,8 +9,10 @@ import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 
 public class DiscountRemoveCommand extends Menu {
-    public DiscountRemoveCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public DiscountRemoveCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name= "remove discount code";
     }
 
     @Override

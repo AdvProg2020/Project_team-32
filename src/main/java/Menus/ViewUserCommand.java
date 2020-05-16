@@ -2,13 +2,16 @@ package Menus;
 
 import Controller.AccountController;
 import Controller.Exeptions.UserDoesNotExistException;
+import Menus.Menu;
 import Model.Person;
 
 import java.util.ArrayList;
 
 public class ViewUserCommand extends Menu {
-    public ViewUserCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public ViewUserCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "view user";
     }
 
     @Override

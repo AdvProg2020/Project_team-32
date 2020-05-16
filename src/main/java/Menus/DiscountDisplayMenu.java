@@ -6,8 +6,13 @@ import Model.Discount;
 import java.util.ArrayList;
 
 public class DiscountDisplayMenu extends Menu {
-    public DiscountDisplayMenu(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public DiscountDisplayMenu(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "view discount codes";
+        subMenu.add(new DiscountViewCommand(this));
+        subMenu.add(new DiscountEditCommand(this));
+        subMenu.add(new DiscountRemoveCommand(this));
     }
 
     @Override

@@ -3,8 +3,9 @@ package Menus;
 import java.util.ArrayList;
 
 public class InformationDisplayCommand extends Menu {
-    public InformationDisplayCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public InformationDisplayCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "view information";
     }
 
     @Override

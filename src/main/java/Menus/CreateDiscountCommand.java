@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 public class CreateDiscountCommand extends Menu {
 
-    public CreateDiscountCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public CreateDiscountCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "create discount code";
     }
 
     @Override

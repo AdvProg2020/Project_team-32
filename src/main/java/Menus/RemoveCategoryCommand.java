@@ -6,8 +6,10 @@ import Controller.CategoryController;
 import java.util.ArrayList;
 
 public class RemoveCategoryCommand extends Menu {
-    public RemoveCategoryCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public RemoveCategoryCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "remove";
     }
 
     @Override
@@ -22,7 +24,7 @@ public class RemoveCategoryCommand extends Menu {
             CategoryController.removeCategory(CategoryController.getCategoryByName(categoryName));
             System.out.println("category deleted successfully.");
         } catch (CategoryNotFindException e) {
-            System.out.println("can not find the category.");;
+            System.out.println("can not find the category.");
         }
     }
 }

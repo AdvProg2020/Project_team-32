@@ -5,9 +5,10 @@ import Model.Seller;
 
 import java.util.ArrayList;
 
-public class ManageProducts extends Menu {
-    public ManageProducts(String name , ArrayList<Menu> subMenu){
-        super(name, subMenu);
+public class ManageProductsMenu extends Menu {
+
+    public ManageProductsMenu(Menu parentMenu) {
+        super(parentMenu);
     }
 
     @Override

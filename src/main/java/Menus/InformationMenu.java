@@ -3,7 +3,10 @@ package Menus;
 import java.util.ArrayList;
 
 public class InformationMenu extends Menu {
-    public InformationMenu(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public InformationMenu(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "view personal info";
+        subMenu.add(new InformationDisplayCommand(this));
+        subMenu.add(new InformationEditorCommand(this));
     }
 }

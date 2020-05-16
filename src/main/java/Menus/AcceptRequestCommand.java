@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 public class AcceptRequestCommand extends Menu {
 
-    public AcceptRequestCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public AcceptRequestCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "accept";
     }
 
     @Override

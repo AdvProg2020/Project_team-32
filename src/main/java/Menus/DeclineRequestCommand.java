@@ -5,8 +5,10 @@ import Controller.RequestController;
 import java.util.ArrayList;
 
 public class DeclineRequestCommand extends Menu {
-    public DeclineRequestCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public DeclineRequestCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "decline";
     }
 
     @Override

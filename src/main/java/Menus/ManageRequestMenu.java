@@ -6,8 +6,13 @@ import Model.Request;
 import java.util.ArrayList;
 
 public class ManageRequestMenu extends Menu {
-    public ManageRequestMenu(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public ManageRequestMenu(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "manage requests";
+        subMenu.add(new ShowRequestDetailCommand(this));
+        subMenu.add(new AcceptRequestCommand(this));
+        subMenu.add(new DeclineRequestCommand(this));
     }
 
     @Override

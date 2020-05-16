@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 public class ShowRequestDetailCommand extends Menu {
 
-    public ShowRequestDetailCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public ShowRequestDetailCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "details";
     }
 
     @Override

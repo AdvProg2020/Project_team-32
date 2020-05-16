@@ -6,8 +6,10 @@ import Controller.GoodController;
 import java.util.ArrayList;
 
 public class RemoveProductCommand extends Menu {
-    public RemoveProductCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+
+    public RemoveProductCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "remove";
     }
 
     @Override
