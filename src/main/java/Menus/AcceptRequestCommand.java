@@ -27,5 +27,7 @@ public class AcceptRequestCommand extends Menu {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        parentMenu.show();
+        parentMenu.execute();
     }
 }

@@ -50,7 +50,10 @@ public class RequestController {
     }
 
     private static void editProduct(Request request) {
-        //TODO
+        Good editGood = Good.getGoodFromAllGoods(request.getMatcher().group(1)+"edited");
+        Good good = Good.getGoodFromAllGoods(request.getMatcher().group(1));
+        good.editInfo(editGood,request.getSeller());
+        GoodController.deleteGood(editGood);
     }
 
     private static void createProduct(Request request) {

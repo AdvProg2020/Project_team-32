@@ -9,7 +9,9 @@ public class Good {
     private String name;
     private String goodID;
     private Status goodStatus;
+
     private enum Status {MAKE_REQUEST,EDIT_REQUEST,CONFIRMED}
+
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
     private ArrayList<Seller> sellers;
     private String companyName;
@@ -53,6 +55,17 @@ public class Good {
         allGoods.add(this);
     }
 
+    public void editInfo(Good editGood, Seller seller) {
+        this.name = editGood.name;
+        this.goodID = editGood.goodID;
+        this.companyName = editGood.companyName;
+        this.category = editGood.category;
+        this.explanation = editGood.explanation;
+        this.properties = editGood.properties;
+        this.sellerAndPrices.replace(seller.getUserName(),editGood.sellerAndPrices.get(seller.getUserName()));
+        this.confirmStatus();
+    }
+
     public HashMap<String, Integer> getSellerAndPrices() {
         return sellerAndPrices;
     }
@@ -89,6 +102,10 @@ public class Good {
 
     public void confirmStatus() {
         goodStatus = Status.CONFIRMED;
+    }
+
+    public void editingStatus(){
+        goodStatus = Status.EDIT_REQUEST;
     }
 
     /*private void managePoint(int point) {

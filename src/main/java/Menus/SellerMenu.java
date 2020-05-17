@@ -2,8 +2,6 @@ package Menus;
 
 import Model.Seller;
 
-import java.util.ArrayList;
-
 public class SellerMenu extends Menu{
 
     private Seller user;

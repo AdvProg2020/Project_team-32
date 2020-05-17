@@ -1,7 +1,5 @@
 package Menus;
 
-import java.util.ArrayList;
-
 public class InformationMenu extends Menu {
     public InformationMenu(Menu parentMenu) {
         super(parentMenu);
