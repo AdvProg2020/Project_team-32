@@ -1,5 +1,6 @@
-package Menus;
+package Menus.BossPage.CategoryManager;
 
+import Menus.Menu;
 import Model.Category;
 
 public class ManageCategoryMenu extends Menu {

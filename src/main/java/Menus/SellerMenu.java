@@ -1,5 +1,6 @@
 package Menus;
 
+import Menus.InformationMenus.InformationMenu;
 import Model.Seller;
 
 public class SellerMenu extends Menu{

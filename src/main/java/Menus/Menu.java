@@ -1,5 +1,6 @@
 package Menus;
 
+import Menus.BossPage.BossMenu;
 import Model.Person;
 
 import java.util.ArrayList;

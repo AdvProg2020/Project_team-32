@@ -1,7 +1,8 @@
-package Menus;
+package Menus.BossPage.DiscountManagerMenus;
 
 import Controller.BossController;
 import Controller.Exeptions.DiscountDoesNotExistException;
+import Menus.Menu;
 import Model.Discount;
 
 public class DiscountEditCommand extends Menu {

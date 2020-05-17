@@ -1,6 +1,7 @@
-package Menus;
+package Menus.BossPage.RequestManagerMenus;
 
 import Controller.RequestController;
+import Menus.Menu;
 import Model.Request;
 
 public class AcceptRequestCommand extends Menu {
@@ -23,7 +24,7 @@ public class AcceptRequestCommand extends Menu {
         try {
             RequestController.acceptRequest(request);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("can not accept request.");
         }
         parentMenu.show();
         parentMenu.execute();

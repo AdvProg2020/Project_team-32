@@ -1,8 +1,7 @@
 package Menus;
 
+import Menus.InformationMenus.InformationMenu;
 import Model.Customer;
-
-import java.util.ArrayList;
 
 public class CustomerMenu extends Menu {
 

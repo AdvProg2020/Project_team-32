@@ -1,6 +1,7 @@
-package Menus;
+package Menus.BossPage.DiscountManagerMenus;
 
 import Controller.BossController;
+import Menus.Menu;
 
 public class CreateDiscountCommand extends Menu {
 

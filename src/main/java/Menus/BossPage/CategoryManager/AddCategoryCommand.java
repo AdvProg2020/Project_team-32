@@ -1,8 +1,9 @@
-package Menus;
+package Menus.BossPage.CategoryManager;
 
 import Controller.Exeptions.CategoryNotFindException;
 import Controller.Exeptions.DuplicateCategoryException;
 import Controller.CategoryController;
+import Menus.Menu;
 
 import java.util.ArrayList;
 import java.util.Collections;

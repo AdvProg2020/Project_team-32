@@ -1,6 +1,7 @@
-package Menus;
+package Menus.BossPage.RequestManagerMenus;
 
 import Controller.RequestController;
+import Menus.Menu;
 
 public class DeclineRequestCommand extends Menu {
 
