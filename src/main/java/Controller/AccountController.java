@@ -36,11 +36,15 @@ public class AccountController {
     }
 
 
-    public static Person login(String[] command) throws WrongPasswordException, UserDoesNotExistException {
+    public static Person login(String[] command,Guest guest) throws WrongPasswordException, UserDoesNotExistException {
         Person person;
         person = Person.getPersonByUserName(command[1]);
         if(!person.getPassWord().equals(command[2]))
             throw new WrongPasswordException();
+        if(person instanceof Customer){
+            ((Customer) person).setShoppingBaskets(guest.getShoppingBaskets());
+        }
+        guest.clearShoppingBaskets();
         return person;
     }
 

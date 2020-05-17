@@ -64,7 +64,7 @@ abstract public class Menu {
         if(menu instanceof SellerMenu)
             return ((SellerMenu) menu).getUser();
         if(menu instanceof GuestMenu)
-            return ((GuestMenu)menu).getGuest();
+            return ((GuestMenu)menu).getUser();
         return getUserRecursively(menu.parentMenu);
     }
 

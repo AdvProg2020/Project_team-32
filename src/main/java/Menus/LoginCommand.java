@@ -3,13 +3,15 @@ package Menus;
 import Controller.AccountController;
 import Controller.Exeptions.WrongPasswordException;
 import Controller.Exeptions.UserDoesNotExistException;
+import Model.Guest;
 import Model.Person;
 
 public class LoginCommand extends Menu {
-    public LoginCommand(String name) {
-        super(name, null);
-    }
 
+    public LoginCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "login";
+    }
 
     @Override
     public void show() {
@@ -22,7 +24,7 @@ public class LoginCommand extends Menu {
         Person person;
         if (commandValidation(command)) {
             try {
-                person = AccountController.login(command.split(" "));
+                person = AccountController.login(command.split(" "), (Guest) getUserRecursively(this));
                 System.out.println("Login successfully done");
                 Menu menu = AccountController.getRelativeMenuForLoginAndSetPerson(person);
                 menu.show();
