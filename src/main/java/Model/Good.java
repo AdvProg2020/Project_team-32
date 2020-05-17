@@ -20,16 +20,11 @@ public class Good {
     private float point;
     private HashMap<String , String> properties;
 
-    //------------------------------------------------------------
     private int numberOfViews; //this should set after any view
 
     public int getNumberOfViews() {
         return numberOfViews;
     }
-    //------------------------------------------------------------
-
-    //------------------------------------------------------------
-
 
     public void setPoint(float point) {
         this.point = point;
@@ -54,6 +49,9 @@ public class Good {
         this.sellers.add(seller);
         allGoods.add(this);
 
+        this.properties.put("company name", companyName);
+        this.properties.put("name", name);
+        // TODO ali sharifi
     }
 
     public void editInfo(Good editGood, Seller seller) {
@@ -108,11 +106,6 @@ public class Good {
     public void editingStatus(){
         goodStatus = Status.EDIT_REQUEST;
     }
-
-    /*private void managePoint(int point) {
-
-    }*/
-
 
     private void editInformation(String goodStatus, String companyName, String stockStatus, Category category, String explanation) {
 
