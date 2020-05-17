@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 public class ShowAvailableFiltersCommand extends Menu {
 
-    public ShowAvailableFiltersCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ShowAvailableFiltersCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Show available filter command";
     }
 
     @Override
@@ -20,6 +21,11 @@ public class ShowAvailableFiltersCommand extends Menu {
         System.out.println("Special Properties:");
         for (String property : GoodController.getCurrentCategory().getSpecialProperties()) {
             System.out.println(property);
+        }
+
+        System.out.println("Category");
+        for (Category category : GoodController.getCurrentCategory().getSubCategory()) {
+            System.out.println(category.getName());
         }
     }
 

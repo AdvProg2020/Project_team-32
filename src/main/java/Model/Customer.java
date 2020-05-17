@@ -6,12 +6,13 @@ public class Customer extends Person {
 
     private ArrayList<BuyLog> allBuyLogs;
 
-    private ArrayList<ShoppingBasket> shoppingBaskets = new ArrayList<ShoppingBasket>();
+    private ArrayList<ShoppingBasket> shoppingBaskets;
 
 
     public Customer (String userName, String passWord) {
         super(userName, passWord);
         this.allBuyLogs = new ArrayList<BuyLog>();
+        this.shoppingBaskets = new ArrayList<ShoppingBasket>();
     }
 
     public ArrayList<ShoppingBasket> getShoppingBaskets() {

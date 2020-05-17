@@ -1,7 +1,8 @@
-package Menus;
+package Menus.BossPage.UserMangerMenus;
 
 import Controller.AccountController;
 import Controller.Exeptions.UserDoesNotExistException;
+import Menus.Menu;
 import Model.Person;
 
 public class ViewUserCommand extends Menu {

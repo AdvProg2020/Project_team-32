@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class ShowAvailableSortsCommand extends Menu {
 
-    public ShowAvailableSortsCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ShowAvailableSortsCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Show available sorts command";
     }
 
     @Override

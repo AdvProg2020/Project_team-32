@@ -1,7 +1,8 @@
-package Menus;
+package Menus.BossPage.UserMangerMenus;
 
 import Controller.BossController;
 import Controller.Exeptions.DuplicateUsernameException;
+import Menus.Menu;
 
 public class CreateMangerCommand extends Menu {
 
@@ -24,5 +25,7 @@ public class CreateMangerCommand extends Menu {
         } catch (DuplicateUsernameException exception) {
             System.out.println("this username is already exist");
         }
+        parentMenu.show();
+        parentMenu.execute();
     }
 }

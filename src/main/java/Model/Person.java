@@ -49,7 +49,6 @@ public abstract class Person {
     }
 
     public Person(String userName, String passWord) {
-        //super(shoppingBasket);
         this.userName = userName;
         this.passWord = passWord;
         allPersons.add(this);

@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 public class AttributesCommand extends Menu {
 
-    public AttributesCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public AttributesCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Attributes command";
     }
 
     @Override

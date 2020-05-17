@@ -10,20 +10,13 @@ import java.util.ArrayList;
 public class GuestMenu extends Menu {
     private Guest user;
 
-    private Customer guest;
-
-    public GuestMenu(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
-        guest = new Customer("&&guest&&", "123");
+    public GuestMenu(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "guest menu";
+        user = new Guest();
     }
 
-    public Customer getGuest() {
-        return guest;
+    public Guest getUser() {
+        return user;
     }
-
-    public void setUser(Guest user) {
-        this.user = user;
-    }
-
-
 }

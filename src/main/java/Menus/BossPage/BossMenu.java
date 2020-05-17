@@ -1,5 +1,13 @@
-package Menus;
+package Menus.BossPage;
 
+import Menus.*;
+import Menus.BossPage.CategoryManager.ManageCategoryMenu;
+import Menus.BossPage.DiscountManagerMenus.CreateDiscountCommand;
+import Menus.BossPage.DiscountManagerMenus.DiscountDisplayMenu;
+import Menus.BossPage.ProductManagerMenus.ProductManagerMenu;
+import Menus.BossPage.RequestManagerMenus.ManageRequestMenu;
+import Menus.BossPage.UserMangerMenus.UserManagerMenu;
+import Menus.InformationMenus.InformationMenu;
 import Model.Boss;
 
 public class BossMenu extends Menu {

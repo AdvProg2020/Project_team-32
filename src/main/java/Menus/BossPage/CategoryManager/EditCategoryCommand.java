@@ -1,7 +1,8 @@
-package Menus;
+package Menus.BossPage.CategoryManager;
 
 import Controller.Exeptions.CategoryNotFindException;
 import Controller.CategoryController;
+import Menus.Menu;
 import Model.Category;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package Menus;
+package Menus.BossPage.ProductManagerMenus;
 
-import java.util.ArrayList;
+import Menus.Menu;
 
 public class ProductManagerMenu extends Menu {
     public ProductManagerMenu(Menu parentMenu) {

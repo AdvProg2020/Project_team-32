@@ -1,7 +1,8 @@
-package Menus;
+package Menus.BossPage.CategoryManager;
 
 import Controller.Exeptions.CategoryNotFindException;
 import Controller.CategoryController;
+import Menus.Menu;
 
 public class RemoveCategoryCommand extends Menu {
 
@@ -24,5 +25,7 @@ public class RemoveCategoryCommand extends Menu {
         } catch (CategoryNotFindException e) {
             System.out.println("can not find the category.");
         }
+        parentMenu.show();
+        parentMenu.execute();
     }
 }

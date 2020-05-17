@@ -1,5 +1,6 @@
 package Menus;
 
+import Menus.InformationMenus.InformationMenu;
 import Model.Customer;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 public class CustomerMenu extends Menu {
 
     private Customer user;
+
     public CustomerMenu(Menu parentMenu) {
         super(parentMenu);
         this.name="Customer Menu";

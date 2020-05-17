@@ -1,7 +1,8 @@
-package Menus;
+package Menus.BossPage.ProductManagerMenus;
 
 import Controller.Exeptions.GoodDoesNotExistException;
 import Controller.GoodController;
+import Menus.Menu;
 
 public class RemoveProductCommand extends Menu {
 
@@ -23,5 +24,7 @@ public class RemoveProductCommand extends Menu {
         } catch (GoodDoesNotExistException exception) {
             System.out.println("product does not exist");
         }
+        parentMenu.show();
+        parentMenu.execute();
     }
 }

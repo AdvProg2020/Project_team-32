@@ -1,4 +1,6 @@
-package Menus;
+package Menus.InformationMenus;
+
+import Menus.Menu;
 
 public class InformationMenu extends Menu {
 

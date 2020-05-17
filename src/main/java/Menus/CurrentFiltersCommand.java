@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 public class CurrentFiltersCommand extends Menu {
 
-    public CurrentFiltersCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public CurrentFiltersCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Current filters command";
     }
 
     @Override

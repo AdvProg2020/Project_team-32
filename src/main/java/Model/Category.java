@@ -8,23 +8,16 @@ public class Category {
     public static Category rootCategory = new Category("mainCategory", null , null);
     private static ArrayList<Category> allCategories = new ArrayList<>();
     private String name;
-    private Category parentCategory;
 
-    /*
-    //----------------------------------------------------------------------------
-    // by ali sharifi
-    private static HashMap<String , String> generalProperties = new HashMap<String, String>();
-    //----------------------------------------------------------------------------
-    private HashMap<String, String> specialProperties; // key is property name and value is property amount
-     */
+    private Category parentCategory;
 
     private static ArrayList<String> generalProperties;
     static {
         generalProperties.add("name");
-        generalProperties.add("category");
         generalProperties.add("price");
         generalProperties.add("seller");
     }
+
     private ArrayList<String> specialProperties;
     public Category(String name, ArrayList<String> specialProperty, Category parentCategory) {
         this.name = name;
@@ -41,13 +34,6 @@ public class Category {
     public String getName() {
         return name;
     }
-    /*
-    public Category(String name, HashMap<String, String> specialProperty) {
-        this.name = name;
-        this.specialProperties = specialProperty;
-        allCategories.add(this);
-    }
-    */
 
     public void addProduct(Good good){
         this.categoryProduct.add(good);
@@ -70,7 +56,14 @@ public class Category {
     }
 
     public ArrayList<Good> getCategoryProduct() {
-        return categoryProduct;
+
+        ArrayList categoryProducts = new ArrayList<>(this.categoryProduct);
+        for (Category category : subCategory) {
+            for (Good good : category.getCategoryProduct()) {
+                categoryProducts.add(good);
+            }
+        }
+        return categoryProducts;
     }
 
     public ArrayList<Category> getSubCategory() {
@@ -83,5 +76,18 @@ public class Category {
 
     public void setSpecialProperties(ArrayList<String> specialProperties) {
         this.specialProperties = specialProperties;
+    }
+
+    public Category getSubcategory(String name) throws Exception {
+        for (Category category : subCategory) {
+            if(category.name.equalsIgnoreCase(name)){
+                return category;
+            }
+        }
+        throw new Exception();
+    }
+
+    public Category getParentCategory() {
+        return parentCategory;
     }
 }
