@@ -9,11 +9,12 @@ import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class PayProcess extends Menu {
     public PayProcess(Menu parentMenu) {
         super(parentMenu);
-        this.name="Receiver Information";
+        this.name="Pay Process";
     }
 
     @Override
@@ -34,18 +35,29 @@ public class PayProcess extends Menu {
             finalPrice = PurchaseController.calculatePrice((customer).getShoppingBaskets());
             System.out.println("do you have a discount 1.yes 2.no");
             int answer = Integer.parseInt(scanner.nextLine());
+            int random = ((new Random()).nextInt(100));
             if (answer == 1) {
                 System.out.println("please enter your discount ID");
                 discountID = scanner.nextLine();
                 try {
-                    discountPercent = PurchaseController.getDiscountPercent(discountID);
+                    discountPercent = PurchaseController.getDiscountPercent(discountID , customer);
                     finalPrice = PurchaseController.getPriceDiscounted(finalPrice, discountPercent);
                 } catch (InvalidIDException e) {
                     System.out.println("invalid ID");
                     this.show();
                     this.execute();
                 }
-            } else if (answer != 2) {
+            } else if (answer == 2) {
+                if(finalPrice>=1000000){
+                    discountPercent=10;
+                    finalPrice=PurchaseController.getPriceDiscounted(finalPrice,discountPercent);
+                    System.out.println("you get 10% discount because you bought over 1000000 ");
+                }else if((random%10)==0){
+                    discountPercent=(random % 20);
+                    finalPrice=PurchaseController.getPriceDiscounted(finalPrice,discountPercent);
+                    System.out.println("you are lucky : you got "+discountPercent+"percent discount");
+                }
+            } else{
                 this.show();
                 this.execute();
             }

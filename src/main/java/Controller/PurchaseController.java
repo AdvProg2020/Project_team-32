@@ -35,11 +35,9 @@ public class PurchaseController {
         }
         return totalPrice;
     }
-    public static float getDiscountPercent(String discountID)throws InvalidIDException {
-        for (Discount discount : BossController.getAllDiscount()) {
-            if(discount.getDiscountID().equals(discountID)){
-                return discount.getDiscountPercent();
-            }
+    public static float getDiscountPercent(String discountID, Customer customer)throws InvalidIDException {
+        for (Discount discount : customer.getDiscounts()) {
+            if(discount.getDiscountID().equals(discountID)) return discount.getDiscountPercent();
         }throw new InvalidIDException();
 
     }
