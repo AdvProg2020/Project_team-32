@@ -36,5 +36,7 @@ public class AddCategoryCommand extends Menu {
         } catch (CategoryNotFindException e) {
             System.out.println("parent category does not exist.");
         }
+        parentMenu.show();
+        parentMenu.execute();
     }
 }

@@ -75,11 +75,11 @@ public class SellerController {
             if(off.getOffID().equals(offID)) return off;
         }throw new InvalidIDException();
     }
-    public static Good checkGoodID(ArrayList<Good> goods , String goodID) throws InvalidIDException{
+    public static Good getGoodFromSellingGood(Seller seller , String goodID) throws InvalidIDException{
+        ArrayList <Good> goods = seller.getSellingGoods();
         for (Good good : goods) {
             if(good.getGoodID().equals(goodID)) return good;
         }throw new InvalidIDException();
-
     }
     public static String makeRequest(String request ,String input , String pattern) throws InvalidPatternException{
         if(Pattern.compile(pattern).matcher(input).matches()) {

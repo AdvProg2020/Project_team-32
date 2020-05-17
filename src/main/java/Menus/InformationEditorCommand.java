@@ -1,5 +1,7 @@
 package Menus;
 
+import Menus.Menu;
+
 import java.util.ArrayList;
 
 public class InformationEditorCommand extends Menu {

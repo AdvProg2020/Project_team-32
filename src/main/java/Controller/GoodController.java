@@ -93,4 +93,10 @@ public class GoodController {
         new Good(name,productId,(Seller) seller,companyName,category,explanation,properties,price);
         RequestController.addProductRequest(productId,(Seller)seller);
     }
+
+    public static void editProduct(Good good, String name, String companyName, int price, Seller seller, String explanation, Category category, HashMap<String, String> properties) {
+        new Good(name,good.getGoodID()+"edited",seller,companyName,category,explanation,properties,price);
+        RequestController.addEditProductRequest(good.getGoodID()+ " ",seller);
+        good.editingStatus();
+    }
 }
