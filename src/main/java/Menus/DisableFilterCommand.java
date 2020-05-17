@@ -1,7 +1,6 @@
 package Menus;
 
 import Controller.GoodController;
-import Model.Good;
 
 import java.util.ArrayList;
 
@@ -12,12 +11,12 @@ public class DisableFilterCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Please enter a selected filter:");
     }
 
     @Override
-    protected void execute(){
+    public void execute(){
         try{
             GoodController.disableFilter(scanner.nextLine());
         } catch (Exception e){

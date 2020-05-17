@@ -9,12 +9,12 @@ public class AddCommentCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Title:\nComment:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
 
     }
 }

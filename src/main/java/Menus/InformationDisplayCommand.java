@@ -1,9 +1,5 @@
 package Menus;
 
-import Menus.Menu;
-
-import java.util.ArrayList;
-
 public class InformationDisplayCommand extends Menu {
     public InformationDisplayCommand(Menu parentMenu) {
         super(parentMenu);
@@ -11,12 +7,12 @@ public class InformationDisplayCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println(getUserRecursively(this).informationDisplay());
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         parentMenu.show();
         parentMenu.execute();
     }

@@ -2,10 +2,7 @@ package Menus;
 
 import Controller.BossController;
 import Controller.Exeptions.DiscountDoesNotExistException;
-import Model.Boss;
 import Model.Discount;
-
-import java.util.ArrayList;
 
 public class DiscountEditCommand extends Menu {
 
@@ -15,12 +12,12 @@ public class DiscountEditCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter a discountId to edit its information:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String discountId = scanner.nextLine();
         try {
             Discount discount = BossController.getDiscountById(discountId);

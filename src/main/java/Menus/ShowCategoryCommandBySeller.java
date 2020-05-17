@@ -13,12 +13,12 @@ public class ShowCategoryCommandBySeller extends  Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         ArrayList<Category> allCategories = SellerController.showCategory(( (Seller)getUserRecursively(this)));
         String toPrint =null;
         for (Category allCategory : allCategories) {

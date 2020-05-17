@@ -16,7 +16,7 @@ public class ManageRequestMenu extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         ArrayList<Request> allRequest = RequestController.getAllRequest();
         for(int i=0 ; i<allRequest.size(); i++){
             System.out.println( "" + i + "-" + allRequest.get(i).getRequestType() + "from " + allRequest.get(i).getSeller().getUserName());

@@ -11,7 +11,7 @@ public class AttributesCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("general properties");
         for (String property : IndividualGoodController.getGood().getCategory().getGeneralProperties()) {
             System.out.println(property);
@@ -25,7 +25,7 @@ public class AttributesCommand extends Menu {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         parentMenu.show();
         parentMenu.execute();
     }

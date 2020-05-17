@@ -2,10 +2,7 @@ package Menus;
 
 import Controller.AccountController;
 import Controller.Exeptions.UserDoesNotExistException;
-import Menus.Menu;
 import Model.Person;
-
-import java.util.ArrayList;
 
 public class ViewUserCommand extends Menu {
 
@@ -15,12 +12,12 @@ public class ViewUserCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("please enter a username");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String username = scanner.nextLine();
         try {
             Person person = AccountController.getUser(username);

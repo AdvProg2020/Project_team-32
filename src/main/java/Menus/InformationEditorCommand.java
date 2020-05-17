@@ -1,9 +1,5 @@
 package Menus;
 
-import Menus.Menu;
-
-import java.util.ArrayList;
-
 public class InformationEditorCommand extends Menu {
 
     public InformationEditorCommand(Menu parentMenu) {
@@ -12,12 +8,12 @@ public class InformationEditorCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Please edit your information:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String password;
         String firstName;
         String lastName;

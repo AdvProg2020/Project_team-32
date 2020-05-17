@@ -4,8 +4,6 @@ import Controller.CustomerController;
 import Controller.Exeptions.InvalidIDException;
 import Model.Customer;
 
-import java.util.ArrayList;
-
 public class ShowOrderCommand extends Menu {
     public ShowOrderCommand(Menu parentMenu) {
         super(parentMenu);
@@ -13,12 +11,12 @@ public class ShowOrderCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Please enter orderIde");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
 
         try{
             System.out.println(CustomerController.getBugLogWithId(scanner.nextLine(), (Customer) getUserRecursively(this)));

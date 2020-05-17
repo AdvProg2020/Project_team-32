@@ -1,7 +1,5 @@
 package Menus;
 
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
-
 import java.util.ArrayList;
 
 public class ShowAvailableSortsCommand extends Menu {
@@ -11,14 +9,14 @@ public class ShowAvailableSortsCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Time");
         System.out.println("Point");
         System.out.println("Number of view");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         parentMenu.show();
         parentMenu.execute();
     }

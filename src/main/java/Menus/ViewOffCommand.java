@@ -1,10 +1,7 @@
 package Menus;
 
-import Model.Good;
 import Model.Off;
 import Model.Seller;
-
-import java.util.ArrayList;
 
 public class ViewOffCommand extends  Menu{
     public ViewOffCommand(Menu parentMenu) {
@@ -16,7 +13,7 @@ public class ViewOffCommand extends  Menu{
     }
 
     @Override
-    protected void show() {
+    public void show() {
         int i=1;
         for (Off off : ((Seller) getUserRecursively(this)).getOffs()) {
             System.out.println(i+": "+off.getOffID());
@@ -26,7 +23,7 @@ public class ViewOffCommand extends  Menu{
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         super.execute();
     }
 }

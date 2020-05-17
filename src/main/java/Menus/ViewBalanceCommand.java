@@ -1,7 +1,5 @@
 package Menus;
 
-import java.util.ArrayList;
-
 public class ViewBalanceCommand extends Menu{
 
 
@@ -11,12 +9,12 @@ public class ViewBalanceCommand extends Menu{
     }
 
     @java.lang.Override
-    protected void show() {
+    public void show() {
         System.out.println(Menu.getUserRecursively(this).getCredit());
     }
 
     @java.lang.Override
-    protected void execute() {
+    public void execute() {
         //super.execute();
         parentMenu.show();
         parentMenu.execute();

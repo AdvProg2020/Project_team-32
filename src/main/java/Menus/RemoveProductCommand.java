@@ -3,8 +3,6 @@ package Menus;
 import Controller.Exeptions.GoodDoesNotExistException;
 import Controller.GoodController;
 
-import java.util.ArrayList;
-
 public class RemoveProductCommand extends Menu {
 
     public RemoveProductCommand(Menu parentMenu) {
@@ -13,12 +11,12 @@ public class RemoveProductCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter a product-ID:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String Id = scanner.nextLine();
         try {
             GoodController.deleteGoodById(Id);

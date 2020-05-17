@@ -11,12 +11,12 @@ public class CurrentFiltersCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         GoodController.showCurrentFilters();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         parentMenu.show();
         parentMenu.execute();
     }

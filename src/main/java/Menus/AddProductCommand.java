@@ -2,15 +2,11 @@ package Menus;
 
 import Controller.CategoryController;
 import Controller.Exeptions.CategoryNotFindException;
-import Controller.Exeptions.DuplicateGoodException;
 import Controller.GoodController;
 import Model.Category;
 import Model.Good;
 
-import java.awt.geom.GeneralPath;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class AddProductCommand extends Menu {
     public AddProductCommand(Menu parentMenu) {
@@ -19,12 +15,12 @@ public class AddProductCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter product id:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             String productId = scanner.nextLine();
             if(Good.getGoodFromAllGoods(productId)!=null){

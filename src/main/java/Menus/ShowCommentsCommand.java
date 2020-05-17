@@ -12,14 +12,14 @@ public class ShowCommentsCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         for (Comment comment : IndividualGoodController.getGood().getAllComments()) {
             System.out.println(comment);
         }
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         parentMenu.show();
         parentMenu.execute();
     }

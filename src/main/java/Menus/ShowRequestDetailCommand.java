@@ -3,8 +3,6 @@ package Menus;
 import Controller.RequestController;
 import Model.Request;
 
-import java.util.ArrayList;
-
 public class ShowRequestDetailCommand extends Menu {
 
 
@@ -14,12 +12,12 @@ public class ShowRequestDetailCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter request number:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         int index = Integer.parseInt(scanner.nextLine());
         Request request = RequestController.getAllRequest().get(index);
         System.out.println(request.getRequestType() + "from " + request.getSeller().getUserName() + "\n" + request.getRequest());

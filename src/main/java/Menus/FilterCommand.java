@@ -11,12 +11,12 @@ public class FilterCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Enter an available filter with its value");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String filter = scanner.nextLine();
         String value = scanner.nextLine();
         GoodController.filter(filter, value);

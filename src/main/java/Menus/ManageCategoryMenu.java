@@ -2,8 +2,6 @@ package Menus;
 
 import Model.Category;
 
-import java.util.ArrayList;
-
 public class ManageCategoryMenu extends Menu {
 
     public ManageCategoryMenu(Menu parentMenu) {
@@ -15,7 +13,7 @@ public class ManageCategoryMenu extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         for (Category category : Category.getAllCategories()) {
             System.out.println(category.getName());
         }

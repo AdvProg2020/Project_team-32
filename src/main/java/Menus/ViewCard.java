@@ -1,7 +1,5 @@
 package Menus;
 
-import java.util.ArrayList;
-
 public class ViewCard extends Menu {
     public ViewCard(Menu parentMenu) {
         super(parentMenu);
@@ -15,12 +13,12 @@ public class ViewCard extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         super.show();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         super.execute();
     }
 }

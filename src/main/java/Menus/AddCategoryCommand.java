@@ -15,12 +15,12 @@ public class AddCategoryCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter a category name to add:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             String categoryName = scanner.nextLine();
             System.out.println("enter properties:(property1 property2 ...)");

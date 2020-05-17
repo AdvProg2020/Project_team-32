@@ -13,10 +13,13 @@ public class IndividualGoodController {
     }
 
     public static void addToCart(Person person) throws Exception {
+
         if(seller == null){
             throw new Exception();
         }
+
         ShoppingBasket shoppingBasket = new ShoppingBasket(good, seller);
+
         if(person instanceof Customer){
             ((Customer) person).getShoppingBaskets().add(shoppingBasket);
         } else {

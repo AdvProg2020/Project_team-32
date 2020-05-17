@@ -3,8 +3,6 @@ package Menus;
 import Controller.Exeptions.CategoryNotFindException;
 import Controller.CategoryController;
 
-import java.util.ArrayList;
-
 public class RemoveCategoryCommand extends Menu {
 
     public RemoveCategoryCommand(Menu parentMenu) {
@@ -13,12 +11,12 @@ public class RemoveCategoryCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter a category name to remove:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             String categoryName = scanner.nextLine();
             CategoryController.removeCategory(CategoryController.getCategoryByName(categoryName));

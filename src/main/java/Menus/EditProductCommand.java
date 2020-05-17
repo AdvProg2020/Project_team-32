@@ -18,12 +18,12 @@ public class EditProductCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter an productId:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             String productId = scanner.nextLine();
             Good good = SellerController.getGoodFromSellingGood(((Seller)getUserRecursively(this)),productId);

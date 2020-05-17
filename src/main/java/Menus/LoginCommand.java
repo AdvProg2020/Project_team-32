@@ -12,12 +12,12 @@ public class LoginCommand extends Menu {
 
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Please use this format to register:\n login [username] [password]");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String command = scanner.nextLine();
         Person person;
         if (commandValidation(command)) {

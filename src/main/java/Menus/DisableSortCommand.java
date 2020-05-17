@@ -11,12 +11,12 @@ public class DisableSortCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             GoodController.sort(3);
         } catch (Exception e) {

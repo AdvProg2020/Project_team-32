@@ -2,8 +2,6 @@ package Menus;
 
 import Controller.RequestController;
 
-import java.util.ArrayList;
-
 public class DeclineRequestCommand extends Menu {
 
     public DeclineRequestCommand(Menu parentMenu) {
@@ -12,12 +10,12 @@ public class DeclineRequestCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter request number:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         int index = Integer.parseInt(scanner.nextLine());
         RequestController.removeRequest(index);
         System.out.println("Request declined successfully.");

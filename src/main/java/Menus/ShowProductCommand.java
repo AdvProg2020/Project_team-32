@@ -3,8 +3,6 @@ package Menus;
 import Controller.IndividualGoodController;
 import Model.Good;
 
-import java.util.ArrayList;
-
 public class ShowProductCommand extends Menu {
     public ShowProductCommand(Menu parentMenu) {
         super(parentMenu);
@@ -12,12 +10,12 @@ public class ShowProductCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Enter good id:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String id = scanner.next();
         if(Good.getGoodById(id) == null){
             System.out.println("Good is not valid");

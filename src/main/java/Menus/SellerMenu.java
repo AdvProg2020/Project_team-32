@@ -21,7 +21,7 @@ public class SellerMenu extends Menu{
     }
 
     @Override
-    protected void show() {
+    public void show() {
 
         for(int i=0 ; i < subMenu.size() ; i++) {
             System.out.println("" + i + "." + subMenu.get(i));
@@ -31,7 +31,7 @@ public class SellerMenu extends Menu{
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         super.execute();
     }
 

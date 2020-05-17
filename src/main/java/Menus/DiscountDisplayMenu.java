@@ -3,8 +3,6 @@ package Menus;
 import Controller.BossController;
 import Model.Discount;
 
-import java.util.ArrayList;
-
 public class DiscountDisplayMenu extends Menu {
 
     public DiscountDisplayMenu(Menu parentMenu) {
@@ -16,7 +14,7 @@ public class DiscountDisplayMenu extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         for (Discount discount : BossController.getAllDiscount()) {
             System.out.println(discount.getDiscountID() + "\n-------------------");
         }

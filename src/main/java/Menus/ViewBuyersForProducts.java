@@ -4,8 +4,6 @@ import Controller.Exeptions.NumberOutOfBoundException;
 import Controller.SellerController;
 import Model.Seller;
 
-import java.util.ArrayList;
-
 public class ViewBuyersForProducts extends Menu {
     public ViewBuyersForProducts(Menu parentMenu) {
         super(parentMenu);
@@ -13,12 +11,12 @@ public class ViewBuyersForProducts extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("please enter the number you chosed");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             System.out.println(SellerController.viewProductBuyers(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
         }

@@ -1,7 +1,6 @@
 package Menus;
 
 import Controller.GoodController;
-import Model.Good;
 
 import java.util.ArrayList;
 
@@ -12,12 +11,12 @@ public class CurrentSortCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println(SortCommand.getTypeOfSortWithInt(GoodController.getCurrentSort()));
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         parentMenu.show();
         parentMenu.execute();
     }

@@ -1,10 +1,8 @@
 package Menus;
 
-import Controller.Exeptions.InvalidIDException;
 import Controller.Exeptions.InvalidPatternException;
 import Controller.RequestController;
 import Controller.SellerController;
-import Model.Good;
 import Model.Seller;
 
 import java.util.ArrayList;
@@ -16,12 +14,12 @@ public class AddProductBySellerCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("please enter GoodID ");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         System.out.println("please enter goodID,goodName,price,CompanyName,properties,explanations in this order:(without brackets)\n "+
                 "[goodID] [name] [price] [companyName] [properties] [explanation]\n"+
                 "note that properties must be in this order color:black,pattern:polkadot,... \n"+

@@ -1,7 +1,6 @@
 package Menus;
 
 import Model.Person;
-import Model.Seller;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,7 +28,7 @@ abstract public class Menu {
         this.subMenu = new ArrayList<>();
     }
 
-    protected void show(){
+    public void show(){
         for(int i=0 ; i < subMenu.size() ; i++) {
             System.out.println("" + i + "." + subMenu.get(i));
         }
@@ -42,7 +41,7 @@ abstract public class Menu {
         System.out.println("Please select a number:");
     }
 
-    protected void execute(){
+    public void execute(){
         int command = Integer.parseInt(scanner.nextLine());
         if(command == subMenu.size()){
             if(parentMenu==null)
@@ -57,7 +56,7 @@ abstract public class Menu {
         }
     }
 
-    protected static Person getUserRecursively(Menu menu){
+    public static Person getUserRecursively(Menu menu){
         if(menu instanceof BossMenu)
             return ((BossMenu) menu).getUser();
         if(menu instanceof CustomerMenu)

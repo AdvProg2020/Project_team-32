@@ -3,8 +3,6 @@ package Menus;
 import Model.BuyLog;
 import Model.Customer;
 
-import java.util.ArrayList;
-
 public class viewOrdersMenu extends Menu {
 
     public viewOrdersMenu(Menu parentMenu) {
@@ -15,7 +13,7 @@ public class viewOrdersMenu extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         for (BuyLog log : ((Customer)getUserRecursively(this)).getAllBuyLogs()) {
             System.out.println("logID : "+log.getLogID());
         }
@@ -23,7 +21,7 @@ public class viewOrdersMenu extends Menu {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         super.execute();
     }
 

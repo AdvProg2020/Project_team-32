@@ -2,7 +2,6 @@ package Menus;
 
 import Controller.GoodController;
 import Model.Category;
-import Model.Good;
 
 import java.util.ArrayList;
 
@@ -13,7 +12,7 @@ public class ShowAvailableFiltersCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("General Properties:");
         for (String property : Category.getGeneralProperties()) {
             System.out.println(property);
@@ -25,7 +24,7 @@ public class ShowAvailableFiltersCommand extends Menu {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         parentMenu.show();
         parentMenu.execute();
     }

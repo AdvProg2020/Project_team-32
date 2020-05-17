@@ -1,6 +1,5 @@
 package Menus;
 
-import Controller.Exeptions.InvalidPatternException;
 import Model.Good;
 import Model.Off;
 import Model.Seller;
@@ -13,14 +12,14 @@ public class OffMenu extends Menu{
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println(printAllOffs());
         super.show();
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         super.execute();
     }
     private static String printAllOffs(){

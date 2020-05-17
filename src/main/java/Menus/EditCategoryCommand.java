@@ -15,12 +15,12 @@ public class EditCategoryCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter a category name to edit:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String categoryName = scanner.nextLine();
         try {
             Category category = CategoryController.getCategoryByName(categoryName);

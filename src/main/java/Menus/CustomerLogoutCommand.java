@@ -10,12 +10,12 @@ public class CustomerLogoutCommand extends Menu{
     }
 
     @Override
-    protected void show() {
+    public void show() {
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         guestMenu.show();
         guestMenu.execute();
     }

@@ -4,8 +4,6 @@ import Controller.BossController;
 import Controller.Exeptions.DiscountDoesNotExistException;
 import Model.Discount;
 
-import java.util.ArrayList;
-
 public class DiscountViewCommand extends Menu {
 
     public DiscountViewCommand(Menu parentMenu) {
@@ -14,12 +12,12 @@ public class DiscountViewCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("enter a discountId to show its information:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String discountId = scanner.nextLine();
         try {
             Discount discount = BossController.getDiscountById(discountId);

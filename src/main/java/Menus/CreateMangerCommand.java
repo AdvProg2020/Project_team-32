@@ -2,10 +2,6 @@ package Menus;
 
 import Controller.BossController;
 import Controller.Exeptions.DuplicateUsernameException;
-import Menus.Menu;
-import com.sun.org.apache.xerces.internal.utils.XMLLimitAnalyzer;
-
-import java.util.ArrayList;
 
 public class CreateMangerCommand extends Menu {
 
@@ -15,12 +11,12 @@ public class CreateMangerCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Please use this format to create a new manager:\ncreate manager [username] [password]");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String command = scanner.nextLine();
         try {
             BossController.createManager(command.split(" "));

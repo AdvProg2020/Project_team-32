@@ -32,9 +32,6 @@ public abstract class Person {
        return false;
     }
 
-    //protected ArrayList<BuyLog> buyLogs;
-    //protected ArrayList<SellLog> sellLogs;
-
     public void informationEditor(String password,String firstName, String lastName, String phoneId, String email) {
         this.passWord = password;
         this.firstName= firstName;

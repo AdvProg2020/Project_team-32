@@ -3,7 +3,6 @@ package Menus;
 import Controller.AccountController;
 import Controller.Exeptions.DuplicateBossException;
 import Controller.Exeptions.DuplicateUsernameException;
-import com.sun.jdi.InvalidTypeException;
 
 import java.util.ArrayList;
 
@@ -15,12 +14,12 @@ public class RegisterCommand extends Menu {
 
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Please use this format to register:\ncreate account [manager|costumer|seller] [username] [password]");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String command = scanner.nextLine();
         if (commandValidation(command)) {
             try {

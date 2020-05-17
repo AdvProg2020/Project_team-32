@@ -7,8 +7,6 @@ import Controller.SellerController;
 import Model.Off;
 import Model.Seller;
 
-import java.util.ArrayList;
-
 public class EditOffCommand extends Menu {
     public EditOffCommand(Menu parentMenu) {
         super(parentMenu);
@@ -16,12 +14,12 @@ public class EditOffCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("please enter offID ");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try{
             Off off= SellerController.checkOffID(((Seller)getUserRecursively(this)).getOffs(),scanner.nextLine());
             System.out.println("pleasse enter GoodIDs and initial date and end date and offPercent in this order:\n "+

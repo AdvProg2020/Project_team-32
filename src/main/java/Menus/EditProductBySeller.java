@@ -2,11 +2,9 @@ package Menus;
 
 import Controller.Exeptions.InvalidIDException;
 import Controller.Exeptions.InvalidPatternException;
-import Controller.Exeptions.NumberOutOfBoundException;
 import Controller.RequestController;
 import Controller.SellerController;
 import Model.Good;
-import Model.Off;
 import Model.Seller;
 
 import java.util.ArrayList;
@@ -17,12 +15,12 @@ public class EditProductBySeller extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("please enter GoodID ");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try{
             Good good = SellerController.checkGoodID(((Seller)getUserRecursively(this)).getSellingGoods(),scanner.nextLine());
             System.out.println("please enter goodName,price,CompanyName,properties,explanations in this order:(without brackets)\n "+

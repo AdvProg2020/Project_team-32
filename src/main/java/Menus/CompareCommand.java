@@ -12,12 +12,12 @@ public class CompareCommand extends Menu {
 
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Please enter another goodId:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String id = scanner.nextLine();
         Good otherGood = Good.getGoodById(id);
         System.out.println("general properties");

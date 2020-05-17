@@ -2,8 +2,6 @@ package Menus;
 
 import Controller.CustomerController;
 
-import java.util.ArrayList;
-
 public class ShowTotalPricesCommand extends Menu {
     public ShowTotalPricesCommand(Menu parentMenu) {
         super(parentMenu);
@@ -11,11 +9,11 @@ public class ShowTotalPricesCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         System.out.println(CustomerController.showTotalPrices(getUserRecursively(this)));
         parentMenu.show();
         parentMenu.execute();

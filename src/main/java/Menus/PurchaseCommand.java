@@ -8,12 +8,12 @@ public class PurchaseCommand extends  Menu{
     }
 
     @Override
-    protected void show() {
+    public void show() {
         super.show();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         super.execute();
     }
 }

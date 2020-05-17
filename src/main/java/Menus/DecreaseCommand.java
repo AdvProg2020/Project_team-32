@@ -2,10 +2,6 @@ package Menus;
 
 import Controller.CustomerController;
 import Controller.Exeptions.InvalidIDException;
-import Model.Customer;
-import Model.Good;
-
-import java.util.ArrayList;
 
 public class DecreaseCommand extends Menu {
     public DecreaseCommand(Menu parentMenu) {
@@ -14,12 +10,12 @@ public class DecreaseCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("please enter your product ID");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             int x= CustomerController.decrease(getUserRecursively(this ), scanner.nextLine());
             if(x==1) {

@@ -11,12 +11,12 @@ public class SortCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("1. sort by time \n2. sort by point \n3.sort by number of views");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             GoodController.sort(Integer.parseInt(scanner.nextLine()));
         } catch (Exception e) {

@@ -18,11 +18,11 @@ public class PayProcess extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             PurchaseController.isLogedIn(getUserRecursively(this));
             Customer customer = ((Customer) getUserRecursively(this));

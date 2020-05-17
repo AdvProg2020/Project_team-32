@@ -1,6 +1,7 @@
 package Menus;
 
 public class InformationMenu extends Menu {
+
     public InformationMenu(Menu parentMenu) {
         super(parentMenu);
         this.name = "view personal info";
@@ -9,12 +10,12 @@ public class InformationMenu extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         super.show();
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         super.execute();
     }
 }

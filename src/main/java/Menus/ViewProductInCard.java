@@ -13,13 +13,13 @@ public class ViewProductInCard extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("please enter your product ID");
 
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
            Good good =  CustomerController.checkID(getUserRecursively(this),scanner.nextLine());
             //call good page menu

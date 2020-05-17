@@ -2,8 +2,6 @@ package Menus;
 
 import Controller.BossController;
 
-import java.util.ArrayList;
-
 public class CreateDiscountCommand extends Menu {
 
 
@@ -13,12 +11,12 @@ public class CreateDiscountCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("please use this format to create a discount:\n[discountId] [year,month,day] [discountPercent] [max amount]");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         String command = scanner.nextLine();
         if (commandValidation(command)) {
             BossController.createDiscount(command.split(" "));

@@ -2,8 +2,6 @@ package Menus;
 
 import Controller.CustomerController;
 
-import java.util.ArrayList;
-
 public class showProductsCard extends  Menu {
 
     public showProductsCard(Menu parentMenu) {
@@ -12,11 +10,11 @@ public class showProductsCard extends  Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         System.out.println(CustomerController.showProducts(getUserRecursively(this)));
         parentMenu.show();
         parentMenu.execute();

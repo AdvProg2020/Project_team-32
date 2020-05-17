@@ -1,13 +1,9 @@
 package Menus;
 
-import Controller.Exeptions.InvalidIDException;
 import Controller.Exeptions.InvalidPatternException;
 import Controller.RequestController;
 import Controller.SellerController;
-import Model.Off;
 import Model.Seller;
-
-import java.util.ArrayList;
 
 public class AddOffCommand extends Menu {
     public AddOffCommand(Menu parentMenu) {
@@ -16,12 +12,12 @@ public class AddOffCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("you are in add off menu ");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
             System.out.println("pleasse enter offID and GoodIDs and initial date and end date and offPercent in this order: \n "+
                     "[offID] [GoodId1,goodid2,..] [year,month,day] [year,month,day] [offPercent]"+
                     "note about commas and spaces between obj");

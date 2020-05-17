@@ -1,9 +1,6 @@
 package Menus;
 
-import Controller.CustomerController;
 import Model.Seller;
-
-import java.util.ArrayList;
 
 public class ViewCompanyInformaionCommand extends Menu{
     public ViewCompanyInformaionCommand(Menu parentMenu) {
@@ -12,11 +9,11 @@ public class ViewCompanyInformaionCommand extends Menu{
     }
 
     @Override
-    protected void show() {
+    public void show() {
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         System.out.println(( (Seller)getUserRecursively(this)).getFactoryName());
         parentMenu.show();
         parentMenu.execute();

@@ -12,14 +12,14 @@ public class ViewCategoriesCommand extends Menu{
     }
 
     @Override
-    protected void show() {
+    public void show() {
         for (Category category : Category.getAllCategories()) {
             System.out.println(category);
         }
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         parentMenu.show();
         parentMenu.execute();
     }

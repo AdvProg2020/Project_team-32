@@ -12,12 +12,12 @@ public class SelectSellerCommand extends Menu {
     }
 
     @Override
-    protected void show() {
+    public void show() {
         System.out.println("Select a seller:");
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         try {
             IndividualGoodController.selectSeller(scanner.nextLine());
         } catch (UserDoesNotExistException e) {
