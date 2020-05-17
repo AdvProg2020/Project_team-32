@@ -56,7 +56,14 @@ public class Category {
     }
 
     public ArrayList<Good> getCategoryProduct() {
-        return categoryProduct;
+
+        ArrayList categoryProducts = new ArrayList<>(this.categoryProduct);
+        for (Category category : subCategory) {
+            for (Good good : category.getCategoryProduct()) {
+                categoryProducts.add(good);
+            }
+        }
+        return categoryProducts;
     }
 
     public ArrayList<Category> getSubCategory() {
