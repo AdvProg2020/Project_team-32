@@ -25,7 +25,4 @@ public class viewOrdersMenu extends Menu {
         super.execute();
     }
 
-    //showOrderCommand and rateCommand are submenus of this menu
-
-    //implemented by ali sharifi
 }

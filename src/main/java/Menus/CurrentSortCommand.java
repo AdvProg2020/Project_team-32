@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 public class CurrentSortCommand extends Menu {
 
-    public CurrentSortCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public CurrentSortCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Current sort command";
     }
 
     @Override

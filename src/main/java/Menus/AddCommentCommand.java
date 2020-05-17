@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class AddCommentCommand extends Menu {
 
-    public AddCommentCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public AddCommentCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Add comment Command";
     }
 
     @Override

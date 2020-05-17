@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 public class ShowCommentsCommand extends Menu {
 
-    public ShowCommentsCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ShowCommentsCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Show Comments command";
     }
 
     @Override

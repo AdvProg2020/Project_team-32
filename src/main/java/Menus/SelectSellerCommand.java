@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 public class SelectSellerCommand extends Menu {
 
-    public SelectSellerCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public SelectSellerCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Select seller command";
     }
 
     @Override

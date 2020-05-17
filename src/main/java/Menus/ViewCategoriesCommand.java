@@ -7,8 +7,9 @@ import java.util.ArrayList;
 public class ViewCategoriesCommand extends Menu{
 
 
-    public ViewCategoriesCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ViewCategoriesCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "View categories command";
     }
 
     @Override

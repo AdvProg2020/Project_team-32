@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 public class ShowAvailableFiltersCommand extends Menu {
 
-    public ShowAvailableFiltersCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ShowAvailableFiltersCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Show available filter command";
     }
 
     @Override

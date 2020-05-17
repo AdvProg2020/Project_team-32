@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 public class DisableSortCommand extends Menu {
 
-    public DisableSortCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public DisableSortCommand(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Disable sort command";
     }
 
     @Override
