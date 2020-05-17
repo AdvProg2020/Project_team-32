@@ -3,6 +3,7 @@ package Model;
 import Controller.Exeptions.UserDoesNotExistException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public abstract class Person {
@@ -19,8 +20,7 @@ public abstract class Person {
     protected String eMail;
     protected String passWord;
 
-  
-    private ArrayList<Discount> discounts;
+    private HashMap<Discount, Integer> discounts ;
     protected float credit;
 
     public static boolean hasPersonByUserName(String userName) {
@@ -53,7 +53,7 @@ public abstract class Person {
         this.userName = userName;
         this.passWord = passWord;
         allPersons.add(this);
-        discounts = new ArrayList<Discount>();
+        discounts = new HashMap<Discount, Integer>();
     }
 
     public String getPassWord() {
@@ -89,7 +89,7 @@ public abstract class Person {
         return credit;
     }
 
-    public ArrayList<Discount> getDiscounts() {
+    public HashMap<Discount, Integer> getDiscounts() {
         return discounts;
     }
 }

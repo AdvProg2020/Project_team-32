@@ -22,8 +22,9 @@ public class RemoveProductBySellerCommand extends Menu {
             SellerController.removeProduct(( (Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine()));
         }
         catch (NumberOutOfBoundException e){
-            System.out.println("number is not acceptable , please enter another number");
-            this.execute();
+            System.out.println("number is not acceptable ");
+            parentMenu.show();
+            parentMenu.execute();
         }
         System.out.println("product removed succesfully");
         parentMenu.show();

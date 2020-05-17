@@ -22,8 +22,9 @@ ViewForProductCommand extends Menu {
             System.out.println(SellerController.viewProduct(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
         }
         catch(NumberOutOfBoundException e){
-            System.out.println("number is not acceptable , please enter another number");
-            this.execute();
+            System.out.println("number is not acceptable ");
+            parentMenu.show();
+            parentMenu.execute();
         }
         parentMenu.show();
         parentMenu.execute();

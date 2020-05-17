@@ -9,7 +9,6 @@ public class Guest extends Person {
     public Guest(ArrayList<ShoppingBasket> shoppingBaskets) {
         this.shoppingBaskets = shoppingBaskets;
     }
-
     public ArrayList<ShoppingBasket> getShoppingBaskets() {
         return shoppingBaskets;
     }

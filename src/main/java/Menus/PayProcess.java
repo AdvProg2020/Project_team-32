@@ -1,6 +1,7 @@
 package Menus;
 
 import Controller.BossController;
+import Controller.Exeptions.DiscountNotUsableException;
 import Controller.Exeptions.InvalidIDException;
 import Controller.Exeptions.NotLogedInException;
 import Controller.PurchaseController;
@@ -14,7 +15,7 @@ import java.util.Random;
 public class PayProcess extends Menu {
     public PayProcess(Menu parentMenu) {
         super(parentMenu);
-        this.name="Pay Process";
+        this.name = "Pay Process";
     }
 
     @Override
@@ -40,26 +41,31 @@ public class PayProcess extends Menu {
                 System.out.println("please enter your discount ID");
                 discountID = scanner.nextLine();
                 try {
-                    discountPercent = PurchaseController.getDiscountPercent(discountID , customer);
+                    discountPercent = PurchaseController.getDiscountPercent(discountID, customer);
                     finalPrice = PurchaseController.getPriceDiscounted(finalPrice, discountPercent);
                 } catch (InvalidIDException e) {
                     System.out.println("invalid ID");
-                    this.show();
-                    this.execute();
+                    parentMenu.show();
+                    parentMenu.execute();
+                } catch (DiscountNotUsableException e) {
+                    System.out.println("you cant use this discount anymore");
+                    parentMenu.show();
+                    parentMenu.execute();
+
                 }
             } else if (answer == 2) {
-                if(finalPrice>=1000000){
-                    discountPercent=10;
-                    finalPrice=PurchaseController.getPriceDiscounted(finalPrice,discountPercent);
+                if (finalPrice >= 1000000) {
+                    discountPercent = 10;
+                    finalPrice = PurchaseController.getPriceDiscounted(finalPrice, discountPercent);
                     System.out.println("you get 10% discount because you bought over 1000000 ");
-                }else if((random%10)==0){
-                    discountPercent=(random % 20);
-                    finalPrice=PurchaseController.getPriceDiscounted(finalPrice,discountPercent);
-                    System.out.println("you are lucky : you got "+discountPercent+"percent discount");
+                } else if ((random % 10) == 0) {
+                    discountPercent = (random % 20);
+                    finalPrice = PurchaseController.getPriceDiscounted(finalPrice, discountPercent);
+                    System.out.println("you are lucky : you got " + discountPercent + "percent discount");
                 }
-            } else{
-                this.show();
-                this.execute();
+            } else {
+                parentMenu.show();
+                parentMenu.execute();
             }
             if (finalPrice <= (customer).getCredit()) {
                 PurchaseController.payCommand(customer, finalPrice, discountPercent);

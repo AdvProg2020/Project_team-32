@@ -27,8 +27,8 @@ public class DecreaseCommand extends Menu {
         }
         catch (InvalidIDException e){
             System.out.println("ID is incorrect");
-            this.show();
-            this.execute();
+            parentMenu.show();
+            parentMenu.execute();
         }
         parentMenu.show();
         parentMenu.execute();

@@ -22,12 +22,7 @@ public class SellerMenu extends Menu{
 
     @Override
     public void show() {
-
-        for(int i=0 ; i < subMenu.size() ; i++) {
-            System.out.println("" + i + "." + subMenu.get(i));
-        }
-        System.out.println(""+ subMenu.size() + ".back");
-        System.out.println("Please select a number:");
+        super.show();
     }
 
     @Override

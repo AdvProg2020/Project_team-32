@@ -22,7 +22,7 @@ public class EditProductBySeller extends Menu {
     @Override
     public void execute() {
         try{
-            Good good = SellerController.checkGoodID(((Seller)getUserRecursively(this)).getSellingGoods(),scanner.nextLine());
+            Good good = SellerController.getGoodFromSellingGood(((Seller)getUserRecursively(this)),scanner.nextLine());
             System.out.println("please enter goodName,price,CompanyName,properties,explanations in this order:(without brackets)\n "+
                     "[name] [price] [companyName] [properties] [explanation]\n"+
                     "note that properties must be in this order color:black,pattern:polkadot,... \n"+

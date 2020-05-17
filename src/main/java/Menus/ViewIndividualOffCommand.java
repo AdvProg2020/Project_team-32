@@ -22,8 +22,8 @@ public class ViewIndividualOffCommand extends  Menu{
         }
         catch (NumberOutOfBoundException e){
             System.out.println("number is out of bound");
-            this.show();
-            this.execute();
+            parentMenu.show();
+            parentMenu.execute();
         }
         parentMenu.show();
         parentMenu.execute();

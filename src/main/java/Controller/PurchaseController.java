@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Exeptions.DiscountNotUsableException;
 import Controller.Exeptions.InvalidIDException;
 import Controller.Exeptions.NotLogedInException;
 import Model.*;
@@ -35,11 +36,15 @@ public class PurchaseController {
         }
         return totalPrice;
     }
-    public static float getDiscountPercent(String discountID, Customer customer)throws InvalidIDException {
-        for (Discount discount : customer.getDiscounts()) {
-            if(discount.getDiscountID().equals(discountID)) return discount.getDiscountPercent();
-        }throw new InvalidIDException();
-
+    public static float getDiscountPercent(String discountID, Customer customer)throws InvalidIDException , DiscountNotUsableException {
+        for (Discount discount : customer.getDiscounts().keySet()) {
+            if(discount.getDiscountID().equals(discountID) && discount.getUseCount()!=0 ){
+                discount.setUseCount(discount.getUseCount()-1);
+                return discount.getDiscountPercent();
+            }else if(discount.getDiscountID().equals(discountID)){
+                throw  new DiscountNotUsableException();
+            }throw new InvalidIDException();
+        }return 0;
     }
     public static float getPriceDiscounted(float finalPrice, float discountPercent){
         return finalPrice*((100-discountPercent)/100);

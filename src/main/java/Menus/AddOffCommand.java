@@ -33,8 +33,8 @@ public class AddOffCommand extends Menu {
                 System.out.println("pattern is invalid \n" +
                         "note that dates and offPercent must be numbers\n" +
                         "not about commas and spaces between obj");
-                this.show();
-                this.execute();
+                parentMenu.show();
+                parentMenu.execute();
             }
 
     }
