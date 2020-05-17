@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 public class GoodController {
 
-    private static Category currentCategory;
+    private static Category currentCategory = Category.rootCategory;
     private static ArrayList<Good> selectedGoods;
     private static HashMap<String , String> currentFilters = new HashMap<>();
     private static int currentSort;
@@ -43,16 +43,28 @@ public class GoodController {
         return currentCategory;
     }
 
-    public static void filter(final String filter, final String value){
-        ArrayList<Good> newSelectedGoods = new ArrayList<Good>();
-        for (Good good : selectedGoods) {
-            if(good.hasProperty(filter, value)){
-                newSelectedGoods.add(good);
+    public static void filter(String filter, String value) throws Exception {
+        ArrayList<Good> newSelectedGoods;
+        if(filter.equalsIgnoreCase("category")){
+
+            Category category = currentCategory.getSubcategory(value);
+            currentCategory = category;
+            newSelectedGoods = new ArrayList<Good>(category.getCategoryProduct());
+            currentFilters.clear();
+
+        } else {
+            newSelectedGoods = new ArrayList<Good>();
+            for (Good good : selectedGoods) {
+                if(good.hasProperty(filter, value)){
+                    newSelectedGoods.add(good);
+                }
             }
+
         }
         selectedGoods = newSelectedGoods;
         currentFilters.put(filter, value);
     }
+
 
     public static void showCurrentFilters(){
         for (String s : currentFilters.keySet()) {
@@ -62,7 +74,12 @@ public class GoodController {
 
     public static void disableFilter(String filter) throws Exception{
         currentFilters.remove(filter);
-
+        if(filter.equalsIgnoreCase("category")){
+            currentCategory = currentCategory.getParentCategory();
+            selectedGoods = new ArrayList<>(currentCategory.getCategoryProduct());
+            currentFilters.clear();
+            return;
+        }
         for (String s : currentFilters.keySet()) {
             filter(s, currentFilters.get(s));
         }
@@ -99,4 +116,5 @@ public class GoodController {
         RequestController.addEditProductRequest(good.getGoodID()+ " ",seller);
         good.editingStatus();
     }
+
 }

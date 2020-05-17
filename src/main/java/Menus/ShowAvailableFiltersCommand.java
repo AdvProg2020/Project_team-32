@@ -22,6 +22,11 @@ public class ShowAvailableFiltersCommand extends Menu {
         for (String property : GoodController.getCurrentCategory().getSpecialProperties()) {
             System.out.println(property);
         }
+
+        System.out.println("Category");
+        for (Category category : GoodController.getCurrentCategory().getSubCategory()) {
+            System.out.println(category.getName());
+        }
     }
 
     @Override

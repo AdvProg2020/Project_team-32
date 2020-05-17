@@ -53,6 +53,7 @@ public class Good {
         this.sellers = new ArrayList<Seller>();
         this.sellers.add(seller);
         allGoods.add(this);
+
     }
 
     public void editInfo(Good editGood, Seller seller) {
