@@ -39,6 +39,18 @@ Discount {
         this.useCount = useCount;
     }
 
+    public Date getInitialDate() {
+        return initialDate;
+    }
+
+    public Date getExposeDate() {
+        return exposeDate;
+    }
+
+    public void setInitialDate(Date initialDate) {
+        this.initialDate = initialDate;
+    }
+
     @Override
     public String toString() {
         return "Discount{" +

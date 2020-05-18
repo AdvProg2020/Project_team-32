@@ -26,6 +26,7 @@ public class PayProcess extends Menu {
     public void execute() {
         try {
             PurchaseController.isLogedIn(getUserRecursively(this));
+
             Customer customer = ((Customer) getUserRecursively(this));
             String address, phoneNumber, discountID;
             float finalPrice = 0, discountPercent = 0;

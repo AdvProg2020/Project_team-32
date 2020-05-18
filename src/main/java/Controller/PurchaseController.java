@@ -72,4 +72,31 @@ public class PurchaseController {
         }
         customer.getShoppingBaskets().clear();
     }
+    public static void passTime(){
+        ArrayList<Discount> toRemoveDiscount = new ArrayList<>();
+        for (Discount discount : BossController.getAllDiscount()) {
+            if(discount.getExposeDate().before(new Date())){
+                for (Person allPerson : Person.allPersons) {
+                    if(allPerson.getDiscounts().containsKey(discount)) {
+                        allPerson.getDiscounts().remove(discount);
+                    }
+                }
+                toRemoveDiscount.add(discount);
+            }
+        }
+        BossController.getAllDiscount().removeAll(toRemoveDiscount);
+
+        for (Person allPerson : Person.allPersons) {
+            if(allPerson instanceof  Seller){
+                ArrayList<Off> toRemoveOff = new ArrayList<>();
+                for (Off off : ((Seller) allPerson).getOffs()) {
+                    if(off.getExposeDate().before(new Date())){
+                        toRemoveOff.add(off);
+                    }
+                }
+                ((Seller)allPerson).getOffs().removeAll(toRemoveOff);
+            }
+        }
+
+    }
 }
