@@ -29,10 +29,14 @@ public class BossController {
         return allDiscount;
     }
 
-    public static void createDiscount(String[] command) {
+    public static void createDiscount(String[] command,ArrayList<Person> users) {
         String[] exposeDateString = command[1].split(",");
         Date exposeDate = new Date(Integer.parseInt(exposeDateString[0]),Integer.parseInt(exposeDateString[1]),Integer.parseInt(exposeDateString[2]));
-        allDiscount.add(new Discount(command[0], exposeDate, Integer.parseInt(command[2]), Integer.parseInt(command[3])));
+        Discount discount = new Discount(command[0], exposeDate, Integer.parseInt(command[2]), Integer.parseInt(command[3]));
+        allDiscount.add(discount);
+        for (Person user : users) {
+            user.addDiscount(discount,Integer.parseInt(command[4]));
+        }
     }
 
     public static Discount getDiscountById(String discountId) throws DiscountDoesNotExistException {

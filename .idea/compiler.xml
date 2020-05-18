@@ -10,6 +10,7 @@
         <module name="Project_team-32" />
         <module name="Project" />
         <module name="APproject" />
+        <module name="New folder" />
       </profile>
     </annotationProcessing>
   </component>

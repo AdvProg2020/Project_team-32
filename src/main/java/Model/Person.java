@@ -91,4 +91,8 @@ public abstract class Person {
     public HashMap<Discount, Integer> getDiscounts() {
         return discounts;
     }
+
+    public void addDiscount(Discount discount, int useNumber) {
+        discounts.put(discount,useNumber);
+    }
 }
