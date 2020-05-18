@@ -183,4 +183,5 @@ public class Good {
                 sellerAndPrices.get(seller.getUserName()) + "\nCategory: " + category + "\nSeller: " + seller +
                 "\npoint" + point;
     }
+
 }

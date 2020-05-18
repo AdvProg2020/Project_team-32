@@ -7,15 +7,19 @@ import Model.Seller;
 import java.util.ArrayList;
 
 public class OffMenu extends Menu{
-    public OffMenu(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    private static ArrayList<Good> allOffs = new ArrayList<>(); // this arrayList added by ali sharifi
+
+    public OffMenu(Menu parentMenu) {
+        super(parentMenu);
+        this.name = "Off menu";
+        this.subMenu.add(new ShowProductCommand(this));
+        this.subMenu.add(new OffMenuFilterCommand(this));
     }
 
     @Override
     public void show() {
         System.out.println(printAllOffs());
         super.show();
-
     }
 
     @Override
@@ -27,6 +31,11 @@ public class OffMenu extends Menu{
         for (Seller allSeller : Seller.getAllSellers()) {
             for (Off off : allSeller.getOffs()) {
                 for (Good good : off.getGoodsForOff()) {
+
+                    //by ali sharifi
+                    allOffs.add(good);
+                    //------------------------
+
                     output+="**** goodName: "+good.getName()+" goodID: " +
                             good.getGoodID()+"purePrice:"+ good.getSellerAndPrices().get(allSeller.getUserName())+
                             " discounted: " + good.getSellerAndPrices().get(allSeller.getUserName())*(100-off.getDiscountPercent())/100+"\n";

@@ -4,6 +4,7 @@ import Controller.IndividualGoodController;
 import Model.Good;
 
 public class ShowProductCommand extends Menu {
+
     public ShowProductCommand(Menu parentMenu) {
         super(parentMenu);
         this.name="show individual product";

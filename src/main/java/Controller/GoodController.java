@@ -13,11 +13,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class GoodController {
+public class GoodController extends Filterable{
 
-    private static Category currentCategory = Category.rootCategory;
+    /*private static Category currentCategory = Category.rootCategory;
     private static ArrayList<Good> selectedGoods;
-    private static HashMap<String , String> currentFilters = new HashMap<>();
+    private static HashMap<String , String> currentFilters = new HashMap<>();*/
+
     private static int currentSort;
 
     public static void deleteGoodById(String Id) throws GoodDoesNotExistException {
@@ -39,7 +40,7 @@ public class GoodController {
         GoodController.currentCategory = currentCategory;
     }
 
-    public static Category getCurrentCategory() {
+    /*public static Category getCurrentCategory() {
         return currentCategory;
     }
 
@@ -85,6 +86,9 @@ public class GoodController {
         }
 
     }
+    public static ArrayList<Good> getSelectedGoods() {
+        return selectedGoods;
+    }*/
 
     public static void sort(int sort) throws Exception {
         if(sort == 1){
@@ -102,9 +106,7 @@ public class GoodController {
         return currentSort;
     }
 
-    public static ArrayList<Good> getSelectedGoods() {
-        return selectedGoods;
-    }
+
 
     public static void AddProduct(String productId, String name, String companyName, int price, String explanation, HashMap<String, String> properties, Person seller,Category category) {
         new Good(name,productId,(Seller) seller,companyName,category,explanation,properties,price);
