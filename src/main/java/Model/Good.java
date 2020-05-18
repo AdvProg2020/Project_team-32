@@ -20,6 +20,8 @@ public class Good {
     private float point;
     private HashMap<String , String> properties;
 
+    private int numberOfRates;
+
     private int numberOfViews; //this should set after any view
 
     public int getNumberOfViews() {
@@ -27,7 +29,11 @@ public class Good {
     }
 
     public void setPoint(float point) {
-        this.point = point;
+
+        this.point = (this.point)*numberOfRates + point;
+        this.numberOfRates += 1;
+        this.point /= this.numberOfRates;
+
     }
 
     private ArrayList<Comment> allComments;
