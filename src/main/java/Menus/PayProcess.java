@@ -34,10 +34,12 @@ public class PayProcess extends Menu {
             address = scanner.nextLine();
             System.out.println("please enter your phone number");
             phoneNumber = scanner.nextLine();
+            PurchaseController.passTime();
             finalPrice = PurchaseController.calculatePrice((customer).getShoppingBaskets());
             System.out.println("do you have a discount 1.yes 2.no");
             int answer = Integer.parseInt(scanner.nextLine());
             int random = ((new Random()).nextInt(100));
+            PurchaseController.passTime();
             if (answer == 1) {
                 System.out.println("please enter your discount ID");
                 discountID = scanner.nextLine();

@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.PurchaseController;
 import Model.Off;
 import Model.Seller;
 
@@ -15,6 +16,7 @@ public class ViewOffCommand extends  Menu{
     @Override
     public void show() {
         int i=1;
+        PurchaseController.passTime();
         for (Off off : ((Seller) getUserRecursively(this)).getOffs()) {
             System.out.println(i+": "+off.getOffID());
             i++;

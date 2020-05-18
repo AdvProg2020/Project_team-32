@@ -1,5 +1,6 @@
 package Menus;
 
+import Controller.PurchaseController;
 import Model.Discount;
 
 public class ViewDiscountCodesCommand extends Menu {
@@ -10,7 +11,8 @@ public class ViewDiscountCodesCommand extends Menu {
 
     @Override
     public void show() {
-        for (Discount discount : Menu.getUserRecursively(this).getDiscounts()) {
+        PurchaseController.passTime();
+        for (Discount discount : getUserRecursively(this).getDiscounts().keySet()) {
             System.out.println(discount.toString());
         }
     }
