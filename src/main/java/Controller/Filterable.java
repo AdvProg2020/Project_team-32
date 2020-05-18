@@ -64,4 +64,9 @@ public class Filterable {
         return selectedGoods;
     }
 
+    public static void reset(){
+        currentCategory = Category.rootCategory;
+        selectedGoods.clear();
+        currentFilters.clear();
+    }
 }

@@ -27,6 +27,7 @@ abstract public class Menu {
     public Menu(Menu parentMenu) {
         this.parentMenu = parentMenu;
         this.subMenu = new ArrayList<>();
+        subMenu.add(new LogoutCommand(this));
     }
 
     public void show(){
