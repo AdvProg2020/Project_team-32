@@ -177,4 +177,10 @@ public class Good {
     public ArrayList<Comment> getAllComments() {
         return allComments;
     }
+
+    public String getSummary(Seller seller){
+        return "explanation: " + explanation + "\n" + "Price of this seller: " +
+                sellerAndPrices.get(seller.getUserName()) + "\nCategory: " + category + "\nSeller: " + seller +
+                "\npoint" + point;
+    }
 }

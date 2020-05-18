@@ -39,4 +39,7 @@ public class IndividualGoodController {
         return good;
     }
 
+    public static Seller getSeller() {
+        return seller;
+    }
 }
