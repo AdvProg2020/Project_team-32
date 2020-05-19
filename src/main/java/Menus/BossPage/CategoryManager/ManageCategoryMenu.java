@@ -11,6 +11,7 @@ public class ManageCategoryMenu extends Menu {
         subMenu.add(new EditCategoryCommand(this));
         subMenu.add(new AddCategoryCommand(this));
         subMenu.add(new RemoveCategoryCommand(this));
+        this.addLoginOrLogout();
     }
 
     @Override

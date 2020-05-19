@@ -12,6 +12,7 @@ public class DiscountDisplayMenu extends Menu {
         subMenu.add(new DiscountViewCommand(this));
         subMenu.add(new DiscountEditCommand(this));
         subMenu.add(new DiscountRemoveCommand(this));
+        this.addLoginOrLogout();
     }
 
     @Override

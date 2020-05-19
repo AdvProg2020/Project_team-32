@@ -9,6 +9,7 @@ public class InformationMenu extends Menu {
         this.name = "view personal info";
         subMenu.add(new InformationDisplayCommand(this));
         subMenu.add(new InformationEditorCommand(this));
+        this.addLoginOrLogout();
     }
 
     @Override

@@ -15,7 +15,10 @@ public class AccountController {
 
     public static void register(String userName, String accountType, String passWord) throws DuplicateUsernameException, DuplicateBossException {
         if(!Person.hasPersonByUserName(userName)){
-            if(accountType.equals("boss") && !isBossCreated){
+            if(isBossCreated){
+                throw new DuplicateBossException();
+            }
+            else if(accountType.equals("manager")){
                 new Boss(userName, passWord);
                 isBossCreated = true;
             }
@@ -24,9 +27,6 @@ public class AccountController {
             }
             else if(accountType.equals("seller")){
                 new Seller(userName , passWord);
-            }
-            else if(isBossCreated){
-                throw new DuplicateBossException();
             }
         }
         else {

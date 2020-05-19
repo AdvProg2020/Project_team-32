@@ -24,6 +24,7 @@ public class BossMenu extends Menu {
         subMenu.add(new DiscountDisplayMenu(this));
         subMenu.add(new ManageRequestMenu(this));
         subMenu.add(new ManageCategoryMenu(this));
+        this.addLoginOrLogout();
     }
 
     public void setUser(Boss user) {

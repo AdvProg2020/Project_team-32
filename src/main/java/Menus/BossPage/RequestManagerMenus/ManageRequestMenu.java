@@ -14,6 +14,7 @@ public class ManageRequestMenu extends Menu {
         subMenu.add(new ShowRequestDetailCommand(this));
         subMenu.add(new AcceptRequestCommand(this));
         subMenu.add(new DeclineRequestCommand(this));
+        this.addLoginOrLogout();
     }
 
     @Override

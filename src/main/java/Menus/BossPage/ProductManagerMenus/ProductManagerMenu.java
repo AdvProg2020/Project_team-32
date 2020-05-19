@@ -7,5 +7,6 @@ public class ProductManagerMenu extends Menu {
         super(parentMenu);
         this.name = "manage all products";
         subMenu.add(new RemoveProductCommand(this));
+        this.addLoginOrLogout();
     }
 }

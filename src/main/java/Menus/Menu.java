@@ -1,6 +1,9 @@
 package Menus;
 
 import Menus.BossPage.BossMenu;
+import Menus.LoginLogoutCommands.LoginCommand;
+import Menus.LoginLogoutCommands.LogoutCommand;
+import Menus.LoginLogoutCommands.RegisterCommand;
 import Model.Person;
 
 import java.util.ArrayList;
@@ -12,10 +15,6 @@ abstract public class Menu {
     public static GuestMenu guestMenu;
     public static CustomerMenu customerMenu;
     public static SellerMenu sellerMenu;
-    private static GoodsMenu goodsMenu;
-    private static OffMenu offMenu;
-    private static LoginCommand loginCommand;
-    private static RegisterCommand registerCommand;
     public static IndividualGoodMenu individualGoodMenu;
 
     protected ArrayList<Menu> subMenu;
@@ -27,7 +26,6 @@ abstract public class Menu {
     public Menu(Menu parentMenu) {
         this.parentMenu = parentMenu;
         this.subMenu = new ArrayList<>();
-        subMenu.add(new LogoutCommand(this));
     }
 
     public void show(){
@@ -70,6 +68,26 @@ abstract public class Menu {
         return getUserRecursively(menu.parentMenu);
     }
 
+
+    public void addLoginOrLogout(){
+        if (isAGuestMenuSubMenu(this)){
+            this.subMenu.add(new RegisterCommand(this));
+            this.subMenu.add(new LoginCommand(this));
+        }
+        else {
+            this.subMenu.add(new LogoutCommand(this));
+        }
+    }
+
+    protected boolean isAGuestMenuSubMenu(Menu menu){
+        if(menu == null){
+            return false;
+        }
+        if(menu instanceof GuestMenu){
+            return true;
+        }
+        return isAGuestMenuSubMenu(menu.parentMenu);
+    }
 
     @Override
     public String toString() {

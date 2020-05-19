@@ -1,8 +1,9 @@
-package Menus;
+package Menus.LoginLogoutCommands;
 
 import Controller.AccountController;
 import Controller.Exeptions.WrongPasswordException;
 import Controller.Exeptions.UserDoesNotExistException;
+import Menus.Menu;
 import Model.Guest;
 import Model.Person;
 
@@ -29,15 +30,12 @@ public class LoginCommand extends Menu {
                 Menu menu = AccountController.getRelativeMenuForLoginAndSetPerson(person);
                 menu.show();
                 menu.execute();
-            } catch (WrongPasswordException exception) {
-                System.out.println("username or password is not correct");
-            } catch (UserDoesNotExistException exception) {
+            } catch (WrongPasswordException | UserDoesNotExistException exception) {
                 System.out.println("username or password is not correct");
             }
-        } else {
-            parentMenu.show();
-            parentMenu.execute();
         }
+        parentMenu.show();
+        parentMenu.execute();
     }
 
     private boolean commandValidation(String command) {

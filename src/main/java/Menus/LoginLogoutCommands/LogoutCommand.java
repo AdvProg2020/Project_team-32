@@ -1,6 +1,7 @@
-package Menus;
+package Menus.LoginLogoutCommands;
 
 import Controller.Filterable;
+import Menus.Menu;
 import Model.Guest;
 
 public class LogoutCommand extends Menu {

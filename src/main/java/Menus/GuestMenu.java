@@ -14,6 +14,9 @@ public class GuestMenu extends Menu {
         super(parentMenu);
         this.name = "guest menu";
         user = new Guest();
+        subMenu.add(new GoodsMenu(this));
+        subMenu.add(new OffMenu(this));
+        this.addLoginOrLogout();
     }
 
     public Guest getUser() {

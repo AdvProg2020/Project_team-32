@@ -1,8 +1,9 @@
-package Menus;
+package Menus.LoginLogoutCommands;
 
 import Controller.AccountController;
 import Controller.Exeptions.DuplicateBossException;
 import Controller.Exeptions.DuplicateUsernameException;
+import Menus.Menu;
 
 import java.util.ArrayList;
 
@@ -10,8 +11,8 @@ public class RegisterCommand extends Menu {
 
     public RegisterCommand(Menu parentMenu) {
         super(parentMenu);
+        this.name= "Register";
     }
-
 
     @Override
     public void show() {

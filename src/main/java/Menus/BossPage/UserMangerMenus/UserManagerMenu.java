@@ -9,5 +9,6 @@ public class UserManagerMenu extends Menu {
         subMenu.add(new ViewUserCommand(this));
         subMenu.add(new DeleteUserByBossCommand(this));
         subMenu.add(new CreateMangerCommand(this));
+        this.addLoginOrLogout();
     }
 }
