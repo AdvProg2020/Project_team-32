@@ -3,7 +3,7 @@ package Controller;
 import Controller.Exeptions.InvalidIDException;
 import Model.*;
 
-import org.graalvm.compiler.nodes.extended.OSRStartNode;
+// import org.graalvm.compiler.nodes.extended.OSRStartNode;
 import java.util.ArrayList;
 
 public class CustomerController {
@@ -37,7 +37,7 @@ public class CustomerController {
             for (ShoppingBasket shoppingBasket : ((Customer) person).getShoppingBaskets()) {
                 outut += shoppingBasket.getGood().getGoodID() + "\n";
             }
-        }
+        }return  null;
 
 
     }
@@ -56,6 +56,7 @@ public class CustomerController {
             }
             throw new InvalidIDException();
         }
+        return null;
     }
     public static void Increase(Person person,String ID)throws InvalidIDException{
         if(person instanceof Guest){
@@ -115,6 +116,7 @@ public class CustomerController {
             }
             else throw new InvalidIDException();
         }
+        return 0;
     }
     public static int showTotalPrices(Person person){
         int totalPrice=0;
