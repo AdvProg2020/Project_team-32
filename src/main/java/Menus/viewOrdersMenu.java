@@ -10,6 +10,7 @@ public class viewOrdersMenu extends Menu {
         this.name="View Orders";
         subMenu.add(new RateCommand(this));
         subMenu.add(new ShowOrderCommand(this));
+        this.addLoginOrLogout();
     }
 
     @Override

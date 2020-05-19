@@ -10,6 +10,7 @@ public class ViewCard extends Menu {
         subMenu.add(new DecreaseCommand(this));
         subMenu.add(new ShowTotalPricesCommand(this));
         subMenu.add(new PurchaseCommand(this));
+        this.addLoginOrLogout();
     }
 
     @Override

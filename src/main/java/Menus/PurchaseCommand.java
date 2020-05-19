@@ -5,6 +5,7 @@ public class PurchaseCommand extends  Menu{
         super(parentMenu);
         this.name="Purchase";
         subMenu.add(new PayProcess(this));
+        this.addLoginOrLogout();
     }
 
     @Override

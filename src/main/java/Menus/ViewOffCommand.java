@@ -11,6 +11,7 @@ public class ViewOffCommand extends  Menu{
         subMenu.add(new ViewIndividualOffCommand(this));
         subMenu.add(new EditOffCommand(this));
         subMenu.add(new AddOffCommand(this));
+        this.addLoginOrLogout();
     }
 
     @Override

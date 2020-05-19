@@ -11,6 +11,7 @@ public class ManageProductsMenu extends Menu {
         subMenu.add(new ViewForProductCommand(this));
         subMenu.add(new ViewBuyersForProducts(this));
         subMenu.add(new AddProductCommand(this));
+        this.addLoginOrLogout();
     }
 
     @Override

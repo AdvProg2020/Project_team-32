@@ -19,6 +19,7 @@ public class SellerMenu extends Menu{
         subMenu.add(new ShowCategoryCommandBySeller( this));
         subMenu.add(new ViewOffCommand( this));
         subMenu.add(new ViewBalanceCommand( this));
+        this.addLoginOrLogout();
     }
 
     @Override
