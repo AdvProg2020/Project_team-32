@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class ViewProductInCard extends Menu {
 
-    public ViewProductInCard(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public ViewProductInCard(Menu parentMenu) {
+        super(parentMenu);
     }
 
     @Override

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class CustomerLogoutCommand extends Menu{
 
 
-    public CustomerLogoutCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public CustomerLogoutCommand(Menu parentMenu) {
+        super(parentMenu);
     }
 
     @Override

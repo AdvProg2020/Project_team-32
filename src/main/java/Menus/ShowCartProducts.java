@@ -7,7 +7,7 @@ public class ShowCartProducts extends Menu {
     public ShowCartProducts(Menu parentMenu) {
         super(parentMenu);
         this.name="show product (Cart)";
-        subMenu.add(new IndividualGoodMenu(this))
+        subMenu.add(new IndividualGoodMenu(this));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class ShowCartProducts extends Menu {
             parentMenu.show();
             parentMenu.execute();
         } else {
-            new IndividualGoodMenu()
+            //new IndividualGoodMenu();
             IndividualGoodController.setGoodId(id);
             individualGoodMenu.show();
             individualGoodMenu.execute();

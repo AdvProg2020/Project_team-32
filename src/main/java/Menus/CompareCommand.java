@@ -6,8 +6,8 @@ import Model.Good;
 import java.util.ArrayList;
 public class CompareCommand extends Menu {
 
-    public CompareCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public CompareCommand(Menu parentMenu) {
+        super(parentMenu);
     }
 
 

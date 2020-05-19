@@ -8,6 +8,8 @@ public class Seller extends Person {
     private String factoryName;
     private ArrayList<Off> offs;
     private ArrayList<SellLog> allSellingLogs;
+    private static ArrayList<Seller> allSellers = new ArrayList<>();
+
 
     public ArrayList<SellLog> getAllSellingLogs() {
         return allSellingLogs;
@@ -18,6 +20,7 @@ public class Seller extends Person {
         this.sellingGoods = new ArrayList<Good>();
         this.offs= new ArrayList<>();
         this.allSellingLogs = new ArrayList<SellLog>();
+        allSellers.add(this);
     }
 
     public ArrayList<Off> getOffs() {
@@ -69,5 +72,9 @@ public class Seller extends Person {
 
     public void deleteGood(Good good) {
         sellingGoods.remove(good);
+    }
+
+    public static ArrayList<Seller> getAllSellers() {
+        return allSellers;
     }
 }

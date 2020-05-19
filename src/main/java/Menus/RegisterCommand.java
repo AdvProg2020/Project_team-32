@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class RegisterCommand extends Menu {
 
-    public RegisterCommand(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public RegisterCommand(Menu parentMenu) {
+        super(parentMenu);
     }
 
 

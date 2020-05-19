@@ -14,7 +14,9 @@ public class Filterable {
 
 
     public static void filter(String filter, String value) throws Exception {
+
         ArrayList<Good> newSelectedGoods;
+
         if(filter.equalsIgnoreCase("category")){
 
             Category category = currentCategory.getSubcategory(value);
@@ -68,5 +70,12 @@ public class Filterable {
         currentCategory = Category.rootCategory;
         selectedGoods.clear();
         currentFilters.clear();
+    }
+
+
+    //---------------------------------for test
+
+    public static void setSelectedGoods(ArrayList<Good> selectedGoods) {
+        Filterable.selectedGoods = selectedGoods;
     }
 }

@@ -33,5 +33,5 @@ public class DecreaseCommand extends Menu {
         parentMenu.show();
         parentMenu.execute();
     }
-    }
 }
+

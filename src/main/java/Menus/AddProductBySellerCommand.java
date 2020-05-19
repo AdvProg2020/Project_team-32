@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class AddProductBySellerCommand extends Menu {
 
-    public AddProductBySellerCommand(String name , ArrayList<Menu> subMenu){
-        super(name, subMenu);
+    public AddProductBySellerCommand(Menu parentMenu){
+        super(parentMenu);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class AddProductBySellerCommand extends Menu {
             System.out.println("pattern is invalid \n"+
                     "note price must be in number \n"+
                     "[goodID] [name] [price] [companyName] [properties] [explanation]\n"+
-                    "note that properties must be in this order color:black,pattern:polkadot,... \n"
+                    "note that properties must be in this order color:black,pattern:polkadot,... \n" +
                     "note about commas and spaces between obj");
             this.show();
             this.execute();

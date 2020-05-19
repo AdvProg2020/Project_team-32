@@ -10,8 +10,8 @@ import Model.Seller;
 import java.util.ArrayList;
 
 public class EditProductBySeller extends Menu {
-    public EditProductBySeller(String name, ArrayList<Menu> subMenu) {
-        super(name, subMenu);
+    public EditProductBySeller(Menu parentMenu) {
+        super(parentMenu);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class EditProductBySeller extends Menu {
                 System.out.println("pattern is invalid \n"+
                         "note price must be in number \n"+
                         "[name] [price] [companyName] [properties] [explanation]\n"+
-                        "note that properties must be in this order color:black,pattern:polkadot,... \n"
+                        "note that properties must be in this order color:black,pattern:polkadot,... \n" +
                         "note about commas and spaces between obj");
                 this.show();
                 this.execute();
