@@ -1,17 +1,18 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Category {
+public class Category implements Serializable {
 
-    public static Category rootCategory = new Category("mainCategory", null , null);
     private static ArrayList<Category> allCategories = new ArrayList<>();
+    public static Category rootCategory = new Category("mainCategory", null , null);
     private String name;
 
     private Category parentCategory;
 
-    private static ArrayList<String> generalProperties;
+    private static ArrayList<String> generalProperties = new ArrayList<>();
     static {
         generalProperties.add("name");
         generalProperties.add("price");

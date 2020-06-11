@@ -35,7 +35,6 @@ public class AccountController {
         // a method should call for changing file
     }
 
-
     public static Person login(String[] command,Guest guest) throws WrongPasswordException, UserDoesNotExistException {
         Person person;
         person = Person.getPersonByUserName(command[1]);

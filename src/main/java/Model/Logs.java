@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Logs {
+public class Logs implements Serializable {
     protected String logID;
     protected Date date;
     protected float pricePaid;

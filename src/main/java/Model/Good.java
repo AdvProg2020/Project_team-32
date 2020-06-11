@@ -184,4 +184,7 @@ public class Good {
                 "\npoint" + point;
     }
 
+    public static ArrayList<Good> getAllGoods() {
+        return allGoods;
+    }
 }

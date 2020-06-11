@@ -1,6 +1,8 @@
 package Model;
 
-public class ShoppingBasket {
+import java.io.Serializable;
+
+public class ShoppingBasket implements Serializable {
 
 //    private HashMap<Good,Seller> basketGoods;
 //

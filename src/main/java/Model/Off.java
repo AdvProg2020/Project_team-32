@@ -2,10 +2,11 @@ package Model;
 
 //import jdk.tools.jlink.internal.DirArchive;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Off {
+public class Off implements Serializable {
     private String offID;
     private ArrayList<Good> goodsForOff;
     private OffStatus offStatus;

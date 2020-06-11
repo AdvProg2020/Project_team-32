@@ -1,10 +1,11 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Request {
+public class Request implements Serializable {
 
     private String request;
     private RequestPattern requestPattern;

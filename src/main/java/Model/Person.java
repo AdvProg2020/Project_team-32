@@ -2,15 +2,15 @@ package Model;
 
 import Controller.Exeptions.UserDoesNotExistException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public abstract class Person {
+public abstract class Person implements Serializable {
 
   
     public static ArrayList<Person> allPersons = new ArrayList<Person>();
-
 
     protected String userName;
     protected String firstName;
