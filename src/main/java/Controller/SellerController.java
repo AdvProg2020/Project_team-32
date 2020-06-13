@@ -11,24 +11,27 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class SellerController {
-    public static String viewProduct(Seller seller, int n) throws NumberOutOfBoundException {
-        if (seller.getSellingGoods().size() >= n - 1)
-            return seller.getSellingGoods().get(n - 1).toString();
-        throw new NumberOutOfBoundException();
+    public static Good viewProduct(Seller seller, String ID) throws InvalidIDException {
+        for (Good sellingGood :seller.getSellingGoods()) {
+            if (sellingGood.getGoodID().equals(ID)){
+                return sellingGood;
+            }
+        }
+        throw new InvalidIDException();
     }
 
-    public static String viewProductBuyers(Seller seller, int n) throws NumberOutOfBoundException {
-        String temp = null;
-        if (seller.getSellingGoods().size() >= n - 1) {
-            String ID = seller.getSellingGoods().get(n).getGoodID();
-            for (SellLog allSellingLog : seller.getAllSellingLogs()) {
-                if (allSellingLog.getSoldGood().getGoodID().equals(ID)) {
-                    temp += seller.getAllSellingLogs().get(n - 1).getBuyerUserNmae() + "\n";
+    public static ArrayList<String> viewProductBuyers(Seller seller,String ID) throws InvalidIDException {
+        ArrayList<String> temp = null;
+        for (Good sellingGood : seller.getSellingGoods()) {
+            if(sellingGood.getGoodID().equals(ID)){
+                for (SellLog allSellingLog : seller.getAllSellingLogs()) {
+                    if(allSellingLog.getSoldGood().equals(sellingGood)){
+                        temp.add(allSellingLog.getBuyerUserNmae());
+                    }
                 }
+                return temp;
             }
-            return temp;
-        }
-        throw new NumberOutOfBoundException();
+        }throw new InvalidIDException();
     }
 
     public static void editProducts(Seller seller, int n, int price) throws NumberOutOfBoundException {

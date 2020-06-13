@@ -71,6 +71,10 @@ public class Good {
         this.confirmStatus();
     }
 
+    public HashMap<String, String> getProperties() {
+        return properties;
+    }
+
     public HashMap<String, Integer> getSellerAndPrices() {
         return sellerAndPrices;
     }
@@ -129,6 +133,11 @@ public class Good {
     public String getGoodID() {
         return goodID;
     }
+
+    public String getpointString(){
+        return String.valueOf(point);
+    }
+    public String get
 
     @Override
     public String toString() {

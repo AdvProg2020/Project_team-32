@@ -41,10 +41,10 @@
         <Tab fx:id="manageProductTab" closable="false">
             <AnchorPane>
             <children>
-               <Button layoutX="262.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="Button" />
-               <Button layoutX="390.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="Button" />
-               <Button layoutX="518.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="Button" />
-               <Label layoutX="126.0" layoutY="46.0" prefHeight="52.0" prefWidth="135.0" text="Label" />
+               <Button fx:id="viewProductButton" layoutX="262.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="view product" />
+               <Button fx:id="viewProductBuyers" layoutX="390.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="view buyers" />
+               <Button fx:id="editProduct" layoutX="518.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="edit product" />
+               <Label fx:id="productID" layoutX="126.0" layoutY="46.0" prefHeight="52.0" prefWidth="135.0" text="enter Product id" />
                <Line endX="546.0" endY="-7.62939453125E-6" layoutX="126.0" layoutY="120.0" startX="-100.0" />
                <Pane fx:id="manageProductPane" layoutX="26.0" layoutY="134.0" prefHeight="509.0" prefWidth="650.0">
                </Pane>
