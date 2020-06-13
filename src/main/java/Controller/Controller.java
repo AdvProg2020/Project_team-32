@@ -1,15 +1,13 @@
 package Controller;
 
-import Menus.*;
-import Menus.BossPage.BossMenu;
+import View.*;
+import View.BossPage.BossMenu;
 import Model.Category;
 import Model.Good;
-import Model.Guest;
 import Model.Person;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Controller {
 

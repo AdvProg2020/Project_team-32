@@ -1,0 +1,33 @@
+package View;
+
+import Controller.CustomerController;
+import Controller.Exeptions.InvalidIDException;
+import Model.Good;
+
+public class ViewProductInCard extends Menu {
+
+    public ViewProductInCard(Menu parentMenu) {
+        super(parentMenu);
+    }
+
+    @Override
+    public void show() {
+        System.out.println("please enter your product ID");
+
+    }
+
+    @Override
+    public void execute() {
+        try {
+           Good good =  CustomerController.checkID(getUserRecursively(this),scanner.nextLine());
+            //call good page menu
+        }
+        catch (InvalidIDException e){
+            System.out.println("ID is incorrect");
+            this.show();
+            this.execute();
+        }
+        parentMenu.show();
+        parentMenu.execute();
+    }
+}
