@@ -4,46 +4,43 @@ import Controller.Exeptions.WrongPasswordException;
 import Controller.Exeptions.DuplicateBossException;
 import Controller.Exeptions.DuplicateUsernameException;
 import Controller.Exeptions.UserDoesNotExistException;
-import Menus.Menu;
+import View.Menu;
 import Model.*;
 
 import java.util.ArrayList;
 
 public class AccountController {
 
+    //this field should be a guest in start of program
+    public static Person loggedInUser;
+
+    //this filed should be initialize
     public static boolean isBossCreated = false;
 
-    public static void register(String userName, String accountType, String passWord) throws DuplicateUsernameException, DuplicateBossException {
+    public static void register(String userName, String accountType, String passWord) throws DuplicateUsernameException {
+        System.out.println(userName + " " + accountType + " " + passWord);
         if(!Person.hasPersonByUserName(userName)){
-            if(isBossCreated){
-                throw new DuplicateBossException();
-            }
-            else if(accountType.equals("manager")){
-                new Boss(userName, passWord);
-                isBossCreated = true;
-            }
-            else if(accountType.equals("customer")){
+            if(accountType.equals("Customer")){
                 new Customer(userName, passWord);
             }
-            else if(accountType.equals("seller")){
+            else if(accountType.equals("Seller")){
                 new Seller(userName , passWord);
             }
         }
         else {
             throw new DuplicateUsernameException();
         }
-        // a method should call for changing file
     }
 
-    public static Person login(String[] command,Guest guest) throws WrongPasswordException, UserDoesNotExistException {
+    public static Person login(String username,String password) throws WrongPasswordException, UserDoesNotExistException {
         Person person;
-        person = Person.getPersonByUserName(command[1]);
-        if(!person.getPassWord().equals(command[2]))
+        person = Person.getPersonByUserName(username);
+        if(!person.getPassWord().equals(password))
             throw new WrongPasswordException();
         if(person instanceof Customer){
-            ((Customer) person).setShoppingBaskets(guest.getShoppingBaskets());
+            ((Customer) person).setShoppingBaskets(((Guest)loggedInUser).getShoppingBaskets());
         }
-        guest.clearShoppingBaskets();
+        ((Guest)loggedInUser).clearShoppingBaskets();
         return person;
     }
 

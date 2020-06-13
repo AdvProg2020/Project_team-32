@@ -1,0 +1,53 @@
+#page{
+    -fx-background-color : white;
+}
+
+.inputText{
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(75,75,75,0.76);
+    -fx-border-color : rgba(0, 0, 0, 0.16);
+    -fx-border-width : 0 0 1 0 ;
+}
+
+.inputText:focused{
+    -fx-border-color : rgba(255, 171, 78, 0.75);
+    -fx-border-width : 0 0 1.5 0 ;
+}
+
+.inputChoice{
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(75,75,75,0.76);
+    -fx-border-color : rgba(0, 0, 0, 0.16);
+    -fx-border-width : 0 0 1 0 ;
+}
+
+.inputChoice:focused{
+    -fx-border-color : rgba(255, 171, 78, 0.75);
+    -fx-border-width : 0 0 1.5 0 ;
+}
+
+.inputChoiceError{
+    -fx-border-color : rgba(255, 31, 31, 0.75);
+    -fx-text-fill: rgba(255, 31, 31, 0.75);
+}
+
+.button{
+    -fx-min-width: 100;
+    -fx-min-height: 40;
+    -fx-display-caret: false;
+    -fx-background-color: rgba(255, 186, 13, 0.94);
+    -fx-background-radius: 20px;
+    -fx-border-radius: 95%;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7),5,0,0,2);
+}
+
+.button:hover{
+    -fx-opacity: 0.7;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2),5,0,0,2);
+}
+
+.button:pressed{
+    -fx-opacity: 1;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.9),5,0,0,2);
+}
