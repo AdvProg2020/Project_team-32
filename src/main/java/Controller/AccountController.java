@@ -6,10 +6,18 @@ import Controller.Exeptions.DuplicateUsernameException;
 import Controller.Exeptions.UserDoesNotExistException;
 import Menus.Menu;
 import Model.*;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 
-public class AccountController {
+public class AccountController  {
+
 
     public static boolean isBossCreated = false;
 
@@ -58,6 +66,7 @@ public class AccountController {
         }
         else if (person instanceof Seller){
             Menu.sellerMenu.setUser((Seller) person);
+//            launch();
             return Menu.sellerMenu;
         }
         return null;
@@ -77,4 +86,13 @@ public class AccountController {
     public static Person getUser(String username) throws UserDoesNotExistException {
         return Person.getPersonByUserName(username);
     }
+//    @Override
+//    public void start(Stage primaryStage) throws Exception{
+////        System.out.println("salam");
+//        URL url=  new File("src/main/java/Menus/SellerMenuPack/SellerMenu.fxml").toURI().toURL();
+//        Parent root = FXMLLoader.load(url);
+//        primaryStage.setTitle("Hello World");
+//        primaryStage.setScene(new Scene(root, 300, 275));
+//        primaryStage.show();
+//    }
 }
