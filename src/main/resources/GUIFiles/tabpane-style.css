@@ -1,0 +1,85 @@
+.tab-pane{
+    -fx-tab-min-height: 5em;
+    -fx-tab-max-height: 5em;
+
+    -fx-tab-min-width: 5em;
+    -fx-tab-max-width: 5em;
+
+    -fx-background-color: white;
+
+}
+
+.tab .tab-label{
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+
+}
+
+#infoTab{
+    -fx-background-image: url("icons/profileIcon.png");
+}
+
+#userMangerTab{
+    -fx-background-image: url("icons/userMangerIcon.png");
+}
+
+#productManagerTab {
+    -fx-background-image: url("icons/productManagerIcon.png");
+}
+
+#discountManagerTab {
+    -fx-background-image: url("icons/discountIcon.png");
+}
+
+#requestManagerTab{
+    -fx-background-image: url("icons/requestIcon.png");
+}
+
+#categoryManagerTab{
+    -fx-background-image: url("icons/categoryIcon.png");
+}
+
+.tab {
+    -fx-background-color: rgba(255, 255, 255, 0.78);
+    -fx-background-size: 60%;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-opacity: 1;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.tab:hover{
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}
+
+.tab:selected{
+    -fx-background-color: transparent;
+
+
+    -fx-background-insets: 0;
+
+    -fx-border-width: 5 0 0 0;
+    -fx-border-color: #FFFFFF;
+}
+
+.tab:focused{
+    -fx-focus-color : transparent;
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color : linear-gradient(#ffcf58,white);
+    -fx-border-width: 0 0 0.7 0;
+    -fx-border-color: rgba(250, 189, 57, 0.75);
+}
+
+.tab-pane *.tab-header-area {
+    -fx-background-insets: 0,0,0,5;
+    -fx-padding: 0.0em 0.1em 0.0em 0.0em;
+}
+
+.tab:selected .focus-indicator{
+    -fx-focus-color : transparent;
+    -fx-border-color: transparent;
+}
