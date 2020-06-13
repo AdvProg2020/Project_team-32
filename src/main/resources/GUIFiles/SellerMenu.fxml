@@ -1,15 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" side="LEFT" stylesheets="@SellerTabPane-Style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SellerPage.SellerMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" side="LEFT" stylesheets="@SellerTabPane-Style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SellerPage.SellerMenuController">
     <tabs>
-        <Tab fx:id="userMangerTab" closable="false" />
-        <Tab fx:id="productManagerTab" closable="false" />
-        <Tab fx:id="discountManagerTab" closable="false" />
-        <Tab fx:id="requestManagerTab" closable="false" />
-        <Tab fx:id="categoryManagerTab" closable="false" />
-        <Tab fx:id="infoTab" closable="false" />
+        <Tab fx:id="userMangerTab" closable="false">
+            <AnchorPane>
+
+            </AnchorPane>
+        </Tab>
+        <Tab fx:id="companyInfoTab" closable="false">
+            <AnchorPane>
+                <children>
+                     <Label fx:id="companyNameLabel" layoutX="268.0" layoutY="325.0" prefHeight="113.0" prefWidth="193.0" text="Label" />
+                     <Label layoutX="312.0" layoutY="267.0" prefHeight="57.0" prefWidth="106.0" text="Company name:" />
+                </children>
+            </AnchorPane>
+        </Tab>
+        <Tab fx:id="salesHIstoryTab" closable="false">
+            <AnchorPane>
+            <children>
+               <TableView fx:id="tableView" layoutX="100.0" layoutY="103.0" prefHeight="494.0" prefWidth="530.0">
+                 <columns>
+                   <TableColumn fx:id="tableColumn1" prefWidth="91.99993133544922" text="logId" />
+                     <TableColumn fx:id="tableColumn2" prefWidth="100.00006103515625" text="customer" />
+                     <TableColumn fx:id="tableColumn3" prefWidth="136.800048828125" text="pricepaid" />
+                     <TableColumn fx:id="tableColumn4" prefWidth="157.60012817382812" text="off" />
+                 </columns>
+               </TableView>
+            </children></AnchorPane>
+        </Tab>
+        <Tab fx:id="manageProductTab" closable="false">
+            <AnchorPane>
+
+            </AnchorPane>
+        </Tab>
+        <Tab fx:id="addProductTab" closable="false">
+            <AnchorPane>
+
+            </AnchorPane>
+        </Tab>
+        <Tab fx:id="removeProductTab" closable="false">
+            <AnchorPane>
+
+            </AnchorPane>
+        </Tab>
+        <Tab fx:id="showCategoryTab" closable="false">
+            <AnchorPane>
+
+            </AnchorPane>
+        </Tab>
+        <Tab fx:id="offsTab" closable="false">
+            <AnchorPane>
+
+            </AnchorPane>
+        </Tab>
+        <Tab fx:id="balanceTab" closable="false">
+            <AnchorPane>
+
+            </AnchorPane>
+        </Tab>
     </tabs>
 </TabPane>
