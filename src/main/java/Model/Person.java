@@ -16,7 +16,6 @@ public abstract class Person implements Serializable {
     protected String firstName;
     protected String lastName;
     protected String phoneID;
-
     protected String eMail;
     protected String passWord;
 
@@ -38,6 +37,42 @@ public abstract class Person implements Serializable {
         this.lastName = lastName;
         this.phoneID = phoneId;
         this.eMail = email;
+    }
+
+    public String geteMail() {
+        return eMail;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneID() {
+        return phoneID;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneID(String phoneID) {
+        this.phoneID = phoneID;
+    }
+
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
     }
 
     public Person() {
