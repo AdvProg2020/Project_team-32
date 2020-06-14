@@ -75,10 +75,12 @@ public class SellerController {
         }
         return categories;
     }
-    public static String showInddividualOff(Seller seller , int n) throws NumberOutOfBoundException{
-        if (seller.getOffs().size() >= n - 1) {
-            return seller.getOffs().get(n).toString();
-        }throw new NumberOutOfBoundException();
+    public static Off showInddividualOff(Seller seller , String ID) throws InvalidIDException{
+        for (Off off : seller.getOffs()) {
+            if(off.getOffID().equals(ID)){
+                return off;
+            }
+        }throw new InvalidIDException();
 
     }
     public static Off checkOffID(ArrayList<Off> offs , String offID) throws InvalidIDException {

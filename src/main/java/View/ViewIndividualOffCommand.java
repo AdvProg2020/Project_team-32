@@ -17,15 +17,15 @@ public class ViewIndividualOffCommand extends  Menu{
 
     @Override
     public void execute() {
-        try{
-            System.out.println(SellerController.showInddividualOff(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
-        }
-        catch (NumberOutOfBoundException e){
-            System.out.println("number is out of bound");
-            parentMenu.show();
-            parentMenu.execute();
-        }
-        parentMenu.show();
-        parentMenu.execute();
+//        try{
+//            System.out.println(SellerController.showInddividualOff(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
+//        }
+//        catch (NumberOutOfBoundException e){
+//            System.out.println("number is out of bound");
+//            parentMenu.show();
+//            parentMenu.execute();
+//        }
+//        parentMenu.show();
+//        parentMenu.execute();
     }
 }

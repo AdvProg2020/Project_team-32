@@ -10,7 +10,10 @@ public class Off implements Serializable {
     private String offID;
     private ArrayList<Good> goodsForOff;
     private OffStatus offStatus;
-    private enum OffStatus {creating,editing,confirmed};
+
+    private enum OffStatus {creating, editing, confirmed}
+
+    ;
     private Date initialDate;
     private Date exposeDate;
     private int discountPercent;
@@ -44,12 +47,24 @@ public class Off implements Serializable {
         return initialDate;
     }
 
+    public String getInitialDateString() {
+        return initialDate.toString();
+    }
+
     public Date getExposeDate() {
         return exposeDate;
     }
 
+    public String getExposeDateString() {
+        return exposeDate.toString();
+    }
+
     public int getDiscountPercent() {
         return discountPercent;
+    }
+
+    public String getDiscountPercentString() {
+        return String.valueOf(discountPercent);
     }
 
     @Override
@@ -59,9 +74,9 @@ public class Off implements Serializable {
                 ", initialDate=" + initialDate +
                 ", exposeDate=" + exposeDate +
                 ", discountPercent=" + discountPercent
-                +'}';
+                + '}';
         for (Good good : this.goodsForOff) {
-            output+= good.getName()+"  "+ good.getGoodID()+"\n";
+            output += good.getName() + "  " + good.getGoodID() + "\n";
         }
         return output;
     }

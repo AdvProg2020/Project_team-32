@@ -3,10 +3,7 @@ package View.SellerPage;
 import Controller.*;
 import Controller.Exeptions.CategoryNotFindException;
 import Controller.Exeptions.InvalidIDException;
-import Model.Category;
-import Model.Good;
-import Model.SellLog;
-import Model.Seller;
+import Model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -113,9 +110,23 @@ public class SellerMenuController implements Initializable {
     @FXML
     Button RemoveProductButton;
 
+    @FXML
+    Pane manageOffPane;
+
+    @FXML
+    Button viewOffButton;
+    @FXML
+    Button editOff;
+    @FXML
+    Button addOff;
+    @FXML
+    TextField offID;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //info personal
+
+//        AccountController.loggedInUser= new Seller("yasin","moosavi");\
 
 
         //company name
@@ -365,6 +376,52 @@ public class SellerMenuController implements Initializable {
         categoryTable.setItems(details);
 
         //view offs
+        viewOffButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    Off off = SellerController.showInddividualOff(((Seller)AccountController.loggedInUser),offID.getText().trim());
+                    TableView offTable = new TableView();
+                    TableColumn<String, Off> offID = new TableColumn<>("off ID");
+                    TableColumn<String, Off> initialDate = new TableColumn<>("initial Date");
+                    TableColumn<String, Off> exposeDate = new TableColumn<>("Expopse Date");
+                    TableColumn<String, Off> discountPercent = new TableColumn<>("discount");
+                    offID.setCellValueFactory(new PropertyValueFactory<>("OffID"));
+                    initialDate.setCellValueFactory(new PropertyValueFactory<>("InitialDateString"));
+                    exposeDate.setCellValueFactory(new PropertyValueFactory<>("ExposeDateString"));
+                    discountPercent.setCellValueFactory(new PropertyValueFactory<>("DiscountPercentString"));
+
+                    tableView.getItems().add(off);
+
+                    manageOffPane.getChildren().clear();
+                    manageOffPane.getChildren().add(offTable);
+                } catch (InvalidIDException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        editOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+//
+//                Off off= SellerController.checkOffID(((Seller)getUserRecursively(this)).getOffs(),scanner.nextLine());
+//                System.out.println("pleasse enter GoodIDs and initial date and end date and offPercent in this order:\n "+
+//                        "[GoodId1,goodid2,..] [year,month,day] [year,month,day] [offPercent]"+
+//                        "not about commas and spaces between obj");
+
+            }
+        });
+        addOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
+
+
+
+
 
 
         //all tabs selected initializing
@@ -378,6 +435,19 @@ public class SellerMenuController implements Initializable {
 
                 if (newTab.equals(balanceTab)) {
                     balanceLable.setText("remaining money :" + ((Seller) AccountController.loggedInUser).getCredit() + "Tomans");
+                }
+                // off view tab
+                else if(newTab.equals(offsTab)){
+                    ArrayList<Off> offs = ((Seller)AccountController.loggedInUser).getOffs();
+                    TableView offTable = new TableView();
+                    TableColumn<String, Off> offIdColumn = new TableColumn<>("off ID");
+
+                    offIdColumn.setCellValueFactory(new PropertyValueFactory<>("OffID"));
+                    for (Off off : offs) {
+                        tableView.getItems().add(off);
+                    }
+                    manageOffPane.getChildren().clear();
+                    manageOffPane.getChildren().add(offTable);
                 }
             }
         });
