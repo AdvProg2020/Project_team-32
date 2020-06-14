@@ -1,6 +1,8 @@
 package View;
 
 import Controller.Controller;
+import Model.Category;
+import Model.Good;
 import Model.Person;
 import Model.Seller;
 import javafx.application.Application;
@@ -28,7 +30,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        new Seller("ali","123");
+        new Good("khiyar","123",new Seller("ali","123"),"salma",new Category("hey",null,null),null,null,0);
         launch(args);
 
     }

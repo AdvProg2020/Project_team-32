@@ -31,6 +31,7 @@ public class GoodController extends Filterable{
 
     public static void deleteGood(Good good){
         Good.confirmedGoods.remove(good);
+        Good.getAllGoods().remove(good);
         for (Seller seller : good.getSellers()) {
             seller.deleteGood(good);
         }

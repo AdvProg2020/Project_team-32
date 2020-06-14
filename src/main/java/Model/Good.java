@@ -53,7 +53,7 @@ public class Good {
         this.sellers = new ArrayList<Seller>();
         this.sellers.add(seller);
         allGoods.add(this);
-
+        this.properties = new HashMap<>();
         this.properties.put("company name", companyName);
         this.properties.put("name", name);
         // TODO ali sharifi
@@ -133,11 +133,15 @@ public class Good {
         return goodID;
     }
 
+    public String getGoodStatus() {
+        return goodStatus.name();
+    }
+
     public String getpointString() {
         return String.valueOf(point);
     }
 
-    public String getcategoryString() {
+    public String getCategoryString() {
         return category.getName();
     }
 

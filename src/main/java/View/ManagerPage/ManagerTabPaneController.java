@@ -24,6 +24,8 @@ public class ManagerTabPaneController implements Initializable {
         try {
             URL infoPaneUrl = new File("src\\main\\resources\\GUIFiles\\personal-info.fxml").toURI().toURL();
             URL userManagerUrl = new File("src\\main\\resources\\GUIFiles\\user-manager-page.fxml").toURI().toURL();
+            URL productManagerUrl = new File("src\\main\\resources\\GUIFiles\\product-manager-page.fxml").toURI().toURL();
+            productManagerTab.setContent(FXMLLoader.load(productManagerUrl));
             infoTab.setContent(FXMLLoader.load(infoPaneUrl));
             userMangerTab.setContent(FXMLLoader.load(userManagerUrl));
         } catch (IOException e) {

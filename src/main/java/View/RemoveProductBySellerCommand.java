@@ -18,7 +18,7 @@ public class RemoveProductBySellerCommand extends Menu {
 
     @Override
     public void execute() {
-        try{
+    /*    try{
             SellerController.removeProduct(( (Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine()));
         }
         catch (NumberOutOfBoundException e){
@@ -29,6 +29,6 @@ public class RemoveProductBySellerCommand extends Menu {
         System.out.println("product removed succesfully");
         parentMenu.show();
         parentMenu.execute();
-
+*/
     }
 }
