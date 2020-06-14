@@ -16,9 +16,9 @@ public class BossController {
 
     private static ArrayList<Discount> allDiscount = new ArrayList<Discount>();
 
-    public static void createManager(String[] command) throws DuplicateUsernameException {
-        if(!Person.hasPersonByUserName(command[1])){
-            new Boss(command[1], command[2]);
+    public static void createManager(String username, String password) throws DuplicateUsernameException {
+        if(!Person.hasPersonByUserName(username)){
+            new Boss(username, password);
         }
         else{
             throw new DuplicateUsernameException();

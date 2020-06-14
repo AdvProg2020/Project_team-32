@@ -69,8 +69,7 @@ public class AccountController  {
         return null;
     }
 
-    public static void deleteUser(String username) throws UserDoesNotExistException {
-        Person person = Person.getPersonByUserName(username);
+    public static void deleteUser(Person person) {
         Person.allPersons.remove(person);
         if(person instanceof Seller){
             ArrayList<Good> goods= ((Seller) person).getSellingGoods();

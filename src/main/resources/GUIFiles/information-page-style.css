@@ -40,6 +40,35 @@
     -fx-cursor: hand;
 }
 
+#addManagerButton {
+    -fx-display-caret: false;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 70, 70;
+    -fx-background-image: url("icons/managerIcon.png");
+    -fx-cursor: hand;
+}
+
+#addManagerButton:pressed{
+    -fx-opacity: 1;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.9),5,0,0,2);
+}
+
+#removeButton {
+    -fx-display-caret: false;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60, 60;
+    -fx-background-image: url("icons/removeIcon.png");
+    -fx-cursor: hand;
+}
+
+#removeButton:pressed{
+    -fx-opacity: 1;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.9),5,0,0,2);
+}
+
+
 .submitButton{
     -fx-min-width: 100;
     -fx-min-height: 40;

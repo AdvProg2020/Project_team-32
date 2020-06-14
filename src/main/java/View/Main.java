@@ -1,5 +1,8 @@
 package View;
 
+import Controller.Controller;
+import Model.Person;
+import Model.Seller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +28,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        new Seller("ali","123");
         launch(args);
+
     }
 
 }

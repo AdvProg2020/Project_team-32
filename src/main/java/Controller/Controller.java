@@ -23,7 +23,7 @@ public class Controller {
         exportData();
     }
 
-    private static void importData(){
+    public static void importData(){
         importDataEach(Person.allPersons,"src/main/resources/database/accounts.txt");
         importDataEach(BossController.getAllDiscount(),"src/main/resources/database/discounts.txt");
         importDataEach(RequestController.getAllRequest(), "src/main/resources/database/requests.txt");
@@ -31,7 +31,7 @@ public class Controller {
         importDataEach(Good.confirmedGoods, "src/main/resources/database/confirmedGoods.txt");
         importDataEach(Good.getAllGoods(), "src/main/resources/database/allGoods.txt");    }
 
-    private static void exportData(){
+    public static void exportData(){
         for (Person person : Person.allPersons) {
             System.out.println(person);
         }

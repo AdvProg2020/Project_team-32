@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PersonalInfoController implements Initializable {
-   
+
     public Button phoneEditButton;
     public Button lastnameEditButton;
     public Button firstnameEditButton;
@@ -38,7 +38,7 @@ public class PersonalInfoController implements Initializable {
             phoneText.setText(user.getPhoneID());
             lastNameText.setText(user.getLastName());
             firstNameText.setText(user.getFirstName());
-            emailText.setText(user.geteMail());
+            emailText.setText(user.getEmail());
         }
         emailText.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -95,7 +95,6 @@ public class PersonalInfoController implements Initializable {
         phoneText.setDisable(false);
     }
 
-
     public void changeInformation(ActionEvent actionEvent) {
 
         //validation
@@ -106,13 +105,14 @@ public class PersonalInfoController implements Initializable {
         if(!textValidation(phoneText.getText(),"\\d+")){
             phoneText.getStyleClass().add("inputChoiceError");
             phoneText.setText("invalid phone number");
-            return;
         }
+        if(!textValidation(emailText.getText(),".+@.+\\..+") || !textValidation(phoneText.getText(),"\\d+"))
+            return;
 
         Person user = AccountController.loggedInUser;
         if(user != null){
             //change user information
-            user.seteMail(emailText.getText());
+            user.setEmail(emailText.getText());
             user.setPhoneID(phoneText.getText());
             user.setFirstName(firstNameText.getText());
             user.setLastName(lastNameText.getText());

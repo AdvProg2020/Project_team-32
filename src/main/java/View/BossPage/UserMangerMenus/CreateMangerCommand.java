@@ -18,7 +18,7 @@ public class CreateMangerCommand extends Menu {
 
     @Override
     public void execute() {
-        String command = scanner.nextLine();
+       /* String command = scanner.nextLine();
         try {
             BossController.createManager(command.split(" "));
             System.out.println("manger created successfully");
@@ -26,6 +26,6 @@ public class CreateMangerCommand extends Menu {
             System.out.println("this username is already exist");
         }
         parentMenu.show();
-        parentMenu.execute();
+        parentMenu.execute();*/
     }
 }

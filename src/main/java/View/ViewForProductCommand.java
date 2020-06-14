@@ -18,8 +18,8 @@ ViewForProductCommand extends Menu {
 
     @Override
     public void execute() {
-        try {
-            System.out.println(SellerController.viewProduct(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
+     /*  try {
+         //   System.out.println(SellerController.viewProduct(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
         }
         catch(NumberOutOfBoundException e){
             System.out.println("number is not acceptable ");
@@ -27,6 +27,6 @@ ViewForProductCommand extends Menu {
             parentMenu.execute();
         }
         parentMenu.show();
-        parentMenu.execute();
+        parentMenu.execute();*/
     }
 }

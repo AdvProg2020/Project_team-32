@@ -1,5 +1,6 @@
 package View.ManagerPage;
 
+import com.sun.jndi.toolkit.url.Uri;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
@@ -22,9 +23,12 @@ public class ManagerTabPaneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             URL infoPaneUrl = new File("src\\main\\resources\\GUIFiles\\personal-info.fxml").toURI().toURL();
+            URL userManagerUrl = new File("src\\main\\resources\\GUIFiles\\user-manager-page.fxml").toURI().toURL();
             infoTab.setContent(FXMLLoader.load(infoPaneUrl));
+            userMangerTab.setContent(FXMLLoader.load(userManagerUrl));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }

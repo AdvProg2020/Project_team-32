@@ -18,7 +18,7 @@ public class DeleteUserByBossCommand extends Menu {
 
     @Override
     public void execute() {
-        String username = scanner.nextLine();
+     /*   String username = scanner.nextLine();
         try {
             AccountController.deleteUser(username);
             System.out.println("user is deleted successfully");
@@ -26,6 +26,6 @@ public class DeleteUserByBossCommand extends Menu {
             System.out.println("username is not correct");
         }
         parentMenu.show();
-        parentMenu.execute();
+        parentMenu.execute();*/
     }
 }

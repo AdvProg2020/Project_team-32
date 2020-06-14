@@ -16,7 +16,7 @@ public abstract class Person implements Serializable {
     protected String firstName;
     protected String lastName;
     protected String phoneID;
-    protected String eMail;
+    protected String email;
     protected String passWord;
 
     private HashMap<Discount, Integer> discounts ;
@@ -36,11 +36,11 @@ public abstract class Person implements Serializable {
         this.firstName= firstName;
         this.lastName = lastName;
         this.phoneID = phoneId;
-        this.eMail = email;
+        this.email = email;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
     public String getFirstName() {
@@ -71,8 +71,8 @@ public abstract class Person implements Serializable {
         this.phoneID = phoneID;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Person() {
@@ -113,7 +113,7 @@ public abstract class Person implements Serializable {
                         "first name=" + firstName + '\n' +
                         "last name=" + lastName + '\n' +
                         "phone number=" + phoneID + '\n' +
-                        "email=" + eMail + '\n' +
+                        "email=" + email + '\n' +
                         "password=" + passWord + '\n' +
                         "credit=" + credit ;
 

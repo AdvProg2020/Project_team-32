@@ -17,7 +17,7 @@ public class ViewBuyersForProducts extends Menu {
 
     @Override
     public void execute() {
-        try {
+   /*     try {
             System.out.println(SellerController.viewProductBuyers(((Seller)getUserRecursively(this)),Integer.parseInt(scanner.nextLine())));
         }
         catch(NumberOutOfBoundException e){
@@ -27,5 +27,5 @@ public class ViewBuyersForProducts extends Menu {
         }
         parentMenu.show();
         parentMenu.execute();
-    }
+    */}
 }
