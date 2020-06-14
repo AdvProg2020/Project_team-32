@@ -3,12 +3,10 @@ package View.SellerPage;
 import Controller.*;
 import Controller.Exeptions.CategoryNotFindException;
 import Controller.Exeptions.InvalidIDException;
-import Controller.Exeptions.InvalidPatternException;
 import Model.Category;
 import Model.Good;
 import Model.SellLog;
 import Model.Seller;
-import com.sun.deploy.xml.XMLable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,8 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
@@ -99,6 +97,13 @@ public class SellerMenuController implements Initializable {
     TableColumn<String,String> categoryColumn;
     @FXML
     Label balanceLable;
+
+    @FXML
+    Label addProductID_Label;
+    @FXML
+    Button addProductID_Button;
+    @FXML
+    Pane addProductPane ;
 
 
 
@@ -248,6 +253,89 @@ public class SellerMenuController implements Initializable {
         });
         //Add product
 
+
+        addProductID_Button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                addProductPane.getChildren().clear();
+                Good good_addProduct =Good.getGoodFromAllGoods(addProductID_Label.getText().trim());
+                if(good_addProduct!=null){
+                    System.out.println("the id is already exist enter a price to add as its seller or 0 to ignore it:");
+                    Label priceLabel = new Label("enter new price");
+                    Button confirmPrice = new Button("confirm price");
+                    confirmPrice.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            int price = Integer.parseInt(priceLabel.getText().trim());
+                            if(price > 0){
+                                good_addProduct.addSellerAndPrice(AccountController.loggedInUser.getUserName(),price);
+                                priceLabel.setText("succesful");
+                            }
+                        }
+                    });
+                    addProductPane.getChildren().addAll(priceLabel,confirmPrice);
+
+                }else {
+
+                    Label categoryLabel = new Label("category name");
+                    Button setCategory = new Button("press to set category");
+                    addProductPane.getChildren().clear();
+                    addProductPane.getChildren().addAll(categoryLabel,setCategory);
+                    setCategory.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+
+                            try {
+                                Category category = CategoryController.getCategoryByName(categoryLabel.getText());
+                                Label goodName = new Label("good name");
+                                Label price = new Label("price");
+                                Label companyName = new Label("company name");
+                                Label explanation = new Label("explanation");
+                                Label[] labelProperties =  new Label[category.getSpecialProperties().size()];
+                                HashMap<String,String> properties = new HashMap<>();
+                                int i=0;
+                                for (String specialProperty : category.getSpecialProperties()) {
+                                    labelProperties[i] = new Label(specialProperty);
+                                    i++;
+                                }
+                                Button confirm = new Button("confirm");
+                                confirm.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent event) {
+
+                                        int i=0;
+                                        for (String specialProperty : category.getSpecialProperties()) {
+                                            properties.put(specialProperty,labelProperties[i].getText().trim());
+                                            i++;
+                                        }
+                                        GoodController.AddProduct(addProductID_Label.getText().trim(),goodName.getText().trim()
+                                                ,companyName.getText().trim(),Integer.parseInt(price.getText().trim()),
+                                                explanation.getText().trim(),properties,((Seller)AccountController.loggedInUser)
+                                                ,category);
+                                        System.out.println("Request sent successfully.");
+                                    }
+                                });
+                                addProductPane.getChildren().addAll(goodName,price,companyName,explanation);
+                                for (int j=0;j<category.getSpecialProperties().size();j++){
+                                    addProductPane.getChildren().add(labelProperties[j]);
+                                }
+
+
+                            } catch (CategoryNotFindException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+
+
+
+                }
+            }
+        });
+
+
+
         //remove product
 
         //show categories
@@ -261,7 +349,6 @@ public class SellerMenuController implements Initializable {
         categoryTable.setItems(details);
 
         //view offs
-
 
 
 
