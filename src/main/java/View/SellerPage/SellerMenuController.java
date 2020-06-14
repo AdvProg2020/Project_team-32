@@ -1,14 +1,17 @@
 package View.SellerPage;
 
-import Controller.AccountController;
+import Controller.*;
+import Controller.Exeptions.CategoryNotFindException;
 import Controller.Exeptions.InvalidIDException;
 import Controller.Exeptions.InvalidPatternException;
-import Controller.RequestController;
-import Controller.SellerController;
+import Model.Category;
 import Model.Good;
 import Model.SellLog;
 import Model.Seller;
+import com.sun.deploy.xml.XMLable;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +28,9 @@ import java.net.URL;
 import java.util.*;
 
 public class SellerMenuController implements Initializable {
+
+    @FXML
+    TabPane sellerTabPane;
     @FXML
     Tab userMangerTab;
     @FXML
@@ -86,6 +92,13 @@ public class SellerMenuController implements Initializable {
     Button editProduct;
     @FXML
     Label productID;
+
+    @FXML
+    TableView<String> categoryTable;
+    @FXML
+    TableColumn<String,String> categoryColumn;
+    @FXML
+    Label balanceLable;
 
 
 
@@ -176,47 +189,57 @@ public class SellerMenuController implements Initializable {
 
                 try {
                     Good good = SellerController.getGoodFromSellingGood(((Seller) AccountController.loggedInUser),productID.getText());
-                    Label goodName = new Label();
-                    goodName.setText("good name");
-                    Label price = new Label();
-                    price.setText("price");
-                    Label companyName = new Label();
-                    companyName.setText("company name");
-                    Label explanation = new Label();
-                    explanation.setText("explanation");
-                    ArrayList<String> properties = (ArrayList<String>) good.getProperties().keySet();
-                    Label[] propert =  new Label[properties.size()-1];
-                    for(int i=0 ;i< properties.size();i++){
-                        propert[i] = new Label();
-                        propert[i].setText(properties.get(i));
-                    }
-                    Button confirm = new Button("confirm");
-                    confirm.setOnAction(new EventHandler<ActionEvent>() {
+                    Label categoryLabel = new Label("category name");
+                    Button setCategory = new Button("press to set category");
+                    manageProductPane.getChildren().clear();
+                    manageProductPane.getChildren().addAll(categoryLabel,setCategory);
+                    setCategory.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            String s ="";
-                            s+=goodName.getText().trim()+" "+price.getText().trim()+" "+companyName.getText().trim()+" ";
-                            for (int i = 0; i < properties.size(); i++) {
-                                s+=properties.get(i).trim()+":"+propert[i].getText().trim()+",";
-                            }
-                            s+=" "+ explanation.getText().trim();
-                            String request = null;
+
                             try {
-                                request = SellerController.makeRequest(good.getGoodID(),s.trim(),"^(\\S+) (\\d+) (\\S+) (\\S+:\\S+,)+ (.+)$");
-                                RequestController.addEditProductRequest(request,((Seller)AccountController.loggedInUser));
-                            } catch (InvalidPatternException e) {
+                                Category category = CategoryController.getCategoryByName(categoryLabel.getText());
+                                Label goodName = new Label("good name");
+                                Label price = new Label("price");
+                                Label companyName = new Label("company name");
+                                Label explanation = new Label("explanation");
+                                Label[] labelProperties =  new Label[category.getSpecialProperties().size()];
+                                HashMap<String,String> properties = new HashMap<>();
+                                int i=0;
+                                for (String specialProperty : category.getSpecialProperties()) {
+                                    labelProperties[i] = new Label(specialProperty);
+                                    i++;
+                                }
+                                Button confirm = new Button("confirm");
+                                confirm.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent event) {
+
+                                        int i=0;
+                                        for (String specialProperty : category.getSpecialProperties()) {
+                                            properties.put(specialProperty,labelProperties[i].getText().trim());
+                                            i++;
+                                        }
+                                        GoodController.editProduct(good,goodName.getText().trim(),companyName.getText().trim(),Integer.parseInt(price.getText().trim())
+                                                , ((Seller)AccountController.loggedInUser) ,explanation.getText().trim(),category,properties);
+                                        System.out.println("Request sent successfully.");
+                                    }
+                                });
+                                manageProductPane.getChildren().addAll(goodName,price,companyName,explanation);
+                                for (int j=0;j<category.getSpecialProperties().size();j++){
+                                    manageProductPane.getChildren().add(labelProperties[j]);
+                                }
+
+
+                            } catch (CategoryNotFindException e) {
                                 e.printStackTrace();
                             }
+
                         }
                     });
 
-                    manageProductPane.getChildren().clear();
-                    manageProductPane.getChildren().addAll(goodName,price,companyName);
-                    for (Label label : propert) {
-                        manageProductPane.getChildren().addAll(label);
-                    }
-                    manageProductPane.getChildren().add(explanation);
-                } catch (InvalidIDException e) {
+
+                } catch (InvalidIDException  e) {
                     e.printStackTrace();
                 }
 
@@ -224,6 +247,39 @@ public class SellerMenuController implements Initializable {
             }
         });
         //Add product
+
+        //remove product
+
+        //show categories
+        ArrayList<Category> categories =SellerController.showCategory(((Seller)AccountController.loggedInUser));
+        ArrayList<String> categoryNames =new ArrayList<>();
+        for (Category category : categories) {
+            categoryNames.add(category.getName());
+        }
+        ObservableList<String> details = FXCollections.observableArrayList(categoryNames) ;
+        categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
+        categoryTable.setItems(details);
+
+        //view offs
+
+
+
+
+        //all tabs selected initializing
+
+
+        sellerTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+
+                //view balance
+
+                if(newTab.equals (balanceTab)) {
+                    balanceLable.setText("remaining money :"+((Seller)AccountController.loggedInUser).getCredit()+"Tomans");
+                }
+            }
+        });
+
 
 
 

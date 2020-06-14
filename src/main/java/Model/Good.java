@@ -10,7 +10,7 @@ public class Good {
     private String goodID;
     private Status goodStatus;
 
-    private enum Status {MAKE_REQUEST,EDIT_REQUEST,CONFIRMED}
+    private enum Status {MAKE_REQUEST, EDIT_REQUEST, CONFIRMED}
 
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
     private ArrayList<Seller> sellers;
@@ -18,7 +18,7 @@ public class Good {
     private Category category;
     private String explanation;
     private float point;
-    private HashMap<String , String> properties;
+    private HashMap<String, String> properties;
 
     private int numberOfRates;
 
@@ -30,7 +30,7 @@ public class Good {
 
     public void setPoint(float point) {
 
-        this.point = (this.point)*numberOfRates + point;
+        this.point = (this.point) * numberOfRates + point;
         this.numberOfRates += 1;
         this.point /= this.numberOfRates;
 
@@ -39,9 +39,8 @@ public class Good {
     private ArrayList<Comment> allComments;
 
 
-
     public Good(String name, String goodID, Seller seller, String companyName, Category category
-            , String explanation, HashMap<String , String > properties,int price) {
+            , String explanation, HashMap<String, String> properties, int price) {
         this.name = name;
         this.goodID = goodID;
         this.goodStatus = Status.MAKE_REQUEST;
@@ -67,7 +66,7 @@ public class Good {
         this.category = editGood.category;
         this.explanation = editGood.explanation;
         this.properties = editGood.properties;
-        this.sellerAndPrices.replace(seller.getUserName(),editGood.sellerAndPrices.get(seller.getUserName()));
+        this.sellerAndPrices.replace(seller.getUserName(), editGood.sellerAndPrices.get(seller.getUserName()));
         this.confirmStatus();
     }
 
@@ -83,37 +82,37 @@ public class Good {
         return category;
     }
 
-    public static Good getGoodFromAllGoods(String goodID){
+    public static Good getGoodFromAllGoods(String goodID) {
         for (Good good : allGoods) {
-            if(good.goodID.equals(goodID)){
+            if (good.goodID.equals(goodID)) {
                 return good;
             }
         }
         return null;
     }
 
-    public static Good getGoodById(String Id){
+    public static Good getGoodById(String Id) {
         for (Good good : confirmedGoods) {
-            if(good.goodID.equals(Id)){
+            if (good.goodID.equals(Id)) {
                 return good;
             }
         }
         return null;
     }
 
-    public ArrayList<Seller> getSellers(){
+    public ArrayList<Seller> getSellers() {
         return sellers;
     }
 
     public void addSellerAndPrice(String sellerUserName, int price) {
-        this.sellerAndPrices.put(sellerUserName,price);
+        this.sellerAndPrices.put(sellerUserName, price);
     }
 
     public void confirmStatus() {
         goodStatus = Status.CONFIRMED;
     }
 
-    public void editingStatus(){
+    public void editingStatus() {
         goodStatus = Status.EDIT_REQUEST;
     }
 
@@ -121,7 +120,7 @@ public class Good {
 
     }
 
-    public void addComment(String userName, Good good, String commentString, String commentStatus, String title){
+    public void addComment(String userName, Good good, String commentString, String commentStatus, String title) {
         Comment comment = new Comment(userName, good, commentString, commentStatus, title);
         allComments.add(comment);
     }
@@ -134,10 +133,13 @@ public class Good {
         return goodID;
     }
 
-    public String getpointString(){
+    public String getpointString() {
         return String.valueOf(point);
     }
-    public String get
+
+    public String getcategoryString() {
+        return category.getName();
+    }
 
     @Override
     public String toString() {
@@ -157,9 +159,9 @@ public class Good {
         sellers.remove(person);
     }
 
-    public boolean hasProperty(String property, String value){
-        if(properties.containsKey(property)){
-            if(properties.get(property).equals(value)){
+    public boolean hasProperty(String property, String value) {
+        if (properties.containsKey(property)) {
+            if (properties.get(property).equals(value)) {
                 return true;
             }
         }
@@ -172,14 +174,14 @@ public class Good {
         return point;
     }
 
-    public boolean hasSeller(String seller){
-        if(sellerAndPrices.containsKey(seller)){
+    public boolean hasSeller(String seller) {
+        if (sellerAndPrices.containsKey(seller)) {
             return true;
         }
         return false;
     }
 
-    public String getProperty(String property){
+    public String getProperty(String property) {
         return properties.get(property);
     }
 
@@ -187,7 +189,7 @@ public class Good {
         return allComments;
     }
 
-    public String getSummary(Seller seller){
+    public String getSummary(Seller seller) {
         return "explanation: " + explanation + "\n" + "Price of this seller: " +
                 sellerAndPrices.get(seller.getUserName()) + "\nCategory: " + category + "\nSeller: " + seller +
                 "\npoint" + point;
