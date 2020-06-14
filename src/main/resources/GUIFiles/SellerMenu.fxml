@@ -61,8 +61,11 @@
         </Tab>
         <Tab fx:id="removeProductTab" closable="false">
             <AnchorPane>
-
-            </AnchorPane>
+            <children>
+               <Label layoutX="170.0" layoutY="288.0" prefHeight="46.0" prefWidth="140.0" text="product ID" />
+               <Label layoutX="365.0" layoutY="288.0" prefHeight="123.0" prefWidth="123.0" text="result" />
+               <Button layoutX="172.0" layoutY="350.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="136.0" text="remove" />
+            </children></AnchorPane>
         </Tab>
         <Tab fx:id="showCategoryTab" closable="false">
             <AnchorPane>

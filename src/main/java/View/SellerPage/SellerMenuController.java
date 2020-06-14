@@ -106,6 +106,12 @@ public class SellerMenuController implements Initializable {
     Pane addProductPane ;
 
 
+    @FXML
+    Label messageRemoveProduct;
+    @FXML
+    Label IdRemoveProduct;
+    @FXML
+    Button RemoveProductButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -337,6 +343,19 @@ public class SellerMenuController implements Initializable {
 
 
         //remove product
+        RemoveProductButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    SellerController.removeProduct(((Seller)AccountController.loggedInUser),IdRemoveProduct.getText().trim());
+                    messageRemoveProduct.setText("succesfully deleted the product");
+                } catch (InvalidIDException e) {
+                    e.printStackTrace();
+                    messageRemoveProduct.setText("invalid ID");
+                }
+            }
+        });
+
 
         //show categories
         ArrayList<Category> categories =SellerController.showCategory(((Seller)AccountController.loggedInUser));

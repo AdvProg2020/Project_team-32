@@ -5,6 +5,7 @@ import Controller.Exeptions.InvalidPatternException;
 import Controller.Exeptions.NumberOutOfBoundException;
 import Model.*;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.StringReader;
 import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
@@ -46,11 +47,18 @@ public class SellerController {
 
     }
 
-    public static void removeProduct(Seller seller, int n) throws NumberOutOfBoundException {
-        if (seller.getSellingGoods().size() >= n - 1) {
-            seller.getSellingGoods().get(n - 1).getSellers().remove(seller);
-            seller.getSellingGoods().get(n - 1).getSellerAndPrices().remove(seller.getUserName());
-        } else throw new NumberOutOfBoundException();
+    public static void removeProduct(Seller seller, String ID) throws InvalidIDException {
+        Good good = null;
+        for (Good sellingGood : seller.getSellingGoods()) {
+            if(sellingGood.getGoodID().equals(ID)){
+                sellingGood.getSellers().remove(seller);
+                sellingGood.getSellerAndPrices().remove(seller.getUserName());
+                good=sellingGood;
+                break;
+            }
+        }
+        if(good!=null) seller.getSellingGoods().remove(good);
+        else throw new InvalidIDException();
     }
 
     public static ArrayList<Category> showCategory(Seller seller) {
