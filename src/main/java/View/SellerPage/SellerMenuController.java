@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -49,6 +50,8 @@ public class SellerMenuController implements Initializable {
 
     @FXML
     Label companyNameLabel;
+    @FXML
+    ImageView companyImage;
 
 
     @FXML
@@ -117,6 +120,10 @@ public class SellerMenuController implements Initializable {
 
 
         //company name
+        Seller seller  = new Seller("yasin","moosavi");
+        AccountController.loggedInUser=seller;
+        Seller.seller(seller);
+
         companyNameLabel.setText(((Seller) AccountController.loggedInUser).getFactoryName());
 
         // sales history

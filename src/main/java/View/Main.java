@@ -30,7 +30,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        new Good("khiyar","123",new Seller("ali","123"),"salma",new Category("hey",null,null),null,null,0);
+//        new Good("khiyar","123",new Seller("ali","123"),"salma",new Category("hey",null,null),null,null,0);
         launch(args);
 
     }

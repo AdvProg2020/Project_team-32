@@ -6,11 +6,12 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 
-<?import javafx.scene.control.TextField?>
 <TabPane fx:id="sellerTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" side="LEFT" stylesheets="@SellerTabPane-Style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SellerPage.SellerMenuController">
     <tabs>
         <Tab fx:id="userMangerTab" closable="false">
@@ -21,8 +22,9 @@
         <Tab fx:id="companyInfoTab" closable="false">
             <AnchorPane>
                 <children>
-                    <Label fx:id="companyNameLabel" layoutX="268.0" layoutY="325.0" prefHeight="113.0" prefWidth="193.0" text="Label" />
-                    <Label layoutX="312.0" layoutY="267.0" prefHeight="57.0" prefWidth="106.0" text="Company name:" />
+                    <Label fx:id="companyNameLabel" layoutX="133.0" layoutY="350.0" prefHeight="53.0" prefWidth="194.0" text="Label" />
+                    <Label layoutX="155.0" layoutY="263.0" prefHeight="58.0" prefWidth="150.0" text="Company name:" />
+               <ImageView fx:id="companyImage" fitHeight="250.0" fitWidth="245.0" layoutX="388.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true" />
                 </children>
             </AnchorPane>
         </Tab>
@@ -32,9 +34,9 @@
                     <TableView fx:id="tableView" layoutX="100.0" layoutY="103.0" prefHeight="494.0" prefWidth="530.0">
                         <columns>
                             <TableColumn fx:id="tableColumn1" prefWidth="91.99993133544922" text="logId" />
-                            <TableColumn fx:id="tableColumn2" prefWidth="100.00006103515625" text="customer" />
-                            <TableColumn fx:id="tableColumn3" prefWidth="136.800048828125" text="pricepaid" />
-                            <TableColumn fx:id="tableColumn4" prefWidth="157.60012817382812" text="off" />
+                            <TableColumn fx:id="tableColumn2" prefWidth="130.39996337890625" text="customer" />
+                            <TableColumn fx:id="tableColumn3" prefWidth="148.0" text="pricepaid" />
+                            <TableColumn fx:id="tableColumn4" prefWidth="160.00009155273438" text="off" />
                         </columns>
                     </TableView>
                 </children></AnchorPane>
@@ -42,10 +44,10 @@
         <Tab fx:id="manageProductTab" closable="false">
             <AnchorPane>
                 <children>
-                    <Button fx:id="viewProductButton" layoutX="262.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="view product" />
+                    <Button fx:id="viewProductButton" layoutX="245.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="view product" />
                     <Button fx:id="viewProductBuyers" layoutX="390.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="view buyers" />
-                    <Button fx:id="editProduct" layoutX="518.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="edit product" />
-                    <TextField fx:id="productID" layoutX="126.0" layoutY="46.0" prefHeight="52.0" prefWidth="135.0" text="enter Product id" />
+                    <Button fx:id="editProduct" layoutX="536.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="edit product" />
+                    <TextField fx:id="productID" layoutX="84.0" layoutY="46.0" prefHeight="52.0" prefWidth="135.0" text="enter Product id" />
                     <Line endX="546.0" endY="-7.62939453125E-6" layoutX="126.0" layoutY="120.0" startX="-100.0" />
                     <Pane fx:id="manageProductPane" layoutX="26.0" layoutY="134.0" prefHeight="509.0" prefWidth="650.0">
                     </Pane>
@@ -76,17 +78,17 @@
                             <TableColumn fx:id="categoryColumn" prefWidth="232.80007934570312" text="categories" />
                         </columns>
                     </TableView>
-                    <Label layoutX="95.0" layoutY="95.0" prefHeight="177.0" prefWidth="172.0" text="sir ! these are your categories!" />
+                    <Label layoutX="111.0" layoutY="258.0" prefHeight="58.0" prefWidth="224.0" text="sir ! these are your categories!" />
                     <Line endX="56.600006103515625" endY="215.0" layoutX="337.0" layoutY="373.0" startX="56.600006103515625" startY="-275.3999938964844" />
                 </children></AnchorPane>
         </Tab>
         <Tab fx:id="offsTab" closable="false">
             <AnchorPane>
                 <children>
-                    <Button fx:id="viewOffButton" layoutX="262.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="view off" />
-                    <Button fx:id="editOff" layoutX="390.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="edit off" />
-                    <Button fx:id="addOff" layoutX="518.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="add off" />
-                    <TextField fx:id="offID" layoutX="126.0" layoutY="46.0" prefHeight="52.0" prefWidth="135.0" text="enter off id" />
+                    <Button fx:id="viewOffButton" layoutX="249.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="view off" />
+                    <Button fx:id="editOff" layoutX="385.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="edit off" />
+                    <Button fx:id="addOff" layoutX="522.0" layoutY="46.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="128.0" text="add off" />
+                    <TextField fx:id="offID" layoutX="78.0" layoutY="46.0" prefHeight="52.0" prefWidth="135.0" text="enter off id" />
                     <Line endX="546.0" endY="-7.62939453125E-6" layoutX="126.0" layoutY="120.0" startX="-100.0" />
                     <Pane fx:id="manageOffPane" layoutX="26.0" layoutY="134.0" prefHeight="509.0" prefWidth="650.0">
                     </Pane>
@@ -96,7 +98,7 @@
         <Tab fx:id="balanceTab" closable="false">
             <AnchorPane>
                 <children>
-                    <Label layoutX="95.0" layoutY="162.0" prefHeight="60.0" prefWidth="334.0" text="your money:" />
+                    <Label fx:id="balanceLable" layoutX="93.0" layoutY="164.0" prefHeight="60.0" prefWidth="334.0" text="your money:" />
                 </children>
             </AnchorPane>
         </Tab>

@@ -11,6 +11,14 @@ public class Seller extends Person {
     private static ArrayList<Seller> allSellers = new ArrayList<>();
 
 
+    public static void seller(Seller seller){
+        seller.factoryName = "apple";
+        Good good = new Good("khiyar","123",new Seller("ali","123"),"salma",new Category("hey",null,null),null,null,0);
+        seller.sellingGoods.add(good);
+
+    }
+
+
     public ArrayList<SellLog> getAllSellingLogs() {
         return allSellingLogs;
     }
