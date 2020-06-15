@@ -3,6 +3,7 @@ package View.SellerPage;
 import Controller.*;
 import Controller.Exeptions.CategoryNotFindException;
 import Controller.Exeptions.InvalidIDException;
+import Controller.Exeptions.InvalidPatternException;
 import Model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -142,17 +143,12 @@ public class SellerMenuController implements Initializable {
             tableView.getItems().add(allSellingLog);
         }
 
-        //manage product begening
-        for (Good sellingGood : ((Seller) AccountController.loggedInUser).getSellingGoods()) {
-            GridPane gridPane = new GridPane();
-            Label name = new Label();
-            Label ID = new Label();
-            name.setText(sellingGood.getName());
-            ID.setText(sellingGood.getGoodID());
-            gridPane.add(name, 0, 0);
-            gridPane.add(ID, 1, 0);
-            manageProductPane.getChildren().add(gridPane);
-        }
+        //manage product
+        //
+        //
+        //
+        //
+
 
         //view individual product
         viewProductButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -182,6 +178,9 @@ public class SellerMenuController implements Initializable {
 
             }
         });
+
+        //view product bbuyers
+
         viewProductBuyers.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -204,6 +203,9 @@ public class SellerMenuController implements Initializable {
 
             }
         });
+
+        // edit product
+
         editProduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -267,8 +269,9 @@ public class SellerMenuController implements Initializable {
 
             }
         });
-        //Add product
 
+
+        //Add product
 
         addProductID_Button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -351,6 +354,8 @@ public class SellerMenuController implements Initializable {
 
 
         //remove product
+
+
         RemoveProductButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -366,6 +371,8 @@ public class SellerMenuController implements Initializable {
 
 
         //show categories
+
+
         ArrayList<Category> categories = SellerController.showCategory(((Seller) AccountController.loggedInUser));
         ArrayList<String> categoryNames = new ArrayList<>();
         for (Category category : categories) {
@@ -375,12 +382,13 @@ public class SellerMenuController implements Initializable {
         categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
         categoryTable.setItems(details);
 
-        //view offs
+        //view off individual
+
         viewOffButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    Off off = SellerController.showInddividualOff(((Seller)AccountController.loggedInUser),offID.getText().trim());
+                    Off off = SellerController.showInddividualOff(((Seller) AccountController.loggedInUser), offID.getText().trim());
                     TableView offTable = new TableView();
                     TableColumn<String, Off> offID = new TableColumn<>("off ID");
                     TableColumn<String, Off> initialDate = new TableColumn<>("initial Date");
@@ -401,27 +409,105 @@ public class SellerMenuController implements Initializable {
 
             }
         });
+
+        //edit off
+
         editOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-//
-//                Off off= SellerController.checkOffID(((Seller)getUserRecursively(this)).getOffs(),scanner.nextLine());
-//                System.out.println("pleasse enter GoodIDs and initial date and end date and offPercent in this order:\n "+
-//                        "[GoodId1,goodid2,..] [year,month,day] [year,month,day] [offPercent]"+
-//                        "not about commas and spaces between obj");
+
+                try {
+                    Off off = SellerController.checkOffID(((Seller) AccountController.loggedInUser).getOffs(), offID.getText().trim());
+                    TextField goods = new TextField("enter goods in this order GoodId1,goodid2,.. ");
+                    final String[] date1 = new String[1];
+                    final String[] date2 = new String[1];
+                    DatePicker firstDate = new DatePicker();
+                    DatePicker lastDate = new DatePicker();
+                    firstDate.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            date1[0] = String.valueOf(firstDate.getValue()).replaceAll("-", ",");
+                        }
+                    });
+                    lastDate.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            date2[0] = String.valueOf(lastDate.getValue()).replaceAll("-", ",");
+                        }
+                    });
+                    TextField offPercent = new TextField("enter off percent");
+                    Button confirm = new Button("confrim");
+                    confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            String input = goods.getText().trim();
+                            input += " " + date1[0] + " " + date2[0] + " " + offPercent.getText().trim();
+
+                            String request = null;
+                            try {
+                                request = SellerController.makeRequest(off.getOffID(), input.trim(), "^(\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)$");
+                                RequestController.addEditOffRequest(request, ((Seller) AccountController.loggedInUser));
+                            } catch (InvalidPatternException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                    manageOffPane.getChildren().clear();
+                    manageOffPane.getChildren().addAll(goods, firstDate, lastDate, offPercent, confirm);
+
+                } catch (InvalidIDException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
+
+        // add off
+
         addOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                TextField offID = new TextField("off ID");
+                TextField goods = new TextField("enter goods in this order GoodId1,goodid2,.. ");
+                final String[] date1 = new String[1];
+                final String[] date2 = new String[1];
+                DatePicker firstDate = new DatePicker();
+                DatePicker lastDate = new DatePicker();
+                firstDate.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        date1[0] = String.valueOf(firstDate.getValue()).replaceAll("-", ",");
+                    }
+                });
+                lastDate.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        date2[0] = String.valueOf(lastDate.getValue()).replaceAll("-", ",");
+                    }
+                });
+                TextField offPercent = new TextField("enter off percent");
+                Button confirm = new Button("confrim");
+                confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        String input = offID.getText().trim() + " " + goods.getText().trim();
+                        input += " " + date1[0] + " " + date2[0] + " " + offPercent.getText().trim();
+                        String request = null;
+                        try {
+                            request = SellerController.makeRequest(null, input.trim(), "^(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)$");
+                            RequestController.addOffRequest(request.trim(), ((Seller) AccountController.loggedInUser));
+                        } catch (InvalidPatternException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+                manageOffPane.getChildren().clear();
+                manageOffPane.getChildren().addAll(offID, goods, firstDate, lastDate, offPercent);
 
             }
         });
-
-
-
-
 
 
         //all tabs selected initializing
@@ -437,8 +523,8 @@ public class SellerMenuController implements Initializable {
                     balanceLable.setText("remaining money :" + ((Seller) AccountController.loggedInUser).getCredit() + "Tomans");
                 }
                 // off view tab
-                else if(newTab.equals(offsTab)){
-                    ArrayList<Off> offs = ((Seller)AccountController.loggedInUser).getOffs();
+                else if (newTab.equals(offsTab)) {
+                    ArrayList<Off> offs = ((Seller) AccountController.loggedInUser).getOffs();
                     TableView offTable = new TableView();
                     TableColumn<String, Off> offIdColumn = new TableColumn<>("off ID");
 
@@ -449,6 +535,20 @@ public class SellerMenuController implements Initializable {
                     manageOffPane.getChildren().clear();
                     manageOffPane.getChildren().add(offTable);
                 }
+                // manage product tab
+                else if (newTab.equals(manageProductTab)) {
+                    TableView productTable = new TableView();
+                    TableColumn<String, Good> goodNameProductTab = new TableColumn<>("good name");
+                    TableColumn<String, Good> goodIdProductTab = new TableColumn<>("good ID");
+                    goodNameProductTab.setCellValueFactory(new PropertyValueFactory<>("Name"));
+                    goodIdProductTab.setCellValueFactory(new PropertyValueFactory<>("GoodID"));
+                    for (Good sellingGood : ((Seller) AccountController.loggedInUser).getSellingGoods()) {
+                        productTable.getItems().add(sellingGood);
+                    }
+                    manageProductPane.getChildren().clear();
+                    manageProductPane.getChildren().add(productTable);
+                }
+
             }
         });
 
