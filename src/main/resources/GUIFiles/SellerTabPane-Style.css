@@ -5,7 +5,7 @@
     -fx-tab-min-width: 5em;
     -fx-tab-max-width: 5em;
 
-    -fx-background-color: white;
+    -fx-background-color: #DCDCDC;
 
 }
 
@@ -15,33 +15,41 @@
 
 }
 
-#infoTab{
-    -fx-background-image: url("icons/profileIcon.png");
-}
-
 #userMangerTab{
-    -fx-background-image: url("icons/userMangerIcon.png");
+    -fx-background-image: url("Sellericons/contact.png");
+}
+#offsTab{
+    -fx-background-image: url("Sellericons/off/icons8-discount-64.png");
+}
+#salesHIstoryTab {
+    -fx-background-image: url("Sellericons/sale/icons8-sale-100.png");
+}
+#companyInfoTab {
+
+    -fx-background-image: url("Sellericons/company-info/icons8-company-100-3.png");
+    -fx-background-size:100% ;
+}
+#balanceTab{
+    -fx-background-image: url("Sellericons/balance/icons8-cheap-2-100-2.png");
+}
+#addProductTab{
+    -fx-background-image: url("Sellericons/add.png");
+}
+#manageProductTab{
+    -fx-background-image: url("Sellericons/icons8-product-100-2.png");
+    -fx-background-size: 100%;
+}
+#showCategoryTab{
+    -fx-background-image: url("Sellericons/category/icons8-book-stack-100.png");
+}
+#removeProductTab{
+    -fx-background-image: url("Sellericons/remove.png");
 }
 
-#productManagerTab {
-    -fx-background-image: url("icons/productManagerIcon.png");
-}
-
-#discountManagerTab {
-    -fx-background-image: url("icons/discountIcon.png");
-}
-
-#requestManagerTab{
-    -fx-background-image: url("icons/requestIcon.png");
-}
-
-#categoryManagerTab{
-    -fx-background-image: url("icons/categoryIcon.png");
-}
 
 .tab {
-    -fx-background-color: rgba(255, 255, 255, 0.78);
-    -fx-background-size: 60%;
+    -fx-background-color: rgba(25, 25, 25, 0.01);
+    -fx-background-size: 80%;
     -fx-background-insets: 0.0;
     -fx-background-radius: 0.0;
     -fx-opacity: 1;
@@ -69,9 +77,9 @@
 }
 
 .tab-pane *.tab-header-background {
-    -fx-background-color : linear-gradient(#ffcf58,white);
+    -fx-background-color : rgba(47,79,79 0.8);
     -fx-border-width: 0 0 0.7 0;
-    -fx-border-color: rgba(250, 189, 57, 0.75);
+    -fx-border-color: rgba(20, 45, 57, 0.75);
 }
 
 .tab-pane *.tab-header-area {

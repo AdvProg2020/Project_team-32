@@ -27,6 +27,7 @@ public class SellerMenuController implements Initializable {
 
     @FXML
     TabPane sellerTabPane;
+
     @FXML
     Tab userMangerTab;
     @FXML
@@ -48,26 +49,10 @@ public class SellerMenuController implements Initializable {
 
     @FXML
     Label companyNameLabel;
-//    @FXML
-//    Label label1 ;
-//    @FXML
-//    Label label2 ;
-//    @FXML
-//    Label label3 ;
-//    @FXML
-//    Label label4 ;
-//    @FXML
-//    Label label5 ;
-//    @FXML
-//    Label label6 ;
-//    @FXML
-//    Label label7 ;
 
 
     @FXML
     TableView tableView;
-
-
     @FXML
     TableColumn<String, SellLog> tableColumn1;
     @FXML
@@ -77,9 +62,9 @@ public class SellerMenuController implements Initializable {
     @FXML
     TableColumn<Float, SellLog> tableColumn4;
 
+
     @FXML
     Pane manageProductPane;
-
     @FXML
     Button viewProductButton;
     @FXML
@@ -93,6 +78,7 @@ public class SellerMenuController implements Initializable {
     TableView<String> categoryTable;
     @FXML
     TableColumn<String, String> categoryColumn;
+
     @FXML
     Label balanceLable;
 
@@ -113,7 +99,6 @@ public class SellerMenuController implements Initializable {
 
     @FXML
     Pane manageOffPane;
-
     @FXML
     Button viewOffButton;
     @FXML
@@ -122,6 +107,7 @@ public class SellerMenuController implements Initializable {
     Button addOff;
     @FXML
     TextField offID;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
