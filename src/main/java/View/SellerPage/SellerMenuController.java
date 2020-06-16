@@ -14,10 +14,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
@@ -119,22 +121,24 @@ public class SellerMenuController implements Initializable {
 //        AccountController.loggedInUser= new Seller("yasin","moosavi");\
 
 
-        //company name
+
         Seller seller  = new Seller("yasin","moosavi");
         AccountController.loggedInUser=seller;
         Seller.seller(seller);
+        SellLog  sellLog= new SellLog("sellog",new Date(),100,20,seller.getSellingGoods().get(0),"taha","choert" );
+        Good sib = new Good("sib","sibid",seller,"sib sazi"
+                ,new Category("sibcat",null,null),
+                "sib explanations",null,100);
+        ArrayList<Good> goodsArray = new ArrayList<>();
+        goodsArray.add(sib);
+        Off off = new Off("12",goodsArray,new Date(), new Date(),150);
+        seller.getOffs().add(off);
 
+
+        // company name
         companyNameLabel.setText(((Seller) AccountController.loggedInUser).getFactoryName());
 
-        // sales history
-        tableColumn1.setCellValueFactory(new PropertyValueFactory<>("logID"));
-        tableColumn2.setCellValueFactory(new PropertyValueFactory<>("buyerUserNmae"));
-        tableColumn3.setCellValueFactory(new PropertyValueFactory<>("pricePaid"));
-        tableColumn4.setCellValueFactory(new PropertyValueFactory<>("amountReducedForOff"));
 
-        for (SellLog allSellingLog : ((Seller) AccountController.loggedInUser).getAllSellingLogs()) {
-            tableView.getItems().add(allSellingLog);
-        }
 
         //manage product
         //
@@ -161,8 +165,12 @@ public class SellerMenuController implements Initializable {
                     explanations.setCellValueFactory(new PropertyValueFactory<>("explanation"));
                     point.setCellValueFactory(new PropertyValueFactory<>("pointString"));
 
-                    tableView.getItems().add(good);
+                    productTable.getColumns().addAll(goodName,goodId,categoryName,explanations,point);
 
+                    System.out.println("salam");
+
+                    productTable.getItems().add(good);
+                    productTable.setMinSize(600,500);
                     manageProductPane.getChildren().clear();
                     manageProductPane.getChildren().add(productTable);
                 } catch (InvalidIDException e) {
@@ -183,7 +191,7 @@ public class SellerMenuController implements Initializable {
                     ObservableList<String> details = FXCollections.observableArrayList(allBuyers);
                     TableView<String> buyersTable = new TableView<>();
                     TableColumn<String, String> col1 = new TableColumn<>("Buyers");
-                    buyersTable.getColumns().addAll(col1);
+                    buyersTable.getColumns().add(col1);
                     col1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
                     buyersTable.setItems(details);
                     manageProductPane.getChildren().clear();
@@ -363,17 +371,7 @@ public class SellerMenuController implements Initializable {
         });
 
 
-        //show categories
 
-
-        ArrayList<Category> categories = SellerController.showCategory(((Seller) AccountController.loggedInUser));
-        ArrayList<String> categoryNames = new ArrayList<>();
-        for (Category category : categories) {
-            categoryNames.add(category.getName());
-        }
-        ObservableList<String> details = FXCollections.observableArrayList(categoryNames);
-        categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
-        categoryTable.setItems(details);
 
         //view off individual
 
@@ -392,8 +390,8 @@ public class SellerMenuController implements Initializable {
                     exposeDate.setCellValueFactory(new PropertyValueFactory<>("ExposeDateString"));
                     discountPercent.setCellValueFactory(new PropertyValueFactory<>("DiscountPercentString"));
 
-                    tableView.getItems().add(off);
-
+                    offTable.getColumns().addAll(offID,initialDate,exposeDate,discountPercent);
+                    offTable.getItems().add(off);
                     manageOffPane.getChildren().clear();
                     manageOffPane.getChildren().add(offTable);
                 } catch (InvalidIDException e) {
@@ -446,8 +444,22 @@ public class SellerMenuController implements Initializable {
 
                         }
                     });
+                    GridPane gridPane = new GridPane();
+                    gridPane.setLayoutX(100);
+                    gridPane.setLayoutY(50);
+                    gridPane.setHgap(10);
+                    gridPane.setVgap(20);
+                    ColumnConstraints cc = new ColumnConstraints();
+                    cc.setPrefWidth(400);
+                    gridPane.getColumnConstraints().add(cc);
+                    gridPane.setAlignment(Pos.TOP_CENTER);
+                    gridPane.add(goods,0,0);
+                    gridPane.add(firstDate,0,1);
+                    gridPane.add(lastDate,0,2);
+                    gridPane.add(offPercent,0,3);
+                    gridPane.add(confirm,0,4);
                     manageOffPane.getChildren().clear();
-                    manageOffPane.getChildren().addAll(goods, firstDate, lastDate, offPercent, confirm);
+                    manageOffPane.getChildren().addAll(gridPane);
 
                 } catch (InvalidIDException e) {
                     e.printStackTrace();
@@ -466,7 +478,9 @@ public class SellerMenuController implements Initializable {
                 final String[] date1 = new String[1];
                 final String[] date2 = new String[1];
                 DatePicker firstDate = new DatePicker();
+                firstDate.setMinWidth(400);
                 DatePicker lastDate = new DatePicker();
+                lastDate.setMinWidth(400);
                 firstDate.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -490,14 +504,31 @@ public class SellerMenuController implements Initializable {
                         try {
                             request = SellerController.makeRequest(null, input.trim(), "^(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)$");
                             RequestController.addOffRequest(request.trim(), ((Seller) AccountController.loggedInUser));
+                            System.out.println("off added");
                         } catch (InvalidPatternException e) {
                             e.printStackTrace();
                         }
 
                     }
                 });
+
+                GridPane gridPane = new GridPane();
+                gridPane.setLayoutX(100);
+                gridPane.setLayoutY(50);
+                gridPane.setHgap(10);
+                gridPane.setVgap(20);
+                ColumnConstraints cc = new ColumnConstraints();
+                cc.setPrefWidth(400);
+                gridPane.getColumnConstraints().add(cc);
+                gridPane.setAlignment(Pos.TOP_CENTER);
+                gridPane.add(offID,0,0);
+                gridPane.add(goods,0,1);
+                gridPane.add(firstDate,0,2);
+                gridPane.add(lastDate,0,3);
+                gridPane.add(offPercent,0,4);
+                gridPane.add(confirm,0,5);
                 manageOffPane.getChildren().clear();
-                manageOffPane.getChildren().addAll(offID, goods, firstDate, lastDate, offPercent);
+                manageOffPane.getChildren().addAll(gridPane);
 
             }
         });
@@ -519,11 +550,13 @@ public class SellerMenuController implements Initializable {
                 else if (newTab.equals(offsTab)) {
                     ArrayList<Off> offs = ((Seller) AccountController.loggedInUser).getOffs();
                     TableView offTable = new TableView();
+                    offTable.setPrefWidth(640);
                     TableColumn<String, Off> offIdColumn = new TableColumn<>("off ID");
-
                     offIdColumn.setCellValueFactory(new PropertyValueFactory<>("OffID"));
+                    offIdColumn.prefWidthProperty().bind(offTable.widthProperty().multiply(1));
+                    offTable.getColumns().add(offIdColumn);
                     for (Off off : offs) {
-                        tableView.getItems().add(off);
+                        offTable.getItems().add(off);
                     }
                     manageOffPane.getChildren().clear();
                     manageOffPane.getChildren().add(offTable);
@@ -531,15 +564,55 @@ public class SellerMenuController implements Initializable {
                 // manage product tab
                 else if (newTab.equals(manageProductTab)) {
                     TableView productTable = new TableView();
+                    productTable.setPrefWidth(650);
                     TableColumn<String, Good> goodNameProductTab = new TableColumn<>("good name");
                     TableColumn<String, Good> goodIdProductTab = new TableColumn<>("good ID");
                     goodNameProductTab.setCellValueFactory(new PropertyValueFactory<>("Name"));
                     goodIdProductTab.setCellValueFactory(new PropertyValueFactory<>("GoodID"));
+                    productTable.getColumns().addAll(goodNameProductTab,goodIdProductTab);
+                    goodNameProductTab.prefWidthProperty().bind(productTable.widthProperty().multiply(0.5));
+                    goodIdProductTab.prefWidthProperty().bind(productTable.widthProperty().multiply(0.5));
+//                    goodNameProductTab.setResizable(false);
+//                    goodIdProductTab.setResizable(false);
+
                     for (Good sellingGood : ((Seller) AccountController.loggedInUser).getSellingGoods()) {
                         productTable.getItems().add(sellingGood);
                     }
                     manageProductPane.getChildren().clear();
                     manageProductPane.getChildren().add(productTable);
+                }
+                // sales history
+                else if(newTab.equals(salesHIstoryTab)){
+                    tableColumn1.setCellValueFactory(new PropertyValueFactory<>("logID"));
+                    tableColumn2.setCellValueFactory(new PropertyValueFactory<>("buyerUserNmae"));
+                    tableColumn3.setCellValueFactory(new PropertyValueFactory<>("pricePaid"));
+                    tableColumn4.setCellValueFactory(new PropertyValueFactory<>("amountReducedForOff"));
+
+                    tableColumn1.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+                    tableColumn2.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
+                    tableColumn3.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+                    tableColumn4.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
+                    tableColumn1.setResizable(false);
+                    tableColumn2.setResizable(false);
+                    tableColumn3.setResizable(false);
+                    tableColumn4.setResizable(false);
+                    for (SellLog allSellingLog : ((Seller) AccountController.loggedInUser).getAllSellingLogs()) {
+                        tableView.getItems().add(allSellingLog);
+                    }
+                }
+                //show categories
+                else if(newTab.equals(showCategoryTab)){
+                    ArrayList<Category> categories = SellerController.showCategory(((Seller) AccountController.loggedInUser));
+                    ArrayList<String> categoryNames = new ArrayList<>();
+                    for (Category category : categories) {
+                        categoryNames.add(category.getName());
+                    }
+                    ObservableList<String> details = FXCollections.observableArrayList(categoryNames);
+                    categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
+                    categoryColumn.prefWidthProperty().bind(categoryTable.widthProperty().multiply(1));
+                    categoryColumn.setResizable(false);
+                    categoryTable.getColumns().add(categoryColumn);
+                    categoryTable.setItems(details);
                 }
 
             }
