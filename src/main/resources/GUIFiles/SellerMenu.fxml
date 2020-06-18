@@ -12,11 +12,73 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
 <TabPane fx:id="sellerTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" side="LEFT" stylesheets="@SellerTabPane-Style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SellerPage.SellerMenuController">
     <tabs>
         <Tab fx:id="userMangerTab" closable="false">
-            <AnchorPane>
-
+            <AnchorPane stylesheets="information-page-style.css">
+                <children>
+                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="75.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@icons/emptyAvatar.png" />
+                        </image>
+                    </ImageView>
+                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffb32e" height="200.0" layoutX="284.0" layoutY="70.0" stroke="WHITE" strokeType="INSIDE" width="347.0" />
+                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="353.0" layoutX="64.0" layoutY="306.0" stroke="#ffb32e" strokeType="INSIDE" width="572.0" />
+                    <Text fx:id="welcomeText" fill="#ddab21" layoutX="80.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi, username">
+                        <font>
+                            <Font name="Freestyle Script" size="43.0" />
+                        </font>
+                    </Text>
+                    <TextField fx:id="usernameText" disable="true" editable="false" layoutX="364.0" layoutY="124.0" styleClass="inputChoice" text="username" />
+                    <TextField fx:id="passwordText" disable="true" editable="false" layoutX="364.0" layoutY="191.0" styleClass="inputChoice" text="password" />
+                    <Label layoutX="364.0" layoutY="102.0" text="username:" textFill="WHITE">
+                        <font>
+                            <Font name="Comic Sans MS" size="15.0" />
+                        </font>
+                    </Label>
+                    <Label layoutX="364.0" layoutY="170.0" text="password:" textFill="WHITE">
+                        <font>
+                            <Font name="Comic Sans MS" size="15.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="emailText" disable="true" layoutX="120.0" layoutY="357.0" styleClass="inputChoice" text="email@mail.com" />
+                    <TextField fx:id="firstNameText" disable="true" layoutX="120.0" layoutY="425.0" styleClass="inputChoice" text="firstname" />
+                    <TextField fx:id="lastNameText" disable="true" layoutX="120.0" layoutY="499.0" styleClass="inputChoice" text="lastname" />
+                    <Button fx:id="emailEditButton" layoutX="317.0" layoutY="366.0" minHeight="22.0" minWidth="21.0" mnemonicParsing="false" onAction="#enableEmailText" prefHeight="22.0" prefWidth="21.0" styleClass="editButton" />
+                    <Button fx:id="firstnameEditButton" layoutX="317.0" layoutY="433.0" minHeight="22.0" minWidth="21.0" mnemonicParsing="false" onAction="#enableFirstText" prefHeight="22.0" prefWidth="21.0" styleClass="editButton" />
+                    <Button fx:id="lastnameEditButton" layoutX="317.0" layoutY="509.0" minHeight="22.0" minWidth="21.0" mnemonicParsing="false" onAction="#enableLastText" prefHeight="22.0" prefWidth="21.0" styleClass="editButton" />
+                    <TextField fx:id="phoneText" disable="true" layoutX="378.0" layoutY="361.0" styleClass="inputChoice" text="+1239***33" />
+                    <Button fx:id="phoneEditButton" layoutX="575.0" layoutY="370.0" minHeight="22.0" minWidth="21.0" mnemonicParsing="false" onAction="#enablePhoneText" prefHeight="22.0" prefWidth="21.0" styleClass="editButton" />
+                    <Label layoutX="130.0" layoutY="339.0" text="Email:" textFill="#ffb32e">
+                        <font>
+                            <Font name="Comic Sans MS" size="15.0" />
+                        </font>
+                    </Label>
+                    <Label layoutX="130.0" layoutY="407.0" text="Firstname:" textFill="#ffb32e">
+                        <font>
+                            <Font name="Comic Sans MS" size="15.0" />
+                        </font>
+                    </Label>
+                    <Label layoutX="130.0" layoutY="481.0" text="Lastname:" textFill="#ffb32e">
+                        <font>
+                            <Font name="Comic Sans MS" size="15.0" />
+                        </font>
+                    </Label>
+                    <Label layoutX="378.0" layoutY="340.0" text="Phone number:" textFill="#ffb32e">
+                        <font>
+                            <Font name="Comic Sans MS" size="15.0" />
+                        </font>
+                    </Label>
+                    <Button layoutX="480.0" layoutY="497.0" mnemonicParsing="false" onAction="#changeInformation" styleClass="submitButton" text="Apply" textFill="WHITE">
+                        <font>
+                            <Font name="Comic Sans MS" size="16.0" />
+                        </font>
+                    </Button>
+                </children>
             </AnchorPane>
         </Tab>
         <Tab fx:id="companyInfoTab" closable="false">

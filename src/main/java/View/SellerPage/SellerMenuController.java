@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.*;
@@ -113,26 +114,74 @@ public class SellerMenuController implements Initializable {
     @FXML
     TextField offID;
 
+    public Button phoneEditButton;
+    public Button lastnameEditButton;
+    public Button firstnameEditButton;
+    public Button emailEditButton;
+    public TextField emailText;
+    public TextField firstNameText;
+    public TextField lastNameText;
+    public TextField phoneText;
+    public Text welcomeText;
+    public TextField passwordText;
+    public TextField usernameText;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //info personal
 
-//        AccountController.loggedInUser= new Seller("yasin","moosavi");\
-
-
-
         Seller seller  = new Seller("yasin","moosavi");
         AccountController.loggedInUser=seller;
-        Seller.seller(seller);
-        SellLog  sellLog= new SellLog("sellog",new Date(),100,20,seller.getSellingGoods().get(0),"taha","choert" );
-        Good sib = new Good("sib","sibid",seller,"sib sazi"
-                ,new Category("sibcat",null,null),
-                "sib explanations",null,100);
-        ArrayList<Good> goodsArray = new ArrayList<>();
-        goodsArray.add(sib);
-        Off off = new Off("12",goodsArray,new Date(), new Date(),150);
-        seller.getOffs().add(off);
+        Person user = AccountController.loggedInUser;
+
+        if(user!=null && !(user instanceof Guest)){
+            passwordText.setText(user.getPassWord());
+            usernameText.setText(user.getUserName());
+            welcomeText.setText("Hi," + user.getUserName());
+            phoneText.setText(user.getPhoneID());
+            lastNameText.setText(user.getLastName());
+            firstNameText.setText(user.getFirstName());
+            emailText.setText(user.getEmail());
+        }
+        emailText.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue)
+                    resetFields(emailText);
+            }
+        });
+
+        lastNameText.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue)
+                    resetFields(lastNameText);
+            }
+        });
+
+        firstNameText.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue)
+                    resetFields(firstNameText);
+            }
+        });
+
+            //        AccountController.loggedInUser= new Seller("yasin","moosavi");\
+
+
+
+
+//        AccountController.loggedInUser=seller;
+//        Seller.seller(seller);
+//        SellLog  sellLog= new SellLog("sellog",new Date(),100,20,seller.getSellingGoods().get(0),"taha","choert" );
+//        Good sib = new Good("sib","sibid",seller,"sib sazi"
+//                ,new Category("sibcat",null,null),
+//                "sib explanations",null,100);
+//        ArrayList<Good> goodsArray = new ArrayList<>();
+//        goodsArray.add(sib);
+//        Off off = new Off("12",goodsArray,new Date(), new Date(),150);
+//        seller.getOffs().add(off);
 
 
         // company name
@@ -620,4 +669,60 @@ public class SellerMenuController implements Initializable {
 
 
     }
+    private void resetFields(TextField field) {
+        field.getStyleClass().remove("inputChoiceError");
+        field.setText("");
+    }
+
+    public void enableEmailText(ActionEvent actionEvent) {
+        emailText.setDisable(false);
+    }
+
+    public void enableFirstText(ActionEvent actionEvent) {
+        firstNameText.setDisable(false);
+    }
+
+    public void enableLastText(ActionEvent actionEvent) {
+        lastNameText.setDisable(false);
+    }
+
+    public void enablePhoneText(ActionEvent actionEvent) {
+        phoneText.setDisable(false);
+    }
+
+    public void changeInformation(ActionEvent actionEvent) {
+
+        //validation
+        if(!textValidation(emailText.getText(),".+@.+\\..+")){
+            emailText.getStyleClass().add("inputChoiceError");
+            emailText.setText("invalid mail");
+        }
+        if(!textValidation(phoneText.getText(),"\\d+")){
+            phoneText.getStyleClass().add("inputChoiceError");
+            phoneText.setText("invalid phone number");
+        }
+        if(!textValidation(emailText.getText(),".+@.+\\..+") || !textValidation(phoneText.getText(),"\\d+"))
+            return;
+
+        Person user = AccountController.loggedInUser;
+        if(user != null){
+            //change user information
+            user.setEmail(emailText.getText());
+            user.setPhoneID(phoneText.getText());
+            user.setFirstName(firstNameText.getText());
+            user.setLastName(lastNameText.getText());
+        }
+
+        //reset text fields to disable mode
+        lastNameText.setDisable(true);
+        firstNameText.setDisable(true);
+        phoneText.setDisable(true);
+        emailText.setDisable(true);
+
+    }
+
+    private boolean textValidation(String text, String regex) {
+        return text.matches(regex);
+    }
+
 }
