@@ -39,6 +39,14 @@
     -fx-background-image: url("icons/categoryIcon.png");
 }
 
+#viewCategoriesTab{
+    -fx-background-image: url("GoodsMenuIcons/categoryIcon1.png");
+}
+
+#returnToMainMenuTab {
+    -fx-background-image: url("GoodsMenuIcons/return.png");
+}
+
 .tab {
     -fx-background-color: rgba(255, 255, 255, 0.78);
     -fx-background-size: 60%;
