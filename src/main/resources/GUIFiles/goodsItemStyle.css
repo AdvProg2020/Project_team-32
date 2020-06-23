@@ -12,7 +12,3 @@
 .vBox {
     -fx-alignment: center;
 }
-
-.imageView {
-    -fx-fit-to-height: true;
-}
