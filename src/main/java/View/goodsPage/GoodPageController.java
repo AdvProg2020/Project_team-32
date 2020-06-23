@@ -4,16 +4,18 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.cell.CheckBoxTreeCell;
 
 public class GoodPageController implements Initializable {
 
     @FXML
-    private TreeView<String> treeView;
+    private TreeView<String> categoriesTreeView;
+
+    @FXML
+    private TreeView filterTreeView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -24,7 +26,23 @@ public class GoodPageController implements Initializable {
         TreeItem<String> laptops = new TreeItem<>("laptops");
         TreeItem<String> TVs = new TreeItem<>("TVs");
         categories.getChildren().addAll(laptops, TVs);
-        treeView.setRoot(categories);
+        categoriesTreeView.setRoot(categories);
+
+        TreeItem<String > filters = new CheckBoxTreeItem<>("Filters");
+        filterTreeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+        TreeItem<String > filterByCategoryProperties = new CheckBoxTreeItem<>("Category Properties");
+        TreeItem<String> filterByGeneralProperties = new CheckBoxTreeItem<>("General Properties");
+        filterTreeView.setRoot(filters);
+        filters.setExpanded(true);
+        filterTreeView.setEditable(true);
+        filters.getChildren().addAll(filterByCategoryProperties, filterByGeneralProperties);
+        CheckBoxTreeItem<String> a = new CheckBoxTreeItem<>("hello");
+        filterByCategoryProperties.getChildren().addAll(a);
+        CheckBoxTreeItem<String> b = new CheckBoxTreeItem<>("hi");
+        filterByCategoryProperties.getChildren().addAll(b);
+
+
+
     }
 
 
