@@ -18,7 +18,7 @@ public class GoodsPageTest extends Application {
         URL url = new File("src\\main\\resources\\GUIFiles\\GoodsPage.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("test");
-        primaryStage.setScene(new Scene(root, 500, 500));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 }

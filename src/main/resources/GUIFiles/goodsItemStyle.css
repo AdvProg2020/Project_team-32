@@ -1,0 +1,18 @@
+.pane:hover {
+    -fx-border-radius: 15;
+    -fx-opacity: 0.7;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2),5,0,0,2);
+}
+
+.hBox {
+    -fx-alignment: center;
+    -fx-spacing: 10;
+}
+
+.vBox {
+    -fx-alignment: center;
+}
+
+.imageView {
+    -fx-fit-to-height: true;
+}
