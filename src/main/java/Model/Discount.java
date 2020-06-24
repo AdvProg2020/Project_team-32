@@ -30,9 +30,23 @@ public class Discount implements Serializable {
     public int getDiscountPercent() {
         return discountPercent;
     }
+    public String getDiscountPercentString() {
+        return String.valueOf(discountPercent);
+    }
+
+    public int getMaxAmount() {
+        return maxAmount;
+    }
+
+    public String getMaxAmountString() {
+        return String.valueOf(maxAmount);
+    }
 
     public int getUseCount() {
         return useCount;
+    }
+    public String getUseCountString() {
+        return String.valueOf(useCount);
     }
 
     public void setUseCount(int useCount) {
@@ -42,9 +56,15 @@ public class Discount implements Serializable {
     public Date getInitialDate() {
         return initialDate;
     }
+    public String getInitialDateString() {
+        return initialDate.toString();
+    }
 
     public Date getExposeDate() {
         return exposeDate;
+    }
+    public String getExposeDateString() {
+        return exposeDate.toString();
     }
 
     public void setInitialDate(Date initialDate) {

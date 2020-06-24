@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.CustomerPage.DiscountsController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="528.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.DiscountsController">
+   <children>
+      <TableView fx:id="discountTable" layoutX="51.0" layoutY="42.0" prefHeight="450.0" prefWidth="664.0">
+        <columns>
+          <TableColumn fx:id="ID_col" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="initDate_col" prefWidth="119.20001220703125" text="initiapl date" />
+            <TableColumn fx:id="expDate_col" prefWidth="103.19993591308594" text="expose date" />
+            <TableColumn fx:id="discountPercent_col" prefWidth="108.79998779296875" text="percent" />
+            <TableColumn fx:id="maxAmount_col" prefWidth="88.0" text="max amount" />
+            <TableColumn fx:id="count_col" prefWidth="82.4000244140625" text="count" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>
