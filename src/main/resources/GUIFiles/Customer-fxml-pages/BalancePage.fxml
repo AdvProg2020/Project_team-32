@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.CustomerPage.BalanceController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="514.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.BalanceController">
+   <children>
+      <Label fx:id="balance" layoutX="310.0" layoutY="239.0" prefHeight="111.0" prefWidth="271.0" text="balance" />
+   </children>
 </AnchorPane>
