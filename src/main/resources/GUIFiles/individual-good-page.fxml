@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="637.0" stylesheets="@individual-good-stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane layoutX="319.0" layoutY="26.0" prefHeight="528.0" prefWidth="295.0">
+         <content>
+            <VBox fx:id="mainVBox" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <VBox fx:id="commentsVBox" prefHeight="200.0" prefWidth="100.0" />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <VBox layoutX="48.0" layoutY="290.0" prefHeight="237.0" prefWidth="200.0">
+         <children>
+            <HBox prefHeight="51.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="51.0" prefWidth="78.0" text="name" textAlignment="CENTER" />
+                  <Label fx:id="nameLabel" alignment="CENTER" prefHeight="59.0" prefWidth="159.0" text="Label" />
+               </children>
+            </HBox>
+            <HBox prefHeight="51.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="51.0" prefWidth="78.0" text="seller" textAlignment="CENTER" />
+                  <Label fx:id="sellerLabel" alignment="CENTER" prefHeight="59.0" prefWidth="159.0" text="Label" />
+               </children>
+            </HBox>
+            <HBox prefHeight="51.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="51.0" prefWidth="78.0" text="price" textAlignment="CENTER" />
+                  <Label fx:id="sellerLabel1" alignment="CENTER" prefHeight="59.0" prefWidth="159.0" text="price" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ImageView fx:id="imageView" fitHeight="213.0" fitWidth="200.0" layoutX="48.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</Pane>
