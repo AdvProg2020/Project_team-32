@@ -1,6 +1,7 @@
 package View.CustomerPage;
-
+import Controller.PurchaseController;
 import Controller.AccountController;
+import Controller.Controller;
 import Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.File;
 import java.io.IOException;
@@ -136,10 +138,8 @@ public class CartController implements Initializable {
        totalPrice.setOnMouseClicked(new EventHandler<MouseEvent>() {
            @Override
            public void handle(MouseEvent event) {
-               int fPrice=0;
-               for (rowInfo item : cartTable.getItems()) {
-                   fPrice+=item.getPrice()*item.getNumber();
-               }
+               PurchaseController.passTime();
+               float fPrice= PurchaseController.calculatePrice(((Customer)AccountController.loggedInUser).getShoppingBaskets());
                totalPrice.setText(String.valueOf(fPrice));
            }
        });
@@ -153,7 +153,10 @@ public class CartController implements Initializable {
                    e.printStackTrace();
                }
                try {
-                   mainPane=FXMLLoader.load(infoPaneUrl);
+                   Pane pane=FXMLLoader.load(infoPaneUrl);
+                   mainPane.getChildren().clear();
+                   mainPane.getChildren().add(pane);
+                   System.out.println("vaty");
                } catch (IOException e) {
                    e.printStackTrace();
                }

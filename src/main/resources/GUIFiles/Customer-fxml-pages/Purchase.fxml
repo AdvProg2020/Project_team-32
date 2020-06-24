@@ -1,14 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.CustomerPage.PurchaseController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="681.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.PurchaseControllerFXML">
+   <children>
+      <Line endX="-100.0" endY="595.7999877929688" layoutX="602.0" layoutY="61.0" startX="-100.0" />
+      <Label layoutX="542.0" layoutY="61.0" prefHeight="18.0" prefWidth="150.0" text="phone number" />
+      <Label layoutX="542.0" layoutY="131.0" prefHeight="18.0" prefWidth="150.0" text="address" />
+      <TextField fx:id="phoneNumberText" layoutX="543.0" layoutY="91.0" />
+      <TextField fx:id="addressText" layoutX="542.0" layoutY="160.0" prefHeight="42.0" prefWidth="150.0" />
+      <ImageView fx:id="discountImage" fitHeight="604.0" fitWidth="440.0" layoutX="31.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+      <Accordion fx:id="accordion" layoutX="516.0" layoutY="269.0" prefHeight="378.0" prefWidth="202.0">
+        <panes>
+          <TitledPane animated="false" prefHeight="337.0" prefWidth="202.0" text="no discount">
+            <content>
+              <AnchorPane fx:id="NoDisPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="noDisPay" layoutX="45.0" layoutY="160.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="110.0" text="pay" />
+                        <Label fx:id="noDisResult" layoutX="43.0" layoutY="106.0" prefHeight="42.0" prefWidth="115.0" text="result" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="with discount">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="checkDiscount" layoutX="25.0" layoutY="112.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="check" />
+                        <TextField fx:id="discountTextField" layoutX="26.0" layoutY="79.0" />
+                        <Label fx:id="discountCheckLabel" layoutX="29.0" layoutY="53.0" prefHeight="18.0" prefWidth="142.0" text="enter your discount code" />
+                        <VBox fx:id="disVBox" layoutX="31.0" layoutY="148.0" prefHeight="194.0" prefWidth="138.0">
+                           <children>
+                              <Label fx:id="disResult" prefHeight="59.0" prefWidth="162.0" text="result" />
+                              <Button fx:id="disPay" mnemonicParsing="false" prefHeight="26.0" prefWidth="142.0" text="pay" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+      <Button fx:id="nextButton" layoutX="544.0" layoutY="222.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="next" />
+   </children>
 </AnchorPane>

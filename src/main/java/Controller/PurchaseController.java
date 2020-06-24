@@ -43,8 +43,8 @@ public class PurchaseController {
                 return discount.getDiscountPercent();
             }else if(discount.getDiscountID().equals(discountID)){
                 throw  new DiscountNotUsableException();
-            }throw new InvalidIDException();
-        }return 0;
+            }
+        }throw new InvalidIDException();
     }
     public static float getPriceDiscounted(float finalPrice, float discountPercent){
         return finalPrice*((100-discountPercent)/100);
