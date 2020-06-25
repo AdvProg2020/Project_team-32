@@ -14,16 +14,12 @@ public class Filterable {
 
 
     public static void filter(String filter, String value) throws Exception {
-
         ArrayList<Good> newSelectedGoods;
-
         if(filter.equalsIgnoreCase("category")){
-
             Category category = currentCategory.getSubcategory(value);
             currentCategory = category;
             newSelectedGoods = new ArrayList<Good>(category.getCategoryProduct());
             currentFilters.clear();
-
         } else {
             newSelectedGoods = new ArrayList<Good>();
             for (Good good : selectedGoods) {
@@ -31,12 +27,10 @@ public class Filterable {
                     newSelectedGoods.add(good);
                 }
             }
-
         }
         selectedGoods = newSelectedGoods;
         currentFilters.put(filter, value);
     }
-
 
     public static void showCurrentFilters(){
         for (String s : currentFilters.keySet()) {

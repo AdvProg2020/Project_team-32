@@ -11,9 +11,7 @@ import java.net.URL;
 public class IndividualGoodPageTest extends Application {
 
     public static void main(String[] args) {
-
         launch(args);
-
     }
 
     @Override

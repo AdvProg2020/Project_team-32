@@ -9,9 +9,7 @@ public class Good {
     private String name;
     private String goodID;
     private Status goodStatus;
-
     private enum Status {MAKE_REQUEST, EDIT_REQUEST, CONFIRMED}
-
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
     private ArrayList<Seller> sellers;
     private String companyName;

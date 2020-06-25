@@ -1,6 +1,7 @@
 package View;
 
 import Controller.GoodController;
+import Controller.Sort.SortType;
 
 public class SortCommand extends Menu {
 
@@ -17,7 +18,7 @@ public class SortCommand extends Menu {
     @Override
     public void execute() {
         try {
-            GoodController.sort(Integer.parseInt(scanner.nextLine()));
+            GoodController.sort(getTypeOfSortWithInt(Integer.parseInt(scanner.nextLine())));
         } catch (Exception e) {
             System.out.println("invalidSortMethod");
         }
@@ -25,13 +26,15 @@ public class SortCommand extends Menu {
         parentMenu.execute();
     }
 
-    public static String getTypeOfSortWithInt(int i){
+
+
+    public static SortType getTypeOfSortWithInt(int i){
         if( i == 1 ){
-            return "Sort By Time.";
+            return SortType.sortByTime;
         } else if (i == 2){
-            return "Sort By Point.";
+            return SortType.sortByPoint;
         } else {
-            return "Sort By Number of View.";
+            return SortType.sortByNumberOfView;
         }
     }
 }

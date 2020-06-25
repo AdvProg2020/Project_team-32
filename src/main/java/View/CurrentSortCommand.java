@@ -11,7 +11,10 @@ public class CurrentSortCommand extends Menu {
 
     @Override
     public void show() {
+        /*
         System.out.println(SortCommand.getTypeOfSortWithInt(GoodController.getCurrentSort()));
+        */
+        System.out.println(GoodController.getCurrentSort());
     }
 
     @Override
