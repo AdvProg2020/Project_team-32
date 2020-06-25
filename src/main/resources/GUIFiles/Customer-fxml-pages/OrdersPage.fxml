@@ -6,46 +6,34 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-
-<AnchorPane prefHeight="544.0" prefWidth="753.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.OrdersController">
+<AnchorPane fx:id="paneqqq" prefHeight="678.0" prefWidth="759.0" stylesheets="@orderCss.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.OrdersController">
    <children>
-      <Button fx:id="orderShowPageButton" layoutX="541.0" layoutY="267.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="150.0" text="show order" />
-      <Label fx:id="result_Label" layoutX="541.0" layoutY="114.0" prefHeight="26.0" prefWidth="150.0" text="result" />
-      <TextField fx:id="IdTextField" layoutX="540.0" layoutY="147.0" prefHeight="48.0" prefWidth="149.0" />
-      <Button fx:id="ratePageButton" layoutX="541.0" layoutY="206.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="150.0" text="rate" />
-      <Pane fx:id="tablePane" layoutX="59.0" layoutY="66.0" prefHeight="449.0" prefWidth="437.0">
+      <Button fx:id="orderShowPageButton" layoutX="516.0" layoutY="375.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="150.0" text="show order" />
+      <Label fx:id="result_Label" layoutX="516.0" layoutY="129.0" prefHeight="26.0" prefWidth="150.0" text="result" />
+      <TextField fx:id="IdTextField" layoutX="516.0" layoutY="179.0" prefHeight="70.0" prefWidth="150.0" />
+      <Button fx:id="ratePageButton" layoutX="516.0" layoutY="289.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="150.0" text="rate" />
+      <TableView fx:id="table" layoutX="81.0" layoutY="107.0" prefHeight="450.0" prefWidth="330.0">
+         <columns>
+            <TableColumn fx:id="logCol" prefWidth="329.59999694824216" text="log ID" />
+         </columns>
+      </TableView>
+      <VBox fx:id="rateVbox" layoutX="60.0" layoutY="187.0" prefHeight="125.0" prefWidth="376.0">
+         <Label fx:id="rateResult" layoutX="131.0" layoutY="162.0" prefHeight="18.0" prefWidth="398.0" text="Label" />
+         <TextField fx:id="rateTextFied" layoutX="131.0" layoutY="201.0" prefHeight="40.0" prefWidth="149.0" />
+         <Button fx:id="rateButton" layoutX="150.0" layoutY="264.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="405.0" text="Rate" />
+      </VBox>
+      <VBox fx:id="orderVBox" layoutX="80.0" layoutY="105.0" prefHeight="450.0" prefWidth="330.0">
          <children>
-            <TableView fx:id="table" layoutX="108.0" prefHeight="450.0" prefWidth="184.0">
-              <columns>
-                <TableColumn fx:id="logCol" prefWidth="183.1999969482422" text="log ID" />
-              </columns>
-            </TableView>
+            <Label fx:id="LogID_VBox" prefHeight="47.0" prefWidth="184.0" text="log ID" />
+            <Label fx:id="date_VBox" prefHeight="38.0" prefWidth="184.0" text="date" />
+            <Label fx:id="goodName_VBox" prefHeight="40.0" prefWidth="184.0" text="goodname" />
+            <Label fx:id="seller_VBox" prefHeight="45.0" prefWidth="184.0" text="seller" />
+            <Label fx:id="price_VBox" layoutX="10.0" layoutY="136.0" prefHeight="45.0" prefWidth="184.0" text="price paid" />
          </children>
-      </Pane>
-      <Pane fx:id="ratePane" layoutX="59.0" layoutY="37.0" prefHeight="485.0" prefWidth="438.0">
-         <children>
-            <Button fx:id="rateButton" layoutX="150.0" layoutY="264.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Rate" />
-            <Label fx:id="rateResult" layoutX="131.0" layoutY="162.0" prefHeight="17.0" prefWidth="149.0" text="Label" />
-            <TextField fx:id="rateTextFied" layoutX="131.0" layoutY="201.0" prefHeight="40.0" prefWidth="149.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="showOrderPane" layoutX="51.0" layoutY="38.0" prefHeight="479.0" prefWidth="438.0">
-         <children>
-            <VBox fx:id="orderVBox" layoutX="117.0" layoutY="14.0" prefHeight="451.0" prefWidth="184.0">
-               <children>
-                  <Label fx:id="LogID_VBox" prefHeight="47.0" prefWidth="184.0" text="log ID" />
-                  <Label fx:id="date_VBox" prefHeight="38.0" prefWidth="184.0" text="date" />
-                  <Label fx:id="goodName_VBox" prefHeight="40.0" prefWidth="184.0" text="goodname" />
-                  <Label fx:id="seller_VBox" prefHeight="45.0" prefWidth="184.0" text="seller" />
-                  <Label fx:id="price_VBox" layoutX="10.0" layoutY="136.0" prefHeight="45.0" prefWidth="184.0" text="price paid" />
-               </children>
-            </VBox>
-         </children>
-      </Pane>
-      <Line endX="-2.20001220703125" endY="404.4000244140625" layoutX="515.0" layoutY="94.0" startX="-2.20001220703125" startY="-45.19999313354492" />
+      </VBox>
+      <Line endX="-2.20001220703125" endY="493.0" layoutX="487.0" layoutY="87.0" startX="-2.20001220703125" startY="-0.5999984741210938" stroke="#001a66"/>
    </children>
 </AnchorPane>

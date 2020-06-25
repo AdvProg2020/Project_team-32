@@ -1,0 +1,189 @@
+.tab-pane{
+    -fx-tab-min-height: 5em;
+    -fx-tab-max-height: 5em;
+
+    -fx-tab-min-width: 5em;
+    -fx-tab-max-width: 5em;
+
+    -fx-background-color: white;
+
+}
+
+.tab .tab-label{
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+
+}
+.tab {
+    -fx-background-color: rgba(25, 25, 25, 0.01);
+    -fx-background-size: 80%;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-opacity: 1;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.tab:hover{
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}
+
+.tab:selected{
+    -fx-background-color: transparent;
+
+
+    -fx-background-insets: 0;
+
+    -fx-border-width: 5 0 0 0;
+    -fx-border-color: #FFFFFF;
+}
+
+.tab:focused{
+    -fx-focus-color : transparent;
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color : rgba(47,79,79 0.8);
+    -fx-border-width: 0 0 0.7 0;
+    -fx-border-color: rgba(20, 45, 57, 0.75);
+}
+
+
+.tab-pane *.tab-header-area {
+    -fx-background-insets: 0,0,0,5;
+    -fx-padding: 0.0em 0.1em 0.0em 0.0em;
+}
+
+.tab:selected .focus-indicator{
+    -fx-focus-color : transparent;
+    -fx-border-color: transparent;
+}
+.label {
+    -fx-background-color: rgba(230, 255, 255,0.4);
+    -fx-text-fill: white;
+    -fx-border-color : rgba(75, 75, 75, 0.56);
+    -fx-border-width : 0 0 1 0 ;
+    -fx-text-alignment: center;
+    -fx-label-padding: 10px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-weight: bold;
+}
+.text-field{
+    -fx-background-color: rgba(204, 204, 255,0.4);
+    -fx-text-fill: rgba(75,75,75,0.76);
+    -fx-border-color : rgba(75, 75, 75, 0.56);
+    -fx-border-width : 1 0 1 0 ;
+    -fx-text-alignment: center;
+    -fx-label-padding: 10px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-weight: bold;
+}
+.table-view{
+    -fx-background-color: rgba(204, 255, 255,0.3) ;
+    -fx-border-color: transparent;
+    -fx-border-radius: 2px;
+    /*-fx-padding: 1px;*/
+
+}
+.table-view:hover{
+    -fx-opacity: 0.7;
+    -fx-cursor: null;
+}
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    /*-fx-background-color: linear-gradient(#E0FFFF 0%, #FAF0E6 100%);*/
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+.table-view .table-cell:hover{
+    -fx-background-color: #E0FFFF;
+    -fx-text-fill: black;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #004d4d;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+.table-row-cell{
+    -fx-background-color: transparent;
+}
+
+
+.table-col{
+
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(75,75,75,0.76);
+    -fx-border-color : white;
+    -fx-border-width : 0 0 0 0 ;
+    -fx-text-alignment: center;
+    -fx-label-padding: 10px;
+    -fx-border-radius:10px;
+}
+
+.button{
+    -fx-background-color: transparent;
+            /*linear-gradient(#7FFFD4, #7FFFD4),*/
+            /*linear-gradient(#40E0D0, #40E0D0),*/
+            /*linear-gradient(#7FFFD4, #7FFFD4),*/
+            /*linear-gradient(#40E0D0 0%, #40E0D0 50%, #40E0D0 100%),*/
+            /*linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));*/
+    -fx-border-color: #E0FFFF;
+    -fx-border-width: 1 1 1 1;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+
+}
+.button:hover{
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}
+
+.button:selected{
+    -fx-background-color: transparent;
+
+
+    -fx-background-insets: 0;
+
+    -fx-border-width: 5 0 0 0;
+    -fx-border-color: #FFFFFF;
+}
+
+.button:focused{
+    -fx-focus-color : transparent;
+}
+#userMangerTab{
+    -fx-background-image: url("../Sellericons/contact.png");
+}
+#cartTab {
+    -fx-background-image: url("../CustomerIcons/icons8-full-shopping-basket-64.png");
+
+}
+#ordersTab{
+    -fx-background-image: url("../CustomerIcons/icons8-new-document-64.png");
+}
+#balanceTab{
+    -fx-background-image: url("../Sellericons/balance/icons8-cheap-2-100-2.png");}
+#discountsTab{
+    -fx-background-image: url("../CustomerIcons/icons8-discount-100.png");
+}
+
