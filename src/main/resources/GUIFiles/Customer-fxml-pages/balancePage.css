@@ -1,0 +1,8 @@
+.label{
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width : 1 0 1.5 0 ;
+}
+#paneClass{
+    -fx-background-image: url("/GUIFiles/Customer_page_bg/photo-of-rainbow-colored-painting-on-canvas-1704119.jpg");
+}

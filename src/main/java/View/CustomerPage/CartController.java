@@ -89,6 +89,7 @@ public class CartController implements Initializable {
                 for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
                     if (shoppingBasket.getGood().getGoodID().equals(chosenID)){
                         shoppingBasket.setQuantity(shoppingBasket.getQuantity()+1);
+                        System.out.println("salam1");
                         break;
                     }
                 }
@@ -116,6 +117,7 @@ public class CartController implements Initializable {
                for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
                    if (shoppingBasket.getGood().getGoodID().equals(chosenID)){
                        shoppingBasket.setQuantity(shoppingBasket.getQuantity()-1);
+                       System.out.println("salam2");
                        if (shoppingBasket.getQuantity()==0){
                            toRemove = shoppingBasket;
                        }

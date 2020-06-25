@@ -34,16 +34,10 @@ public class OrdersController implements Initializable {
     private Button ratePageButton;
 
     @FXML
-    private Pane tablePane;
-
-    @FXML
     private TableView<BuyLog> table;
 
     @FXML
     private TableColumn<BuyLog, String> logCol;
-
-    @FXML
-    private Pane ratePane;
 
     @FXML
     private Button rateButton;
@@ -53,9 +47,6 @@ public class OrdersController implements Initializable {
 
     @FXML
     private TextField rateTextFied;
-
-    @FXML
-    private Pane showOrderPane;
 
     @FXML
     private VBox orderVBox;
@@ -74,11 +65,12 @@ public class OrdersController implements Initializable {
 
     @FXML
     private Label price_VBox;
-
+    @FXML
+    private VBox rateVbox;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ratePane.setVisible(false);
-        showOrderPane.setVisible(false);
+        orderVBox.setVisible(false);
+        rateVbox.setVisible(false);
         logCol.setCellValueFactory(new PropertyValueFactory<>("LogID"));
         ObservableList<BuyLog> logList = FXCollections.observableArrayList();
         for (BuyLog buyLog : ((Customer) AccountController.loggedInUser).getAllBuyLogs()) {
@@ -88,8 +80,8 @@ public class OrdersController implements Initializable {
         ratePageButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                tablePane.setVisible(false);
-                ratePane.setVisible(true);
+                table.setVisible(false);
+                rateVbox.setVisible(true);
                 rateButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -108,8 +100,8 @@ public class OrdersController implements Initializable {
             public void handle(MouseEvent event) {
                 try{
                     BuyLog log =CustomerController.getBugLogWithId(IdTextField.getText().trim(),((Customer)AccountController.loggedInUser));
-                    tablePane.setVisible(false);
-                    showOrderPane.setVisible(true);
+                    table.setVisible(false);
+                    orderVBox.setVisible(true);
                     LogID_VBox.setText("log ID :"+log.getLogID());
                     date_VBox.setText("date: "+log.getDate().toString());
                     goodName_VBox.setText("good's Name: "+log.getGoodsBought().getName());

@@ -7,20 +7,20 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainPane" prefHeight="571.0" prefWidth="688.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.CartController">
+<AnchorPane fx:id="mainPane" prefHeight="700" prefWidth="700" stylesheets="@CartCss.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.CartController">
    <children>
-      <TableView fx:id="cartTable" layoutX="63.0" layoutY="41.0" prefHeight="394.0" prefWidth="422.0">
+      <TableView fx:id="cartTable" layoutX="63.0" layoutY="41.0" prefHeight="434.0" prefWidth="571.0">
         <columns>
-          <TableColumn fx:id="goodIDColumn" prefWidth="125.60003662109375" text="good id" />
-          <TableColumn fx:id="goodNameColumn" prefWidth="130.4000244140625" text="good name" />
-            <TableColumn fx:id="numberColumn" prefWidth="67.99993896484375" text="number" />
-            <TableColumn fx:id="priceColumn" prefWidth="84.0" text="price" />
+          <TableColumn fx:id="goodIDColumn" prefWidth="148.00000762939453" text="good id" />
+          <TableColumn fx:id="goodNameColumn" prefWidth="151.20001220703125" text="good name" />
+            <TableColumn fx:id="numberColumn" prefWidth="142.4000244140625" text="number" />
+            <TableColumn fx:id="priceColumn" prefWidth="116.79995727539062" text="price" />
         </columns>
       </TableView>
-      <Button fx:id="purchase" layoutX="462.0" layoutY="460.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="158.0" text="purchase" />
-      <Label fx:id="totalPrice" layoutX="152.0" layoutY="460.0" prefHeight="43.0" prefWidth="192.0" text="Totalprice" />
-      <ImageView fx:id="increaseIMG" fitHeight="51.0" fitWidth="60.0" layoutX="560.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="decreaseIMG" fitHeight="51.0" fitWidth="60.0" layoutX="560.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="viewProduct" layoutX="560.0" layoutY="272.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="60.0" text="view" />
+      <Button fx:id="purchase" layoutX="72.0" layoutY="557.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="158.0" text="purchase" />
+      <Label fx:id="totalPrice" layoutX="78.0" layoutY="499.0" prefHeight="43.0" prefWidth="192.0" text="Totalprice" />
+      <ImageView fx:id="increaseIMG" fitHeight="51.0" fitWidth="60.0" layoutX="515.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="decreaseIMG" fitHeight="51.0" fitWidth="60.0" layoutX="585.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="viewProduct" layoutX="505.0" layoutY="557.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="139.0" text="view" />
    </children>
 </AnchorPane>

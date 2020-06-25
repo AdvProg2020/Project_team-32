@@ -1,9 +1,12 @@
 package View.CustomerPage;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CustomerTabPaneController implements Initializable {
-
+    public TabPane tabPane;
     public Tab  userMangerTab;
     public Tab cartTab;
     public Tab ordersTab;
@@ -36,14 +39,35 @@ public class CustomerTabPaneController implements Initializable {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        try {
-            userMangerTab.setContent(FXMLLoader.load(infoPaneUrl));
-            cartTab.setContent(FXMLLoader.load(cartPageURL));
-            ordersTab.setContent(FXMLLoader.load(ordersPageURL));
-            balanceTab.setContent(FXMLLoader.load(balancePageURl));
-            discountsTab.setContent(FXMLLoader.load(discountsPageURL));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            URL finalInfoPaneUrl = infoPaneUrl;
+            URL finalCartPageURL = cartPageURL;
+            URL finalOrdersPageURL = ordersPageURL;
+            URL finalBalancePageURl = balancePageURl;
+            URL finalDiscountsPageURL = discountsPageURL;
+            tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+                @Override
+                public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+                    try {
+                        if (newTab.equals(userMangerTab)){
+                            userMangerTab.setContent(FXMLLoader.load(finalInfoPaneUrl));
+                        }
+                        else if (newTab.equals(cartTab)){
+                            cartTab.setContent(FXMLLoader.load(finalCartPageURL));
+                        }
+                        else if (newTab.equals(ordersTab)){
+                            ordersTab.setContent(FXMLLoader.load(finalOrdersPageURL));
+                        }
+                        else if (newTab.equals(balanceTab)){
+                            balanceTab.setContent(FXMLLoader.load(finalBalancePageURl));
+                        }
+                        else if (newTab.equals(discountsTab)){
+                            discountsTab.setContent(FXMLLoader.load(finalDiscountsPageURL));
+                        }
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+
+                }
+            });
     }
 }
