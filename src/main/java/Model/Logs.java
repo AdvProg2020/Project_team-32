@@ -18,4 +18,12 @@ public class Logs implements Serializable {
     public String getLogID() {
         return logID;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public float getPricePaid() {
+        return pricePaid;
+    }
 }
