@@ -82,6 +82,23 @@ public class AccountController  {
     public static Person getUser(String username) throws UserDoesNotExistException {
         return Person.getPersonByUserName(username);
     }
+
+    public static ArrayList<Customer> getAllCustomer(){
+
+        ArrayList<Person> list = Person.allPersons;
+        ArrayList<Customer> customers = new ArrayList<>();
+
+        for (Person person : list) {
+            if(person instanceof Customer){
+                customers.add((Customer) person);
+            }
+        }
+
+        return customers;
+
+    }
+
+
 //    @Override
 //    public void start(Stage primaryStage) throws Exception{
 ////        System.out.println("salam");

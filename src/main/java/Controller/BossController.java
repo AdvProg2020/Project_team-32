@@ -57,8 +57,8 @@ public class BossController {
         discount.setMaxAmount(Integer.parseInt(command[3]));
     }
 
-
     public static void removeDiscount(Discount discount) {
         allDiscount.remove(discount);
+        //TODO , should remove from costumer list
     }
 }
