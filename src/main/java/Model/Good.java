@@ -17,6 +17,7 @@ public class Good {
     private String explanation;
     private float point;
     private HashMap<String, String> properties;
+    private String imageAddress;
 
     private int numberOfRates;
 
@@ -199,5 +200,13 @@ public class Good {
 
     public static ArrayList<Good> getAllGoods() {
         return allGoods;
+    }
+
+    public String getImageAddress() {
+        return imageAddress;
+    }
+
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
     }
 }

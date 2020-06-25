@@ -1,14 +1,14 @@
-.pane:hover {
-    -fx-border-radius: 15;
-    -fx-opacity: 0.7;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2),5,0,0,2);
+.mainPane {
+    -fx-alignment: center;
+    -fx-pref-width: 250;
+    -fx-pref-height: 200;
 }
 
-.hBox {
+.HBox {
     -fx-alignment: center;
-    -fx-spacing: 10;
+    -fx-spacing: 10px;
 }
 
-.vBox {
-    -fx-alignment: center;
+.mainPane:hover {
+    -fx-effect: dropshadow(gaussian, silver, 0.25, 1,0, 0);
 }
