@@ -1,6 +1,7 @@
 import View.IndividualGoodPage.CommentController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -19,9 +20,8 @@ public class CommentTest extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("testing");
         URL url = new File("src\\main\\resources\\GUIFiles\\good-comments.fxml").toURI().toURL();
-        FXMLLoader fxmlLoader = new FXMLLoader(url);
-        primaryStage.setScene(new Scene(((VBox)fxmlLoader.load())));
-        ((CommentController)fxmlLoader.getController()).setProperties("ali", "Sharifi", true);
+        Parent root = FXMLLoader.load(url);
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 }

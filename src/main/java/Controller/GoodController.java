@@ -4,6 +4,7 @@ import Controller.Exeptions.DuplicateGoodException;
 import Controller.Exeptions.GoodDoesNotExistException;
 import Controller.Sort.SortByNumberOfView;
 import Controller.Sort.SortByPoint;
+import Controller.Sort.SortType;
 import Model.Category;
 import Model.Good;
 import Model.Person;
@@ -15,11 +16,7 @@ import java.util.HashMap;
 
 public class GoodController extends Filterable{
 
-    /*private static Category currentCategory = Category.rootCategory;
-    private static ArrayList<Good> selectedGoods;
-    private static HashMap<String , String> currentFilters = new HashMap<>();*/
-
-    private static int currentSort;
+    private static SortType currentSort;
 
     public static void deleteGoodById(String Id) throws GoodDoesNotExistException {
         Good good = Good.getGoodById(Id);
@@ -41,23 +38,21 @@ public class GoodController extends Filterable{
         GoodController.currentCategory = currentCategory;
     }
 
-    public static void sort(int sort) throws Exception {
-        if(sort == 1){
+    public static void sort(SortType type) throws Exception {
+        if(type == SortType.sortByTime){
 
-        } else if(sort == 2){
+        } else if(type == SortType.sortByPoint){
             Collections.sort(selectedGoods, new SortByPoint());
-        } else if(sort == 3){
+        } else if(type == SortType.sortByNumberOfView){
             Collections.sort(selectedGoods, new SortByNumberOfView());
         } else {
             throw new Exception();
         }
     }
 
-    public static int getCurrentSort() {
+    public static SortType getCurrentSort() {
         return currentSort;
     }
-
-
 
     public static void AddProduct(String productId, String name, String companyName, int price, String explanation, HashMap<String, String> properties, Person seller,Category category) {
         new Good(name,productId,(Seller) seller,companyName,category,explanation,properties,price);

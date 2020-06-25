@@ -1,3 +1,12 @@
-.label {
-    -fx-border-radius: 15 px;
+
+#commentVBox {
+    -fx-alignment: center;
+}
+
+#usernameField {
+    -fx-font-weight: bold;
+}
+
+#usernameHBox {
+
 }

@@ -31,7 +31,6 @@ public class IndividualGoodController {
         if(good.hasSeller(seller1)){
             seller = (Seller)Person.getPersonByUserName(seller1);
         }
-
         //something TODO by ali sharifi
     }
 

@@ -36,6 +36,7 @@ public class CommentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /*
         usernameLabel.setText(username);
         commentField.setText(comment);
         if(bought) {
@@ -43,6 +44,12 @@ public class CommentController implements Initializable {
         } else {
             buyStatus.setText("not bought");
         }
+         */
+
+        usernameLabel.setText("username");
+        commentField.setText("comment");
+        buyStatus.setText("bought");
+
     }
 
     public Parent getComment() throws IOException {
