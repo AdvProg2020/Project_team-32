@@ -12,7 +12,7 @@ public class ShowProductsCommand extends Menu {
 
     @Override
     public void show() {
-        for (Good good : GoodController.getSelectedGoods()) {
+        for (Good good : GoodController.getGoodController().getSelectedGoods()) {
             System.out.println(good);
         }
     }

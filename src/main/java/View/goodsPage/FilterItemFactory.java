@@ -19,13 +19,13 @@ public class FilterItemFactory {
         checkBox.setOnAction(e -> {
             if(checkBox.isSelected()) {
                 try {
-                    GoodController.filter(filterLable.getText(), controller.valueOfFileter());
+                    GoodController.getGoodController().filter(filterLable.getText(), controller.valueOfFileter());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             } else {
                 try {
-                    GoodController.disableFilter(filterLable.getText());
+                    GoodController.getGoodController().disableFilter(filterLable.getText());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

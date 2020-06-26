@@ -53,7 +53,7 @@ public class RequestController {
         Good editGood = Good.getGoodFromAllGoods(request.getMatcher().group(1)+"edited");
         Good good = Good.getGoodFromAllGoods(request.getMatcher().group(1));
         good.editInfo(editGood,request.getSeller());
-        GoodController.deleteGood(editGood);
+        GoodController.getGoodController().deleteGood(editGood);
     }
 
     private static void createProduct(Request request) {

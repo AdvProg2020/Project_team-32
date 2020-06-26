@@ -79,7 +79,7 @@ public class OffPageController implements Initializable, Updatable {
         secondColumnGood.setSpacing(10);
         firstColumnGoods.getChildren().clear();
         secondColumnGood.getChildren().clear();
-        for (int i = 0; i < OffController.getSelectedGoods().size(); i++) {
+        for (int i = 0; i < OffController.getOffController().getSelectedGoods().size(); i++) {
             if (i % 2 == 0) {
                 firstColumnGoods.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
             } else {

@@ -18,7 +18,7 @@ public class SortCommand extends Menu {
     @Override
     public void execute() {
         try {
-            GoodController.sort(getTypeOfSortWithInt(Integer.parseInt(scanner.nextLine())));
+            GoodController.getGoodController().sort(getTypeOfSortWithInt(Integer.parseInt(scanner.nextLine())));
         } catch (Exception e) {
             System.out.println("invalidSortMethod");
         }

@@ -80,13 +80,16 @@ public class GoodPageController implements Initializable, Updatable {
         secondColumnGood.setSpacing(10);
         firstColumnGoods.getChildren().clear();
         secondColumnGood.getChildren().clear();
-        for (int i = 0; i < GoodController.getSelectedGoods().size(); i++) {
+        for (int i = 0; i < GoodController.getGoodController().getSelectedGoods().size(); i++) {
             if (i % 2 == 0) {
                 firstColumnGoods.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
             } else {
                 secondColumnGood.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
             }
         }
+        /*for (Good good : GoodController.getGoodController().getSelectedGoods()) {
+            System.out.println(good);
+        }*/
     }
 
     @Override

@@ -18,7 +18,7 @@ public class DisableSortCommand extends Menu {
     @Override
     public void execute() {
         try {
-            GoodController.sort(SortType.sortByNumberOfView);
+            GoodController.getGoodController().sort(SortType.sortByNumberOfView);
         } catch (Exception e) {
             e.printStackTrace();
         }

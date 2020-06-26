@@ -14,7 +14,7 @@ public class CurrentSortCommand extends Menu {
         /*
         System.out.println(SortCommand.getTypeOfSortWithInt(GoodController.getCurrentSort()));
         */
-        System.out.println(GoodController.getCurrentSort());
+        System.out.println(GoodController.getGoodController().getCurrentSort());
     }
 
     @Override

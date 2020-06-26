@@ -14,7 +14,7 @@ public class OffMenuFilterCommand extends FilterCommand {
         String filter = scanner.nextLine();
         String value = scanner.nextLine();
         try {
-            OffController.filter(filter, value);
+            OffController.getOffController().filter(filter, value);
         } catch (Exception e) {
             System.out.println("CannotFilter");
         }

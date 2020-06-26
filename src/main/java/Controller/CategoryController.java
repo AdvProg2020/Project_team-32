@@ -39,7 +39,7 @@ public class CategoryController {
 
     public static void removeCategory(Category category){
         for (Good good : category.getCategoryProduct()) {
-            GoodController.deleteGood(good);
+            GoodController.getGoodController().deleteGood(good);
         }
         for (Category subCategory : category.getSubCategory()) {
             removeCategory(subCategory);
