@@ -129,16 +129,9 @@
 .table-view:focused{
     -fx-background-color: transparent;
 }
-
-/* Spaltenköpfe
-    Struktur column-header-background -> column-header */
-
 .table-view .column-header-background{
     -fx-background-color: linear-gradient(#E0FFFF 0%, #FAF0E6 100%);
 }
-/*.table-view .column :hover {*/
-/*    -fx-background-color: #005797;*/
-/*}*/
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
     -fx-text-fill: black;
