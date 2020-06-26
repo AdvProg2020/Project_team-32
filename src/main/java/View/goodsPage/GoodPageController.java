@@ -3,17 +3,23 @@ package View.goodsPage;
 import Controller.GoodController;
 import Model.Category;
 import Model.Good;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.Initializable;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class GoodPageController implements Initializable {
 
@@ -37,48 +43,61 @@ public class GoodPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //final Node categoryIcon = new ImageView(new Image(getClass().getResourceAsStream("GUIFiles\\GoodsMenuIcons\\categoryIcon1.png")));
-        //TreeItem<String> categories = new TreeItem<>("Categories", categoryIcon);
-
-        // initializing categories
         TreeItem<String> categories = new TreeItem<>("Categories");
         categories.setExpanded(true);
         categories.getChildren().add(Category.rootCategory.getCategory());
-        /*TreeItem<String> laptops = new TreeItem<>("laptops");
-        TreeItem<String> TVs = new TreeItem<>("TVs");
-        categories.getChildren().addAll(laptops, TVs);*/
+
         categoriesTreeView.setRoot(categories);
+        categoriesTreeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String selectedCategory = categoriesTreeView.getSelectionModel().getSelectedItem().getValue();
+                TreeItem<String > filters = new CheckBoxTreeItem<>("Filters");
+                filterTreeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+                TreeItem<String > filterByCategoryProperties = new CheckBoxTreeItem<>("Category Properties");
+                TreeItem<String> filterByGeneralProperties = new CheckBoxTreeItem<>("General Properties");
+                filterTreeView.setRoot(filters);
+                filters.setExpanded(true);
+                //filterTreeView.setEditable(true);
+                filters.getChildren().addAll(filterByCategoryProperties, filterByGeneralProperties);
+                for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
+                    CheckBoxTreeItem<String> a = new CheckBoxTreeItem<String>(property);
+                    a.addEventHandler( MouseEvent.MOUSE_CLICKED, new EventHandler() {
+                        @Override
+                        public void handle(Event event) {
+                            if (a.isSelected()) {
+                                try {
+                                    GoodController.filter(a.getValue(), valueOfFileter());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                try {
+                                    GoodController.disableFilter(a.getValue());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            updateGoods();
+                        }
+                    });
+                    filterByCategoryProperties.getChildren().add(a);
+                }
+                for (String property : Category.getGeneralProperties()) {
+                    filterByGeneralProperties.getChildren().add(new CheckBoxTreeItem<String>(property));
+                }
+            }
+        });
 
-        // initializing filters
-        String selectedCategory = categoriesTreeView.getSelectionModel().getSelectedItem().getValue();
-        TreeItem<String > filters = new CheckBoxTreeItem<>("Filters");
-        filterTreeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-        TreeItem<String > filterByCategoryProperties = new CheckBoxTreeItem<>("Category Properties");
-        TreeItem<String> filterByGeneralProperties = new CheckBoxTreeItem<>("General Properties");
-        filterTreeView.setRoot(filters);
-        filters.setExpanded(true);
-        filterTreeView.setEditable(true);
-        filters.getChildren().addAll(filterByCategoryProperties, filterByGeneralProperties);
-        /*CheckBoxTreeItem<String> a = new CheckBoxTreeItem<>("hello");
-        filterByCategoryProperties.getChildren().addAll(a);
-        CheckBoxTreeItem<String> b = new CheckBoxTreeItem<>("hi");
-        filterByCategoryProperties.getChildren().addAll(b);*/
-        for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
-            filterByCategoryProperties.getChildren().add(new CheckBoxTreeItem<String>(property));
-            CheckBoxTreeItem<String> a = new CheckBoxTreeItem<>(property);
-        }
-        for (String property : Category.getGeneralProperties()) {
-            filterByGeneralProperties.getChildren().add(new CheckBoxTreeItem<String>(property));
-        }
 
 
+    }
 
-        // initializing columns of goods
+    public void updateGoods() {
         firstColumnGoods.setSpacing(10);
         secondColumnGood.setSpacing(10);
         GoodController.setCurrentCategory(Category.getCategoryByName(categoriesTreeView.getSelectionModel().getSelectedItem().getValue()));
-
-        for (int i = 0; i < Good.getAllGoods().size(); i++) {
+        for (int i = 0; i < GoodController.getSelectedGoods().size(); i++) {
             String name = Good.getAllGoods().get(i).getName();
             String imageAddress = Good.getAllGoods().get(i).getImageAddress();
             float point = Good.getAllGoods().get(i).getPoint();
@@ -92,19 +111,23 @@ public class GoodPageController implements Initializable {
 
             }
         }
+    }
 
-        /*
-        try {
-            Pane pane = GoodIconFactory.createIcon("hello","src\\main\\resources\\GUIFiles\\apple.jpg",4);
-            firstColumnGoods.getChildren().add(pane);
-            Pane banana = GoodIconFactory.createIcon("banana","src\\main\\resources\\GUIFiles\\banana.jpg", 6);
-            firstColumnGoods.getChildren().add(banana);
-            Pane fish = GoodIconFactory.createIcon("fish", "src\\main\\resources\\GUIFiles\\fish.jpg", 3);
-            secondColumnGood.getChildren().add(fish);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        */
+    public String valueOfFileter() {
+        final String[] returnedValue = new String[1];
+        Stage window = new Stage();
+        window.setTitle("enter value of filter");
+        TextField value = new TextField();
+        Button button = new Button("submit");
+        button.setOnAction(e -> {
+            returnedValue[0] = value.getText();
+            window.close();
+        });
+        VBox box = new VBox(value, button);
+        Scene scene = new Scene(box);
+        window.setScene(scene);
+        window.showAndWait();
+        return returnedValue[0];
     }
 
 

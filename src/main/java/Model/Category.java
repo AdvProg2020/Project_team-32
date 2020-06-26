@@ -11,6 +11,7 @@ public class Category implements Serializable {
     private static ArrayList<Category> allCategories = new ArrayList<>();
     public static Category rootCategory = new Category("mainCategory", null , null);
     private String name;
+
     private TreeItem<String> category;
 
     private Category parentCategory;
@@ -106,7 +107,7 @@ public class Category implements Serializable {
 
     public TreeItem<String> getCategory() {
         for (Category c : subCategory) {
-            category.getChildren().add(c.category);
+            category.getChildren().add(c.getCategory());
         }
         return category;
     }
