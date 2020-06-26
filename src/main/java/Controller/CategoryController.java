@@ -25,7 +25,7 @@ public class CategoryController {
         Category parentCategory = getCategoryByName(parentName);
         if(hasCategoryByName(categoryName))
             throw new DuplicateCategoryException();
-        parentCategory.addSubCategory(new Category(categoryName, list, parentCategory));
+       new Category(categoryName, list, parentCategory);
     }
 
     private static boolean hasCategoryByName(String name) {
@@ -44,6 +44,11 @@ public class CategoryController {
         for (Category subCategory : category.getSubCategory()) {
             removeCategory(subCategory);
         }
+        Category.getAllCategories().remove(category);
     }
 
+    public static void editCategory(Category categoryToChange, String name, ArrayList<String> properties) {
+        categoryToChange.setName(name);
+        categoryToChange.setSpecialProperties(properties);
+    }
 }

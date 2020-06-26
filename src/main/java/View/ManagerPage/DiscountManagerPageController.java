@@ -1,29 +1,19 @@
 package View.ManagerPage;
 
 import Controller.BossController;
-import Controller.GoodController;
-import Model.Boss;
 import Model.Discount;
-import View.Main;
+import View.ManagerPage.GUIModels.ChangeDiscountPane;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.Year;
 import java.util.Date;
 import java.util.ResourceBundle;
 

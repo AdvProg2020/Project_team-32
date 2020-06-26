@@ -11,6 +11,7 @@ public class Category implements Serializable {
     private static ArrayList<Category> allCategories = new ArrayList<>();
     public static Category rootCategory = new Category("mainCategory", null , null);
     private String name;
+
     private TreeItem<String> category;
 
     private Category parentCategory;
@@ -23,6 +24,7 @@ public class Category implements Serializable {
     }
 
     private ArrayList<String> specialProperties;
+
     public Category(String name, ArrayList<String> specialProperty, Category parentCategory) {
         this.name = name;
         this.specialProperties = specialProperty;
@@ -31,6 +33,9 @@ public class Category implements Serializable {
         this.categoryProduct = new ArrayList<>();
         category = new TreeItem<>(name);
         allCategories.add(this);
+        if(parentCategory != null) {
+            parentCategory.addSubCategory(this);
+        }
     }
 
     private ArrayList<Category> subCategory;
@@ -96,9 +101,13 @@ public class Category implements Serializable {
         return parentCategory;
     }
 
+    public String getParentCategoryName() {
+        return parentCategory==null ? "null" : parentCategory.name;
+    }
+
     public TreeItem<String> getCategory() {
         for (Category c : subCategory) {
-            category.getChildren().add(c.category);
+            category.getChildren().add(c.getCategory());
         }
         return category;
     }

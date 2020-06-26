@@ -30,8 +30,8 @@ public class RequestController {
         return allRequest;
     }
 
-    public static void removeRequest(int index) {
-        allRequest.remove(index);
+    public static void removeRequest(Request request) {
+        allRequest.remove(request);
     }
 
     public static void acceptRequest(Request request) throws Exception {

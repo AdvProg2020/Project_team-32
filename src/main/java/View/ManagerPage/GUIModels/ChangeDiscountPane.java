@@ -1,9 +1,11 @@
-package View.ManagerPage;
+package View.ManagerPage.GUIModels;
 
 import Controller.BossController;
 import Model.Boss;
 import Model.Customer;
 import Model.Discount;
+import View.ManagerPage.AddEditDiscountPageController;
+import View.ManagerPage.DiscountManagerPageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

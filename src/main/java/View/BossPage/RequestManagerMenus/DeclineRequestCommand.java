@@ -10,7 +10,7 @@ public class DeclineRequestCommand extends Menu {
         this.name = "decline";
     }
 
-    @Override
+/*    @Override
     public void show() {
         System.out.println("enter request number:");
     }
@@ -22,5 +22,5 @@ public class DeclineRequestCommand extends Menu {
         System.out.println("Request declined successfully.");
         parentMenu.show();
         parentMenu.execute();
-    }
+    }*/
 }

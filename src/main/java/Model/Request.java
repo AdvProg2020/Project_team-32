@@ -39,4 +39,9 @@ public class Request implements Serializable {
     public String getRequest() {
         return request;
     }
+
+    public String getSellerName(){
+        return seller.getUserName();
+    }
+
 }
