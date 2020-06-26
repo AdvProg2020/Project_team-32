@@ -11,6 +11,7 @@ public class Off implements Serializable {
     private ArrayList<Good> goodsForOff;
     private OffStatus offStatus;
 
+    private static ArrayList<Off> allOffs = new ArrayList<>();
     private enum OffStatus {creating, editing, confirmed}
 
     ;
@@ -79,5 +80,13 @@ public class Off implements Serializable {
             output += good.getName() + "  " + good.getGoodID() + "\n";
         }
         return output;
+    }
+
+    public static void addOff(Off off) {
+        allOffs.add(off);
+    }
+
+    public static ArrayList<Off> getAllOffs() {
+        return new ArrayList<>(allOffs);
     }
 }

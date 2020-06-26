@@ -1,9 +1,11 @@
-package View.goodsPage;
+package View.OffPageController;
 
-import Controller.GoodController;
+import Controller.OffController;
 import Model.Category;
 import Model.Good;
 import View.Updatable;
+import View.goodsPage.FilterItemFactory;
+import View.goodsPage.GoodIconFactory;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
@@ -17,8 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class GoodPageController implements Initializable, Updatable {
-
+public class OffPageController implements Initializable, Updatable {
     @FXML
     private TreeView<String> categoriesTreeView;
 
@@ -66,11 +67,9 @@ public class GoodPageController implements Initializable, Updatable {
             }
         });
         updateGoods();
-
-
     }
 
-    public GoodPageController get() {
+    public Updatable get() {
         return this;
     }
 
@@ -80,7 +79,7 @@ public class GoodPageController implements Initializable, Updatable {
         secondColumnGood.setSpacing(10);
         firstColumnGoods.getChildren().clear();
         secondColumnGood.getChildren().clear();
-        for (int i = 0; i < GoodController.getSelectedGoods().size(); i++) {
+        for (int i = 0; i < OffController.getSelectedGoods().size(); i++) {
             if (i % 2 == 0) {
                 firstColumnGoods.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
             } else {
