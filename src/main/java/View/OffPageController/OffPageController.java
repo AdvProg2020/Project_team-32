@@ -21,47 +21,46 @@ import javafx.stage.Stage;
 
 public class OffPageController implements Initializable, Updatable {
     @FXML
-    private TreeView<String> categoriesTreeView;
+    private TreeView<String> categoriesTreeView1;
 
     @FXML
-    private VBox FiltersVBox;
+    private VBox FiltersVBox1;
 
     @FXML
-    private ScrollPane goodsPand;
+    private ScrollPane goodsPand1;
 
     @FXML
-    private HBox goodsBox;
+    private HBox goodsBox1;
 
     @FXML
-    private VBox firstColumnGoods;
+    private VBox firstColumnGoods1;
 
     @FXML
-    private VBox secondColumnGood;
+    private VBox secondColumnGood1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         TreeItem<String> categories = new TreeItem<>("Categories");
         categories.setExpanded(true);
         categories.getChildren().add(Category.rootCategory.getCategory());
-
-        categoriesTreeView.setRoot(categories);
-        categoriesTreeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        categoriesTreeView1.setRoot(categories);
+        categoriesTreeView1.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(categoriesTreeView.getSelectionModel().getSelectedItem() != null) {
-                    FiltersVBox.getChildren().clear();
-                    String selectedCategory = categoriesTreeView.getSelectionModel().getSelectedItem().getValue();
+                if(categoriesTreeView1.getSelectionModel().getSelectedItem() != null) {
+                    FiltersVBox1.getChildren().clear();
+                    String selectedCategory = categoriesTreeView1.getSelectionModel().getSelectedItem().getValue();
                     Label filters = new Label("filters");
                     Label filterByCategoryProperties = new Label("Category Properties");
                     Label filterByGeneralProperties = new Label("General Properties");
 
-                    FiltersVBox.getChildren().add(filterByCategoryProperties);
+                    FiltersVBox1.getChildren().add(filterByCategoryProperties);
                     for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
-                        FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
+                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
                     }
-                    FiltersVBox.getChildren().add(filterByGeneralProperties);
+                    FiltersVBox1.getChildren().add(filterByGeneralProperties);
                     for (String property : Category.getGeneralProperties()) {
-                        FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
+                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
                     }
                 }
             }
@@ -75,15 +74,15 @@ public class OffPageController implements Initializable, Updatable {
 
     @Override
     public void updateGoods() {
-        firstColumnGoods.setSpacing(10);
-        secondColumnGood.setSpacing(10);
-        firstColumnGoods.getChildren().clear();
-        secondColumnGood.getChildren().clear();
+        firstColumnGoods1.setSpacing(10);
+        secondColumnGood1.setSpacing(10);
+        firstColumnGoods1.getChildren().clear();
+        secondColumnGood1.getChildren().clear();
         for (int i = 0; i < OffController.getOffController().getSelectedGoods().size(); i++) {
             if (i % 2 == 0) {
-                firstColumnGoods.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
+                firstColumnGoods1.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
             } else {
-                secondColumnGood.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
+                secondColumnGood1.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
             }
         }
     }
