@@ -16,34 +16,34 @@
 }
 
 #userMangerTab{
-    -fx-background-image: url("Sellericons/contact.png");
+    -fx-background-image: url("../Sellericons/contact.png");
 }
 #offsTab{
-    -fx-background-image: url("Sellericons/off/icons8-discount-64.png");
+    -fx-background-image: url("../Sellericons/off/icons8-discount-64.png");
 }
 #salesHIstoryTab {
-    -fx-background-image: url("Sellericons/sale/icons8-sale-100.png");
+    -fx-background-image: url("../Sellericons/sale/icons8-sale-100.png");
 }
 #companyInfoTab {
 
-    -fx-background-image: url("Sellericons/company-info/icons8-company-100-3.png");
+    -fx-background-image: url("../Sellericons/company-info/icons8-company-100-3.png");
     -fx-background-size:100% ;
 }
 #balanceTab{
-    -fx-background-image: url("Sellericons/balance/icons8-cheap-2-100-2.png");
+    -fx-background-image: url("../Sellericons/balance/icons8-cheap-2-100-2.png");
 }
 #addProductTab{
-    -fx-background-image: url("Sellericons/add.png");
+    -fx-background-image: url("../Sellericons/add.png");
 }
 #manageProductTab{
-    -fx-background-image: url("Sellericons/icons8-product-100-2.png");
+    -fx-background-image: url("../Sellericons/icons8-product-100-2.png");
     -fx-background-size: 100%;
 }
 #showCategoryTab{
-    -fx-background-image: url("Sellericons/category/icons8-book-stack-100.png");
+    -fx-background-image: url("../Sellericons/category/icons8-book-stack-100.png");
 }
 #removeProductTab{
-    -fx-background-image: url("Sellericons/remove.png");
+    -fx-background-image: url("../Sellericons/remove.png");
 }
 
 
@@ -171,7 +171,7 @@
     -fx-border-radius:10px;
 }
 #companyImage{
-    -fx-image: url("Sellericons/company-info/icons8-company-100-5.png");
+    -fx-image: url("../Sellericons/company-info/icons8-company-100-5.png");
 }
 
 .button{

@@ -9,10 +9,7 @@ import Model.ShoppingBasket;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -90,6 +87,10 @@ public class PurchaseControllerFXML implements Initializable {
                                     noDisResult.setText("you are lucky : you got " + discountPercent[0] + "percent discount");
                                 }
                                 PurchaseController.payCommand(customer, totalPrice[0], discountPercent[0]);
+                                Alert alert =new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("result");
+                                alert.setContentText("you have successfully bought this thing");
+                                alert.show();
                                 noDisResult.setText("you have succesfully bought things");
                                 //pop up should be shown here
                             }
@@ -110,6 +111,10 @@ public class PurchaseControllerFXML implements Initializable {
                                     public void handle(MouseEvent event) {
                                         if (customer.getCredit()>= totalPrice[0]){
                                             PurchaseController.payCommand(customer, totalPrice[0], discountPercent[0]);
+                                            Alert alert =new Alert(Alert.AlertType.INFORMATION);
+                                            alert.setTitle("result");
+                                            alert.setContentText("you have successfully bought this thing");
+                                            alert.show();
                                         }
                                     }
                                 });

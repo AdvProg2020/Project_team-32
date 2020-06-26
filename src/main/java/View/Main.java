@@ -34,6 +34,7 @@ public class Main extends Application {
         new Customer("ioo","234");
         System.out.println(BossController.getAllDiscount());
         launch(args);
+
     }
 
 }

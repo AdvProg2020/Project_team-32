@@ -7,7 +7,7 @@ public class Comment implements Serializable {
     private Good good;
     private String commentString;
     private  String commentStatus;
-    //private int commenterBoughtGood;
+    private boolean commenterBoughtGood;
     private String title;
 
     /*public Comment(String userName, Good good, String commentString, int commenterBoughtGood) {
@@ -23,5 +23,29 @@ public class Comment implements Serializable {
         this.commentString = commentString;
         this.commentStatus = commentStatus;
         this.title = title;
+    }
+
+    public void setCommenterBoughtGood(boolean commenterBoughtGood) {
+        this.commenterBoughtGood = commenterBoughtGood;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getCommentString() {
+        return commentString;
+    }
+
+    public void setCommentString(String commentString) {
+        this.commentString = commentString;
+    }
+
+    public boolean getCommenterBoughtGood() {
+        return commenterBoughtGood;
     }
 }

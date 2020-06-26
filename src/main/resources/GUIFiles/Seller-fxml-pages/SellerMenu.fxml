@@ -18,7 +18,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 
-<TabPane fx:id="sellerTabPane"  tabClosingPolicy="UNAVAILABLE"    side="LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="800.0" stylesheets="@SellerTabPane-Style.css"  xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SellerPage.SellerMenuController">
+<TabPane fx:id="sellerTabPane" tabClosingPolicy="UNAVAILABLE" side="LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="800.0" stylesheets="@SellerTabPane-Style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SellerPage.SellerMenuController">
     <tabs>
         <Tab fx:id="userMangerTab" closable="false">
 
