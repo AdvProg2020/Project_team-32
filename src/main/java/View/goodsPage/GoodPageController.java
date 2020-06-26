@@ -10,6 +10,8 @@ import javafx.fxml.Initializable;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.EventListener;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -27,7 +29,7 @@ public class GoodPageController implements Initializable {
     private TreeView<String> categoriesTreeView;
 
     @FXML
-    private TreeView filterTreeView;
+    private VBox FiltersVBox;
 
     @FXML
     private ScrollPane goodsPand;
@@ -51,64 +53,44 @@ public class GoodPageController implements Initializable {
         categoriesTreeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String selectedCategory = categoriesTreeView.getSelectionModel().getSelectedItem().getValue();
-                TreeItem<String > filters = new CheckBoxTreeItem<>("Filters");
-                filterTreeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-                TreeItem<String > filterByCategoryProperties = new CheckBoxTreeItem<>("Category Properties");
-                TreeItem<String> filterByGeneralProperties = new CheckBoxTreeItem<>("General Properties");
-                filterTreeView.setRoot(filters);
-                filters.setExpanded(true);
-                //filterTreeView.setEditable(true);
-                filters.getChildren().addAll(filterByCategoryProperties, filterByGeneralProperties);
-                for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
-                    CheckBoxTreeItem<String> a = new CheckBoxTreeItem<String>(property);
-                    a.addEventHandler( MouseEvent.MOUSE_CLICKED, new EventHandler() {
-                        @Override
-                        public void handle(Event event) {
-                            if (a.isSelected()) {
-                                try {
-                                    GoodController.filter(a.getValue(), valueOfFileter());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                try {
-                                    GoodController.disableFilter(a.getValue());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            updateGoods();
-                        }
-                    });
-                    filterByCategoryProperties.getChildren().add(a);
-                }
-                for (String property : Category.getGeneralProperties()) {
-                    filterByGeneralProperties.getChildren().add(new CheckBoxTreeItem<String>(property));
+                if(categoriesTreeView.getSelectionModel().getSelectedItem() != null) {
+                    FiltersVBox.getChildren().clear();
+                    String selectedCategory = categoriesTreeView.getSelectionModel().getSelectedItem().getValue();
+                    Label filters = new Label("filters");
+                    Label filterByCategoryProperties = new Label("Category Properties");
+                    Label filterByGeneralProperties = new Label("General Properties");
+
+                    FiltersVBox.getChildren().add(filterByCategoryProperties);
+                    for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
+                        FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
+                    }
+                    FiltersVBox.getChildren().add(filterByGeneralProperties);
+                    for (String property : Category.getGeneralProperties()) {
+                        FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
+                    }
                 }
             }
         });
-
+        updateGoods();
 
 
     }
 
+    public GoodPageController get() {
+        return this;
+    }
+
+
     public void updateGoods() {
         firstColumnGoods.setSpacing(10);
         secondColumnGood.setSpacing(10);
-        GoodController.setCurrentCategory(Category.getCategoryByName(categoriesTreeView.getSelectionModel().getSelectedItem().getValue()));
+        firstColumnGoods.getChildren().clear();
+        secondColumnGood.getChildren().clear();
         for (int i = 0; i < GoodController.getSelectedGoods().size(); i++) {
-            String name = Good.getAllGoods().get(i).getName();
-            String imageAddress = Good.getAllGoods().get(i).getImageAddress();
-            float point = Good.getAllGoods().get(i).getPoint();
-            try {
-                if (i % 2 == 0) {
-                    firstColumnGoods.getChildren().add(GoodIconFactory.createIcon(name, imageAddress, point));
-                } else {
-                    secondColumnGood.getChildren().add(GoodIconFactory.createIcon(name, imageAddress, point));
-                }
-            } catch (Exception e) {
-
+            if (i % 2 == 0) {
+                firstColumnGoods.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
+            } else {
+                secondColumnGood.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
             }
         }
     }

@@ -35,7 +35,7 @@ public class Good {
 
     }
 
-    private ArrayList<Comment> allComments;
+    private ArrayList<Comment> allComments = new ArrayList<>();
 
 
     public Good(String name, String goodID, Seller seller, String companyName, Category category
@@ -46,13 +46,12 @@ public class Good {
         this.companyName = companyName;
         this.category = category;
         this.explanation = explanation;
-        this.properties = properties;
         this.sellerAndPrices = new HashMap<>();
         this.sellerAndPrices.put(seller.getUserName(), price);
         this.sellers = new ArrayList<Seller>();
         this.sellers.add(seller);
         allGoods.add(this);
-        this.properties = new HashMap<>();
+        this.properties = new HashMap<>(properties);
         this.properties.put("company name", companyName);
         this.properties.put("name", name);
         // TODO ali sharifi
