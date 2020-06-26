@@ -185,4 +185,8 @@
 #discountsTab{
     -fx-background-image: url("../CustomerIcons/icons8-discount-100.png");
 }
+#logOutTab{
+    -fx-background-image: url("/GUIFiles/icons/icons8-logout-rounded-left-64.png");
+}
+
 

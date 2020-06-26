@@ -53,13 +53,13 @@ public class CartController implements Initializable {
         decreaseIMG.setOnMouseEntered(event -> Controller.sound(0));
         purchase.setOnMouseClicked(event -> Controller.sound(3));
         purchase.setOnMouseClicked(event -> Controller.sound(3));
-        AccountController.loggedInUser = new Customer("yasin", "123");
-        Customer customer = ((Customer) AccountController.loggedInUser);
-        Seller seller = new Seller("mamad", "2");
-        Good sib = new Good("sib", "1", seller, null, null, null, null, 100);
-        Good porteghal = new Good("porthgal", "2", seller, null, null, null, null, 200);
-        customer.getShoppingBaskets().add(new ShoppingBasket(sib, seller));
-        customer.getShoppingBaskets().add(new ShoppingBasket(porteghal, seller));
+//        AccountController.loggedInUser = new Customer("yasin", "123");
+//        Customer customer = ((Customer) AccountController.loggedInUser);
+//        Seller seller = new Seller("mamad", "2");
+//        Good sib = new Good("sib", "1", seller, null, null, null, null, 100);
+//        Good porteghal = new Good("porthgal", "2", seller, null, null, null, null, 200);
+//        customer.getShoppingBaskets().add(new ShoppingBasket(sib, seller));
+//        customer.getShoppingBaskets().add(new ShoppingBasket(porteghal, seller));
 
 
         goodIDColumn.setCellValueFactory(new PropertyValueFactory<>("GoodID"));
@@ -68,11 +68,7 @@ public class CartController implements Initializable {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
         ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
-//        if (AccountController.loggedInUser instanceof Guest){
-//            Guest guest =
-//        }else if (AccountController.loggedInUser instanceof Customer){
-//
-//        }
+
         for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
             Good good = shoppingBasket.getGood();
             int price = good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());

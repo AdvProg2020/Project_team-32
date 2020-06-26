@@ -69,7 +69,7 @@ public class CustomerTabPaneController implements Initializable {
                     }
                     else if (newTab.equals(discountsTab)){
                         discountsTab.setContent(FXMLLoader.load(finalDiscountsPageURL));
-                    }else if (newTab.equals(finalLogOut)){
+                    }else if (newTab.equals(logOutTab)){
                         logOutTab.setContent(FXMLLoader.load(finalLogOut));
                     }
                 }catch (IOException e){
