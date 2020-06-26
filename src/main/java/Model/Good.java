@@ -108,6 +108,7 @@ public class Good {
     }
 
     public void confirmStatus() {
+        confirmedGoods.add(this);
         goodStatus = Status.CONFIRMED;
     }
 
