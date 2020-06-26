@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Seller extends Person {
@@ -17,6 +18,8 @@ public class Seller extends Person {
         seller.factoryName = "apple";
         Good good = new Good("khiyar","123",new Seller("ali","123"),"salma",new Category("hey",null,null),null,null,0);
         seller.sellingGoods.add(good);
+        SellLog sellLog = new SellLog("1234",new Date(),123,324,good,"oskol","pashm");
+        seller.allSellingLogs.add(sellLog);
 
     }
 

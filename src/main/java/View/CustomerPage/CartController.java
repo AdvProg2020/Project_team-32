@@ -1,4 +1,5 @@
 package View.CustomerPage;
+
 import Controller.PurchaseController;
 import Controller.AccountController;
 import Controller.Controller;
@@ -45,13 +46,13 @@ public class CartController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        AccountController.loggedInUser = new Customer("yasin","123");
-        Customer customer = ((Customer)AccountController.loggedInUser);
-        Seller seller = new Seller("mamad","2");
-        Good sib = new Good("sib","1",seller,null,null,null,null,100);
-        Good porteghal = new Good("porthgal","2",seller,null,null,null,null,200);
-        customer.getShoppingBaskets().add(new ShoppingBasket(sib,seller));
-        customer.getShoppingBaskets().add(new ShoppingBasket(porteghal,seller));
+        AccountController.loggedInUser = new Customer("yasin", "123");
+        Customer customer = ((Customer) AccountController.loggedInUser);
+        Seller seller = new Seller("mamad", "2");
+        Good sib = new Good("sib", "1", seller, null, null, null, null, 100);
+        Good porteghal = new Good("porthgal", "2", seller, null, null, null, null, 200);
+        customer.getShoppingBaskets().add(new ShoppingBasket(sib, seller));
+        customer.getShoppingBaskets().add(new ShoppingBasket(porteghal, seller));
 
 
         goodIDColumn.setCellValueFactory(new PropertyValueFactory<>("GoodID"));
@@ -67,8 +68,8 @@ public class CartController implements Initializable {
 //        }
         for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
             Good good = shoppingBasket.getGood();
-            int price =good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
-            goodsList.add(new rowInfo(good.getGoodID(),good.getName(),shoppingBasket.getQuantity(),price));
+            int price = good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
+            goodsList.add(new rowInfo(good.getGoodID(), good.getName(), shoppingBasket.getQuantity(), price));
         }
         cartTable.setItems(goodsList);
 
@@ -85,10 +86,10 @@ public class CartController implements Initializable {
         increaseIMG.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String chosenID =  cartTable.getSelectionModel().getSelectedItem().getGoodID();
+                String chosenID = cartTable.getSelectionModel().getSelectedItem().getGoodID();
                 for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
-                    if (shoppingBasket.getGood().getGoodID().equals(chosenID)){
-                        shoppingBasket.setQuantity(shoppingBasket.getQuantity()+1);
+                    if (shoppingBasket.getGood().getGoodID().equals(chosenID)) {
+                        shoppingBasket.setQuantity(shoppingBasket.getQuantity() + 1);
                         System.out.println("salam1");
                         break;
                     }
@@ -97,8 +98,8 @@ public class CartController implements Initializable {
                 ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
                 for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
                     Good good = shoppingBasket.getGood();
-                    int price =good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
-                    goodsList.add(new rowInfo(good.getGoodID(),good.getName(),shoppingBasket.getQuantity(),price));
+                    int price = good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
+                    goodsList.add(new rowInfo(good.getGoodID(), good.getName(), shoppingBasket.getQuantity(), price));
                 }
                 cartTable.setItems(goodsList);
             }
@@ -109,62 +110,61 @@ public class CartController implements Initializable {
                 //TODO
             }
         });
-       decreaseIMG.setOnMouseClicked(new EventHandler<MouseEvent>() {
-           @Override
-           public void handle(MouseEvent event) {
-               String chosenID =  cartTable.getSelectionModel().getSelectedItem().getGoodID();
-               ShoppingBasket toRemove = null;
-               for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
-                   if (shoppingBasket.getGood().getGoodID().equals(chosenID)){
-                       shoppingBasket.setQuantity(shoppingBasket.getQuantity()-1);
-                       System.out.println("salam2");
-                       if (shoppingBasket.getQuantity()==0){
-                           toRemove = shoppingBasket;
-                       }
-                       break;
-                   }
-               }
-               if (toRemove!=null){
-                   ((Customer)AccountController.loggedInUser).getShoppingBaskets().remove(toRemove);
-               }
-               cartTable.getItems().clear();
-               ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
-               for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
-                   Good good = shoppingBasket.getGood();
-                   int price =good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
-                   goodsList.add(new rowInfo(good.getGoodID(),good.getName(),shoppingBasket.getQuantity(),price));
-               }
-               cartTable.setItems(goodsList);
-           }
-       });
-       totalPrice.setOnMouseClicked(new EventHandler<MouseEvent>() {
-           @Override
-           public void handle(MouseEvent event) {
-               PurchaseController.passTime();
-               float fPrice= PurchaseController.calculatePrice(((Customer)AccountController.loggedInUser).getShoppingBaskets());
-               totalPrice.setText(String.valueOf(fPrice));
-           }
-       });
-       purchase.setOnMouseClicked(new EventHandler<MouseEvent>() {
-           @Override
-           public void handle(MouseEvent event) {
-               URL infoPaneUrl = null;
-               try {
-                   infoPaneUrl = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\Purchase.fxml").toURI().toURL();
-               } catch (MalformedURLException e) {
-                   e.printStackTrace();
-               }
-               try {
-                   Pane pane=FXMLLoader.load(infoPaneUrl);
-                   mainPane.getChildren().clear();
-                   mainPane.getChildren().add(pane);
-                   System.out.println("vaty");
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-           }
-       });
-
+        decreaseIMG.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String chosenID = cartTable.getSelectionModel().getSelectedItem().getGoodID();
+                ShoppingBasket toRemove = null;
+                for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
+                    if (shoppingBasket.getGood().getGoodID().equals(chosenID)) {
+                        shoppingBasket.setQuantity(shoppingBasket.getQuantity() - 1);
+                        System.out.println("salam2");
+                        if (shoppingBasket.getQuantity() == 0) {
+                            toRemove = shoppingBasket;
+                        }
+                        break;
+                    }
+                }
+                if (toRemove != null) {
+                    ((Customer) AccountController.loggedInUser).getShoppingBaskets().remove(toRemove);
+                }
+                cartTable.getItems().clear();
+                ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
+                for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
+                    Good good = shoppingBasket.getGood();
+                    int price = good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
+                    goodsList.add(new rowInfo(good.getGoodID(), good.getName(), shoppingBasket.getQuantity(), price));
+                }
+                cartTable.setItems(goodsList);
+            }
+        });
+        totalPrice.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                PurchaseController.passTime();
+                float fPrice = PurchaseController.calculatePrice(((Customer) AccountController.loggedInUser).getShoppingBaskets());
+                totalPrice.setText(String.valueOf(fPrice));
+            }
+        });
+        purchase.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                URL infoPaneUrl = null;
+                try {
+                    infoPaneUrl = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\Purchase.fxml").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    Pane pane = FXMLLoader.load(infoPaneUrl);
+                    mainPane.getChildren().clear();
+                    mainPane.getChildren().add(pane);
+                    System.out.println("vaty");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
     }

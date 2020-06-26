@@ -12,14 +12,20 @@
     -fx-font-weight: bold;
 }
 .accordion{
-    -fx-background-color: blueviolet;
+    -fx-background-color: transparent;
 }
-.accordion .header{
-    -fx-background-color: #005797;
+
+#titlpane1{
+    -fx-background-color: rgba(0, 77, 77,0.3);
 }
-.titled-pane{
-    -fx-background-color: #00ff99;
+#titlpane2{
+    -fx-background-color: rgba(0, 77, 77,0.3);
+    /*-fx-color-label-visible: true;*/
 }
-.accordion .titled-pane .header{
-    -fx-background-color: #ffcf58;
+#NoDisPane{
+    -fx-background-color: black;
 }
+#disPane{
+    -fx-background-color: black;
+}
+

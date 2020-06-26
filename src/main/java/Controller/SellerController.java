@@ -22,11 +22,11 @@ public class SellerController {
     }
 
     public static ArrayList<String> viewProductBuyers(Seller seller,String ID) throws InvalidIDException {
-        ArrayList<String> temp = null;
+        ArrayList<String> temp = new ArrayList<>();
         for (Good sellingGood : seller.getSellingGoods()) {
             if(sellingGood.getGoodID().equals(ID)){
                 for (SellLog allSellingLog : seller.getAllSellingLogs()) {
-                    if(allSellingLog.getSoldGood().equals(sellingGood)){
+                    if(allSellingLog.getSoldGood().getGoodID().equals(sellingGood.getGoodID())){
                         temp.add(allSellingLog.getBuyerUserNmae());
                     }
                 }
@@ -43,9 +43,6 @@ public class SellerController {
 
     }
 
-    public static void addProduct() {
-
-    }
 
     public static void removeProduct(Seller seller, String ID) throws InvalidIDException {
         Good good = null;

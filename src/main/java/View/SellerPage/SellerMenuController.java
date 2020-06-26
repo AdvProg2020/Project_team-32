@@ -5,6 +5,7 @@ import Controller.Exeptions.CategoryNotFindException;
 import Controller.Exeptions.InvalidIDException;
 import Controller.Exeptions.InvalidPatternException;
 import Model.*;
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -133,6 +136,21 @@ public class SellerMenuController implements Initializable {
         goodsArray.add(sib);
         Off off = new Off("12",goodsArray,new Date(), new Date(),150);
         seller.getOffs().add(off);
+        ArrayList<String> a= new ArrayList<>();
+        a.add("food11");
+        a.add("food22");
+        a.add("food33");
+        a.add("food44");
+        a.add("food55");
+        a.add("food66");
+        a.add("food77");
+        a.add("food88");
+        a.add("food99");
+        a.add("food10");
+        a.add("food11");
+        a.add("food12");
+        a.add("food13");
+        Category.getAllCategories().add(new Category("cat",a,null));
 
         URL infoTabURL = null;
         try {
@@ -199,7 +217,9 @@ public class SellerMenuController implements Initializable {
             public void handle(ActionEvent event) {
                 try {
                     ArrayList<String> allBuyers = SellerController.viewProductBuyers(((Seller) AccountController.loggedInUser), productID.getText());
-
+                    for (String allBuyer : allBuyers) {
+                        System.out.println(allBuyer);
+                    }
                     ObservableList<String> details = FXCollections.observableArrayList(allBuyers);
                     TableView<String> buyersTable = new TableView<>();
                     TableColumn<String, String> col1 = new TableColumn<>("Buyers");
@@ -227,8 +247,12 @@ public class SellerMenuController implements Initializable {
                     Good good = SellerController.getGoodFromSellingGood(((Seller) AccountController.loggedInUser), productID.getText());
                     TextField categoryTextField = new TextField("category name");
                     Button setCategory = new Button("press to set category");
+                    VBox vBox = new VBox();
+                    vBox.setLayoutX(200);
+                    vBox.getChildren().clear();
+                    vBox.getChildren().addAll(categoryTextField,setCategory);
                     manageProductPane.getChildren().clear();
-                    manageProductPane.getChildren().addAll(categoryTextField, setCategory);
+                    manageProductPane.getChildren().addAll(vBox);
                     setCategory.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
@@ -258,13 +282,15 @@ public class SellerMenuController implements Initializable {
                                         }
                                         GoodController.editProduct(good, goodName.getText().trim(), companyName.getText().trim(), Integer.parseInt(price.getText().trim())
                                                 , ((Seller) AccountController.loggedInUser), explanation.getText().trim(), category, properties);
-                                        System.out.println("Request sent successfully.");
+                                        new Alert(Alert.AlertType.CONFIRMATION).show();
                                     }
                                 });
-                                manageProductPane.getChildren().addAll(goodName, price, companyName, explanation);
+                                vBox.getChildren().addAll(goodName, price, companyName, explanation,confirm);
+                                manageProductPane.getChildren().clear();
                                 for (int j = 0; j < category.getSpecialProperties().size(); j++) {
-                                    manageProductPane.getChildren().add(textFieldProperties[j]);
+                                    vBox.getChildren().add(textFieldProperties[j]);
                                 }
+                                manageProductPane.getChildren().addAll(vBox);
 
 
                             } catch (CategoryNotFindException e) {
@@ -305,14 +331,22 @@ public class SellerMenuController implements Initializable {
                             }
                         }
                     });
-                    addProductPane.getChildren().addAll(priceTextField, confirmPrice);
+                    GridPane gridPane = new GridPane();
+                    gridPane.setLayoutX(200);
+                    gridPane.setLayoutY(200);
+                    gridPane.setVgap(10);
+                    gridPane.add(priceTextField,0,0);
+                    gridPane.add(confirmPrice,0,1);
+                    addProductPane.getChildren().addAll(gridPane);
 
                 } else {
-
                     TextField categoryTextField = new TextField("category name");
                     Button setCategory = new Button("press to set category");
                     addProductPane.getChildren().clear();
-                    addProductPane.getChildren().addAll(categoryTextField, setCategory);
+                    VBox box = new VBox();
+                    box.setLayoutX(200);
+                    box.getChildren().addAll(categoryTextField,setCategory);
+                    addProductPane.getChildren().addAll(box);
                     setCategory.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
@@ -344,13 +378,16 @@ public class SellerMenuController implements Initializable {
                                                 , companyName.getText().trim(), Integer.parseInt(price.getText().trim()),
                                                 explanation.getText().trim(), properties, ((Seller) AccountController.loggedInUser)
                                                 , category);
-                                        System.out.println("Request sent successfully.");
+                                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                        alert.show();
                                     }
                                 });
-                                addProductPane.getChildren().addAll(goodName, price, companyName, explanation);
+                                box.getChildren().addAll(goodName,price,companyName,explanation,confirm);
+                                addProductPane.getChildren().clear();
                                 for (int j = 0; j < category.getSpecialProperties().size(); j++) {
-                                    addProductPane.getChildren().add(textFieldProperties[j]);
+                                    box.getChildren().add(textFieldProperties[j]);
                                 }
+                                addProductPane.getChildren().add(box);
 
 
                             } catch (CategoryNotFindException e) {
@@ -620,9 +657,11 @@ public class SellerMenuController implements Initializable {
                         categoryNames.add(category.getName());
                     }
                     ObservableList<String> details = FXCollections.observableArrayList(categoryNames);
+                    categoryColumn = new TableColumn<>();
                     categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
                     categoryColumn.prefWidthProperty().bind(categoryTable.widthProperty().multiply(1));
                     categoryColumn.setResizable(false);
+                    categoryTable.getColumns().clear();
                     categoryTable.getColumns().add(categoryColumn);
                     categoryTable.setItems(details);
                 }
