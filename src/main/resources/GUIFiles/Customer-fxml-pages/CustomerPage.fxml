@@ -13,5 +13,6 @@
     <Tab fx:id="ordersTab" closable="false" />
     <Tab fx:id="balanceTab" closable="false" />
     <Tab fx:id="discountsTab" closable="false" />
+    <Tab fx:id="logOutTab" closable="false"/>
 </tabs>
 </TabPane>

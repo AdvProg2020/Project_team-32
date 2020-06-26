@@ -36,6 +36,7 @@ import java.util.*;
 
 public class SellerMenuController implements Initializable {
 
+    public Tab logOutTab;
     @FXML
     TabPane sellerTabPane;
 
@@ -699,6 +700,19 @@ public class SellerMenuController implements Initializable {
                     categoryTable.getColumns().clear();
                     categoryTable.getColumns().add(categoryColumn);
                     categoryTable.setItems(details);
+                }
+                else if (newTab.equals(logOutTab)){
+                    URL url = null;
+                    try {
+                        url = new File("src\\main\\resources\\GUIFiles\\logout-page.fxml").toURI().toURL();
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        logOutTab.setContent(FXMLLoader.load(url));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
