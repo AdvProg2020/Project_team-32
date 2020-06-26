@@ -1,5 +1,6 @@
 package View.goodsPage;
 
+import Controller.GoodController;
 import Model.Category;
 import Model.Good;
 import javafx.fxml.Initializable;
@@ -49,6 +50,7 @@ public class GoodPageController implements Initializable {
         categoriesTreeView.setRoot(categories);
 
         // initializing filters
+        String selectedCategory = categoriesTreeView.getSelectionModel().getSelectedItem().getValue();
         TreeItem<String > filters = new CheckBoxTreeItem<>("Filters");
         filterTreeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
         TreeItem<String > filterByCategoryProperties = new CheckBoxTreeItem<>("Category Properties");
@@ -57,16 +59,25 @@ public class GoodPageController implements Initializable {
         filters.setExpanded(true);
         filterTreeView.setEditable(true);
         filters.getChildren().addAll(filterByCategoryProperties, filterByGeneralProperties);
-        CheckBoxTreeItem<String> a = new CheckBoxTreeItem<>("hello");
+        /*CheckBoxTreeItem<String> a = new CheckBoxTreeItem<>("hello");
         filterByCategoryProperties.getChildren().addAll(a);
         CheckBoxTreeItem<String> b = new CheckBoxTreeItem<>("hi");
-        filterByCategoryProperties.getChildren().addAll(b);
+        filterByCategoryProperties.getChildren().addAll(b);*/
+        for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
+            filterByCategoryProperties.getChildren().add(new CheckBoxTreeItem<String>(property));
+            CheckBoxTreeItem<String> a = new CheckBoxTreeItem<>(property);
+        }
+        for (String property : Category.getGeneralProperties()) {
+            filterByGeneralProperties.getChildren().add(new CheckBoxTreeItem<String>(property));
+        }
 
 
 
         // initializing columns of goods
         firstColumnGoods.setSpacing(10);
         secondColumnGood.setSpacing(10);
+        GoodController.setCurrentCategory(Category.getCategoryByName(categoriesTreeView.getSelectionModel().getSelectedItem().getValue()));
+
         for (int i = 0; i < Good.getAllGoods().size(); i++) {
             String name = Good.getAllGoods().get(i).getName();
             String imageAddress = Good.getAllGoods().get(i).getImageAddress();

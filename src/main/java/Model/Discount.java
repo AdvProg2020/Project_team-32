@@ -14,13 +14,13 @@ public class Discount implements Serializable {
     private int maxAmount;
     private int useCount;
 
-    public Discount(String discountID, Date exposeDate, int discountPercent, int maxAmount) {
+    public Discount(String discountID, Date exposeDate, int discountPercent, int maxAmount, int useCount) {
         this.discountID = discountID;
         this.initialDate = new Date();
         this.exposeDate = exposeDate;
         this.discountPercent = discountPercent;
         this.maxAmount = maxAmount;
-        this.useCount = 0;
+        this.useCount = useCount;
     }
 
     public String getDiscountID() {

@@ -17,6 +17,7 @@ public class DiscountEditCommand extends Menu {
         System.out.println("enter a discountId to edit its information:");
     }
 
+/*
     @Override
     public void execute() {
         String discountId = scanner.nextLine();
@@ -37,6 +38,7 @@ public class DiscountEditCommand extends Menu {
         parentMenu.show();
         parentMenu.execute();
     }
+*/
 
     private boolean commandValidation(String command) {
         return command.matches("\\S+ \\d+,\\d+,\\d+ \\d+ \\d+");

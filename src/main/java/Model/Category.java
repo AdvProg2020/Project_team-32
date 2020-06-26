@@ -102,4 +102,13 @@ public class Category implements Serializable {
         }
         return category;
     }
+
+    public static Category getCategoryByName(String name) {
+        for (Category category : allCategories) {
+            if(category.getName().equalsIgnoreCase(name)) {
+                return category;
+            }
+        }
+        return null;
+    }
 }

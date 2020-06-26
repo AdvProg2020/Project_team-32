@@ -1,10 +1,7 @@
 package View;
 
-import Controller.Controller;
-import Model.Category;
-import Model.Good;
-import Model.Person;
-import Model.Seller;
+import Controller.*;
+import Model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -21,16 +19,20 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        URL url = new File("src\\main\\resources\\GUIFiles\\Seller-fxml-pages\\SellerMenu.fxml").toURI().toURL();
+        URL url = new File("src\\main\\resources\\GUIFiles\\manager-tab-pane.fxml").toURI().toURL();
+        //URL url = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CustomerPage.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("helloWorld");
-        primaryStage.setScene(new Scene(root,788,700));
+        primaryStage.setScene(new Scene(root,788,688));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
 
     public static void main(String[] args) {
-//        new Good("khiyar","123",new Seller("ali","123"),"salma",new Category("hey",null,null),null,null,0);
+        new Good("khiyar","123",new Seller("alii","123"),"salma",new Category("hey",null,null),null,null,0);
+        new Customer("ali","123");
+        new Customer("ioo","234");
+        System.out.println(BossController.getAllDiscount());
         launch(args);
 
     }
