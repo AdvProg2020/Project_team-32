@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Guest;
 import View.*;
 import View.BossPage.BossMenu;
 import Model.Category;
@@ -15,6 +16,9 @@ import java.util.Date;
 public class Controller {
     private static Date date = null;
 
+    //
+    public boolean isBossCreated;
+
     public static void main(String[] args) {
         Menu.bossMenu = new BossMenu(null);
         Menu.guestMenu = new GuestMenu(null);
@@ -25,6 +29,10 @@ public class Controller {
         Menu.guestMenu.show();
         Menu.guestMenu.execute();
         exportData();
+    }
+
+    public static void initialize(){
+        AccountController.loggedInUser = new Guest();
     }
 
     public static void importData(){
