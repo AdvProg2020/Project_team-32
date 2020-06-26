@@ -32,6 +32,32 @@ public class Controller {
     }
 
     public static void initialize(){
+        (new Thread() {
+            public void run() {
+
+                Media sound =null;
+                MediaPlayer mediaPlayer =null;
+                while (true){
+                    sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music1.mp3").toURI().toString());
+                    mediaPlayer = new MediaPlayer(sound);
+                    mediaPlayer.play();
+                    try {
+                        Thread.sleep(120000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music2.mp3").toURI().toString());
+                    mediaPlayer = new MediaPlayer(sound);
+                    mediaPlayer.play();
+                    try {
+                        Thread.sleep(120000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }).start();
         AccountController.loggedInUser = new Guest();
     }
 
@@ -90,20 +116,20 @@ public class Controller {
             e.printStackTrace();
         }
     }
-    public static  void backSound(boolean x){
-        Media sound =null;
-        if (date!=null){
-            if ((new Date()).getTime()-date.getTime()<10000) return;
-        }
-        if (x){
-            sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music1.mp3").toURI().toString());
-        }else{
-            sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music2.mp3").toURI().toString());
-        }
-        date = new Date();
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
-    }
+//    public static  void backSound(boolean x){
+//        Media sound =null;
+//        if (date!=null){
+//            if ((new Date()).getTime()-date.getTime()<10000) return;
+//        }
+//        if (x){
+//            sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music1.mp3").toURI().toString());
+//        }else{
+//            sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music2.mp3").toURI().toString());
+//        }
+//        date = new Date();
+//        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+//        mediaPlayer.play();
+//    }
     public static void sound(int voice){
         Media sound =null;
         switch (voice){
