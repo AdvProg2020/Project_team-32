@@ -25,7 +25,7 @@ public class Main extends Application {
   //      URL url = new File("src\\main\\resources\\GUIFiles\\Seller-fxml-pages\\SellerMenu.fxml").toURI().toURL();
 //        URL url = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CustomerPage.fxml").toURI().toURL();
 
-Parent root = FXMLLoader.load(url);
+        Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("helloWorld");
         primaryStage.setScene(new Scene(root,788,688));
         primaryStage.setResizable(false);

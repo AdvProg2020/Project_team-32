@@ -39,6 +39,7 @@ public class Controller {
                 while (true){
                     sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music1.mp3").toURI().toString());
                     mediaPlayer = new MediaPlayer(sound);
+                    mediaPlayer.setVolume(0.03);
                     mediaPlayer.play();
                     try {
                         Thread.sleep(120000);
@@ -47,6 +48,7 @@ public class Controller {
                     }
                     sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music2.mp3").toURI().toString());
                     mediaPlayer = new MediaPlayer(sound);
+                    mediaPlayer.setVolume(0.03);
                     mediaPlayer.play();
                     try {
                         Thread.sleep(120000);
