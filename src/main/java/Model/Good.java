@@ -9,7 +9,9 @@ public class Good {
     private String name;
     private String goodID;
     private Status goodStatus;
+
     private enum Status {MAKE_REQUEST, EDIT_REQUEST, CONFIRMED}
+
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
     private ArrayList<Seller> sellers;
     private String companyName;
@@ -51,7 +53,7 @@ public class Good {
         this.sellers = new ArrayList<Seller>();
         this.sellers.add(seller);
         allGoods.add(this);
-        this.properties = new HashMap<>(properties);
+        this.properties = properties != null ? new HashMap<>(properties) : new HashMap<>();
         this.properties.put("company name", companyName);
         this.properties.put("name", name);
         // TODO ali sharifi
