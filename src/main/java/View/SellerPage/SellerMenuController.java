@@ -149,28 +149,7 @@ public class SellerMenuController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //info personal
         this.fixSounds();
-
-        /*Seller seller= new Seller("yasin","moosavi");
-        AccountController.loggedInUser=seller;
-        Seller.seller(seller);
-        SellLog  sellLog= new SellLog("sellog",new Date(),100,20,seller.getSellingGoods().get(0),"taha","choert" );
-        Good sib = new Good("sib","sibid",seller,"sib sazi"
-                ,new Category("sibcat",null,null),
-                "sib explanations",null,100);
-        ArrayList<Good> goodsArray = new ArrayList<>();
-        goodsArray.add(sib);
-        Off off = new Off("12",goodsArray,new Date(), new Date(),150);
-        seller.getOffs().add(off);
-        ArrayList<String> a= new ArrayList<>();
-        a.add("food11");
-        a.add("food22");
-        a.add("food33");
-        a.add("food44");
-        a.add("food55");
-        a.add("food66");
-        Category.getAllCategories().add(new Category("cat",a,null));*/
 
         URL infoTabURL = null;
         try {
