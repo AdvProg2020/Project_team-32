@@ -40,6 +40,25 @@
     -fx-cursor: hand;
 }
 
+#addButton {
+    -fx-display-caret: false;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60, 60;
+    -fx-background-image: url("icons/addIcon.png");
+    -fx-cursor: hand;
+}
+
+#editButton {
+    -fx-display-caret: false;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60, 60;
+    -fx-background-image: url("icons/editIcon.png");
+    -fx-cursor: hand;
+}
+
+
 #addManagerButton {
     -fx-display-caret: false;
     -fx-background-color: transparent;
@@ -64,6 +83,16 @@
 }
 
 #removeButton:pressed{
+    -fx-opacity: 1;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.9),5,0,0,2);
+}
+
+#addButton:pressed{
+    -fx-opacity: 1;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.9),5,0,0,2);
+}
+
+#editButton:pressed{
     -fx-opacity: 1;
     -fx-effect: innershadow(gaussian, rgba(0,0,0,0.9),5,0,0,2);
 }

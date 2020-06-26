@@ -1,5 +1,8 @@
 package View.ManagerPage;
 
+import Controller.BossController;
+import Model.Boss;
+import Model.Customer;
 import Model.Discount;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,14 +16,17 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class ChangeDiscountPane extends Pane {
 
     DiscountManagerPageController parentController;
     AddEditDiscountPageController controller;
+    boolean isEditPane;
+    Discount discountToChange;
 
-
-    public ChangeDiscountPane(DiscountManagerPageController parentController,Discount discount) {
+    public ChangeDiscountPane(DiscountManagerPageController parentController, Discount discount) {
 
         URL url = null;
         try {
@@ -44,16 +50,20 @@ public class ChangeDiscountPane extends Pane {
 
 
         //check if discount is not null
-        if(discount != null ){
+        if (discount != null) {
             setDiscountAmount(discount);
         }
 
-        System.out.println(controller);
-        System.out.println(parentController);
+        //set page controller field
+        controller.setChangeDiscountPane(this);
+
+        isEditPane = discount != null;
+
+        discountToChange = discount;
 
     }
 
-    private void setDiscountAmount(Discount discount){
+    private void setDiscountAmount(Discount discount) {
 
         //set discount amount
 
@@ -70,7 +80,27 @@ public class ChangeDiscountPane extends Pane {
 
         controller.maxAmountInput.setText("" + discount.getMaxAmount());
 
+        controller.numberOfUseInput.setText("" + discount.getUseCount());
+
     }
 
 
+    public void makeDiscount(LocalDate exposeDate, String discountId, String maxAmount, double percent, ArrayList<Customer> customers, String numberOfUse) {
+
+        Date date = Date.from(exposeDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        int maxDiscountAmount = Integer.parseInt(maxAmount);
+        int useNumber = Integer.parseInt(numberOfUse);
+        int percentInt = (int) percent;
+
+        if (!isEditPane) {
+            BossController.createDiscount(date, discountId, maxDiscountAmount, percentInt, useNumber, customers);
+        }
+        else {
+            BossController.editDiscount(date, discountId, maxDiscountAmount, percentInt, discountToChange);
+        }
+
+        parentController.closeStage();
+        parentController.updateTable();
+
+    }
 }

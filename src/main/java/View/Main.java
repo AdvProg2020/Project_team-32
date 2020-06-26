@@ -20,6 +20,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
         URL url = new File("src\\main\\resources\\GUIFiles\\manager-tab-pane.fxml").toURI().toURL();
+        //URL url = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CustomerPage.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("helloWorld");
         primaryStage.setScene(new Scene(root,788,688));
@@ -28,13 +29,11 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        new Good("khiyar","123",new Seller("ali","123"),"salma",new Category("hey",null,null),null,null,0);
+        new Good("khiyar","123",new Seller("alii","123"),"salma",new Category("hey",null,null),null,null,0);
         new Customer("ali","123");
         new Customer("ioo","234");
-        BossController.createDiscount("absd 1999,2,2 60 10000 20".split(" "),new ArrayList<>());
         System.out.println(BossController.getAllDiscount());
         launch(args);
-
     }
 
 }

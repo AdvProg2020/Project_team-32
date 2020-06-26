@@ -37,6 +37,7 @@ public class DiscountManagerPageController implements Initializable {
     public TableColumn<Discount, Date> dateColumn;
     public TableColumn<Discount, String> idColumn;
     public TableView<Discount> discountsTable;
+    private Stage stageToShow;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -50,28 +51,42 @@ public class DiscountManagerPageController implements Initializable {
         //initial table items
         discountsTable.getItems().addAll(BossController.getAllDiscount());
 
+        stageToShow = new Stage();
+
     }
 
-    public void updateTable(){
+    public void updateTable() {
         discountsTable.getItems().clear();
         discountsTable.getItems().addAll(BossController.getAllDiscount());
     }
 
 
     public void remove(ActionEvent actionEvent) {
-        if(discountsTable.getSelectionModel().getSelectedItem() != null){
+        if (discountsTable.getSelectionModel().getSelectedItem() != null) {
             BossController.removeDiscount(discountsTable.getSelectionModel().getSelectedItem());
             updateTable();
-        }
-        else {
-            new Alert(Alert.AlertType.WARNING,"Should select a discount.").show();
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Should select a discount.").show();
         }
     }
 
     public void addDiscount(ActionEvent actionEvent) {
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(new ChangeDiscountPane(this,null)));
-            stage.show();
+        stageToShow.setScene(new Scene(new ChangeDiscountPane(this, null)));
+        stageToShow.show();
     }
+
+    public void closeStage() {
+        stageToShow.close();
+    }
+
+    public void editDiscount(ActionEvent actionEvent) {
+        if (discountsTable.getSelectionModel().getSelectedItem() != null) {
+            Discount discount = discountsTable.getSelectionModel().getSelectedItem();
+            stageToShow.setScene(new Scene(new ChangeDiscountPane(this, discount)));
+            stageToShow.show();
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Should select a discount.").show();
+        }
+    }
+
 }

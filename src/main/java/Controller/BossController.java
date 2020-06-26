@@ -4,10 +4,12 @@ import Controller.Exeptions.DiscountDoesNotExistException;
 import Controller.Exeptions.DuplicateBossException;
 import Controller.Exeptions.DuplicateUsernameException;
 import Model.Boss;
+import Model.Customer;
 import Model.Discount;
 import Model.Person;
 
 import java.net.Inet4Address;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,10 +19,9 @@ public class BossController {
     private static ArrayList<Discount> allDiscount = new ArrayList<Discount>();
 
     public static void createManager(String username, String password) throws DuplicateUsernameException {
-        if(!Person.hasPersonByUserName(username)){
+        if (!Person.hasPersonByUserName(username)) {
             new Boss(username, password);
-        }
-        else{
+        } else {
             throw new DuplicateUsernameException();
         }
     }
@@ -29,32 +30,28 @@ public class BossController {
         return allDiscount;
     }
 
-    public static void createDiscount(String[] command,ArrayList<Person> users) {
-        String[] exposeDateString = command[1].split(",");
-        Date exposeDate = new Date(Integer.parseInt(exposeDateString[0]),Integer.parseInt(exposeDateString[1]),Integer.parseInt(exposeDateString[2]));
-        Discount discount = new Discount(command[0], exposeDate, Integer.parseInt(command[2]), Integer.parseInt(command[3]));
+    public static void createDiscount(Date exposeDate, String discountId, int maxAmount, int percent, int numberOfUse, ArrayList<Customer> users) {
+        Discount discount = new Discount(discountId, exposeDate, percent, maxAmount, numberOfUse);
         allDiscount.add(discount);
-        for (Person user : users) {
-            user.addDiscount(discount,Integer.parseInt(command[4]));
+        for (Customer user : users) {
+            user.addDiscount(discount, numberOfUse);
         }
     }
 
     public static Discount getDiscountById(String discountId) throws DiscountDoesNotExistException {
         for (Discount discount : allDiscount) {
-            if(discount.getDiscountID().equals(discountId)){
+            if (discount.getDiscountID().equals(discountId)) {
                 return discount;
             }
         }
         throw new DiscountDoesNotExistException();
     }
 
-    public static void editDiscount(String[] command, Discount discount) {
-        String[] exposeDateString = command[1].split(",");
-        Date exposeDate = new Date(Integer.parseInt(exposeDateString[0]),Integer.parseInt(exposeDateString[1]),Integer.parseInt(exposeDateString[2]));
-        discount.setDiscountID(command[0]);
+    public static void editDiscount(Date exposeDate, String discountId, int maxAmount, int percent, Discount discount) {
+        discount.setDiscountID(discountId);
         discount.setExposeDate(exposeDate);
-        discount.setDiscountPercent(Integer.parseInt(command[2]));
-        discount.setMaxAmount(Integer.parseInt(command[3]));
+        discount.setDiscountPercent(percent);
+        discount.setMaxAmount(maxAmount);
     }
 
     public static void removeDiscount(Discount discount) {

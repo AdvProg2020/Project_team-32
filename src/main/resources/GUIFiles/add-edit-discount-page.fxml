@@ -12,14 +12,14 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: white;" stylesheets="@information-page-style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ManagerPage.AddEditDiscountPageController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="368.0" layoutX="59.0" layoutY="89.0" stroke="#ffb32e" strokeType="INSIDE" width="273.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="536.0" layoutX="63.0" layoutY="89.0" stroke="#ffb32e" strokeType="INSIDE" width="273.0" />
       <TextField fx:id="idInput" layoutX="102.0" layoutY="157.0" promptText="id" styleClass="inputChoice" />
-      <Label  layoutX="106.0" layoutY="137.0" text="Discount ID:">
+      <Label layoutX="106.0" layoutY="137.0" text="Discount ID:" textFill="#ffb32e">
          <font>
             <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="106.0" layoutY="220.0" text="Percent:">
+      <Label layoutX="106.0" layoutY="220.0" text="Percent:" textFill="#ffb32e">
          <font>
             <Font name="Comic Sans MS" size="15.0" />
          </font>
@@ -31,22 +31,28 @@
          </font>
       </Label>
       <TextField fx:id="maxAmountInput" layoutX="99.0" layoutY="346.0" promptText="amount" styleClass="inputChoice" />
-      <Label layoutX="105.0" layoutY="319.0" text="Max Amount:">
+      <Label layoutX="105.0" layoutY="319.0" text="Max Amount:" textFill="#ffb32e">
          <font>
             <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
-      <DatePicker fx:id="datePicker" layoutX="64.0" layoutY="525.0" prefHeight="33.0" prefWidth="257.0" />
-      <Label layoutX="64.0" layoutY="489.0" text="Expose Date:" textFill="#ffb32e">
+      <DatePicker fx:id="datePicker" layoutX="108.0" layoutY="539.0" prefHeight="22.0" prefWidth="179.0" />
+      <Label layoutX="111.0" layoutY="507.0" text="Expose Date:" textFill="#ffb32e">
          <font>
             <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
-      <VBox fx:id="userPicker" layoutX="377.0" layoutY="92.0" prefHeight="362.0" prefWidth="250.0" style="-fx-background-color: #ffb32e;" />
-      <Button layoutX="488.0" layoutY="516.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" stylesheets="@registerPageStyle.css" text="Submit" textFill="WHITE">
+      <VBox fx:id="userPicker" layoutX="377.0" layoutY="92.0" prefHeight="385.0" prefWidth="250.0" style="-fx-background-color: #ffb32e;" />
+      <Button layoutX="443.0" layoutY="523.0" mnemonicParsing="false" onAction="#submitChanges" prefHeight="47.0" prefWidth="118.0" stylesheets="@registerPageStyle.css" text="Submit" textFill="WHITE">
          <font>
             <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Button>
+      <TextField fx:id="numberOfUseInput" layoutX="102.0" layoutY="439.0" promptText="number" styleClass="inputChoice" />
+      <Label layoutX="108.0" layoutY="412.0" text="Number of use:" textFill="#ffb32e">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

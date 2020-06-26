@@ -23,9 +23,9 @@
                 <Font name="Freestyle Script" size="43.0" />
             </font>
         </Text>
-        <Button fx:id="removeButton" onAction="#remove" layoutX="364.0" layoutY="35.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" stylesheets="@information-page-style.css" />
-      <Button fx:id="addDiscount" onAction="#addDiscount" layoutX="443.0" layoutY="35.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" stylesheets="@information-page-style.css" text="add" />
-      <Button fx:id="editDiscount" layoutX="532.0" layoutY="35.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" stylesheets="@information-page-style.css" text="edit" />
+        <Button fx:id="removeButton" layoutX="364.0" layoutY="35.0" mnemonicParsing="false" onAction="#remove" prefHeight="70.0" prefWidth="70.0" stylesheets="@information-page-style.css" />
+      <Button id="addButton" fx:id="addDiscount" layoutX="443.0" layoutY="35.0" mnemonicParsing="false" onAction="#addDiscount" prefHeight="70.0" prefWidth="70.0" stylesheets="@information-page-style.css" />
+      <Button id="editButton" fx:id="editDiscount" layoutX="532.0" layoutY="35.0" mnemonicParsing="false" onAction="#editDiscount" prefHeight="70.0" prefWidth="70.0" stylesheets="@information-page-style.css" />
     </children>
 
 </AnchorPane>
