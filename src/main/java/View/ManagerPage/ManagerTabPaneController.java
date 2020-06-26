@@ -28,13 +28,15 @@ public class ManagerTabPaneController implements Initializable {
             URL userManagerUrl = new File("src\\main\\resources\\GUIFiles\\user-manager-page.fxml").toURI().toURL();
             URL productManagerUrl = new File("src\\main\\resources\\GUIFiles\\product-manager-page.fxml").toURI().toURL();
             URL discountMangerUrl = new File("src\\main\\resources\\GUIFiles\\discount-manager-page.fxml").toURI().toURL();
-
+            URL categoryManagerUrl = new File("src\\main\\resources\\GUIFiles\\category-manager.fxml").toURI().toURL();
 
             //set tab's contents
             discountManagerTab.setContent(FXMLLoader.load(discountMangerUrl));
             productManagerTab.setContent(FXMLLoader.load(productManagerUrl));
             infoTab.setContent(FXMLLoader.load(infoPaneUrl));
             userMangerTab.setContent(FXMLLoader.load(userManagerUrl));
+            categoryManagerTab.setContent(FXMLLoader.load(categoryManagerUrl));
+
 
         } catch (IOException e) {
             e.printStackTrace();

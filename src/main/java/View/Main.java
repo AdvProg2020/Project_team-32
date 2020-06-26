@@ -29,7 +29,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        new Good("khiyar","123",new Seller("alii","123"),"salma",new Category("hey",null,null),null,null,0);
+        new Good("khiyar","123",new Seller("alii","123"),"salma",new Category("hey",null,Category.rootCategory),null,null,0);
         new Customer("ali","123");
         new Customer("ioo","234");
         System.out.println(BossController.getAllDiscount());
