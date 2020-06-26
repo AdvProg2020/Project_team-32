@@ -20,7 +20,7 @@ public class CreateDiscountCommand extends Menu {
         System.out.println("please use this format to create a discount:\n[discountId] [year,month,day] [discountPercent] [max amount] [use number]");
     }
 
-    @Override
+ /*   @Override
     public void execute() {
         String command = scanner.nextLine();
         if (commandValidation(command)) {
@@ -47,7 +47,7 @@ public class CreateDiscountCommand extends Menu {
         parentMenu.show();
         parentMenu.execute();
     }
-
+*/
     private boolean commandValidation(String command) {
         return command.matches("\\S+ \\d+,\\d+,\\d+ \\d+ \\d+ \\d+");
     }

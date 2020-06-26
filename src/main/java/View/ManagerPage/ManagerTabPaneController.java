@@ -22,12 +22,20 @@ public class ManagerTabPaneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+
+            //set URLs
             URL infoPaneUrl = new File("src\\main\\resources\\GUIFiles\\personal-info.fxml").toURI().toURL();
             URL userManagerUrl = new File("src\\main\\resources\\GUIFiles\\user-manager-page.fxml").toURI().toURL();
             URL productManagerUrl = new File("src\\main\\resources\\GUIFiles\\product-manager-page.fxml").toURI().toURL();
+            URL discountMangerUrl = new File("src\\main\\resources\\GUIFiles\\discount-manager-page.fxml").toURI().toURL();
+
+
+            //set tab's contents
+            discountManagerTab.setContent(FXMLLoader.load(discountMangerUrl));
             productManagerTab.setContent(FXMLLoader.load(productManagerUrl));
             infoTab.setContent(FXMLLoader.load(infoPaneUrl));
             userMangerTab.setContent(FXMLLoader.load(userManagerUrl));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
