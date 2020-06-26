@@ -7,7 +7,8 @@
 <tabs>
     <Tab fx:id="registerTab" closable="false" text="register" />
     <Tab fx:id="loginTab" closable="false" text="login" />
-    <Tab fx:id="offPageTab" closable="false" />
-    <Tab fx:id="productPageTab" closable="false" />
+    <Tab fx:id="offPageTab" closable="false" text="Offs" />
+    <Tab fx:id="productPageTab" closable="false" text="Goods" />
+
 </tabs>
 </TabPane>

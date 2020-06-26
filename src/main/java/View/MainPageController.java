@@ -4,6 +4,7 @@ import Controller.AccountController;
 import Controller.Controller;
 import Controller.BossController;
 import Controller.Exeptions.DuplicateUsernameException;
+import com.sun.jndi.toolkit.url.Uri;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -20,6 +21,8 @@ import java.util.ResourceBundle;
 public class MainPageController implements Initializable {
     public Tab registerTab;
     public Tab loginTab;
+    public Tab productPageTab;
+    public Tab offPageTab;
 
 
     @Override
@@ -34,10 +37,15 @@ public class MainPageController implements Initializable {
             //set URLs
             URL registerUrl = new File("src\\main\\resources\\GUIFiles\\RegisterPage.fxml").toURI().toURL();
             URL loginUrl = new File("src\\main\\resources\\GUIFiles\\LoginPage.fxml").toURI().toURL();
+            URL productPageUrl = new File("src\\main\\resources\\GUIFiles\\GoodsPage.fxml").toURI().toURL();
+            URL offPageUrl = new File("src\\main\\resources\\GUIFiles\\OffsPage.fxml").toURI().toURL();
+
 
             //set contents
             registerTab.setContent(FXMLLoader.load(registerUrl));
             loginTab.setContent(FXMLLoader.load(loginUrl));
+            productPageTab.setContent(FXMLLoader.load(productPageUrl));
+            offPageTab.setContent(FXMLLoader.load(offPageUrl));
 
         } catch (IOException e) {
             e.printStackTrace();

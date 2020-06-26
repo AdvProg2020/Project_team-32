@@ -34,7 +34,7 @@ Parent root = FXMLLoader.load(url);
 
     public static void main(String[] args) {
         Controller.initialize();
-        //new Good("khiyar","123",new Seller("alii","123"),"salma",new Category("hey",null,Category.rootCategory),null,null,0);
+        new Good("khiyar","123",new Seller("alii","123"),"salma",new Category("hey",null,Category.rootCategory),null,null,0);
         Category hey = new Category("hey",null,Category.rootCategory);
         ArrayList<String> specialProperties = new ArrayList<>();
         specialProperties.add("ali");
