@@ -5,6 +5,8 @@ import View.BossPage.BossMenu;
 import Model.Category;
 import Model.Good;
 import Model.Person;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -77,6 +79,34 @@ public class Controller {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    public static  void backSound(boolean x){
+        Media sound =null;
+        if (x){
+            sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music1.mp3").toURI().toString());
+        }else{
+            sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music2.mp3").toURI().toString());
+        }
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+    }
+    public static void sound(int voice){
+        Media sound =null;
+        switch (voice){
+            case 1:
+                sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\sound_ex_machina_Button_Click.mp3").toURI().toString());
+                break;
+            case 2:
+                sound= new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\transportation_car_seat_belt_click_lock_002.mp3").toURI().toString());
+                break;
+            case 3:
+                sound= new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\click.mp3").toURI().toString());
+                break;
+            default:
+                sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\zapsplat_impact_rock_small_hit_solid_ground_004_11181.mp3").toURI().toString());
+        }
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
     }
 
 }
