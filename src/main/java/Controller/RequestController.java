@@ -107,6 +107,8 @@ public class RequestController {
             goods.add(good);
         }
         int offPercent = Integer.parseInt(matcher.group(5));
-        request.getSeller().makeOff(new Off(offId,goods,exposeDate,initialDate,offPercent));
+        Off off = new Off(offId,goods,exposeDate,initialDate,offPercent);
+        Off.addOff(off);
+        request.getSeller().makeOff(off);
     }
 }

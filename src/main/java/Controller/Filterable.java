@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Category;
 import Model.Good;
+import Model.Off;
 
 import java.util.ArrayList;
 import java.util.HashMap;
