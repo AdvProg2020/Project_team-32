@@ -17,7 +17,7 @@ public class DisableSortCommand extends Menu {
     @Override
     public void execute() {
         try {
-            GoodController.sort(3);
+//            GoodController.sort(3);
         } catch (Exception e) {
             e.printStackTrace();
         }
