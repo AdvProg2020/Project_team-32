@@ -106,5 +106,6 @@
                 </children>
             </AnchorPane>
         </Tab>
+        <Tab fx:id="logOutTab" closable="false"/>
     </tabs>
 </TabPane>
