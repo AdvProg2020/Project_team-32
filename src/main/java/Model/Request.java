@@ -20,7 +20,8 @@ public class Request implements Serializable {
     }
 
     public Matcher getMatcher() {
-        matcher.matches();
+        System.out.println(matcher.matches());
+
         return matcher;
     }
 

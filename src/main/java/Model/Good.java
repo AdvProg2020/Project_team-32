@@ -61,7 +61,6 @@ public class Good {
 
     public void editInfo(Good editGood, Seller seller) {
         this.name = editGood.name;
-        this.goodID = editGood.goodID;
         this.companyName = editGood.companyName;
         this.category = editGood.category;
         this.explanation = editGood.explanation;

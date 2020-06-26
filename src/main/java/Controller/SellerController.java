@@ -93,7 +93,7 @@ public class SellerController {
     }
     public static String makeRequest(String request ,String input , String pattern) throws InvalidPatternException{
         if(Pattern.compile(pattern).matcher(input).matches()) {
-            return request+" "+input;
+            return input;
         }
         else throw new InvalidPatternException();
     }

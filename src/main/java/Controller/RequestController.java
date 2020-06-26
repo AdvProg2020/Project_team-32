@@ -47,13 +47,18 @@ public class RequestController {
         else if(request.getRequestPattern().equals(RequestPattern.EDIT_PRODUCT)){
             editProduct(request);
         }
+        removeRequest(request);
     }
 
     private static void editProduct(Request request) {
         Good editGood = Good.getGoodFromAllGoods(request.getMatcher().group(1)+"edited");
         Good good = Good.getGoodFromAllGoods(request.getMatcher().group(1));
+        System.out.println(good);
+        System.out.println(editGood);
+        System.out.println(request.getMatcher().group(1));
         good.editInfo(editGood,request.getSeller());
         GoodController.getGoodController().deleteGood(editGood);
+        good.confirmStatus();
     }
 
     private static void createProduct(Request request) {
@@ -93,6 +98,8 @@ public class RequestController {
 
     private static void createOff(Request request) throws Exception{
         Matcher matcher = request.getMatcher();
+        System.out.println(request);
+
         String offId = matcher.group(1);
         String[] goodIds = matcher.group(2).split(",");
         String[] date = matcher.group(3).split(",");
