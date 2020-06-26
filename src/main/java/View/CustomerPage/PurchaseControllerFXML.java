@@ -1,6 +1,7 @@
 package View.CustomerPage;
 
 import Controller.AccountController;
+import Controller.Controller;
 import Controller.Exeptions.DiscountNotUsableException;
 import Controller.Exeptions.InvalidIDException;
 import Controller.PurchaseController;
@@ -15,7 +16,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -57,8 +61,23 @@ public class PurchaseControllerFXML implements Initializable {
 
     @FXML
     private Button disPay;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        nextButton.setOnMouseEntered(event -> Controller.sound(1));
+        noDisPay.setOnMouseEntered(event -> Controller.sound(1));
+        checkDiscount.setOnMouseEntered(event -> Controller.sound(1));
+        disPay.setOnMouseEntered(event -> Controller.sound(1));
+
+        nextButton.setOnMouseClicked(event -> Controller.sound(3));
+        noDisPay.setOnMouseClicked(event -> Controller.sound(3));
+        checkDiscount.setOnMouseClicked(event -> Controller.sound(3));
+        disPay.setOnMouseClicked(event -> Controller.sound(3));
+
+        discountCheckLabel.setOnMouseEntered(event -> Controller.sound(2));
+        noDisResult.setOnMouseEntered(event -> Controller.sound(2));
+        disResult.setOnMouseEntered(event -> Controller.sound(2));
+
         disVBox.setVisible(false);
         accordion.setVisible(false);
         nextButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

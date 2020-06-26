@@ -1,5 +1,6 @@
 package View.CustomerPage;
 
+import Controller.Controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -39,35 +40,35 @@ public class CustomerTabPaneController implements Initializable {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-            URL finalInfoPaneUrl = infoPaneUrl;
-            URL finalCartPageURL = cartPageURL;
-            URL finalOrdersPageURL = ordersPageURL;
-            URL finalBalancePageURl = balancePageURl;
-            URL finalDiscountsPageURL = discountsPageURL;
-            tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-                @Override
-                public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
-                    try {
-                        if (newTab.equals(userMangerTab)){
-                            userMangerTab.setContent(FXMLLoader.load(finalInfoPaneUrl));
-                        }
-                        else if (newTab.equals(cartTab)){
-                            cartTab.setContent(FXMLLoader.load(finalCartPageURL));
-                        }
-                        else if (newTab.equals(ordersTab)){
-                            ordersTab.setContent(FXMLLoader.load(finalOrdersPageURL));
-                        }
-                        else if (newTab.equals(balanceTab)){
-                            balanceTab.setContent(FXMLLoader.load(finalBalancePageURl));
-                        }
-                        else if (newTab.equals(discountsTab)){
-                            discountsTab.setContent(FXMLLoader.load(finalDiscountsPageURL));
-                        }
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
+        URL finalInfoPaneUrl = infoPaneUrl;
+        URL finalCartPageURL = cartPageURL;
+        URL finalOrdersPageURL = ordersPageURL;
+        URL finalBalancePageURl = balancePageURl;
+        URL finalDiscountsPageURL = discountsPageURL;
+        tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {;
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
 
+                try {
+                    if (newTab.equals(userMangerTab)){
+                        userMangerTab.setContent(FXMLLoader.load(finalInfoPaneUrl));
+                    }
+                    else if (newTab.equals(cartTab)){
+                        cartTab.setContent(FXMLLoader.load(finalCartPageURL));
+                    }
+                    else if (newTab.equals(ordersTab)){
+                        ordersTab.setContent(FXMLLoader.load(finalOrdersPageURL));
+                    }
+                    else if (newTab.equals(balanceTab)){
+                        balanceTab.setContent(FXMLLoader.load(finalBalancePageURl));
+                    }
+                    else if (newTab.equals(discountsTab)){
+                        discountsTab.setContent(FXMLLoader.load(finalDiscountsPageURL));
+                    }
+                }catch (IOException e){
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
     }
 }

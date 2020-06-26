@@ -120,10 +120,36 @@ public class SellerMenuController implements Initializable {
     Button addOff;
     @FXML
     TextField offID;
+    private  void fixSounds(){
+        //button enter
+        addOff.setOnMouseEntered(event -> Controller.sound(1));
+        editOff.setOnMouseEntered(event -> Controller.sound(1));
+        viewOffButton.setOnMouseEntered(event -> Controller.sound(1));
+        RemoveProductButton.setOnMouseEntered(event -> Controller.sound(1));
+        addProductID_Button.setOnMouseEntered(event -> Controller.sound(1));
+        editProduct.setOnMouseEntered(event -> Controller.sound(1));
+        viewProductBuyers.setOnMouseEntered(event -> Controller.sound(1));
+        viewProductButton.setOnMouseEntered(event -> Controller.sound(1));
+
+        //button clicked
+        addOff.setOnMouseClicked(event -> Controller.sound(3));
+        editOff.setOnMouseClicked(event -> Controller.sound(3));
+        viewOffButton.setOnMouseClicked(event -> Controller.sound(3));
+        RemoveProductButton.setOnMouseClicked(event -> Controller.sound(3));
+        addProductID_Button.setOnMouseClicked(event -> Controller.sound(3));
+        editProduct.setOnMouseClicked(event -> Controller.sound(3));
+        viewProductBuyers.setOnMouseClicked(event -> Controller.sound(3));
+        viewProductButton.setOnMouseClicked(event -> Controller.sound(3));
+
+        //labels
+        messageRemoveProduct.setOnMouseEntered(event -> Controller.sound(2));
+        balanceLable.setOnMouseEntered(event -> Controller.sound(2));
+        companyNameLabel.setOnMouseEntered(event -> Controller.sound(2));
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //info personal
-
+        this.fixSounds();
 
         Seller seller= new Seller("yasin","moosavi");
         AccountController.loggedInUser=seller;
@@ -143,13 +169,6 @@ public class SellerMenuController implements Initializable {
         a.add("food44");
         a.add("food55");
         a.add("food66");
-        a.add("food77");
-        a.add("food88");
-        a.add("food99");
-        a.add("food10");
-        a.add("food11");
-        a.add("food12");
-        a.add("food13");
         Category.getAllCategories().add(new Category("cat",a,null));
 
         URL infoTabURL = null;
@@ -184,6 +203,7 @@ public class SellerMenuController implements Initializable {
                 try {
                     Good good = SellerController.viewProduct(((Seller) AccountController.loggedInUser), productID.getText());
                     TableView productTable = new TableView();
+                    productTable.setPrefWidth(640);
                     TableColumn<String, Good> goodName = new TableColumn<>("good name");
                     TableColumn<String, Good> goodId = new TableColumn<>("good ID");
                     TableColumn<String, Good> point = new TableColumn<>("point");
@@ -194,6 +214,12 @@ public class SellerMenuController implements Initializable {
                     categoryName.setCellValueFactory(new PropertyValueFactory<>("categoryString"));
                     explanations.setCellValueFactory(new PropertyValueFactory<>("explanation"));
                     point.setCellValueFactory(new PropertyValueFactory<>("pointString"));
+
+                    goodName.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
+                    goodId.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
+                    point.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
+                    categoryName.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
+                    explanations.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
 
                     productTable.getColumns().addAll(goodName,goodId,categoryName,explanations,point);
 
@@ -223,9 +249,11 @@ public class SellerMenuController implements Initializable {
                     ObservableList<String> details = FXCollections.observableArrayList(allBuyers);
                     TableView<String> buyersTable = new TableView<>();
                     TableColumn<String, String> col1 = new TableColumn<>("Buyers");
+                    col1.prefWidthProperty().bind(buyersTable.widthProperty().multiply(1));
                     buyersTable.getColumns().add(col1);
                     col1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
                     buyersTable.setItems(details);
+                    buyersTable.setPrefWidth(640);
                     manageProductPane.getChildren().clear();
                     manageProductPane.getChildren().add(buyersTable);
 
@@ -430,6 +458,8 @@ public class SellerMenuController implements Initializable {
                 try {
                     Off off = SellerController.showInddividualOff(((Seller) AccountController.loggedInUser), offID.getText().trim());
                     TableView offTable = new TableView();
+                    offTable.setPrefWidth(640);
+                    offTable.setLayoutY(20);
                     TableColumn<String, Off> offID = new TableColumn<>("off ID");
                     TableColumn<String, Off> initialDate = new TableColumn<>("initial Date");
                     TableColumn<String, Off> exposeDate = new TableColumn<>("Expopse Date");
@@ -438,6 +468,11 @@ public class SellerMenuController implements Initializable {
                     initialDate.setCellValueFactory(new PropertyValueFactory<>("InitialDateString"));
                     exposeDate.setCellValueFactory(new PropertyValueFactory<>("ExposeDateString"));
                     discountPercent.setCellValueFactory(new PropertyValueFactory<>("DiscountPercentString"));
+
+                    offID.prefWidthProperty().bind(offTable.widthProperty().multiply(0.3));
+                    initialDate.prefWidthProperty().bind(offTable.widthProperty().multiply(0.3));
+                    exposeDate.prefWidthProperty().bind(offTable.widthProperty().multiply(0.2));
+                    discountPercent.prefWidthProperty().bind(offTable.widthProperty().multiply(0.2));
 
                     offTable.getColumns().addAll(offID,initialDate,exposeDate,discountPercent);
                     offTable.getItems().add(off);
