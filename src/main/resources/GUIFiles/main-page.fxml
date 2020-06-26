@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" side="LEFT" stylesheets="@tabpane-style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainPageController">
+<tabs>
+    <Tab fx:id="registerTab" closable="false" text="register" />
+    <Tab fx:id="loginTab" closable="false" text="login" />
+    <Tab fx:id="offPageTab" closable="false" />
+    <Tab fx:id="productPageTab" closable="false" />
+</tabs>
+</TabPane>

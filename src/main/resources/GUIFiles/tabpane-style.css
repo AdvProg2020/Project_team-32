@@ -15,6 +15,10 @@
 
 }
 
+#logoutTab{
+    -fx-background-image: url("icons/logoutIcon.png");
+}
+
 #infoTab{
     -fx-background-image: url("icons/profileIcon.png");
 }

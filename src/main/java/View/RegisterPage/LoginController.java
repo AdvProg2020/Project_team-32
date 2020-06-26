@@ -3,15 +3,27 @@ package View.RegisterPage;
 import Controller.AccountController;
 import Controller.Exeptions.UserDoesNotExistException;
 import Controller.Exeptions.WrongPasswordException;
+import Model.Boss;
+import Model.Customer;
+import Model.Person;
+import Model.Seller;
+import View.Main;
+import com.sun.org.apache.xerces.internal.impl.xs.SchemaNamespaceSupport;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -54,13 +66,27 @@ public class LoginController implements Initializable {
         }
         else{
             try {
-                AccountController.login(usernameField.getText(),passwordField.getText());
+                Person person = AccountController.login(usernameField.getText(),passwordField.getText());
+                URL url = null;
+                if(person instanceof Boss){
+                    url = new File("src\\main\\resources\\GUIFiles\\manager-tab-pane.fxml").toURI().toURL();
+                }
+                else if(person instanceof Customer){
+                    url = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CustomerPage.fxml").toURI().toURL();
+                }
+                else if(person instanceof Seller){
+                    url = new File("src\\main\\resources\\GUIFiles\\Seller-fxml-pages\\SellerMenu.fxml").toURI().toURL();
+                }
+                Scene scene = new Scene(FXMLLoader.load(url));
+                Main.primaryStage.setScene(scene);
             } catch (WrongPasswordException e) {
                 usernameField.getStyleClass().add("inputChoiceError");
                 usernameField.setText("Wrong Password");
             } catch (UserDoesNotExistException e) {
                 usernameField.getStyleClass().add("inputChoiceError");
                 usernameField.setText("Username Does'nt Exist");
+            } catch (IOException e) {
+                System.err.println("error in load files.");
             }
         }
     }
