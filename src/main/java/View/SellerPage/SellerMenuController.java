@@ -502,6 +502,7 @@ public class SellerMenuController implements Initializable {
                             try {
                                 request = SellerController.makeRequest(null, input.trim(), "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
                                 RequestController.addEditOffRequest(request, ((Seller) AccountController.loggedInUser));
+                                System.out.println("edit request sent");
                             } catch (InvalidPatternException e) {
                                 e.printStackTrace();
                             }

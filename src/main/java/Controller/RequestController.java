@@ -84,12 +84,14 @@ public class RequestController {
         ArrayList<Good> goods = new ArrayList<>();
         for (String goodId : goodIds) {
             Good good = Good.getGoodById(goodId);
+            System.out.println(goodId);
             if(good == null)
                 throw new Exception();
             goods.add(good);
         }
         int offPercent = Integer.parseInt(matcher.group(9));
         off.editInformation(goods,exposeDate,initialDate,offPercent);
+        System.out.println("edit successful");
     }
 
     private static Off getOffFromId(String offId,Request request) throws Exception {
@@ -119,6 +121,7 @@ public class RequestController {
         ArrayList<Good> goods = new ArrayList<>();
         for (String goodId : goodIds) {
             Good good = Good.getGoodById(goodId);
+            System.out.println(goodId);
             if(good == null)
                 throw new Exception();
             goods.add(good);
@@ -127,5 +130,6 @@ public class RequestController {
         Off off = new Off(offId,goods,exposeDate,initialDate,offPercent);
         Off.addOff(off);
         request.getSeller().makeOff(off);
+        System.out.println("add soff succesful");
     }
 }
