@@ -7,14 +7,14 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@treeViewsStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.OffPageController.OffPageController">
    <children>
-      <TreeView fx:id="categoriesTreeView" prefHeight="600.0" prefWidth="171.0" styleClass="treeView" />
-      <VBox fx:id="FiltersVBox" prefHeight="600.0" prefWidth="217.0" />
-      <ScrollPane fx:id="goodsPand" hbarPolicy="NEVER" prefHeight="600.0" prefWidth="500.0" vbarPolicy="ALWAYS">
+      <TreeView fx:id="categoriesTreeView1" prefHeight="600.0" prefWidth="171.0" styleClass="treeView" />
+      <VBox fx:id="FiltersVBox1" prefHeight="600.0" prefWidth="217.0" />
+      <ScrollPane fx:id="goodsPand1" hbarPolicy="NEVER" prefHeight="600.0" prefWidth="500.0" vbarPolicy="ALWAYS">
          <content>
-            <HBox fx:id="goodsBox" prefHeight="600.0" prefWidth="500.0">
+            <HBox fx:id="goodsBox1" prefHeight="600.0" prefWidth="500.0">
                <children>
-                  <VBox fx:id="firstColumnGoods" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="250.0" />
-                  <VBox fx:id="secondColumnGood" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="250.0" />
+                  <VBox fx:id="firstColumnGoods1" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="250.0" />
+                  <VBox fx:id="secondColumnGood1" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="250.0" />
                </children>
             </HBox>
          </content>

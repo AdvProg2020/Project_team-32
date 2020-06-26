@@ -42,7 +42,6 @@ public class GoodPageController implements Initializable, Updatable {
         TreeItem<String> categories = new TreeItem<>("Categories");
         categories.setExpanded(true);
         categories.getChildren().add(Category.rootCategory.getCategory());
-
         categoriesTreeView.setRoot(categories);
         categoriesTreeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -66,8 +65,6 @@ public class GoodPageController implements Initializable, Updatable {
             }
         });
         updateGoods();
-
-
     }
 
     public GoodPageController get() {
@@ -76,6 +73,7 @@ public class GoodPageController implements Initializable, Updatable {
 
     @Override
     public void updateGoods() {
+
         firstColumnGoods.setSpacing(10);
         secondColumnGood.setSpacing(10);
         firstColumnGoods.getChildren().clear();
@@ -87,9 +85,9 @@ public class GoodPageController implements Initializable, Updatable {
                 secondColumnGood.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
             }
         }
-        /*for (Good good : GoodController.getGoodController().getSelectedGoods()) {
+        for (Good good : GoodController.getGoodController().getSelectedGoods()) {
             System.out.println(good);
-        }*/
+        }
     }
 
     @Override

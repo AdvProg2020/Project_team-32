@@ -12,7 +12,7 @@ public class Category implements Serializable {
     public static Category rootCategory = new Category("mainCategory", null , null);
     private String name;
 
-    private TreeItem<String> category;
+    //private
 
     private Category parentCategory;
 
@@ -31,7 +31,6 @@ public class Category implements Serializable {
         this.parentCategory = parentCategory;
         this.subCategory = new ArrayList<>();
         this.categoryProduct = new ArrayList<>();
-        category = new TreeItem<>(name);
         allCategories.add(this);
         if(parentCategory != null) {
             parentCategory.addSubCategory(this);
@@ -106,8 +105,16 @@ public class Category implements Serializable {
     }
 
     public TreeItem<String> getCategory() {
+        TreeItem<String> category = new TreeItem<>();
+        if(subCategory.size() == 0) {
+            return null;
+        }
         for (Category c : subCategory) {
-            category.getChildren().add(c.getCategory());
+            TreeItem a = new TreeItem(c.getName());
+            if(c.getCategory() != null) {
+                a.getChildren().add(c.getCategory());
+            }
+            category.getChildren().add(a);
         }
         return category;
     }
