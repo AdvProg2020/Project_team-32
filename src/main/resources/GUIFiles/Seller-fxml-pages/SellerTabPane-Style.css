@@ -45,6 +45,9 @@
 #removeProductTab{
     -fx-background-image: url("../Sellericons/remove.png");
 }
+#logOutTab{
+    -fx-background-image: url("/GUIFiles/icons/icons8-logout-rounded-left-64.png");
+}
 
 
 .tab {

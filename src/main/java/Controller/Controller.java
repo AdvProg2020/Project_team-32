@@ -31,32 +31,32 @@ public class Controller {
     }
 
     public static void initialize(){
-        (new Thread() {
-            public void run() {
-
-                Media sound =null;
-                MediaPlayer mediaPlayer =null;
-                while (true){
-                    sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music1.mp3").toURI().toString());
-                    mediaPlayer = new MediaPlayer(sound);
-                    mediaPlayer.play();
-                    try {
-                        Thread.sleep(120000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music2.mp3").toURI().toString());
-                    mediaPlayer = new MediaPlayer(sound);
-                    mediaPlayer.play();
-                    try {
-                        Thread.sleep(120000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        }).start();
+//        (new Thread() {
+//            public void run() {
+//
+//                Media sound =null;
+//                MediaPlayer mediaPlayer =null;
+//                while (true){
+//                    sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music1.mp3").toURI().toString());
+//                    mediaPlayer = new MediaPlayer(sound);
+//                    mediaPlayer.play();
+//                    try {
+//                        Thread.sleep(120000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music2.mp3").toURI().toString());
+//                    mediaPlayer = new MediaPlayer(sound);
+//                    mediaPlayer.play();
+//                    try {
+//                        Thread.sleep(120000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }
+//        }).start();
 
         //set isBossCreated
         isBossCreated = false;
