@@ -11,7 +11,7 @@ public class CurrentFiltersCommand extends Menu {
 
     @Override
     public void show() {
-        GoodController.showCurrentFilters();
+        GoodController.getGoodController().showCurrentFilters();
     }
 
     @Override

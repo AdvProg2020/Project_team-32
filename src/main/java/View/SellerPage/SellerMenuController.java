@@ -288,7 +288,7 @@ public class SellerMenuController implements Initializable {
                                             properties.put(specialProperty, textFieldProperties[i].getText().trim());
                                             i++;
                                         }
-                                        GoodController.editProduct(good, goodName.getText().trim(), companyName.getText().trim(), Integer.parseInt(price.getText().trim())
+                                        GoodController.getGoodController().editProduct(good, goodName.getText().trim(), companyName.getText().trim(), Integer.parseInt(price.getText().trim())
                                                 , ((Seller) AccountController.loggedInUser), explanation.getText().trim(), category, properties);
                                         new Alert(Alert.AlertType.CONFIRMATION).show();
                                     }
@@ -382,7 +382,7 @@ public class SellerMenuController implements Initializable {
                                             properties.put(specialProperty, textFieldProperties[i].getText().trim());
                                             i++;
                                         }
-                                        GoodController.AddProduct(addProductID_Label.getText().trim(), goodName.getText().trim()
+                                        GoodController.getGoodController().AddProduct(addProductID_Label.getText().trim(), goodName.getText().trim()
                                                 , companyName.getText().trim(), Integer.parseInt(price.getText().trim()),
                                                 explanation.getText().trim(), properties, ((Seller) AccountController.loggedInUser)
                                                 , category);

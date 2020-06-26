@@ -1,6 +1,7 @@
 package View.LoginLogoutCommands;
 
 import Controller.Filterable;
+import Controller.GoodController;
 import View.Menu;
 
 public class LogoutCommand extends Menu {
@@ -16,7 +17,7 @@ public class LogoutCommand extends Menu {
 
     @Override
     public void execute() {
-        Filterable.reset();
+        GoodController.getGoodController().reset();
         guestMenu.show();
         guestMenu.execute();
     }

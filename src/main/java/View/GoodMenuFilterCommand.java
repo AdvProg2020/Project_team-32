@@ -14,7 +14,7 @@ public class GoodMenuFilterCommand extends FilterCommand {
         String filter = scanner.nextLine();
         String value = scanner.nextLine();
         try {
-            GoodController.filter(filter, value);
+            GoodController.getGoodController().filter(filter, value);
         } catch (Exception e) {
             System.out.println("CannotFilter");
         }

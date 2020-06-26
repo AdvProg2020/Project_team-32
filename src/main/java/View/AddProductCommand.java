@@ -46,7 +46,7 @@ public class AddProductCommand extends Menu {
                     System.out.println("enter " + specialProperty + ":");
                     properties.put(specialProperty,scanner.nextLine());
                 }
-                GoodController.AddProduct(productId,name,companyName,price,explanation,properties,getUserRecursively(this),category);
+                GoodController.getGoodController().AddProduct(productId,name,companyName,price,explanation,properties,getUserRecursively(this),category);
             }
         } catch (CategoryNotFindException e) {
             System.out.println("can not find the category.");;

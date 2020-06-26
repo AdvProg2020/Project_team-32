@@ -42,7 +42,7 @@ public class EditProductCommand extends Menu {
                 System.out.println("enter " + specialProperty + ":");
                 properties.put(specialProperty,scanner.nextLine());
             }
-            GoodController.editProduct(good,name,companyName,price, (Seller) getUserRecursively(this),explanation,category,properties);
+            GoodController.getGoodController().editProduct(good,name,companyName,price, (Seller) getUserRecursively(this),explanation,category,properties);
             System.out.println("Request sent successfully.");
 
         } catch (InvalidIDException e) {

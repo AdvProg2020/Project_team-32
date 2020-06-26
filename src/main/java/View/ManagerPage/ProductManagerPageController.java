@@ -37,7 +37,7 @@ public class ProductManagerPageController implements Initializable {
 
     public void remove(ActionEvent actionEvent) {
         if(productsTable.getSelectionModel().getSelectedItem() != null){
-            GoodController.deleteGood(productsTable.getSelectionModel().getSelectedItem());
+            GoodController.getGoodController().deleteGood(productsTable.getSelectionModel().getSelectedItem());
             updateTable();
         }
         else {

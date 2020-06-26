@@ -17,7 +17,7 @@ public class DisableFilterCommand extends Menu {
     @Override
     public void execute(){
         try {
-            GoodController.disableFilter(scanner.nextLine());
+            GoodController.getGoodController().disableFilter(scanner.nextLine());
         } catch (Exception e){
             System.out.println("Filter is not selected");
         }

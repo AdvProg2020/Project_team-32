@@ -20,7 +20,7 @@ public class RemoveProductCommand extends Menu {
     public void execute() {
         String Id = scanner.nextLine();
         try {
-            GoodController.deleteGoodById(Id);
+            GoodController.getGoodController().deleteGoodById(Id);
         } catch (GoodDoesNotExistException exception) {
             System.out.println("product does not exist");
         }

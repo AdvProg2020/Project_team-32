@@ -7,14 +7,14 @@ import Model.Off;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Filterable {
+public abstract class Filterable {
 
-    protected static Category currentCategory = Category.rootCategory;
-    protected static ArrayList<Good> selectedGoods = Good.getAllGoods();
-    protected static HashMap<String , String> currentFilters = new HashMap<>();
+    protected Category currentCategory = Category.rootCategory;
+    protected ArrayList<Good> selectedGoods = Good.getAllGoods();
+    protected HashMap<String , String> currentFilters = new HashMap<>();
 
 
-    public static void filter(String filter, String value) throws Exception {
+    public void filter(String filter, String value) throws Exception {
         ArrayList<Good> newSelectedGoods;
         if(filter.equalsIgnoreCase("category")){
 
@@ -34,13 +34,13 @@ public class Filterable {
         currentFilters.put(filter, value);
     }
 
-    public static void showCurrentFilters(){
+    public void showCurrentFilters(){
         for (String s : currentFilters.keySet()) {
             System.out.println("Filter: " + s + "Value: " +currentFilters.get(s));
         }
     }
 
-    public static void disableFilter(String filter) throws Exception{
+    public void disableFilter(String filter) throws Exception{
         currentFilters.remove(filter);
         if(filter.equalsIgnoreCase("category")){
             currentCategory = currentCategory.getParentCategory();
@@ -57,21 +57,17 @@ public class Filterable {
 
     }
 
-    public static Category getCurrentCategory() {
+    public Category getCurrentCategory() {
         return currentCategory;
     }
 
-    public static ArrayList<Good> getSelectedGoods() {
+    public ArrayList<Good> getSelectedGoods() {
         return selectedGoods;
     }
 
-    public static void reset(){
-        currentCategory = Category.rootCategory;
-        selectedGoods.clear();
-        currentFilters.clear();
-    }
+    public abstract void reset();
 
-    public static boolean isSortBy(String filter) {
+    public boolean isSortBy(String filter) {
         if (currentFilters.containsKey(filter)) {
             return true;
         } else {
@@ -81,7 +77,7 @@ public class Filterable {
 
     //---------------------------------for test
 
-    public static void setSelectedGoods(ArrayList<Good> selectedGoods) {
-        Filterable.selectedGoods = selectedGoods;
+    public void setSelectedGoods(ArrayList<Good> selectedGoods) {
+        selectedGoods = selectedGoods;
     }
 }

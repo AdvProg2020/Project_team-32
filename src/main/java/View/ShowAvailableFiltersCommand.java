@@ -17,12 +17,12 @@ public class ShowAvailableFiltersCommand extends Menu {
             System.out.println(property);
         }
         System.out.println("Special Properties:");
-        for (String property : GoodController.getCurrentCategory().getSpecialProperties()) {
+        for (String property : GoodController.getGoodController().getCurrentCategory().getSpecialProperties()) {
             System.out.println(property);
         }
 
         System.out.println("Category");
-        for (Category category : GoodController.getCurrentCategory().getSubCategory()) {
+        for (Category category : GoodController.getGoodController().getCurrentCategory().getSubCategory()) {
             System.out.println(category.getName());
         }
     }
