@@ -10,8 +10,10 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Controller {
+    private static Date date = null;
 
     public static void main(String[] args) {
         Menu.bossMenu = new BossMenu(null);
@@ -82,11 +84,15 @@ public class Controller {
     }
     public static  void backSound(boolean x){
         Media sound =null;
+        if (date!=null){
+            if ((new Date()).getTime()-date.getTime()<10000) return;
+        }
         if (x){
             sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music1.mp3").toURI().toString());
         }else{
             sound = new Media(new File("src\\main\\resources\\GUIFiles\\SoundEffects\\back_music2.mp3").toURI().toString());
         }
+        date = new Date();
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
     }

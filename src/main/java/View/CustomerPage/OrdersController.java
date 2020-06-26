@@ -1,6 +1,7 @@
 package View.CustomerPage;
 
 import Controller.AccountController;
+import Controller.Controller;
 import Controller.CustomerController;
 import Controller.Exeptions.InvalidIDException;
 import Model.BuyLog;
@@ -69,6 +70,25 @@ public class OrdersController implements Initializable {
     private VBox rateVbox;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        orderShowPageButton.setOnMouseClicked(event -> Controller.sound(3));
+        rateButton.setOnMouseClicked(event -> Controller.sound(3));
+        ratePageButton.setOnMouseClicked(event -> Controller.sound(3));
+
+        orderShowPageButton.setOnMouseEntered(event -> Controller.sound(1));
+        rateButton.setOnMouseEntered(event -> Controller.sound(1));
+        ratePageButton.setOnMouseEntered(event -> Controller.sound(1));
+
+        price_VBox.setOnMouseEntered(event -> Controller.sound(2));
+        seller_VBox.setOnMouseEntered(event -> Controller.sound(2));
+        goodName_VBox.setOnMouseEntered(event -> Controller.sound(2));
+        date_VBox.setOnMouseEntered(event -> Controller.sound(2));
+        LogID_VBox.setOnMouseEntered(event -> Controller.sound(2));
+        rateResult.setOnMouseEntered(event -> Controller.sound(2));
+        result_Label.setOnMouseEntered(event -> Controller.sound(2));
+
+
+
+
         orderVBox.setVisible(false);
         rateVbox.setVisible(false);
         logCol.setCellValueFactory(new PropertyValueFactory<>("LogID"));

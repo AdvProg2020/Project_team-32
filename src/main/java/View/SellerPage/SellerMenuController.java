@@ -120,10 +120,36 @@ public class SellerMenuController implements Initializable {
     Button addOff;
     @FXML
     TextField offID;
+    private  void fixSounds(){
+        //button enter
+        addOff.setOnMouseEntered(event -> Controller.sound(1));
+        editOff.setOnMouseEntered(event -> Controller.sound(1));
+        viewOffButton.setOnMouseEntered(event -> Controller.sound(1));
+        RemoveProductButton.setOnMouseEntered(event -> Controller.sound(1));
+        addProductID_Button.setOnMouseEntered(event -> Controller.sound(1));
+        editProduct.setOnMouseEntered(event -> Controller.sound(1));
+        viewProductBuyers.setOnMouseEntered(event -> Controller.sound(1));
+        viewProductButton.setOnMouseEntered(event -> Controller.sound(1));
+
+        //button clicked
+        addOff.setOnMouseClicked(event -> Controller.sound(3));
+        editOff.setOnMouseClicked(event -> Controller.sound(3));
+        viewOffButton.setOnMouseClicked(event -> Controller.sound(3));
+        RemoveProductButton.setOnMouseClicked(event -> Controller.sound(3));
+        addProductID_Button.setOnMouseClicked(event -> Controller.sound(3));
+        editProduct.setOnMouseClicked(event -> Controller.sound(3));
+        viewProductBuyers.setOnMouseClicked(event -> Controller.sound(3));
+        viewProductButton.setOnMouseClicked(event -> Controller.sound(3));
+
+        //labels
+        messageRemoveProduct.setOnMouseEntered(event -> Controller.sound(2));
+        balanceLable.setOnMouseEntered(event -> Controller.sound(2));
+        companyNameLabel.setOnMouseEntered(event -> Controller.sound(2));
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //info personal
-
+        this.fixSounds();
 
         Seller seller= new Seller("yasin","moosavi");
         AccountController.loggedInUser=seller;

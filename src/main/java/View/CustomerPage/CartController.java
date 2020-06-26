@@ -46,6 +46,13 @@ public class CartController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        purchase.setOnMouseEntered(event -> Controller.sound(1));
+        viewProduct.setOnMouseEntered(event -> Controller.sound(1));
+        totalPrice.setOnMouseEntered(event -> Controller.sound(2));
+        increaseIMG.setOnMouseEntered(event -> Controller.sound(0));
+        decreaseIMG.setOnMouseEntered(event -> Controller.sound(0));
+        purchase.setOnMouseClicked(event -> Controller.sound(3));
+        purchase.setOnMouseClicked(event -> Controller.sound(3));
         AccountController.loggedInUser = new Customer("yasin", "123");
         Customer customer = ((Customer) AccountController.loggedInUser);
         Seller seller = new Seller("mamad", "2");

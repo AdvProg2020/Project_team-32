@@ -67,7 +67,17 @@ public class PurchaseControllerFXML implements Initializable {
         nextButton.setOnMouseEntered(event -> Controller.sound(1));
         noDisPay.setOnMouseEntered(event -> Controller.sound(1));
         checkDiscount.setOnMouseEntered(event -> Controller.sound(1));
-        nextButton.setOnMouseEntered(event -> Controller.sound(1));
+        disPay.setOnMouseEntered(event -> Controller.sound(1));
+
+        nextButton.setOnMouseClicked(event -> Controller.sound(3));
+        noDisPay.setOnMouseClicked(event -> Controller.sound(3));
+        checkDiscount.setOnMouseClicked(event -> Controller.sound(3));
+        disPay.setOnMouseClicked(event -> Controller.sound(3));
+
+        discountCheckLabel.setOnMouseEntered(event -> Controller.sound(2));
+        noDisResult.setOnMouseEntered(event -> Controller.sound(2));
+        disResult.setOnMouseEntered(event -> Controller.sound(2));
+
         disVBox.setVisible(false);
         accordion.setVisible(false);
         nextButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

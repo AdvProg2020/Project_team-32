@@ -1,6 +1,7 @@
 package View.CustomerPage;
 
 import Controller.AccountController;
+import Controller.Controller;
 import Model.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +24,8 @@ public class BalanceController implements Initializable {
     private Label balance;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        balance.setOnMouseEntered(event -> Controller.sound(1));
         balance.setText(String.valueOf(((Customer) AccountController.loggedInUser).getCredit()));
     }
 }
