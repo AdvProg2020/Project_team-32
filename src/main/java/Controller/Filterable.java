@@ -10,7 +10,7 @@ import java.util.HashMap;
 public abstract class Filterable {
 
     protected Category currentCategory = Category.rootCategory;
-    protected ArrayList<Good> selectedGoods = Good.getAllGoods();
+    protected ArrayList<Good> selectedGoods = Good.confirmedGoods;
     protected HashMap<String , String> currentFilters = new HashMap<>();
 
 

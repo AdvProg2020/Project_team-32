@@ -105,7 +105,7 @@ public class Category implements Serializable {
     }
 
     public TreeItem<String> getCategory() {
-        TreeItem<String> category = new TreeItem<>();
+        TreeItem<String> category = new TreeItem<>("categories");
         if(subCategory.size() == 0) {
             return null;
         }
