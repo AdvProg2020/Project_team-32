@@ -495,12 +495,12 @@ public class SellerMenuController implements Initializable {
                     confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            String input = goods.getText().trim();
+                            String input = off.getOffID()+" "+goods.getText().trim();
                             input += " " + date1[0] + " " + date2[0] + " " + offPercent.getText().trim();
 
                             String request = null;
                             try {
-                                request = SellerController.makeRequest(off.getOffID(), input.trim(), "^(\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)$");
+                                request = SellerController.makeRequest(null, input.trim(), "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
                                 RequestController.addEditOffRequest(request, ((Seller) AccountController.loggedInUser));
                             } catch (InvalidPatternException e) {
                                 e.printStackTrace();
@@ -566,7 +566,7 @@ public class SellerMenuController implements Initializable {
                         input += " " + date1[0] + " " + date2[0] + " " + offPercent.getText().trim();
                         String request = null;
                         try {
-                            request = SellerController.makeRequest(null, input.trim(), "^(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)$");
+                            request = SellerController.makeRequest(null, input.trim(), "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
                             RequestController.addOffRequest(request.trim(), ((Seller) AccountController.loggedInUser));
                             System.out.println("off added");
                         } catch (InvalidPatternException e) {

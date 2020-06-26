@@ -34,22 +34,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Controller.initialize();
-//        new Good("khiyar","123",new Seller("alii","123"),"salma",new Category("hey",null,Category.rootCategory),null,null,0);
-//        Category hey = new Category("hey",null,Category.rootCategory);
-//        ArrayList<String> specialProperties = new ArrayList<>();
-//        specialProperties.add("ali");
-//        specialProperties.add("hossein");
-//        specialProperties.add("mazi");
-//        specialProperties.add("yasin");
-//        hey.setSpecialProperties(specialProperties);
-//
-//        Person person = new Customer("ali", "sharifi");
-//        HashMap<String, String> properties = new HashMap<>();
-//        properties.put("mazi", "2");
-//        new Good("khiyar","123",new Seller("alii","123"),"salma",hey,null,properties,0).addComment("ali", null, "hello", "", "askldfj");//.setImageAddress("src\\main\\resources\\GUIFiles\\fish.jpg");
-//        new Customer("ali","123");
-//        new Customer("ioo","234");
-        System.out.println(BossController.getAllDiscount());
         launch(args);
 
     }
