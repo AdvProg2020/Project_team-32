@@ -1,6 +1,7 @@
 package View;
 
 import Controller.GoodController;
+import Controller.Sort.SortType;
 
 public class DisableSortCommand extends Menu {
 
@@ -17,7 +18,7 @@ public class DisableSortCommand extends Menu {
     @Override
     public void execute() {
         try {
-//            GoodController.sort(3);
+            GoodController.sort(SortType.sortByNumberOfView);
         } catch (Exception e) {
             e.printStackTrace();
         }
