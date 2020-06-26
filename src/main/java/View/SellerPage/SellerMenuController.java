@@ -151,7 +151,7 @@ public class SellerMenuController implements Initializable {
         //info personal
         this.fixSounds();
 
-        Seller seller= new Seller("yasin","moosavi");
+        /*Seller seller= new Seller("yasin","moosavi");
         AccountController.loggedInUser=seller;
         Seller.seller(seller);
         SellLog  sellLog= new SellLog("sellog",new Date(),100,20,seller.getSellingGoods().get(0),"taha","choert" );
@@ -169,7 +169,7 @@ public class SellerMenuController implements Initializable {
         a.add("food44");
         a.add("food55");
         a.add("food66");
-        Category.getAllCategories().add(new Category("cat",a,null));
+        Category.getAllCategories().add(new Category("cat",a,null));*/
 
         URL infoTabURL = null;
         try {

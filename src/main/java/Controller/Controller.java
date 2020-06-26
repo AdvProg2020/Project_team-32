@@ -16,8 +16,7 @@ import java.util.Date;
 public class Controller {
     private static Date date = null;
 
-    //
-    public boolean isBossCreated;
+    public static boolean isBossCreated;
 
     public static void main(String[] args) {
         Menu.bossMenu = new BossMenu(null);
@@ -58,6 +57,10 @@ public class Controller {
 
             }
         }).start();
+
+        //set isBossCreated
+        isBossCreated = false;
+
         AccountController.loggedInUser = new Guest();
     }
 
