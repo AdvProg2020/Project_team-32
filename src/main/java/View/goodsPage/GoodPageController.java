@@ -1,5 +1,7 @@
 package View.goodsPage;
 
+import Model.Category;
+import Model.Good;
 import javafx.fxml.Initializable;
 
 import java.io.FileNotFoundException;
@@ -40,9 +42,10 @@ public class GoodPageController implements Initializable {
         // initializing categories
         TreeItem<String> categories = new TreeItem<>("Categories");
         categories.setExpanded(true);
-        TreeItem<String> laptops = new TreeItem<>("laptops");
+        categories.getChildren().add(Category.rootCategory.getCategory());
+        /*TreeItem<String> laptops = new TreeItem<>("laptops");
         TreeItem<String> TVs = new TreeItem<>("TVs");
-        categories.getChildren().addAll(laptops, TVs);
+        categories.getChildren().addAll(laptops, TVs);*/
         categoriesTreeView.setRoot(categories);
 
         // initializing filters
@@ -64,16 +67,33 @@ public class GoodPageController implements Initializable {
         // initializing columns of goods
         firstColumnGoods.setSpacing(10);
         secondColumnGood.setSpacing(10);
+        for (int i = 0; i < Good.getAllGoods().size(); i++) {
+            String name = Good.getAllGoods().get(i).getName();
+            String imageAddress = Good.getAllGoods().get(i).getImageAddress();
+            float point = Good.getAllGoods().get(i).getPoint();
+            try {
+                if (i % 2 == 0) {
+                    firstColumnGoods.getChildren().add(GoodIconFactory.createIcon(name, imageAddress, point));
+                } else {
+                    secondColumnGood.getChildren().add(GoodIconFactory.createIcon(name, imageAddress, point));
+                }
+            } catch (Exception e) {
+
+            }
+        }
+
+        /*
         try {
             Pane pane = GoodIconFactory.createIcon("hello","src\\main\\resources\\GUIFiles\\apple.jpg",4);
             firstColumnGoods.getChildren().add(pane);
             Pane banana = GoodIconFactory.createIcon("banana","src\\main\\resources\\GUIFiles\\banana.jpg", 6);
             firstColumnGoods.getChildren().add(banana);
             Pane fish = GoodIconFactory.createIcon("fish", "src\\main\\resources\\GUIFiles\\fish.jpg", 3);
-            firstColumnGoods.getChildren().add(fish);
+            secondColumnGood.getChildren().add(fish);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        */
     }
 
 

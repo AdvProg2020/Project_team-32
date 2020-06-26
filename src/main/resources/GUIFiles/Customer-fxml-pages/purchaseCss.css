@@ -1,0 +1,25 @@
+#discountImage{
+    -fx-image: url("/GUIFiles/Customer_page_bg/symbol-5083748_1280.png");
+}
+.label {
+    -fx-background-color: rgba(230, 255, 255,0.4);
+    -fx-text-fill: black;
+    -fx-border-color : rgba(75, 75, 75, 0.56);
+    -fx-border-width : 0 0 1 0 ;
+    -fx-text-alignment: center;
+    -fx-label-padding: 10px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-weight: bold;
+}
+.accordion{
+    -fx-background-color: blueviolet;
+}
+.accordion .header{
+    -fx-background-color: #005797;
+}
+.titled-pane{
+    -fx-background-color: #00ff99;
+}
+.accordion .titled-pane .header{
+    -fx-background-color: #ffcf58;
+}
