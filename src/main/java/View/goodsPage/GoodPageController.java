@@ -49,14 +49,14 @@ public class GoodPageController implements Initializable, Updatable {
                     Label filters = new Label("filters");
                     Label filterByCategoryProperties = new Label("Category Properties");
                     Label filterByGeneralProperties = new Label("General Properties");
-
+                    FiltersVBox.getChildren().add(filters);
                     FiltersVBox.getChildren().add(filterByCategoryProperties);
                     for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
-                        FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
+                        FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), GoodController.getGoodController()));
                     }
                     FiltersVBox.getChildren().add(filterByGeneralProperties);
                     for (String property : Category.getGeneralProperties()) {
-                        FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
+                        FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), GoodController.getGoodController()));
                     }
                 }
             }
@@ -64,7 +64,8 @@ public class GoodPageController implements Initializable, Updatable {
         updateGoods();
     }
 
-    public GoodPageController get() {
+    @Override
+    public Updatable getController() {
         return this;
     }
 

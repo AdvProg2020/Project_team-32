@@ -114,6 +114,7 @@ public class Good {
 
     public void editingStatus() {
         goodStatus = Status.EDIT_REQUEST;
+        confirmedGoods.remove(this);
     }
 
     private void editInformation(String goodStatus, String companyName, String stockStatus, Category category, String explanation) {

@@ -107,6 +107,7 @@ public class RequestController {
         Matcher matcher = request.getMatcher();
         System.out.println(request.getRequest());
 
+
         String offId = matcher.group(1);
         String[] goodIds = matcher.group(2).split(",");
         String[] date = new String[3];
@@ -129,6 +130,7 @@ public class RequestController {
         int offPercent = Integer.parseInt(matcher.group(9));
         Off off = new Off(offId,goods,exposeDate,initialDate,offPercent);
         Off.addOff(off);
+        OffController.getOffController().addToSelectedGoods(off.getGoodsForOff());
         request.getSeller().makeOff(off);
         System.out.println("add soff succesful");
     }

@@ -53,11 +53,11 @@ public class OffPageController implements Initializable, Updatable {
 
                     FiltersVBox1.getChildren().add(filterByCategoryProperties);
                     for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
-                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
+                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), OffController.getOffController()));
                     }
                     FiltersVBox1.getChildren().add(filterByGeneralProperties);
                     for (String property : Category.getGeneralProperties()) {
-                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, get()));
+                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), OffController.getOffController()));
                     }
                 }
             }
@@ -65,7 +65,8 @@ public class OffPageController implements Initializable, Updatable {
         updateGoods();
     }
 
-    public Updatable get() {
+    @Override
+    public Updatable getController() {
         return this;
     }
 
@@ -75,6 +76,7 @@ public class OffPageController implements Initializable, Updatable {
         secondColumnGood1.setSpacing(10);
         firstColumnGoods1.getChildren().clear();
         secondColumnGood1.getChildren().clear();
+
         for (int i = 0; i < OffController.getOffController().getSelectedGoods().size(); i++) {
             if (i % 2 == 0) {
                 firstColumnGoods1.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));

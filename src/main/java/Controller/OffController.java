@@ -1,6 +1,9 @@
 package Controller;
 
+import Model.Good;
 import Model.Off;
+
+import java.util.ArrayList;
 
 public class OffController extends Filterable{
 
@@ -9,7 +12,6 @@ public class OffController extends Filterable{
     public static OffController getOffController() {
         if(offController == null) {
             offController = new OffController();
-            offController.reset();
         }
         return offController;
     }
@@ -20,5 +22,16 @@ public class OffController extends Filterable{
         for (Off off : Off.getAllOffs()) {
             selectedGoods.addAll(off.getGoodsForOff());
         }
+    }
+
+    public void addToSelectedGoods(ArrayList<Good> good) {
+        selectedGoods.addAll(good);
+    }
+
+
+
+    public OffController() {
+        selectedGoods = new ArrayList<>();
+        reset();
     }
 }

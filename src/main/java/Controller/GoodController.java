@@ -80,4 +80,8 @@ public class GoodController extends Filterable{
         selectedGoods.clear();
         currentFilters.clear();
     }
+
+    public GoodController() {
+        selectedGoods = Good.confirmedGoods;
+    }
 }
