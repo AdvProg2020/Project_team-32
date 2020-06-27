@@ -1,11 +1,8 @@
 package Controller;
 
-import Model.Guest;
+import Model.*;
 import View.*;
 import View.BossPage.BossMenu;
-import Model.Category;
-import Model.Good;
-import Model.Person;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -61,9 +58,24 @@ public class Controller {
         }).start();
 
         //set isBossCreated
-        isBossCreated = false;
+        isBossCreated = isBossCreated();
 
         AccountController.loggedInUser = new Guest();
+
+        //set mainCategory
+        Category.rootCategory = Category.getCategoryByName("mainCategory");
+        if(Category.rootCategory == null){
+           Category.rootCategory = new Category("mainCategory", null , null);
+        }
+
+    }
+
+    private static boolean isBossCreated() {
+        for (Person person : Person.allPersons) {
+            if(person instanceof Boss)
+                return true;
+        }
+        return false;
     }
 
     public static void importData(){
@@ -72,18 +84,18 @@ public class Controller {
         importDataEach(RequestController.getAllRequest(), "src/main/resources/database/requests.txt");
         importDataEach(Category.getAllCategories(), "src/main/resources/database/categories.txt");
         importDataEach(Good.confirmedGoods, "src/main/resources/database/confirmedGoods.txt");
-        importDataEach(Good.getAllGoods(), "src/main/resources/database/allGoods.txt");    }
+        importDataEach(Good.getAllGoods(), "src/main/resources/database/allGoods.txt");
+        importDataEach(Off.getAllOffs(),"src/main/resources/database/allOffs.txt");
+    }
 
     public static void exportData(){
-        for (Person person : Person.allPersons) {
-            System.out.println(person);
-        }
         exportDataEach(Person.allPersons,"src/main/resources/database/accounts.txt");
         exportDataEach(BossController.getAllDiscount(),"src/main/resources/database/discounts.txt");
         exportDataEach(RequestController.getAllRequest(), "src/main/resources/database/requests.txt");
         exportDataEach(Category.getAllCategories(), "src/main/resources/database/categories.txt");
         exportDataEach(Good.confirmedGoods, "src/main/resources/database/confirmedGoods.txt");
         exportDataEach(Good.getAllGoods(), "src/main/resources/database/allGoods.txt");
+        exportDataEach(Off.getAllOffs(),"src/main/resources/database/allOffs.txt");
         //TODO other list
     }
 

@@ -9,13 +9,12 @@ import java.util.HashMap;
 public class Category implements Serializable {
 
     private static ArrayList<Category> allCategories = new ArrayList<>();
-    public static Category rootCategory = new Category("mainCategory", null , null);
+    public static Category rootCategory;
     private String name;
-
-    //private
-
+    private ArrayList<Category> subCategory;
+    private ArrayList<Good> categoryProduct;
     private Category parentCategory;
-
+    private ArrayList<String> specialProperties;
     private static ArrayList<String> generalProperties = new ArrayList<>();
     static {
         generalProperties.add("name");
@@ -23,22 +22,19 @@ public class Category implements Serializable {
         generalProperties.add("seller");
     }
 
-    private ArrayList<String> specialProperties;
-
     public Category(String name, ArrayList<String> specialProperty, Category parentCategory) {
         this.name = name;
         this.specialProperties = specialProperty;
         this.parentCategory = parentCategory;
         this.subCategory = new ArrayList<>();
         this.categoryProduct = new ArrayList<>();
-        allCategories.add(this);
+        if(Category.getCategoryByName(name) == null) {
+            allCategories.add(this);
+        }
         if(parentCategory != null) {
             parentCategory.addSubCategory(this);
         }
     }
-
-    private ArrayList<Category> subCategory;
-    private ArrayList<Good> categoryProduct;
 
     public String getName() {
         return name;

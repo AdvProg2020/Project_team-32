@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class BuyLog extends Logs {
+
     private float discountMade;
     private Good goodsBought;
     private String sellerUserName;

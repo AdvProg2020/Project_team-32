@@ -33,19 +33,11 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        Controller.importData();
+        System.out.println(Person.allPersons);
         Controller.initialize();
-//        Boss boss = new Boss("1","1");
-//        Controller.isBossCreated =true;
-//        Seller seller = new Seller("2","2");
-//        ArrayList<String> properties = new ArrayList<>();
-//        properties.add("brand");
-//        Good sib = new Good("sibfruit","sib",seller,"comp",
-//                new Category("x",properties,Category.rootCategory),"chert",null,100);
-//        Good.confirmedGoods.add(sib);
-//        seller.getSellingGoods().add(sib);
-
         launch(args);
-
+        Controller.exportData();
     }
 
 }

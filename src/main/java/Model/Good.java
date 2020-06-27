@@ -1,17 +1,16 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Good {
+public class Good implements Serializable {
     public static ArrayList<Good> confirmedGoods = new ArrayList<>();
     private static ArrayList<Good> allGoods = new ArrayList<>();
     private String name;
     private String goodID;
     private Status goodStatus;
-
-    private enum Status {MAKE_REQUEST, EDIT_REQUEST, CONFIRMED}
-
+    private enum Status implements Serializable {MAKE_REQUEST, EDIT_REQUEST, CONFIRMED}
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
     private ArrayList<Seller> sellers;
     private String companyName;
@@ -20,7 +19,7 @@ public class Good {
     private float point;
     private HashMap<String, String> properties;
     private String imageAddress;
-
+    private ArrayList<Comment> allComments = new ArrayList<>();
     private int numberOfRates;
 
     private int numberOfViews; //this should set after any view
@@ -30,15 +29,10 @@ public class Good {
     }
 
     public void setPoint(float point) {
-
         this.point = (this.point) * numberOfRates + point;
         this.numberOfRates += 1;
         this.point /= this.numberOfRates;
-
     }
-
-    private ArrayList<Comment> allComments = new ArrayList<>();
-
 
     public Good(String name, String goodID, Seller seller, String companyName, Category category
             , String explanation, HashMap<String, String> properties, int price) {

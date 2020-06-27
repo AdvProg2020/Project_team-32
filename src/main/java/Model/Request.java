@@ -1,5 +1,7 @@
 package Model;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -9,19 +11,17 @@ public class Request implements Serializable {
 
     private String request;
     private RequestPattern requestPattern;
-    private Matcher matcher;
     private Seller seller;
 
     public Request(String request, RequestPattern requestPattern, Seller seller) {
         this.seller = seller;
         this.request = request;
         this.requestPattern = requestPattern;
-        matcher = requestPattern.pattern.matcher(request);
     }
 
     public Matcher getMatcher() {
-        System.out.println(matcher.matches());
-
+        Matcher matcher = requestPattern.pattern.matcher(request);
+        matcher.matches();
         return matcher;
     }
 

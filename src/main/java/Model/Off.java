@@ -12,9 +12,7 @@ public class Off implements Serializable {
     private OffStatus offStatus;
 
     private static ArrayList<Off> allOffs = new ArrayList<>();
-    private enum OffStatus {creating, editing, confirmed}
-
-    ;
+    private enum OffStatus implements Serializable {creating, editing, confirmed}
     private Date initialDate;
     private Date exposeDate;
     private int discountPercent;

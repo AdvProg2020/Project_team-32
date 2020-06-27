@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum RequestPattern {
+public enum RequestPattern implements Serializable {
 
     ADD_PRODUCT("(.+)","add product request"), //goodId
     EDIT_PRODUCT( "(.+)", "edit product request"),//goodId
