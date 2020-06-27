@@ -23,7 +23,6 @@ public class AccountController {
     public static Person loggedInUser;
 
     public static void register(String userName, String accountType, String passWord) throws DuplicateUsernameException {
-        System.out.println(userName + " " + accountType + " " + passWord);
         if (!Person.hasPersonByUserName(userName)) {
             if (accountType.equals("Customer")) {
                 new Customer(userName, passWord);

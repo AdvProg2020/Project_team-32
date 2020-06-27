@@ -10,10 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -74,8 +71,13 @@ public class RegisterController implements Initializable {
         else {
             try {
                 AccountController.register(usernameField.getText(), (String) roleChoicer.getSelectionModel().getSelectedItem(),passwordField.getText());
+                usernameField.setText("");
+                passwordField.setText("");
+                repeatPasswordField.setText("");
+                new Alert(Alert.AlertType.INFORMATION, "Registered successfully.").show();
             } catch (DuplicateUsernameException e) {
-                e.printStackTrace();
+                usernameField.getStyleClass().add("inputChoiceError");
+                usernameField.setText("already used.");
             }
         }
     }
