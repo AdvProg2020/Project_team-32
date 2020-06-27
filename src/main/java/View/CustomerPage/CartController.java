@@ -4,12 +4,14 @@ import Controller.PurchaseController;
 import Controller.AccountController;
 import Controller.Controller;
 import Model.*;
+import View.IndividualGoodPage.IndividualGoodPageFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -20,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -166,6 +169,19 @@ public class CartController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        viewProduct.setOnMouseClicked(e -> {
+            try {
+                Stage window = new Stage();
+                String goodID = cartTable.getSelectionModel().getSelectedItem().getGoodID();
+                Good good = Good.getGoodById(goodID);
+                Scene scene = new Scene(IndividualGoodPageFactory.createGoodPage(good));
+                window.setScene(scene);
+                window.setTitle(good.getName() + " page");
+                window.showAndWait();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
         });
 
