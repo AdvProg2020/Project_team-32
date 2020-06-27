@@ -9,9 +9,9 @@
    <children>
       <TreeView fx:id="categoriesTreeView" prefHeight="600.0" prefWidth="171.0" styleClass="treeView" />
       <VBox fx:id="FiltersVBox" prefHeight="600.0" prefWidth="217.0" />
-      <ScrollPane fx:id="goodsPand" hbarPolicy="NEVER" prefHeight="600.0" prefWidth="500.0" vbarPolicy="ALWAYS">
+      <ScrollPane fx:id="goodsPand" hbarPolicy="NEVER" prefHeight="600.0" prefWidth="500.0" styleClass="scrollPane" stylesheets="@goodPageStylesheet.css" vbarPolicy="ALWAYS">
          <content>
-            <HBox fx:id="goodsBox" prefHeight="600.0" prefWidth="500.0">
+            <HBox fx:id="goodsBox" prefHeight="600.0" prefWidth="500.0" styleClass="goodBox" stylesheets="@goodPageStylesheet.css">
                <children>
                   <VBox fx:id="firstColumnGoods" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="250.0" />
                   <VBox fx:id="secondColumnGood" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="250.0" />

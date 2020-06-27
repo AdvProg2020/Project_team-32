@@ -3,6 +3,8 @@ package View.IndividualGoodPage;
 import Controller.AccountController;
 import Controller.Exeptions.UserDoesNotExistException;
 import Model.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -26,7 +28,9 @@ public class IndividualGoodPageFactory {
 
         Pane goodPage = new Pane();
         HBox mainBox = new HBox();
-
+        mainBox.setPadding(new Insets(10,10,10,10));
+        mainBox.setAlignment(Pos.CENTER);
+        mainBox.setSpacing(20);
         FileInputStream fileInputStream = null;
         try {
             fileInputStream = new FileInputStream(good.getImageAddress());
@@ -42,24 +46,30 @@ public class IndividualGoodPageFactory {
             ImageView imageView = new ImageView(image);
             VBox properties = new VBox(10);
             HBox nameBox = new HBox();
+            nameBox.setAlignment(Pos.CENTER);
             Label nameLable = new Label("name");
             Label name = new Label(good.getName());
             nameBox.getChildren().addAll(nameLable, name);
             HBox sellersBox = new HBox();
+            sellersBox.setAlignment(Pos.CENTER);
             Label sellersName = new Label("sellers");
             sellersBox.getChildren().add(sellersName);
             VBox sellers = new VBox();
+            sellers.setAlignment(Pos.CENTER);
             for (Seller seller : good.getSellers()) {
                 sellers.getChildren().add(new Label(seller.getFirstName() + " " + seller.getLastName()));
             }
             sellersBox.getChildren().add(sellers);
             HBox rateBox = new HBox();
+            rateBox.setAlignment(Pos.CENTER);
             Label rateLabel = new Label("rate");
             Label rate = new Label(Double.toString(good.getPoint()));
             rateBox.getChildren().addAll(rateLabel, rate);
             properties.getChildren().addAll(imageView, nameBox, sellersBox, rateBox);
-
+            properties.setAlignment(Pos.CENTER);
             VBox comments = new VBox();
+            comments.setAlignment(Pos.CENTER);
+            comments.setSpacing(10);
             comments.getChildren().add(new Label("Comments"));
             for (Comment comment : good.getAllComments()) {
                 comments.getChildren().add(CommentFactory.getComment(comment.getUserName(), comment.getCommentString(), comment.getCommenterBoughtGood()));
@@ -148,8 +158,9 @@ public class IndividualGoodPageFactory {
 
             goodPage.setPrefWidth(600);
             goodPage.setPrefHeight(600);
-
-
+            goodPage.getStylesheets().add("GUIFiles/goodPageStylesheet.css");
+            goodPage.getStyleClass().add("goodPage");
+            comments.getStyleClass().add("commentsBox");
             goodPage.getChildren().add(mainBox);
             return goodPage;
         }

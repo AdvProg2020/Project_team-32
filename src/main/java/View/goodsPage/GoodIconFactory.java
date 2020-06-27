@@ -31,6 +31,7 @@ public class GoodIconFactory {
         String imageAddress = good.getImageAddress();
         float point = good.getPoint();
         Pane goodIcon = new Pane();
+
         goodIcon.setOnMouseClicked(e -> {
             try {
                 Stage window = new Stage();
@@ -42,6 +43,7 @@ public class GoodIconFactory {
                 ioException.printStackTrace();
             }
         });
+
         goodIcon.getStylesheets().add("GUIFiles/goodsItemStyle.css");
         VBox box = new VBox(10);
         box.setPadding(new Insets(10, 10, 10, 10));
@@ -61,16 +63,24 @@ public class GoodIconFactory {
             imageView.setFitHeight(100);
             imageView.setFitWidth(150);
             HBox nameBox = new HBox();
+            nameBox.setAlignment(Pos.CENTER);
             HBox rateBox = new HBox();
+            rateBox.setAlignment(Pos.CENTER);
             Label nameOfProduct = new Label(name);
             Label rateOfProduct = new Label(Float.toString(point));
             nameBox.getChildren().addAll(new Label("name"), nameOfProduct);
             rateBox.getChildren().addAll(new Label("rate"), rateOfProduct);
 
+            HBox sellersbox = new HBox();
+            sellersbox.setAlignment(Pos.CENTER);
+            sellersbox.getChildren().add(new Label("sellers"));
+            VBox sellers = new VBox();
+            for (Seller seller : good.getSellers()) {
+                sellers.getChildren().add(new Label(seller.getUserName()));
+            }
+            sellersbox.getChildren().add(sellers);
 
-
-
-            box.getChildren().addAll(imageView, nameBox, rateBox);
+            box.getChildren().addAll(imageView, nameBox, rateBox, sellersbox);
             goodIcon.getChildren().add(box);
             box.setAlignment(Pos.CENTER);
             box.getStyleClass().add("mainPane");
