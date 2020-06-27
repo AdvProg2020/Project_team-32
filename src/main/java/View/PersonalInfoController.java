@@ -6,11 +6,20 @@ import Model.Person;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,6 +36,7 @@ public class PersonalInfoController implements Initializable {
     public Text welcomeText;
     public TextField passwordText;
     public TextField usernameText;
+    public ImageView imageView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,6 +79,21 @@ public class PersonalInfoController implements Initializable {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(newValue)
                     resetFields(phoneText);
+            }
+        });
+        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Stage stage = new Stage();
+                FileChooser fileChooser = new FileChooser();
+                try {
+                    File selectedFile = fileChooser.showOpenDialog(stage);
+                    URL image = selectedFile.toURI().toURL();
+                    imageView.setImage(new Image(String.valueOf(image)));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 

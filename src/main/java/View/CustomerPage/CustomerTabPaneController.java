@@ -23,6 +23,8 @@ public class CustomerTabPaneController implements Initializable {
     public Tab balanceTab;
     public Tab discountsTab;
     public Tab logOutTab;
+    public Tab offsPageTab;
+    public Tab goodsPageTab;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

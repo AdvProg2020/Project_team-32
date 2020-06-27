@@ -100,6 +100,8 @@
                 </children>
             </AnchorPane>
         </Tab>
+
+        <Tab fx:id="offsPageTab" closable="false" />
         <Tab fx:id="logOutTab" closable="false" />
     </tabs>
 </TabPane>
