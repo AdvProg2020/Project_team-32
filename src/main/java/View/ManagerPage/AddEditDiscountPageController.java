@@ -64,7 +64,7 @@ public class AddEditDiscountPageController implements Initializable {
 
         for (Node child : userPicker.getChildren()) {
             try {
-                if(child instanceof CheckBox){
+                if(child instanceof CheckBox && ((CheckBox) child).isSelected()){
                     Customer customer;
                     customer = (Customer) Person.getPersonByUserName(((CheckBox) child).getText());
                     customers.add(customer);
