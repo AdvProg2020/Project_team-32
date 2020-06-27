@@ -77,11 +77,13 @@ public class GoodController extends Filterable{
     @Override
     public void reset() {
         currentCategory = Category.rootCategory;
-        selectedGoods.clear();
+        selectedGoods = Good.confirmedGoods;
         currentFilters.clear();
     }
 
     public GoodController() {
         selectedGoods = Good.confirmedGoods;
+        currentCategory = Category.rootCategory;
+        currentFilters = new HashMap<>();
     }
 }
