@@ -77,7 +77,7 @@ public class GoodController extends Filterable{
     @Override
     public void reset() {
         currentCategory = Category.rootCategory;
-        selectedGoods.clear();
+        selectedGoods = Good.confirmedGoods;
         currentFilters.clear();
     }
 

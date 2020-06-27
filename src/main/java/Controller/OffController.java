@@ -20,7 +20,6 @@ public class OffController extends Filterable{
 
     @Override
     public void reset() {
-        selectedGoods.clear();
         for (Off off : Off.getAllOffs()) {
             selectedGoods.addAll(off.getGoodsForOff());
         }
@@ -29,8 +28,6 @@ public class OffController extends Filterable{
     public void addToSelectedGoods(ArrayList<Good> good) {
         selectedGoods.addAll(good);
     }
-
-
 
     public OffController() {
         selectedGoods = new ArrayList<>();

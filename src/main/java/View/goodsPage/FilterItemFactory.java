@@ -21,6 +21,8 @@ public class FilterItemFactory {
                 }
             } else {
                 try {
+                    System.out.println("----------------- fileter for disabling ----------------------");
+                    System.out.println(filterLable.getText());
                     filterable.disableFilter(filterLable.getText());
                 } catch (Exception exception) {
                     exception.printStackTrace();

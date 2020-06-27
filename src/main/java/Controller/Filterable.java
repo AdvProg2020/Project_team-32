@@ -41,6 +41,11 @@ public abstract class Filterable {
     }
 
     public void disableFilter(String filter) throws Exception{
+
+        System.out.println("------------- checking if filter exist ---------------------");
+        System.out.println(currentFilters.keySet().contains(filter));
+        System.out.println("-------------------------------------------------------------");
+
         currentFilters.remove(filter);
         if(filter.equalsIgnoreCase("category")){
             currentCategory = currentCategory.getParentCategory();
@@ -49,12 +54,27 @@ public abstract class Filterable {
             return;
         }
         for (String s : currentFilters.keySet()) {
+            System.out.println("---------------- in the current fileters after removing disabled filter ---------------");
+            System.out.println(s);
+            System.out.println("----------------------------------------------------------------------------------------");
             filter(s, currentFilters.get(s));
         }
+
         if(currentFilters.size() == 0) {
-            setSelectedGoods(Good.getAllGoods());
+            reset();
         }
 
+        System.out.println("------------- all confirm goods -------------------------");
+        for (Good good : Good.confirmedGoods) {
+            System.out.println(good);
+        }
+        System.out.println("----------------------------------------------------------");
+
+        System.out.println("----------------- all goods after disabling filter -------------------");
+        for (Good good : selectedGoods) {
+            System.out.println(good);
+        }
+        System.out.println("-------------------------------------------------------------");
     }
 
     public Category getCurrentCategory() {
