@@ -36,9 +36,10 @@ public class GoodPageController implements Initializable, Updatable {
 
     @FXML
     private VBox secondColumnGood;
-
+    @FXML CheckBox checkBox;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         //categoriesTreeView.setRoot(Category.rootCategory.getCategory());
         TreeItem<String> category = new TreeItem<>("Categories");
         Category.rootCategory.getCategory(category);
