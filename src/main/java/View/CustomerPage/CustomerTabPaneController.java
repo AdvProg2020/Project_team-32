@@ -34,6 +34,8 @@ public class CustomerTabPaneController implements Initializable {
         URL balancePageURl =null;
         URL discountsPageURL =null;
         URL logOutURL = null;
+        URL goodsPageURL = null;
+        URL offsPageURL =null;
         try {
             infoPaneUrl = new File("src\\main\\resources\\GUIFiles\\personal-info.fxml").toURI().toURL();
             cartPageURL = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CartPage.fxml").toURI().toURL();
@@ -41,7 +43,8 @@ public class CustomerTabPaneController implements Initializable {
             balancePageURl = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\BalancePage.fxml").toURI().toURL();
             discountsPageURL = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\DiscountsPage.fxml").toURI().toURL();
             logOutURL = new File("src\\main\\resources\\GUIFiles\\logout-page.fxml").toURI().toURL();
-
+            goodsPageURL = new File("src\\main\\resources\\GUIFiles\\GoodsPage.fxml").toURI().toURL();
+            offsPageURL= new File("src\\main\\resources\\GUIFiles\\OffsPage.fxml").toURI().toURL();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -52,6 +55,8 @@ public class CustomerTabPaneController implements Initializable {
         URL finalBalancePageURl = balancePageURl;
         URL finalDiscountsPageURL = discountsPageURL;
         URL finalLogOut = logOutURL;
+        URL finalGoodsPageURL = goodsPageURL;
+        URL finalOffsPageURL = offsPageURL;
         tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {;
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
@@ -73,6 +78,11 @@ public class CustomerTabPaneController implements Initializable {
                         discountsTab.setContent(FXMLLoader.load(finalDiscountsPageURL));
                     }else if (newTab.equals(logOutTab)){
                         logOutTab.setContent(FXMLLoader.load(finalLogOut));
+                    }
+                    else if (newTab.equals(goodsPageTab)){
+                        goodsPageTab.setContent(FXMLLoader.load(finalGoodsPageURL));
+                    }else if (newTab.equals(offsPageTab)){
+                        offsPageTab.setContent(FXMLLoader.load(finalOffsPageURL));
                     }
                 }catch (IOException e){
                     e.printStackTrace();

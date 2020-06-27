@@ -183,5 +183,11 @@
 #logOutTab{
     -fx-background-image: url("/GUIFiles/icons/icons8-logout-rounded-left-64.png");
 }
+#offsPageTab{
+    -fx-background-image: url("/GUIFiles/icons/icons8-increase-discount-50.png");
+}
+#goodsPageTab{
+    -fx-background-image: url("/GUIFiles/icons/icons8-shop-50.png");
+}
 
 

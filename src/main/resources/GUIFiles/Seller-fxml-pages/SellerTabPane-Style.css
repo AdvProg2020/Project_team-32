@@ -48,7 +48,9 @@
 #logOutTab{
     -fx-background-image: url("/GUIFiles/icons/icons8-logout-rounded-left-64.png");
 }
-
+#offsPageTab{
+    -fx-background-image: url("/GUIFiles/icons/icons8-increase-discount-50.png");
+}
 
 .tab {
     -fx-background-color: rgba(25, 25, 25, 0.01);
