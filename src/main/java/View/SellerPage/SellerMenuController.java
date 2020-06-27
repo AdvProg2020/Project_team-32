@@ -686,14 +686,23 @@ public class SellerMenuController implements Initializable {
                     URL url = null;
                     try {
                         url = new File("src\\main\\resources\\GUIFiles\\logout-page.fxml").toURI().toURL();
+                        logOutTab.setContent(FXMLLoader.load(url));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
-                    }
-                    try {
-                        logOutTab.setContent(FXMLLoader.load(url));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+                else if (newTab.equals(offsPageTab)){
+                    try {
+                        URL url = new File("src\\main\\resources\\GUIFiles\\OffsPage.fxml").toURI().toURL();
+                        offsPageTab.setContent(FXMLLoader.load(url));
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
             }
