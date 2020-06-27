@@ -39,7 +39,10 @@ public class GoodPageController implements Initializable, Updatable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        categoriesTreeView.setRoot(Category.rootCategory.getCategory());
+        //categoriesTreeView.setRoot(Category.rootCategory.getCategory());
+        TreeItem<String> category = new TreeItem<>("Categories");
+        Category.rootCategory.getCategory(category);
+        categoriesTreeView.setRoot(category);
         categoriesTreeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

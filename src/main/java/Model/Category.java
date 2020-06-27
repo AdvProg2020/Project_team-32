@@ -104,19 +104,16 @@ public class Category implements Serializable {
         return parentCategory==null ? "null" : parentCategory.name;
     }
 
-    public TreeItem<String> getCategory() {
-        TreeItem<String> category = new TreeItem<>("categories");
+    public void getCategory(TreeItem<String> parent) {
         if(subCategory.size() == 0) {
-            return null;
+            parent.getChildren().add(new TreeItem<>(name));
+            return;
         }
-        for (Category c : subCategory) {
-            TreeItem a = new TreeItem(c.getName());
-            if(c.getCategory() != null) {
-                a.getChildren().add(c.getCategory());
-            }
-            category.getChildren().add(a);
+        TreeItem<String> a = new TreeItem<>(name);
+        parent.getChildren().add(a);
+        for (Category category : subCategory) {
+            category.getCategory(a);
         }
-        return category;
     }
 
     public static Category getCategoryByName(String name) {

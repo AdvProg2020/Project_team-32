@@ -40,7 +40,10 @@ public class OffPageController implements Initializable, Updatable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        categoriesTreeView1.setRoot(Category.rootCategory.getCategory());
+        //categoriesTreeView1.setRoot(Category.rootCategory.getCategory());
+        TreeItem<String> category = new TreeItem<>("Categories");
+        Category.rootCategory.getCategory(category);
+        categoriesTreeView1.setRoot(category);
         categoriesTreeView1.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
