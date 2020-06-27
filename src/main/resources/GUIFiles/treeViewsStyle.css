@@ -1,2 +1,12 @@
 .treeView {
 }
+.label{
+    -fx-text-fill: black;
+}
+.button{
+    -fx-text-fill: black;
+}
+.text-field{
+    -fx-text-fill: black;
+}
+

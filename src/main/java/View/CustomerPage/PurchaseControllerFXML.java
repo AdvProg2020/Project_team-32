@@ -96,14 +96,18 @@ public class PurchaseControllerFXML implements Initializable {
                         public void handle(MouseEvent event) {
 
                             if (customer.getCredit()>= totalPrice[0]){
-                                if (totalPrice[0] >= 1000000) {
+                                if (totalPrice[0] >= 1000) {
                                     discountPercent[0] = 10;
                                     totalPrice[0] = PurchaseController.getPriceDiscounted(totalPrice[0], discountPercent[0]);
-                                    noDisResult.setText("you get 10% discount because you bought over 1000000 ");
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setContentText("you get 10% discount because you bought over 1000000 ");
+                                    alert.show();
                                 } else if ((random % 10) == 0) {
                                     discountPercent[0] = (random % 20);
                                     totalPrice[0] = PurchaseController.getPriceDiscounted(totalPrice[0], discountPercent[0]);
-                                    noDisResult.setText("you are lucky : you got " + discountPercent[0] + "percent discount");
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setContentText("you are lucky : you got " + discountPercent[0] + "percent discount");
+                                    alert.show();
                                 }
                                 PurchaseController.payCommand(customer, totalPrice[0], discountPercent[0]);
                                 Alert alert =new Alert(Alert.AlertType.INFORMATION);

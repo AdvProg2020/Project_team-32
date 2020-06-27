@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@treeViewsStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.OffPageController.OffPageController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@treeViewsStyle.css" xmlns="http://javafx.com/javafx/11.0.1"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.OffPageController.OffPageController">
    <children>
       <TreeView fx:id="categoriesTreeView1" prefHeight="600.0" prefWidth="171.0" styleClass="treeView" />
       <VBox fx:id="FiltersVBox1" prefHeight="600.0" prefWidth="217.0" />
