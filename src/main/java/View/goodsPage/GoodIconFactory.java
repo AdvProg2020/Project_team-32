@@ -1,11 +1,16 @@
 package View.goodsPage;
 
+import Controller.AccountController;
+import Model.Customer;
 import Model.Good;
+import Model.Guest;
 import View.IndividualGoodPage.IndividualGoodPageController;
 import View.IndividualGoodPage.IndividualGoodPageFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -61,7 +66,31 @@ public class GoodIconFactory {
             Label rateOfProduct = new Label(Float.toString(point));
             nameBox.getChildren().addAll(new Label("name"), nameOfProduct);
             rateBox.getChildren().addAll(new Label("rate"), rateOfProduct);
-            box.getChildren().addAll(imageView, nameBox, rateBox);
+            HBox addToShoppingBasket = new HBox();
+            Label addToShoppeingBasketLabel = new Label("add to shopping basket");
+            CheckBox add = new CheckBox();
+            addToShoppingBasket.getChildren().addAll(addToShoppeingBasketLabel, add);
+
+            add.setOnAction(e -> {
+                if(add.isSelected()) {
+
+                    if(AccountController.loggedInUser instanceof Guest) {
+
+                    } else if (AccountController.loggedInUser instanceof Customer) {
+
+                    }
+
+                } else {
+
+                    if(AccountController.loggedInUser instanceof Guest) {
+
+                    } else if (AccountController.loggedInUser instanceof Customer) {
+
+                    }
+                }
+            });
+
+            box.getChildren().addAll(imageView, nameBox, rateBox, addToShoppingBasket);
             goodIcon.getChildren().add(box);
             box.setAlignment(Pos.CENTER);
             box.getStyleClass().add("mainPane");
