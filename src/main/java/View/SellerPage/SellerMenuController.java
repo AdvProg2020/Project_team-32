@@ -336,6 +336,7 @@ public class SellerMenuController implements Initializable {
                             int price = Integer.parseInt(priceTextField.getText().trim());
                             if (price > 0) {
                                 good_addProduct.addSellerAndPrice(AccountController.loggedInUser.getUserName(), price);
+                                ((Seller)AccountController.loggedInUser).getSellingGoods().add(good_addProduct);
                                 priceTextField.setText("succesful");
                             }
                         }

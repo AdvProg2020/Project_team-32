@@ -38,7 +38,7 @@ public class DiscountsController implements Initializable {
     private TableColumn<Discount, Integer> count_col;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        PurchaseController.passTime();
+//        PurchaseController.passTime();
         ID_col.setCellValueFactory(new PropertyValueFactory<>("DiscountID"));
         initDate_col.setCellValueFactory(new PropertyValueFactory<>("InitialDateString"));
         expDate_col.setCellValueFactory(new PropertyValueFactory<>("ExposeDateString"));
@@ -49,6 +49,8 @@ public class DiscountsController implements Initializable {
         for (Discount discount : ((Customer) AccountController.loggedInUser).getDiscounts().keySet()) {
             discountList.add(discount);
         }
+        discountTable.getItems().clear();
+        discountTable.getItems().addAll(discountList);
 
     }
 }
