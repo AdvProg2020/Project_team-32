@@ -37,6 +37,7 @@ import java.util.*;
 public class SellerMenuController implements Initializable {
 
     public Tab logOutTab;
+    public Tab offsPageTab;
     @FXML
     TabPane sellerTabPane;
 
