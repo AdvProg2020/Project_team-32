@@ -9,9 +9,9 @@ import java.util.HashMap;
 
 public abstract class Filterable {
 
-    protected Category currentCategory = Category.rootCategory;
+    protected Category currentCategory;
     protected ArrayList<Good> selectedGoods;
-    protected HashMap<String , String> currentFilters = new HashMap<>();
+    protected HashMap<String , String> currentFilters;
 
 
     public void filter(String filter, String value) throws Exception {

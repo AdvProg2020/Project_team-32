@@ -83,5 +83,7 @@ public class GoodController extends Filterable{
 
     public GoodController() {
         selectedGoods = Good.confirmedGoods;
+        currentCategory = Category.rootCategory;
+        currentFilters = new HashMap<>();
     }
 }
