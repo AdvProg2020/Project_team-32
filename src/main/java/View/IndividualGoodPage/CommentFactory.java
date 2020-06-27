@@ -39,7 +39,6 @@ public class CommentFactory {
 
         comment.getChildren().addAll(usernameBox, commentField, buyStatus);
 
-        //styles
         comment.getStylesheets().add("GUIFiles/comment-stylesheet.css");
         comment.getStyleClass().add("commentVBox");
         comment.setAlignment(Pos.CENTER);

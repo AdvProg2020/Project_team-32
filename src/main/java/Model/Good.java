@@ -38,8 +38,6 @@ public class Good implements Serializable {
 
     }
 
-//    private ArrayList<Comment> allComments = new ArrayList<>();
-
 
     public Good(String name, String goodID, Seller seller, String companyName, Category category
             , String explanation, HashMap<String, String> properties, int price) {

@@ -1,6 +1,7 @@
 package View.goodsPage;
 import Controller.Filterable;
 import View.Updatable;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -10,6 +11,8 @@ public class FilterItemFactory {
 
     public static HBox createFilterItem(String filter, Updatable controller, Filterable filterable) {
         HBox filterItem = new HBox();
+        filterItem.setAlignment(Pos.CENTER);
+        filterItem.setSpacing(10);
         Label filterLable = new Label(filter);
         CheckBox checkBox = new CheckBox();
         checkBox.setOnAction(e -> {

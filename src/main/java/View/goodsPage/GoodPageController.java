@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -39,8 +40,8 @@ public class GoodPageController implements Initializable, Updatable {
     @FXML CheckBox checkBox;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        FiltersVBox.setAlignment(Pos.TOP_CENTER);
 
-        //categoriesTreeView.setRoot(Category.rootCategory.getCategory());
         TreeItem<String> category = new TreeItem<>("Categories");
         Category.rootCategory.getCategory(category);
         categoriesTreeView.setRoot(category);
