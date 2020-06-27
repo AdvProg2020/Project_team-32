@@ -20,6 +20,8 @@ public class Good implements Serializable {
     private HashMap<String, String> properties;
     private String imageAddress;
     private ArrayList<Comment> allComments = new ArrayList<>();
+
+
     private int numberOfRates;
 
     private int numberOfViews; //this should set after any view
@@ -29,10 +31,15 @@ public class Good implements Serializable {
     }
 
     public void setPoint(float point) {
+
         this.point = (this.point) * numberOfRates + point;
         this.numberOfRates += 1;
         this.point /= this.numberOfRates;
+
     }
+
+    private ArrayList<Comment> allComments = new ArrayList<>();
+
 
     public Good(String name, String goodID, Seller seller, String companyName, Category category
             , String explanation, HashMap<String, String> properties, int price) {

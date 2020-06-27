@@ -1,14 +1,19 @@
 package View.IndividualGoodPage;
 
+import Controller.AccountController;
 import Model.Comment;
 import Model.Good;
 import Model.Seller;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -59,7 +64,26 @@ public class IndividualGoodPageFactory {
                 comments.getChildren().add(CommentFactory.getComment(comment.getUserName(), comment.getCommentString(), comment.getCommenterBoughtGood()));
             }
 
-            mainBox.getChildren().addAll(properties, comments);
+            Button addComment = new Button("add comment");
+            addComment.setOnAction(e -> {
+                Stage window = new Stage();
+                window.setTitle("enter comment");
+                VBox commentBox = new VBox();
+                TextField commentFiled = new TextField("enter comment");
+                Button submit = new Button("submit");
+                submit.setOnAction(f -> {
+                    try {
+                        comments.getChildren().add(CommentFactory.getComment(AccountController.loggedInUser.getUserName(),commentFiled.getText(), true ));
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                });
+                commentBox.getChildren().addAll(commentFiled, submit);
+                window.setScene( new Scene(commentBox));
+                window.showAndWait();
+            });
+
+            mainBox.getChildren().addAll(properties, comments, addComment);
 
             goodPage.setPrefWidth(600);
             goodPage.setPrefHeight(600);
