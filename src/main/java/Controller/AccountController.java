@@ -1,19 +1,10 @@
 package Controller;
 
 import Controller.Exeptions.WrongPasswordException;
-import Controller.Exeptions.DuplicateBossException;
 import Controller.Exeptions.DuplicateUsernameException;
 import Controller.Exeptions.UserDoesNotExistException;
-import View.Menu;
 import Model.*;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class AccountController {

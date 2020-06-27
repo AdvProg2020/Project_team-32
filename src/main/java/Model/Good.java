@@ -38,7 +38,7 @@ public class Good implements Serializable {
 
     }
 
-    private ArrayList<Comment> allComments = new ArrayList<>();
+//    private ArrayList<Comment> allComments = new ArrayList<>();
 
 
     public Good(String name, String goodID, Seller seller, String companyName, Category category
@@ -69,6 +69,7 @@ public class Good implements Serializable {
         this.sellerAndPrices.replace(seller.getUserName(), editGood.sellerAndPrices.get(seller.getUserName()));
         this.confirmStatus();
     }
+
 
     public HashMap<String, String> getProperties() {
         return properties;

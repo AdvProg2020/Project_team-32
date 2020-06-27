@@ -1,11 +1,11 @@
 package View.IndividualGoodPage;
 
 import Controller.AccountController;
-import Model.Comment;
-import Model.Good;
-import Model.Seller;
+import Controller.Exeptions.UserDoesNotExistException;
+import Model.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class IndividualGoodPageFactory {
 
@@ -73,6 +74,7 @@ public class IndividualGoodPageFactory {
                 Button submit = new Button("submit");
                 submit.setOnAction(f -> {
                     try {
+                        good.getAllComments().add(new Comment(AccountController.loggedInUser.getUserName(),good,commentFiled.getText(),"sending","aa"));
                         comments.getChildren().add(CommentFactory.getComment(AccountController.loggedInUser.getUserName(),commentFiled.getText(), true ));
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
@@ -83,7 +85,66 @@ public class IndividualGoodPageFactory {
                 window.showAndWait();
             });
 
-            mainBox.getChildren().addAll(properties, comments, addComment);
+            VBox sellersBox1 = new VBox();
+            for (String s : good.getSellerAndPrices().keySet()) {
+                CheckBox checkBox = new CheckBox();
+                checkBox.setText(s + " : " + good.getSellerAndPrices().get(s));
+
+                checkBox.setOnAction(e -> {
+                    if (checkBox.isSelected()) {
+
+                        if (AccountController.loggedInUser instanceof Guest) {
+                            Guest guest = ((Guest) AccountController.loggedInUser);
+                            for (ShoppingBasket shoppingBasket : guest.getShoppingBaskets()) {
+                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
+                                    break;
+                                }
+                            }
+                            try {
+                                guest.getShoppingBaskets().add(new ShoppingBasket(good, (Seller) Seller.getPersonByUserName(s)));
+                            } catch (UserDoesNotExistException userDoesNotExistException) {
+                                userDoesNotExistException.printStackTrace();
+                            }
+                        } else if (AccountController.loggedInUser instanceof Customer) {
+                            Customer customer = ((Customer) AccountController.loggedInUser);
+                            for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
+                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
+                                    break;
+                                }
+                            }
+                            try {
+                                customer.getShoppingBaskets().add(new ShoppingBasket(good, (Seller) Seller.getPersonByUserName(s)));
+                            } catch (UserDoesNotExistException userDoesNotExistException) {
+                                userDoesNotExistException.printStackTrace();
+                            }
+                        }
+
+                    } else if (!checkBox.isSelected()){
+                        if (AccountController.loggedInUser instanceof Guest) {
+                            Guest guest = ((Guest) AccountController.loggedInUser);
+                            ArrayList<ShoppingBasket> toRemove = new ArrayList<>();
+                            for (ShoppingBasket shoppingBasket : guest.getShoppingBaskets()) {
+                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
+                                    toRemove.add(shoppingBasket);
+                                }
+                            }
+                            guest.getShoppingBaskets().remove(toRemove);
+                        } else if (AccountController.loggedInUser instanceof Customer) {
+                            Customer customer = ((Customer) AccountController.loggedInUser);
+                            ArrayList<ShoppingBasket> toRemove = new ArrayList<>();
+                            for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
+                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
+                                    toRemove.add(shoppingBasket);
+                                }
+                            }
+                            customer.getShoppingBaskets().remove(toRemove);
+                        }
+                    }
+                });
+
+                sellersBox1.getChildren().add(checkBox);
+            }
+            mainBox.getChildren().addAll(properties, comments, addComment,sellersBox1);
 
             goodPage.setPrefWidth(600);
             goodPage.setPrefHeight(600);

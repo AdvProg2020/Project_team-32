@@ -33,6 +33,7 @@ public class BossController {
     public static void createDiscount(Date exposeDate, String discountId, int maxAmount, int percent, int numberOfUse, ArrayList<Customer> users) {
         Discount discount = new Discount(discountId, exposeDate, percent, maxAmount, numberOfUse);
         allDiscount.add(discount);
+        System.out.println(users.size());
         for (Customer user : users) {
             user.addDiscount(discount, numberOfUse);
         }

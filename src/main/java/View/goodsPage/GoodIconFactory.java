@@ -68,67 +68,9 @@ public class GoodIconFactory {
             rateBox.getChildren().addAll(new Label("rate"), rateOfProduct);
 
 
-            VBox sellersBox = new VBox();
-            for (String s : good.getSellerAndPrices().keySet()) {
-                CheckBox checkBox = new CheckBox();
-                checkBox.setText(s + " : " + good.getSellerAndPrices().get(s));
 
-                checkBox.setOnAction(e -> {
-                    if (checkBox.isSelected()) {
 
-                        if (AccountController.loggedInUser instanceof Guest) {
-                            Guest guest = ((Guest) AccountController.loggedInUser);
-                            for (ShoppingBasket shoppingBasket : guest.getShoppingBaskets()) {
-                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
-                                    break;
-                                }
-                            }
-                            try {
-                                guest.getShoppingBaskets().add(new ShoppingBasket(good, (Seller) Seller.getPersonByUserName(s)));
-                            } catch (UserDoesNotExistException userDoesNotExistException) {
-                                userDoesNotExistException.printStackTrace();
-                            }
-                        } else if (AccountController.loggedInUser instanceof Customer) {
-                            Customer customer = ((Customer) AccountController.loggedInUser);
-                            for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
-                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
-                                    break;
-                                }
-                            }
-                            try {
-                                customer.getShoppingBaskets().add(new ShoppingBasket(good, (Seller) Seller.getPersonByUserName(s)));
-                            } catch (UserDoesNotExistException userDoesNotExistException) {
-                                userDoesNotExistException.printStackTrace();
-                            }
-                        }
-
-                    } else if (!checkBox.isSelected()){
-                        if (AccountController.loggedInUser instanceof Guest) {
-                            Guest guest = ((Guest) AccountController.loggedInUser);
-                            ArrayList<ShoppingBasket> toRemove = new ArrayList<>();
-                            for (ShoppingBasket shoppingBasket : guest.getShoppingBaskets()) {
-                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
-                                    toRemove.add(shoppingBasket);
-                                }
-                            }
-                            guest.getShoppingBaskets().remove(toRemove);
-                        } else if (AccountController.loggedInUser instanceof Customer) {
-                            Customer customer = ((Customer) AccountController.loggedInUser);
-                            ArrayList<ShoppingBasket> toRemove = new ArrayList<>();
-                            for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
-                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
-                                    toRemove.add(shoppingBasket);
-                                }
-                            }
-                            customer.getShoppingBaskets().remove(toRemove);
-                        }
-                    }
-                });
-
-                sellersBox.getChildren().add(checkBox);
-            }
-
-            box.getChildren().addAll(imageView, nameBox, rateBox, sellersBox);
+            box.getChildren().addAll(imageView, nameBox, rateBox);
             goodIcon.getChildren().add(box);
             box.setAlignment(Pos.CENTER);
             box.getStyleClass().add("mainPane");

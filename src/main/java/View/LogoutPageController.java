@@ -1,8 +1,6 @@
 package View;
 
 import Controller.AccountController;
-import Controller.Controller;
-import View.BossPage.RequestManagerMenus.ShowRequestDetailCommand;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;

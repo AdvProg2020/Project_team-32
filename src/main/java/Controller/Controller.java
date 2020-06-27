@@ -1,8 +1,8 @@
 package Controller;
 
 import Model.*;
-import View.*;
-import View.BossPage.BossMenu;
+
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -15,17 +15,6 @@ public class Controller {
 
     public static boolean isBossCreated;
 
-    public static void main(String[] args) {
-        Menu.bossMenu = new BossMenu(null);
-        Menu.guestMenu = new GuestMenu(null);
-        Menu.customerMenu = new CustomerMenu( null);
-        Menu.sellerMenu = new SellerMenu(null);
-        Menu.individualGoodMenu = new IndividualGoodMenu(null);
-        importData();
-        Menu.guestMenu.show();
-        Menu.guestMenu.execute();
-        exportData();
-    }
 
     public static void initialize(){
         (new Thread() {
