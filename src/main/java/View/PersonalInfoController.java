@@ -49,6 +49,7 @@ public class PersonalInfoController implements Initializable {
             lastNameText.setText(user.getLastName());
             firstNameText.setText(user.getFirstName());
             emailText.setText(user.getEmail());
+            imageView.setImage(new Image(String.valueOf(user.getImageUrl())));
         }
         emailText.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -89,6 +90,7 @@ public class PersonalInfoController implements Initializable {
                 try {
                     File selectedFile = fileChooser.showOpenDialog(stage);
                     URL image = selectedFile.toURI().toURL();
+                    AccountController.loggedInUser.setImageUrl(image);
                     imageView.setImage(new Image(String.valueOf(image)));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -154,6 +156,5 @@ public class PersonalInfoController implements Initializable {
     private boolean textValidation(String text, String regex) {
         return text.matches(regex);
     }
-
 
 }

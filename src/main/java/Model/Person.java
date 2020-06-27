@@ -1,15 +1,20 @@
 package Model;
 
 import Controller.Exeptions.UserDoesNotExistException;
+import Controller.Filterable;
+import com.sun.xml.internal.fastinfoset.tools.FI_DOM_Or_XML_DOM_SAX_SAXEvent;
 
+import java.io.File;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public abstract class Person implements Serializable {
 
-  
+
     public static ArrayList<Person> allPersons = new ArrayList<Person>();
 
     protected String userName;
@@ -18,7 +23,7 @@ public abstract class Person implements Serializable {
     protected String phoneID;
     protected String email;
     protected String passWord;
-
+    protected URL imageUrl;
     private HashMap<Discount, Integer> discounts ;
     protected float credit;
 
@@ -28,7 +33,7 @@ public abstract class Person implements Serializable {
                 return true;
             }
         }
-       return false;
+        return false;
     }
 
     public void informationEditor(String password,String firstName, String lastName, String phoneId, String email) {
@@ -37,6 +42,10 @@ public abstract class Person implements Serializable {
         this.lastName = lastName;
         this.phoneID = phoneId;
         this.email = email;
+    }
+
+    public void setImageUrl(URL imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getEmail() {
@@ -88,6 +97,11 @@ public abstract class Person implements Serializable {
         this.passWord = passWord;
         allPersons.add(this);
         discounts = new HashMap<Discount, Integer>();
+        try {
+            imageUrl = new File("src\\main\\resources\\GUIFiles\\icons\\emptyAvatar.png").toURI().toURL();
+        } catch (MalformedURLException e) {
+            System.err.println("error in loading default avatar");
+        }
     }
 
     public String getPassWord() {
@@ -101,6 +115,10 @@ public abstract class Person implements Serializable {
             }
         }
         throw new UserDoesNotExistException();
+    }
+
+    public URL getImageUrl() {
+        return imageUrl;
     }
 
     public String getUserName() {
