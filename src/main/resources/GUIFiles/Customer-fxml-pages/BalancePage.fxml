@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="paneClass" prefHeight="700" prefWidth="700" stylesheets="@balancePage.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.BalanceController">
    <children>
-      <Label fx:id="balance" layoutX="126.0" layoutY="170.0" prefHeight="48.0" prefWidth="128.0" text="balance" />
+      <Label fx:id="balance" layoutX="286.0" layoutY="146.0" prefHeight="48.0" prefWidth="128.0" text="balance" />
+      <TextField fx:id="textBalance" layoutX="275.0" layoutY="218.0" prefHeight="78.0" prefWidth="149.0" />
+      <Button fx:id="applyButton" layoutX="286.0" layoutY="322.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="128.0" text="apply" />
    </children>
 </AnchorPane>
