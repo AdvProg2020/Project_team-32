@@ -1,10 +1,8 @@
 package View.goodsPage;
 
 import Controller.AccountController;
-import Model.Customer;
-import Model.Good;
-import Model.Guest;
-import Model.Seller;
+import Controller.Exeptions.UserDoesNotExistException;
+import Model.*;
 import View.IndividualGoodPage.IndividualGoodPageController;
 import View.IndividualGoodPage.IndividualGoodPageFactory;
 import javafx.geometry.Insets;
@@ -24,6 +22,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GoodIconFactory {
 
@@ -50,7 +49,7 @@ public class GoodIconFactory {
         try {
             inputStream = new FileInputStream(imageAddress);
         } finally {
-            if(inputStream == null) {
+            if (inputStream == null) {
                 try {
                     inputStream = new FileInputStream("src\\main\\resources\\GUIFiles\\noImageAvailable.png");
                 } catch (FileNotFoundException e) {
@@ -72,25 +71,60 @@ public class GoodIconFactory {
             VBox sellersBox = new VBox();
             for (String s : good.getSellerAndPrices().keySet()) {
                 CheckBox checkBox = new CheckBox();
+                checkBox.setText(s + " : " + good.getSellerAndPrices().get(s));
+
                 checkBox.setOnAction(e -> {
-                    if(checkBox.isSelected()) {
+                    if (checkBox.isSelected()) {
 
-                        if(AccountController.loggedInUser instanceof Guest) {
-
+                        if (AccountController.loggedInUser instanceof Guest) {
+                            Guest guest = ((Guest) AccountController.loggedInUser);
+                            for (ShoppingBasket shoppingBasket : guest.getShoppingBaskets()) {
+                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
+                                    break;
+                                }
+                            }
+                            try {
+                                guest.getShoppingBaskets().add(new ShoppingBasket(good, (Seller) Seller.getPersonByUserName(s)));
+                            } catch (UserDoesNotExistException userDoesNotExistException) {
+                                userDoesNotExistException.printStackTrace();
+                            }
                         } else if (AccountController.loggedInUser instanceof Customer) {
-
+                            Customer customer = ((Customer) AccountController.loggedInUser);
+                            for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
+                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
+                                    break;
+                                }
+                            }
+                            try {
+                                customer.getShoppingBaskets().add(new ShoppingBasket(good, (Seller) Seller.getPersonByUserName(s)));
+                            } catch (UserDoesNotExistException userDoesNotExistException) {
+                                userDoesNotExistException.printStackTrace();
+                            }
                         }
 
-                    } else {
-
-                        if(AccountController.loggedInUser instanceof Guest) {
-
+                    } else if (!checkBox.isSelected()){
+                        if (AccountController.loggedInUser instanceof Guest) {
+                            Guest guest = ((Guest) AccountController.loggedInUser);
+                            ArrayList<ShoppingBasket> toRemove = new ArrayList<>();
+                            for (ShoppingBasket shoppingBasket : guest.getShoppingBaskets()) {
+                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
+                                    toRemove.add(shoppingBasket);
+                                }
+                            }
+                            guest.getShoppingBaskets().remove(toRemove);
                         } else if (AccountController.loggedInUser instanceof Customer) {
-
+                            Customer customer = ((Customer) AccountController.loggedInUser);
+                            ArrayList<ShoppingBasket> toRemove = new ArrayList<>();
+                            for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
+                                if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
+                                    toRemove.add(shoppingBasket);
+                                }
+                            }
+                            customer.getShoppingBaskets().remove(toRemove);
                         }
                     }
                 });
-                checkBox.setText(s + " : " + good.getSellerAndPrices().get(s));
+
                 sellersBox.getChildren().add(checkBox);
             }
 
