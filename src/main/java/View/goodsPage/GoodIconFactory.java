@@ -4,6 +4,7 @@ import Controller.AccountController;
 import Model.Customer;
 import Model.Good;
 import Model.Guest;
+import Model.Seller;
 import View.IndividualGoodPage.IndividualGoodPageController;
 import View.IndividualGoodPage.IndividualGoodPageFactory;
 import javafx.geometry.Insets;
@@ -66,31 +67,34 @@ public class GoodIconFactory {
             Label rateOfProduct = new Label(Float.toString(point));
             nameBox.getChildren().addAll(new Label("name"), nameOfProduct);
             rateBox.getChildren().addAll(new Label("rate"), rateOfProduct);
-            HBox addToShoppingBasket = new HBox();
-            Label addToShoppeingBasketLabel = new Label("add to shopping basket");
-            CheckBox add = new CheckBox();
-            addToShoppingBasket.getChildren().addAll(addToShoppeingBasketLabel, add);
 
-            add.setOnAction(e -> {
-                if(add.isSelected()) {
 
-                    if(AccountController.loggedInUser instanceof Guest) {
+            VBox sellersBox = new VBox();
+            for (String s : good.getSellerAndPrices().keySet()) {
+                CheckBox checkBox = new CheckBox();
+                checkBox.setOnAction(e -> {
+                    if(checkBox.isSelected()) {
 
-                    } else if (AccountController.loggedInUser instanceof Customer) {
+                        if(AccountController.loggedInUser instanceof Guest) {
 
+                        } else if (AccountController.loggedInUser instanceof Customer) {
+
+                        }
+
+                    } else {
+
+                        if(AccountController.loggedInUser instanceof Guest) {
+
+                        } else if (AccountController.loggedInUser instanceof Customer) {
+
+                        }
                     }
+                });
+                checkBox.setText(s + " : " + good.getSellerAndPrices().get(s));
+                sellersBox.getChildren().add(checkBox);
+            }
 
-                } else {
-
-                    if(AccountController.loggedInUser instanceof Guest) {
-
-                    } else if (AccountController.loggedInUser instanceof Customer) {
-
-                    }
-                }
-            });
-
-            box.getChildren().addAll(imageView, nameBox, rateBox, addToShoppingBasket);
+            box.getChildren().addAll(imageView, nameBox, rateBox, sellersBox);
             goodIcon.getChildren().add(box);
             box.setAlignment(Pos.CENTER);
             box.getStyleClass().add("mainPane");
