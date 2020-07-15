@@ -1,9 +1,9 @@
 package View.CustomerPage;
 
-import Controller.PurchaseController;
-import Controller.AccountController;
-import Controller.Controller;
-import Model.*;
+import Server.Controller.PurchaseController;
+import Server.Controller.AccountController;
+import Server.Controller.Controller;
+import Server.Model.*;
 import View.IndividualGoodPage.IndividualGoodPageFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

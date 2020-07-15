@@ -1,9 +1,8 @@
 package View.CustomerPage;
 
-import Controller.AccountController;
-import Controller.PurchaseController;
-import Model.Customer;
-import Model.Discount;
+import Server.Controller.AccountController;
+import Server.Model.Customer;
+import Server.Model.Discount;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

@@ -1,10 +1,8 @@
 package View;
 
-import Controller.AccountController;
-import Controller.Controller;
-import Controller.BossController;
-import Controller.Exeptions.DuplicateUsernameException;
-import com.sun.jndi.toolkit.url.Uri;
+import Server.Controller.Controller;
+import Server.Controller.BossController;
+import Server.Controller.Exeptions.DuplicateUsernameException;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -13,7 +11,6 @@ import javafx.scene.control.TextInputDialog;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;

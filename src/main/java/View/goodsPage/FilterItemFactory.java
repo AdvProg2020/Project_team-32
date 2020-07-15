@@ -1,5 +1,5 @@
 package View.goodsPage;
-import Controller.Filterable;
+import Server.Controller.Filterable;
 import View.Updatable;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;

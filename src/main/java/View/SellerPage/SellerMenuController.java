@@ -1,11 +1,10 @@
 package View.SellerPage;
 
-import Controller.*;
-import Controller.Exeptions.CategoryNotFindException;
-import Controller.Exeptions.InvalidIDException;
-import Controller.Exeptions.InvalidPatternException;
-import Model.*;
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
+import Server.Controller.*;
+import Server.Controller.Exeptions.CategoryNotFindException;
+import Server.Controller.Exeptions.InvalidIDException;
+import Server.Controller.Exeptions.InvalidPatternException;
+import Server.Model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,7 +15,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,7 +24,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;

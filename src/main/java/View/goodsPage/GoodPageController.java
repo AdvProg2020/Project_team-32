@@ -1,8 +1,8 @@
 package View.goodsPage;
 
-import Controller.GoodController;
-import Model.Category;
-import Model.Good;
+import Server.Controller.GoodController;
+import Server.Model.Category;
+import Server.Model.Good;
 import View.Updatable;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;

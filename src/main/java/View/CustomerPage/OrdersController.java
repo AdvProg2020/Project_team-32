@@ -1,11 +1,11 @@
 package View.CustomerPage;
 
-import Controller.AccountController;
-import Controller.Controller;
-import Controller.CustomerController;
-import Controller.Exeptions.InvalidIDException;
-import Model.BuyLog;
-import Model.Customer;
+import Server.Controller.AccountController;
+import Server.Controller.Controller;
+import Server.Controller.CustomerController;
+import Server.Controller.Exeptions.InvalidIDException;
+import Server.Model.BuyLog;
+import Server.Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -14,7 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;

@@ -1,9 +1,9 @@
 package View.ManagerPage;
 
-import Controller.AccountController;
-import Controller.BossController;
-import Controller.Exeptions.DuplicateUsernameException;
-import Model.Person;
+import Server.Controller.AccountController;
+import Server.Controller.BossController;
+import Server.Controller.Exeptions.DuplicateUsernameException;
+import Server.Model.Person;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

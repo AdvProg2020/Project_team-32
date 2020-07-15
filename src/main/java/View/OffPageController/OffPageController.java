@@ -1,8 +1,8 @@
 package View.OffPageController;
 
-import Controller.OffController;
-import Model.Category;
-import Model.Good;
+import Server.Controller.OffController;
+import Server.Model.Category;
+import Server.Model.Good;
 import View.Updatable;
 import View.goodsPage.FilterItemFactory;
 import View.goodsPage.GoodIconFactory;

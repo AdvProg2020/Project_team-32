@@ -1,6 +1,6 @@
 package View;
 
-import Controller.AccountController;
+import Server.Controller.AccountController;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 

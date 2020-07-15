@@ -1,19 +1,13 @@
 package View.goodsPage;
 
-import Controller.AccountController;
-import Controller.Exeptions.UserDoesNotExistException;
-import Model.*;
-import View.IndividualGoodPage.IndividualGoodPageController;
+import Server.Model.*;
 import View.IndividualGoodPage.IndividualGoodPageFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -22,7 +16,6 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class GoodIconFactory {
 

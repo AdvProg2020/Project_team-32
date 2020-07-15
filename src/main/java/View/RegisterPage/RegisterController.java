@@ -1,8 +1,7 @@
 package View.RegisterPage;
 
-import Controller.AccountController;
-import Controller.Exeptions.DuplicateBossException;
-import Controller.Exeptions.DuplicateUsernameException;
+import Server.Controller.AccountController;
+import Server.Controller.Exeptions.DuplicateUsernameException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

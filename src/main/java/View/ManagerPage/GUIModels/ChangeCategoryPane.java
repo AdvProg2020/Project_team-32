@@ -1,13 +1,11 @@
 package View.ManagerPage.GUIModels;
 
-import Controller.CategoryController;
-import Controller.Exeptions.CategoryNotFindException;
-import Controller.Exeptions.DuplicateCategoryException;
-import Model.Category;
-import View.CustomerPage.CartController;
+import Server.Controller.CategoryController;
+import Server.Controller.Exeptions.CategoryNotFindException;
+import Server.Controller.Exeptions.DuplicateCategoryException;
+import Server.Model.Category;
 import View.ManagerPage.AddEditCategoryPageController;
 import View.ManagerPage.CategoryManagerController;
-import View.ManagerPage.DiscountManagerPageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;

@@ -1,9 +1,7 @@
 package View.ManagerPage;
 
-import Controller.GoodController;
-import Controller.RequestController;
-import Model.Request;
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
+import Server.Controller.RequestController;
+import Server.Model.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;

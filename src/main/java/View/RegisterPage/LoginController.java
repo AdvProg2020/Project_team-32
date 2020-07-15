@@ -1,21 +1,19 @@
 package View.RegisterPage;
 
-import Controller.AccountController;
-import Controller.Exeptions.UserDoesNotExistException;
-import Controller.Exeptions.WrongPasswordException;
-import Model.Boss;
-import Model.Customer;
-import Model.Person;
-import Model.Seller;
+import Server.Controller.AccountController;
+import Server.Controller.Exeptions.UserDoesNotExistException;
+import Server.Controller.Exeptions.WrongPasswordException;
+import Server.Model.Boss;
+import Server.Model.Customer;
+import Server.Model.Person;
+import Server.Model.Seller;
 import View.Main;
-import com.sun.org.apache.xerces.internal.impl.xs.SchemaNamespaceSupport;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -23,7 +21,6 @@ import javafx.scene.control.TextField;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 

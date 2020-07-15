@@ -1,12 +1,8 @@
 package View.ManagerPage;
 
-import Controller.CategoryController;
-import Controller.GoodController;
-import Model.Category;
-import Model.Discount;
+import Server.Controller.CategoryController;
+import Server.Model.Category;
 import View.ManagerPage.GUIModels.ChangeCategoryPane;
-import View.ManagerPage.GUIModels.ChangeDiscountPane;
-import com.sun.deploy.panel.PropertyTreeModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -15,7 +11,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import sun.awt.geom.AreaOp;
 
 import java.net.URL;
 import java.util.ResourceBundle;

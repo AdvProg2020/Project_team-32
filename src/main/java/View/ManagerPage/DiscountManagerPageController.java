@@ -1,7 +1,7 @@
 package View.ManagerPage;
 
-import Controller.BossController;
-import Model.Discount;
+import Server.Controller.BossController;
+import Server.Model.Discount;
 import View.ManagerPage.GUIModels.ChangeDiscountPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;

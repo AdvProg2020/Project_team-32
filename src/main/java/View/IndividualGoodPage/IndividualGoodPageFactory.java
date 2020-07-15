@@ -1,8 +1,8 @@
 package View.IndividualGoodPage;
 
-import Controller.AccountController;
-import Controller.Exeptions.UserDoesNotExistException;
-import Model.*;
+import Server.Controller.AccountController;
+import Server.Controller.Exeptions.UserDoesNotExistException;
+import Server.Model.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

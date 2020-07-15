@@ -1,13 +1,10 @@
 package View.ManagerPage;
 
-import Controller.AccountController;
-import Controller.BossController;
-import Controller.GoodController;
-import Model.Good;
+import Server.Controller.GoodController;
+import Server.Model.Good;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;

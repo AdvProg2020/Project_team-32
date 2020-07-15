@@ -1,14 +1,12 @@
 package View.ManagerPage.GUIModels;
 
-import Controller.BossController;
-import Model.Boss;
-import Model.Customer;
-import Model.Discount;
+import Server.Controller.BossController;
+import Server.Model.Customer;
+import Server.Model.Discount;
 import View.ManagerPage.AddEditDiscountPageController;
 import View.ManagerPage.DiscountManagerPageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 import java.io.File;

@@ -1,7 +1,7 @@
 package View;
 
-import Controller.*;
-import Model.*;
+import Server.Controller.*;
+import Server.Model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Main extends Application {
 

@@ -1,8 +1,8 @@
 package View;
 
-import Controller.AccountController;
-import Model.Guest;
-import Model.Person;
+import Server.Controller.AccountController;
+import Server.Model.Guest;
+import Server.Model.Person;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;

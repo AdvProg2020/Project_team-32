@@ -1,9 +1,9 @@
 package View.ManagerPage;
 
 
-import Controller.AccountController;
-import Model.Customer;
-import Model.Person;
+import Server.Controller.AccountController;
+import Server.Model.Customer;
+import Server.Model.Person;
 import View.ManagerPage.GUIModels.ChangeDiscountPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

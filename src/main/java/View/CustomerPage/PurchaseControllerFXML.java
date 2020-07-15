@@ -1,12 +1,11 @@
 package View.CustomerPage;
 
-import Controller.AccountController;
-import Controller.Controller;
-import Controller.Exeptions.DiscountNotUsableException;
-import Controller.Exeptions.InvalidIDException;
-import Controller.PurchaseController;
-import Model.Customer;
-import Model.ShoppingBasket;
+import Server.Controller.AccountController;
+import Server.Controller.Controller;
+import Server.Controller.Exeptions.DiscountNotUsableException;
+import Server.Controller.Exeptions.InvalidIDException;
+import Server.Controller.PurchaseController;
+import Server.Model.Customer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,12 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
-import java.io.File;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
