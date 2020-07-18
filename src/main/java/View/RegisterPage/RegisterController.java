@@ -2,6 +2,7 @@ package View.RegisterPage;
 
 import Server.Controller.AccountController;
 import Server.Controller.Exeptions.DuplicateUsernameException;
+import View.Client;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
@@ -68,17 +70,22 @@ public class RegisterController implements Initializable {
             roleChoicer.getStyleClass().add("inputChoiceError");
         }
         else {
-            try {
-                AccountController.register(usernameField.getText(), (String) roleChoicer.getSelectionModel().getSelectedItem(),passwordField.getText());
-                usernameField.setText("");
-                passwordField.setText("");
-                repeatPasswordField.setText("");
-                new Alert(Alert.AlertType.INFORMATION, "Registered successfully.").show();
-            } catch (DuplicateUsernameException e) {
+            HashMap<String, Object> inputs = new HashMap<>();
+            inputs.put("username" , usernameField.getText());
+            inputs.put("userType" , (String) roleChoicer.getSelectionModel().getSelectedItem());
+            inputs.put("password" , passwordField.getText());
+            Client.sendMessage("register", inputs);
+
+            usernameField.setText("");
+            passwordField.setText("");
+            repeatPasswordField.setText("");
+
+             /*   new Alert(Alert.AlertType.INFORMATION, "Registered successfully.").show();
+
                 usernameField.getStyleClass().add("inputChoiceError");
-                usernameField.setText("already used.");
-            }
+                usernameField.setText("already used.");*/
         }
+
     }
 
     public void resetField(Node field) {

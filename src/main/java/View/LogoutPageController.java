@@ -35,7 +35,7 @@ public class LogoutPageController implements Initializable {
         try {
             URL url = new File("src\\main\\resources\\GUIFiles\\main-page.fxml").toURI().toURL();
             Parent parent = FXMLLoader.load(url);
-            Main.primaryStage.setScene(new Scene(parent));
+            Client.primaryStage.setScene(new Scene(parent));
         } catch (IOException e) {
             System.err.println("error loading files.");
         }

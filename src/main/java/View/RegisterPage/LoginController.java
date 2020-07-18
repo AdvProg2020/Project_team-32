@@ -7,7 +7,7 @@ import Server.Model.Boss;
 import Server.Model.Customer;
 import Server.Model.Person;
 import Server.Model.Seller;
-import View.Main;
+import View.Client;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -75,7 +75,7 @@ public class LoginController implements Initializable {
                     url = new File("src\\main\\resources\\GUIFiles\\Seller-fxml-pages\\SellerMenu.fxml").toURI().toURL();
                 }
                 Scene scene = new Scene(FXMLLoader.load(url));
-                Main.primaryStage.setScene(scene);
+                Client.primaryStage.setScene(scene);
             } catch (WrongPasswordException e) {
                 usernameField.getStyleClass().add("inputChoiceError");
                 usernameField.setText("Wrong Password");

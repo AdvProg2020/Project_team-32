@@ -9,10 +9,11 @@
         <module name="finalProject" />
         <module name="New folder" />
         <module name="Project_team-32" />
-        <module name="Project_team-" />
         <module name="new" />
-        <module name="APproject" />
         <module name="Project" />
+        <module name="Project_team-" />
+        <module name="APproject" />
+        <module name="Project_team-32-Phase3" />
       </profile>
     </annotationProcessing>
   </component>
