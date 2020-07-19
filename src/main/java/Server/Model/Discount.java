@@ -96,5 +96,4 @@ public class Discount implements Serializable {
     public void setMaxAmount(int maxAmount) {
         this.maxAmount = maxAmount;
     }
-
 }

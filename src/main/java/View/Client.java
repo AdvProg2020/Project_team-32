@@ -27,7 +27,7 @@ public class Client extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        URL url = new File("src\\main\\resources\\GUIFiles\\main-page.fxml").toURI().toURL();
+        URL url = new File("src/main/resources/GUIFiles/RegisterPage.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("Shop");
         primaryStage.setScene(new Scene(root,788,688));
@@ -43,8 +43,9 @@ public class Client extends Application {
     private static void connectToServer() {
         try {
             clientSocket = new Socket("localhost", PORT_NUMBER);
-            clientInputStream = new ObjectInputStream(clientSocket.getInputStream());
+            System.out.println("connected");
             clientOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            clientInputStream = new ObjectInputStream(clientSocket.getInputStream());
         } catch (IOException e) {
             System.err.println("error in connection to server.");
         }
@@ -68,6 +69,17 @@ public class Client extends Application {
             System.err.println("error in write message.");
         }
 
+    }
+
+    public static Message getMessage(){
+        Message message = new Message();
+        try {
+            message = (Message) clientInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("can't get message");
+            e.printStackTrace();
+        }
+        return message;
     }
 
     private static String getToken() {

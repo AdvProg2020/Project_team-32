@@ -1,6 +1,8 @@
 package Server;
 
 import Server.Controller.AccountController;
+import Server.Controller.Exeptions.DuplicateUsernameException;
+import Server.Model.Message;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.json.simple.*;
 
@@ -49,9 +51,12 @@ public class Server {
 
         @Override
         public void run() {
+            //TODO initialize and import database
             System.out.println("Connection from " + socket.getPort() + "!");
             handleCommands();
         }
+
+
 
         private void handleCommands() {
             JSONObject command;
@@ -59,12 +64,35 @@ public class Server {
                 try {
                     command = getMessage();
                     if(command.get("commandType").equals("register")){
-                        AccountController.register((String) command.get("username"),(String) command.get("userType"),(String) command.get("password"));
+                        register(command);
                     }
                 }
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void register(JSONObject command)  {
+            Message message = new Message();
+            try {
+               AccountController.register((String) command.get("username"),(String) command.get("userType"),(String) command.get("password"));
+               message.put("status","successful");
+           }
+           catch (DuplicateUsernameException e) {
+                message.put("status","duplicate username exception");
+           }
+            finally {
+                sendMessage(message);
+            }
+        }
+
+        private void sendMessage(Message message){
+            try {
+                clientOutputStream.writeObject(message);
+            } catch (IOException e) {
+                System.err.println("can't send message.");
+                e.printStackTrace();
             }
         }
 

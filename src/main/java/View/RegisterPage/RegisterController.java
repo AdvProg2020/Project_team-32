@@ -2,6 +2,7 @@ package View.RegisterPage;
 
 import Server.Controller.AccountController;
 import Server.Controller.Exeptions.DuplicateUsernameException;
+import Server.Model.Message;
 import View.Client;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -80,10 +81,15 @@ public class RegisterController implements Initializable {
             passwordField.setText("");
             repeatPasswordField.setText("");
 
-             /*   new Alert(Alert.AlertType.INFORMATION, "Registered successfully.").show();
+            Message serverAnswer = Client.getMessage();
 
-                usernameField.getStyleClass().add("inputChoiceError");
-                usernameField.setText("already used.");*/
+             if(serverAnswer.get("status").equals("successful")) {
+                 new Alert(Alert.AlertType.INFORMATION, "Registered successfully.").show();
+             }
+             else if(serverAnswer.get("status").equals("duplicate username exception")) {
+                 usernameField.getStyleClass().add("inputChoiceError");
+                 usernameField.setText("already used.");
+             }
         }
 
     }
