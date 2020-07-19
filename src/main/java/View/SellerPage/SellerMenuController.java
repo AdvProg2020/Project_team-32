@@ -5,6 +5,8 @@ import Server.Controller.Exeptions.CategoryNotFindException;
 import Server.Controller.Exeptions.InvalidIDException;
 import Server.Controller.Exeptions.InvalidPatternException;
 import Server.Model.*;
+import View.Client;
+import com.sun.org.apache.xml.internal.security.utils.IgnoreAllErrorHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -119,7 +121,8 @@ public class SellerMenuController implements Initializable {
     Button addOff;
     @FXML
     TextField offID;
-    private  void fixSounds(){
+
+    private void fixSounds() {
         //button enter
         addOff.setOnMouseEntered(event -> Controller.sound(1));
         editOff.setOnMouseEntered(event -> Controller.sound(1));
@@ -145,6 +148,7 @@ public class SellerMenuController implements Initializable {
         balanceLable.setOnMouseEntered(event -> Controller.sound(2));
         companyNameLabel.setOnMouseEntered(event -> Controller.sound(2));
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.fixSounds();
@@ -165,52 +169,19 @@ public class SellerMenuController implements Initializable {
         // company name
         companyNameLabel.setText(((Seller) AccountController.loggedInUser).getFactoryName());
 
-
-
-        //manage product
-        //
-        //
-        //
-        //
-
-
         //view individual product
         viewProductButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    Good good = SellerController.viewProduct(((Seller) AccountController.loggedInUser), productID.getText());
-                    TableView productTable = new TableView();
-                    productTable.setPrefWidth(640);
-                    TableColumn<String, Good> goodName = new TableColumn<>("good name");
-                    TableColumn<String, Good> goodId = new TableColumn<>("good ID");
-                    TableColumn<String, Good> point = new TableColumn<>("point");
-                    TableColumn<String, Good> categoryName = new TableColumn<>("category name");
-                    TableColumn<String, Good> explanations = new TableColumn<>("explanations");
-                    goodName.setCellValueFactory(new PropertyValueFactory<>("name"));
-                    goodId.setCellValueFactory(new PropertyValueFactory<>("goodID"));
-                    categoryName.setCellValueFactory(new PropertyValueFactory<>("categoryString"));
-                    explanations.setCellValueFactory(new PropertyValueFactory<>("explanation"));
-                    point.setCellValueFactory(new PropertyValueFactory<>("pointString"));
-
-                    goodName.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
-                    goodId.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
-                    point.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
-                    categoryName.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
-                    explanations.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
-
-                    productTable.getColumns().addAll(goodName,goodId,categoryName,explanations,point);
-
-                    System.out.println("salam");
-
-                    productTable.getItems().add(good);
-                    productTable.setMinSize(600,500);
-                    manageProductPane.getChildren().clear();
-                    manageProductPane.getChildren().add(productTable);
-                } catch (InvalidIDException e) {
-                    e.printStackTrace();
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("productId", productID.getText());
+                Client.sendMessage("get good by ID", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    makeProductTable(manageProductPane, (Good) message.get("good"));
+                } else if (message.get("status").equals("InvalidIDException")) {
+                    showErrorAlert("wrong product id");
                 }
-
             }
         });
 
@@ -219,103 +190,32 @@ public class SellerMenuController implements Initializable {
         viewProductBuyers.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    ArrayList<String> allBuyers = SellerController.viewProductBuyers(((Seller) AccountController.loggedInUser), productID.getText());
-                    for (String allBuyer : allBuyers) {
-                        System.out.println(allBuyer);
-                    }
-                    ObservableList<String> details = FXCollections.observableArrayList(allBuyers);
-                    TableView<String> buyersTable = new TableView<>();
-                    TableColumn<String, String> col1 = new TableColumn<>("Buyers");
-                    col1.prefWidthProperty().bind(buyersTable.widthProperty().multiply(1));
-                    buyersTable.getColumns().add(col1);
-                    col1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
-                    buyersTable.setItems(details);
-                    buyersTable.setPrefWidth(640);
-                    manageProductPane.getChildren().clear();
-                    manageProductPane.getChildren().add(buyersTable);
-
-                } catch (InvalidIDException e) {
-                    e.printStackTrace();
+                HashMap<String , Object> inputs = new HashMap<>();
+                inputs.put("productId",productID.getText());
+                Client.sendMessage("get product buyers by id",inputs);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")){
+                    makeBuyersTable(manageProductPane, (ArrayList<String>) message.get("allBuyers"));
+                }else if (message.get("status").equals("InvalidIDException")){
+                    showErrorAlert("wrong product id");
                 }
-
-
             }
         });
-
-        // edit product
 
         editProduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                try {
-                    Good good = SellerController.getGoodFromSellingGood(((Seller) AccountController.loggedInUser), productID.getText());
-                    TextField categoryTextField = new TextField("category name");
-                    Button setCategory = new Button("press to set category");
-                    VBox vBox = new VBox();
-                    vBox.setLayoutX(200);
-                    vBox.getChildren().clear();
-                    vBox.getChildren().addAll(categoryTextField,setCategory);
-                    manageProductPane.getChildren().clear();
-                    manageProductPane.getChildren().addAll(vBox);
-                    setCategory.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-
-                            try {
-                                Category category = CategoryController.getCategoryByName(categoryTextField.getText());
-                                TextField goodName = new TextField("good name");
-                                TextField price = new TextField("price");
-                                TextField companyName = new TextField("company name");
-                                TextField explanation = new TextField("explanation");
-                                TextField[] textFieldProperties = new TextField[category.getSpecialProperties().size()];
-                                HashMap<String, String> properties = new HashMap<>();
-                                int i = 0;
-                                for (String specialProperty : category.getSpecialProperties()) {
-                                    textFieldProperties[i] = new TextField(specialProperty);
-                                    i++;
-                                }
-                                Button confirm = new Button("confirm");
-                                confirm.setOnAction(new EventHandler<ActionEvent>() {
-                                    @Override
-                                    public void handle(ActionEvent event) {
-
-                                        int i = 0;
-                                        for (String specialProperty : category.getSpecialProperties()) {
-                                            properties.put(specialProperty, textFieldProperties[i].getText().trim());
-                                            i++;
-                                        }
-                                        GoodController.getGoodController().editProduct(good, goodName.getText().trim(), companyName.getText().trim(), Integer.parseInt(price.getText().trim())
-                                                , ((Seller) AccountController.loggedInUser), explanation.getText().trim(), category, properties);
-                                        new Alert(Alert.AlertType.CONFIRMATION).show();
-                                    }
-                                });
-                                vBox.getChildren().addAll(goodName, price, companyName, explanation,confirm);
-                                manageProductPane.getChildren().clear();
-                                for (int j = 0; j < category.getSpecialProperties().size(); j++) {
-                                    vBox.getChildren().add(textFieldProperties[j]);
-                                }
-                                manageProductPane.getChildren().addAll(vBox);
-
-
-                            } catch (CategoryNotFindException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    });
-
-
-                } catch (InvalidIDException e) {
-                    e.printStackTrace();
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("productId", productID.getText());
+                Client.sendMessage("get good by ID", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    editProduct(manageProductPane, (Good) message.get("good"));
+                } else if (message.get("status").equals("InvalidIDException")) {
+                    showErrorAlert("wrong product id");
                 }
-
-
             }
         });
-
-
         //Add product
 
         addProductID_Button.setOnAction(new EventHandler<ActionEvent>() {
@@ -333,7 +233,7 @@ public class SellerMenuController implements Initializable {
                             int price = Integer.parseInt(priceTextField.getText().trim());
                             if (price > 0) {
                                 good_addProduct.addSellerAndPrice(AccountController.loggedInUser.getUserName(), price);
-                                ((Seller)AccountController.loggedInUser).getSellingGoods().add(good_addProduct);
+                                ((Seller) AccountController.loggedInUser).getSellingGoods().add(good_addProduct);
                                 priceTextField.setText("succesful");
                             }
                         }
@@ -342,8 +242,8 @@ public class SellerMenuController implements Initializable {
                     gridPane.setLayoutX(200);
                     gridPane.setLayoutY(200);
                     gridPane.setVgap(10);
-                    gridPane.add(priceTextField,0,0);
-                    gridPane.add(confirmPrice,0,1);
+                    gridPane.add(priceTextField, 0, 0);
+                    gridPane.add(confirmPrice, 0, 1);
                     addProductPane.getChildren().addAll(gridPane);
 
                 } else {
@@ -352,7 +252,7 @@ public class SellerMenuController implements Initializable {
                     addProductPane.getChildren().clear();
                     VBox box = new VBox();
                     box.setLayoutX(200);
-                    box.getChildren().addAll(categoryTextField,setCategory);
+                    box.getChildren().addAll(categoryTextField, setCategory);
                     addProductPane.getChildren().addAll(box);
                     setCategory.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
@@ -389,7 +289,7 @@ public class SellerMenuController implements Initializable {
                                         alert.show();
                                     }
                                 });
-                                box.getChildren().addAll(goodName,price,companyName,explanation,confirm);
+                                box.getChildren().addAll(goodName, price, companyName, explanation, confirm);
                                 addProductPane.getChildren().clear();
                                 for (int j = 0; j < category.getSpecialProperties().size(); j++) {
                                     box.getChildren().add(textFieldProperties[j]);
@@ -427,8 +327,6 @@ public class SellerMenuController implements Initializable {
         });
 
 
-
-
         //view off individual
 
         viewOffButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -453,7 +351,7 @@ public class SellerMenuController implements Initializable {
                     exposeDate.prefWidthProperty().bind(offTable.widthProperty().multiply(0.2));
                     discountPercent.prefWidthProperty().bind(offTable.widthProperty().multiply(0.2));
 
-                    offTable.getColumns().addAll(offID,initialDate,exposeDate,discountPercent);
+                    offTable.getColumns().addAll(offID, initialDate, exposeDate, discountPercent);
                     offTable.getItems().add(off);
                     manageOffPane.getChildren().clear();
                     manageOffPane.getChildren().add(offTable);
@@ -494,7 +392,7 @@ public class SellerMenuController implements Initializable {
                     confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            String input = off.getOffID()+" "+goods.getText().trim();
+                            String input = off.getOffID() + " " + goods.getText().trim();
                             input += " " + date1[0] + " " + date2[0] + " " + offPercent.getText().trim();
 
                             String request = null;
@@ -517,11 +415,11 @@ public class SellerMenuController implements Initializable {
                     cc.setPrefWidth(400);
                     gridPane.getColumnConstraints().add(cc);
                     gridPane.setAlignment(Pos.TOP_CENTER);
-                    gridPane.add(goods,0,0);
-                    gridPane.add(firstDate,0,1);
-                    gridPane.add(lastDate,0,2);
-                    gridPane.add(offPercent,0,3);
-                    gridPane.add(confirm,0,4);
+                    gridPane.add(goods, 0, 0);
+                    gridPane.add(firstDate, 0, 1);
+                    gridPane.add(lastDate, 0, 2);
+                    gridPane.add(offPercent, 0, 3);
+                    gridPane.add(confirm, 0, 4);
                     manageOffPane.getChildren().clear();
                     manageOffPane.getChildren().addAll(gridPane);
 
@@ -585,12 +483,12 @@ public class SellerMenuController implements Initializable {
                 cc.setPrefWidth(400);
                 gridPane.getColumnConstraints().add(cc);
                 gridPane.setAlignment(Pos.TOP_CENTER);
-                gridPane.add(offID,0,0);
-                gridPane.add(goods,0,1);
-                gridPane.add(firstDate,0,2);
-                gridPane.add(lastDate,0,3);
-                gridPane.add(offPercent,0,4);
-                gridPane.add(confirm,0,5);
+                gridPane.add(offID, 0, 0);
+                gridPane.add(goods, 0, 1);
+                gridPane.add(firstDate, 0, 2);
+                gridPane.add(lastDate, 0, 3);
+                gridPane.add(offPercent, 0, 4);
+                gridPane.add(confirm, 0, 5);
                 manageOffPane.getChildren().clear();
                 manageOffPane.getChildren().addAll(gridPane);
 
@@ -633,7 +531,7 @@ public class SellerMenuController implements Initializable {
                     TableColumn<String, Good> goodIdProductTab = new TableColumn<>("good ID");
                     goodNameProductTab.setCellValueFactory(new PropertyValueFactory<>("Name"));
                     goodIdProductTab.setCellValueFactory(new PropertyValueFactory<>("GoodID"));
-                    productTable.getColumns().addAll(goodNameProductTab,goodIdProductTab);
+                    productTable.getColumns().addAll(goodNameProductTab, goodIdProductTab);
                     goodNameProductTab.prefWidthProperty().bind(productTable.widthProperty().multiply(0.5));
                     goodIdProductTab.prefWidthProperty().bind(productTable.widthProperty().multiply(0.5));
 //                    goodNameProductTab.setResizable(false);
@@ -646,7 +544,7 @@ public class SellerMenuController implements Initializable {
                     manageProductPane.getChildren().add(productTable);
                 }
                 // sales history
-                else if(newTab.equals(salesHIstoryTab)){
+                else if (newTab.equals(salesHIstoryTab)) {
                     tableColumn1.setCellValueFactory(new PropertyValueFactory<>("logID"));
                     tableColumn2.setCellValueFactory(new PropertyValueFactory<>("buyerUserNmae"));
                     tableColumn3.setCellValueFactory(new PropertyValueFactory<>("pricePaid"));
@@ -665,7 +563,7 @@ public class SellerMenuController implements Initializable {
                     }
                 }
                 //show categories
-                else if(newTab.equals(showCategoryTab)){
+                else if (newTab.equals(showCategoryTab)) {
                     ArrayList<Category> categories = SellerController.showCategory(((Seller) AccountController.loggedInUser));
                     ArrayList<String> categoryNames = new ArrayList<>();
                     for (Category category : categories) {
@@ -679,8 +577,7 @@ public class SellerMenuController implements Initializable {
                     categoryTable.getColumns().clear();
                     categoryTable.getColumns().add(categoryColumn);
                     categoryTable.setItems(details);
-                }
-                else if (newTab.equals(logOutTab)){
+                } else if (newTab.equals(logOutTab)) {
                     URL url = null;
                     try {
                         url = new File("src\\main\\resources\\GUIFiles\\logout-page.fxml").toURI().toURL();
@@ -690,8 +587,7 @@ public class SellerMenuController implements Initializable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else if (newTab.equals(offsPageTab)){
+                } else if (newTab.equals(offsPageTab)) {
                     try {
                         URL url = new File("src\\main\\resources\\GUIFiles\\OffsPage.fxml").toURI().toURL();
                         offsPageTab.setContent(FXMLLoader.load(url));
@@ -707,5 +603,128 @@ public class SellerMenuController implements Initializable {
         });
 
 
+    }
+
+    private static void editProduct(Pane manageProductPane, Good good) {
+        TextField categoryTextField = new TextField("category name");
+        Button setCategory = new Button("press to set category");
+        VBox vBox = new VBox();
+        vBox.setLayoutX(200);
+        vBox.getChildren().clear();
+        vBox.getChildren().addAll(categoryTextField, setCategory);
+        manageProductPane.getChildren().clear();
+        manageProductPane.getChildren().addAll(vBox);
+        setCategory.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+//                Category category = CategoryController.getCategoryByName(categoryTextField.getText());
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("categoryName", categoryTextField.getText());
+                Client.sendMessage("get category by name", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    editProduct_getFields((Category) message.get("category"), good, vBox, manageProductPane);
+                } else if (message.get("status").equals("CategoryNotFindException")) {
+                    showErrorAlert("there is no category with this name");
+                }
+            }
+        });
+    }
+
+    private static void editProduct_getFields(Category category, Good good, VBox vBox, Pane manageProductPane) {
+        TextField goodName = new TextField("good name");
+        TextField price = new TextField("price");
+        TextField companyName = new TextField("company name");
+        TextField explanation = new TextField("explanation");
+        TextField[] textFieldProperties = new TextField[category.getSpecialProperties().size()];
+        int i = 0;
+        for (String specialProperty : category.getSpecialProperties()) {
+            textFieldProperties[i] = new TextField(specialProperty);
+            i++;
+        }
+        Button confirm = new Button("confirm");
+        confirm.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                int i = 0;
+                HashMap<String, String> properties = new HashMap<>();
+                for (String specialProperty : category.getSpecialProperties()) {
+                    properties.put(specialProperty, textFieldProperties[i].getText().trim());
+                    i++;
+                }
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("good", good);
+                input.put("goodName",goodName.getText().trim());
+                input.put("companyName",companyName.getText().trim());
+                input.put("price",Integer.parseInt(price.getText().trim()));
+                input.put("explanatiopn" , explanation.getText().trim());
+                input.put("category",category);
+                input.put("properties",properties);
+                Client.sendMessage("edit product", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    showConfirmationAlert("edit product completed successfully");
+                }
+//                GoodController.getGoodController().editProduct(good, goodName.getText().trim(), companyName.getText().trim(), Integer.parseInt(price.getText().trim())
+//                        , ((Seller) AccountController.loggedInUser), explanation.getText().trim(), category, properties);
+            }
+        });
+        vBox.getChildren().addAll(goodName, price, companyName, explanation, confirm);
+        manageProductPane.getChildren().clear();
+        for (int j = 0; j < category.getSpecialProperties().size(); j++) {
+            vBox.getChildren().add(textFieldProperties[j]);
+        }
+        manageProductPane.getChildren().addAll(vBox);
+    }
+
+    private static void showConfirmationAlert(String text) {
+        Alert alert =  new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText( text);
+        alert.show();
+    }
+
+    private static void showErrorAlert(String text) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(text);
+        alert.show();
+    }
+
+    private static void makeProductTable(Pane manageProductPane, Good good) {
+        TableView productTable = new TableView();
+        productTable.setPrefWidth(640);
+        TableColumn<String, Good> goodName = new TableColumn<>("good name");
+        TableColumn<String, Good> goodId = new TableColumn<>("good ID");
+        TableColumn<String, Good> point = new TableColumn<>("point");
+        TableColumn<String, Good> categoryName = new TableColumn<>("category name");
+        TableColumn<String, Good> explanations = new TableColumn<>("explanations");
+        goodName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        goodId.setCellValueFactory(new PropertyValueFactory<>("goodID"));
+        categoryName.setCellValueFactory(new PropertyValueFactory<>("categoryString"));
+        explanations.setCellValueFactory(new PropertyValueFactory<>("explanation"));
+        point.setCellValueFactory(new PropertyValueFactory<>("pointString"));
+
+        goodName.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
+        goodId.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
+        point.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
+        categoryName.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
+        explanations.prefWidthProperty().bind(productTable.widthProperty().multiply(0.2));
+
+        productTable.getColumns().addAll(goodName, goodId, categoryName, explanations, point);
+        productTable.setMinSize(600, 500);
+        productTable.getItems().add(good);
+        manageProductPane.getChildren().clear();
+        manageProductPane.getChildren().add(productTable);
+    }
+    private static void makeBuyersTable(Pane manageProductPane , ArrayList<String> allBuyers){
+        ObservableList<String> details = FXCollections.observableArrayList(allBuyers);
+        TableView<String> buyersTable = new TableView<>();
+        TableColumn<String, String> col1 = new TableColumn<>("Buyers");
+        col1.prefWidthProperty().bind(buyersTable.widthProperty().multiply(1));
+        buyersTable.getColumns().add(col1);
+        col1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
+        buyersTable.setItems(details);
+        buyersTable.setPrefWidth(640);
+        manageProductPane.getChildren().clear();
+        manageProductPane.getChildren().add(buyersTable);
     }
 }
