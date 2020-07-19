@@ -220,13 +220,13 @@ public class SellerMenuController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
-                Good good_addProduct = Good.getGoodFromAllGoods(addProductID_Label.getText().trim());
+//                Good good_addProduct = Good.getGoodFromAllGoods(addProductID_Label.getText().trim());
                 HashMap<String, Object> input = new HashMap<>();
                 input.put("productId", productID.getText());
                 Client.sendMessage("get good by ID from allGoods", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
-                    addProduct(good_addProduct, addProductPane, addProductID_Label);
+                    addProduct((Good) message.get("good"), addProductPane, addProductID_Label);
                 }
 
             }
@@ -239,12 +239,15 @@ public class SellerMenuController implements Initializable {
         RemoveProductButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                try {
-                    SellerController.removeProduct(((Seller) AccountController.loggedInUser), IdRemoveProduct.getText().trim());
-                    messageRemoveProduct.setText("succesfully deleted the product");
-                } catch (InvalidIDException e) {
-                    e.printStackTrace();
-                    messageRemoveProduct.setText("invalid ID");
+//                SellerController.removeProduct(((Seller) AccountController.loggedInUser), IdRemoveProduct.getText().trim());
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("productId", IdRemoveProduct.getText().trim());
+                Client.sendMessage("remove product", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    showConfirmationAlert("you removed good successfully");
+                }else  if (message.get("status").equals("successful")){
+                    showErrorAlert("InvalidIDException");
                 }
             }
         });
