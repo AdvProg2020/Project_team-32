@@ -1,12 +1,10 @@
 package View.SellerPage;
 
 import Server.Controller.*;
-import Server.Controller.Exeptions.CategoryNotFindException;
 import Server.Controller.Exeptions.InvalidIDException;
 import Server.Controller.Exeptions.InvalidPatternException;
 import Server.Model.*;
 import View.Client;
-import com.sun.org.apache.xml.internal.security.utils.IgnoreAllErrorHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -221,91 +219,16 @@ public class SellerMenuController implements Initializable {
         addProductID_Button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                addProductPane.getChildren().clear();
+
                 Good good_addProduct = Good.getGoodFromAllGoods(addProductID_Label.getText().trim());
-                if (good_addProduct != null) {
-                    System.out.println("the id is already exist enter a price to add as its seller or 0 to ignore it:");
-                    TextField priceTextField = new TextField("enter new price");
-                    Button confirmPrice = new Button("confirm price");
-                    confirmPrice.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            int price = Integer.parseInt(priceTextField.getText().trim());
-                            if (price > 0) {
-                                good_addProduct.addSellerAndPrice(AccountController.loggedInUser.getUserName(), price);
-                                ((Seller) AccountController.loggedInUser).getSellingGoods().add(good_addProduct);
-                                priceTextField.setText("succesful");
-                            }
-                        }
-                    });
-                    GridPane gridPane = new GridPane();
-                    gridPane.setLayoutX(200);
-                    gridPane.setLayoutY(200);
-                    gridPane.setVgap(10);
-                    gridPane.add(priceTextField, 0, 0);
-                    gridPane.add(confirmPrice, 0, 1);
-                    addProductPane.getChildren().addAll(gridPane);
-
-                } else {
-                    TextField categoryTextField = new TextField("category name");
-                    Button setCategory = new Button("press to set category");
-                    addProductPane.getChildren().clear();
-                    VBox box = new VBox();
-                    box.setLayoutX(200);
-                    box.getChildren().addAll(categoryTextField, setCategory);
-                    addProductPane.getChildren().addAll(box);
-                    setCategory.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-
-                            try {
-                                Category category = CategoryController.getCategoryByName(categoryTextField.getText());
-                                TextField goodName = new TextField("good name");
-                                TextField price = new TextField("price");
-                                TextField companyName = new TextField("company name");
-                                TextField explanation = new TextField("explanation");
-                                TextField[] textFieldProperties = new TextField[category.getSpecialProperties().size()];
-                                HashMap<String, String> properties = new HashMap<>();
-                                int i = 0;
-                                for (String specialProperty : category.getSpecialProperties()) {
-                                    textFieldProperties[i] = new TextField(specialProperty);
-                                    i++;
-                                }
-                                Button confirm = new Button("confirm");
-                                confirm.setOnAction(new EventHandler<ActionEvent>() {
-                                    @Override
-                                    public void handle(ActionEvent event) {
-
-                                        int i = 0;
-                                        for (String specialProperty : category.getSpecialProperties()) {
-                                            properties.put(specialProperty, textFieldProperties[i].getText().trim());
-                                            i++;
-                                        }
-                                        GoodController.getGoodController().AddProduct(addProductID_Label.getText().trim(), goodName.getText().trim()
-                                                , companyName.getText().trim(), Integer.parseInt(price.getText().trim()),
-                                                explanation.getText().trim(), properties, ((Seller) AccountController.loggedInUser)
-                                                , category);
-                                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                                        alert.show();
-                                    }
-                                });
-                                box.getChildren().addAll(goodName, price, companyName, explanation, confirm);
-                                addProductPane.getChildren().clear();
-                                for (int j = 0; j < category.getSpecialProperties().size(); j++) {
-                                    box.getChildren().add(textFieldProperties[j]);
-                                }
-                                addProductPane.getChildren().add(box);
-
-
-                            } catch (CategoryNotFindException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    });
-
-
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("productId", productID.getText());
+                Client.sendMessage("get good by ID from allGoods", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    addProduct(good_addProduct, addProductPane, addProductID_Label);
                 }
+
             }
         });
 
@@ -603,6 +526,115 @@ public class SellerMenuController implements Initializable {
         });
 
 
+    }
+
+    private static void addProduct(Good good_addProduct, Pane addProductPane, TextField addProductID_Label) {
+        if (good_addProduct != null)  addProduct_exsistingProduct(good_addProduct, addProductPane);
+         else addProduct_newProduct(addProductPane, addProductID_Label);
+    }
+
+    private static void addProduct_newProduct(Pane addProductPane, TextField addProductID_Label) {
+        addProductPane.getChildren().clear();
+        TextField categoryTextField = new TextField("category name");
+        Button setCategory = new Button("press to set category");
+        VBox box = new VBox();
+        box.setLayoutX(200);
+        box.getChildren().addAll(categoryTextField, setCategory);
+        addProductPane.getChildren().addAll(box);
+        setCategory.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+//                Category category = CategoryController.getCategoryByName(categoryTextField.getText());
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("categoryName", categoryTextField.getText());
+                Client.sendMessage("get category by name", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    addProduct_getFields((Category) message.get("category"), addProductID_Label, box, addProductPane);
+                } else if (message.get("status").equals("CategoryNotFindException")) {
+                    showErrorAlert("there is no category with this name");
+                }
+            }
+        });
+    }
+
+    private static void addProduct_getFields(Category category, TextField addProductID_Label, VBox box, Pane addProductPane) {
+        TextField goodName = new TextField("good name");
+        TextField price = new TextField("price");
+        TextField companyName = new TextField("company name");
+        TextField explanation = new TextField("explanation");
+        TextField[] textFieldProperties = new TextField[category.getSpecialProperties().size()];
+        HashMap<String, String> properties = new HashMap<>();
+        int i = 0;
+        for (String specialProperty : category.getSpecialProperties()) {
+            textFieldProperties[i] = new TextField(specialProperty);
+            i++;
+        }
+        Button confirm = new Button("confirm");
+        confirm.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                int i = 0;
+                for (String specialProperty : category.getSpecialProperties()) {
+                    properties.put(specialProperty, textFieldProperties[i].getText().trim());
+                    i++;
+                }
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("goodId", addProductID_Label.getText().trim());
+                input.put("goodName",goodName.getText().trim());
+                input.put("companyName",companyName.getText().trim());
+                input.put("price",Integer.parseInt(price.getText().trim()));
+                input.put("explanatiopn" , explanation.getText().trim());
+                input.put("category",category);
+                input.put("properties",properties);
+                Client.sendMessage("add new product ", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    showConfirmationAlert("edit product completed successfully");
+                }
+//                GoodController.getGoodController().AddProduct(addProductID_Label.getText().trim(), goodName.getText().trim()
+//                        , companyName.getText().trim(), Integer.parseInt(price.getText().trim()),
+//                        explanation.getText().trim(), properties, ((Seller) AccountController.loggedInUser)
+//                        , category);
+
+            }
+        });
+        box.getChildren().addAll(goodName, price, companyName, explanation, confirm);
+        addProductPane.getChildren().clear();
+        for (int j = 0; j < category.getSpecialProperties().size(); j++) {
+            box.getChildren().add(textFieldProperties[j]);
+        }
+        addProductPane.getChildren().add(box);
+    }
+
+    private static void addProduct_exsistingProduct(Good good_addProduct, Pane addProductPane) {
+        addProductPane.getChildren().clear();
+        System.out.println("the id is already exist enter a price to add as its seller or 0 to ignore it:");
+        TextField priceTextField = new TextField("enter new price");
+        Button confirmPrice = new Button("confirm price");
+        confirmPrice.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int price = Integer.parseInt(priceTextField.getText().trim());
+                if (price > 0) {
+                    HashMap<String, Object> input = new HashMap<>();
+                    input.put("price", price);
+                    input.put("good",good_addProduct);
+                    Client.sendMessage("add existing good", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        showConfirmationAlert("you added this good to your selling goods");
+                    }
+                }
+            }
+        });
+        GridPane gridPane = new GridPane();
+        gridPane.setLayoutX(200);
+        gridPane.setLayoutY(200);
+        gridPane.setVgap(10);
+        gridPane.add(priceTextField, 0, 0);
+        gridPane.add(confirmPrice, 0, 1);
+        addProductPane.getChildren().addAll(gridPane);
     }
 
     private static void editProduct(Pane manageProductPane, Good good) {
