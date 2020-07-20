@@ -5,6 +5,7 @@ import Server.Controller.CategoryController;
 import Server.Controller.Exeptions.CategoryNotFindException;
 import Server.Controller.Exeptions.DuplicateUsernameException;
 import Server.Controller.Exeptions.InvalidIDException;
+import Server.Controller.GoodController;
 import Server.Controller.SellerController;
 import Server.Model.*;
 import org.json.simple.*;
@@ -13,6 +14,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Server {
 
@@ -97,27 +99,25 @@ public class Server {
         private void editProduct(JSONObject command) {
             Message message = new Message();
             try {
-                Good good = SellerController.viewProduct((Seller) logedInUser, (String) command.get("productId"));
-                message.put("good",good);
+                String goodID =((Good)command.get("good")).getGoodID();
+                String categoryName =((Category) command.get("category")).getName();
+                Good good = ((Seller)logedInUser).getGoodByID(goodID);
+                Category category = CategoryController.getCategoryByName(categoryName);
+                String goodName = (String) command.get("goodName");
+                String companyName =(String)command.get("companyName");
+                int price =(int) command.get("price");
+                String explanations = (String) command.get("explanatiopn");
+                HashMap<String,String> properties = (HashMap<String, String>)command.get("properties");
+                GoodController.getGoodController().editProduct(good, goodName, companyName, price
+                        , (Seller)logedInUser, explanations, category, properties);
                 message.put(status,successful);
-//                input.put("good", good);
-//                input.put("goodName", goodName.getText().trim());
-//                input.put("companyName", companyName.getText().trim());
-//                input.put("price", Integer.parseInt(price.getText().trim()));
-//                input.put("explanatiopn", explanation.getText().trim());
-//                input.put("category", category);
-//                input.put("properties", properties);
-//                Client.sendMessage("edit product", input);
-//                Message message = Client.getMessage();
-//                if (message.get("status").equals("successful")) {
-//                    showConfirmationAlert("edit product completed successfully");
-//                }
-            } catch ( InvalidIDException e) {
-                message.put(status, "InvalidIDException");
+            } catch ( CategoryNotFindException e) {
+                message.put(status, "CategoryNotFindException");
             } finally {
                 sendMessage(message);
             }
         }
+
 
         private void getCategoryByName(JSONObject command) {
             Message message = new Message();
