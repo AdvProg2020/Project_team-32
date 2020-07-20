@@ -37,7 +37,6 @@ public class SellerMenuController implements Initializable {
     public Tab offsPageTab;
     @FXML
     TabPane sellerTabPane;
-
     @FXML
     Tab userMangerTab;
     @FXML
@@ -56,13 +55,10 @@ public class SellerMenuController implements Initializable {
     Tab offsTab;
     @FXML
     Tab balanceTab;
-
     @FXML
     Label companyNameLabel;
     @FXML
     ImageView companyImage;
-
-
     @FXML
     TableView tableView;
     @FXML
@@ -73,8 +69,6 @@ public class SellerMenuController implements Initializable {
     TableColumn<Float, SellLog> tableColumn3;
     @FXML
     TableColumn<Float, SellLog> tableColumn4;
-
-
     @FXML
     Pane manageProductPane;
     @FXML
@@ -85,23 +79,18 @@ public class SellerMenuController implements Initializable {
     Button editProduct;
     @FXML
     TextField productID;
-
     @FXML
     TableView<String> categoryTable;
     @FXML
     TableColumn<String, String> categoryColumn;
-
     @FXML
     Label balanceLable;
-
     @FXML
     TextField addProductID_Label;
     @FXML
     Button addProductID_Button;
     @FXML
     Pane addProductPane;
-
-
     @FXML
     Label messageRemoveProduct;
     @FXML
@@ -150,10 +139,6 @@ public class SellerMenuController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.fixSounds();
-        // company name
-        companyNameLabel.setText(((Seller) AccountController.loggedInUser).getFactoryName());
-
-        //view individual product
         viewProductButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -168,9 +153,6 @@ public class SellerMenuController implements Initializable {
                 }
             }
         });
-
-        //view product bbuyers
-
         viewProductBuyers.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -185,7 +167,6 @@ public class SellerMenuController implements Initializable {
                 }
             }
         });
-
         editProduct.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -200,8 +181,6 @@ public class SellerMenuController implements Initializable {
                 }
             }
         });
-        //Add product
-
         addProductID_Button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -217,9 +196,6 @@ public class SellerMenuController implements Initializable {
 
             }
         });
-
-        //remove product
-
         RemoveProductButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -235,9 +211,6 @@ public class SellerMenuController implements Initializable {
                 }
             }
         });
-
-        //view off individual
-
         viewOffButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -254,9 +227,6 @@ public class SellerMenuController implements Initializable {
 
             }
         });
-
-        //edit off
-
         editOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -272,19 +242,12 @@ public class SellerMenuController implements Initializable {
                 }
             }
         });
-
-        // add off
-
         addOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 addOff(manageOffPane);
             }
         });
-
-
-        //all tabs selected initializing
-
 
         sellerTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
@@ -326,6 +289,16 @@ public class SellerMenuController implements Initializable {
                     logOutTabOnClick(logOutTab);
                 } else if (newTab.equals(offsPageTab)) {
                     offsPageTabOnClick(offsPageTab);
+                }
+                else if (newTab.equals(companyInfoTab)){
+//                    companyNameLabel.setText(((Seller) AccountController.loggedInUser).getFactoryName());
+                    HashMap<String, Object> input = new HashMap<>();
+                    Client.sendMessage("get seller company name", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        setAllCategories((ArrayList<Category>) message.get("company name"));
+                    }
+
                 }
 
             }

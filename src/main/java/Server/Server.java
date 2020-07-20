@@ -1,15 +1,17 @@
 package Server;
 
 import Server.Controller.AccountController;
+import Server.Controller.CategoryController;
+import Server.Controller.Exeptions.CategoryNotFindException;
 import Server.Controller.Exeptions.DuplicateUsernameException;
-import Server.Model.Message;
-import jdk.nashorn.internal.parser.JSONParser;
+import Server.Controller.Exeptions.InvalidIDException;
+import Server.Controller.SellerController;
+import Server.Model.*;
 import org.json.simple.*;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.rmi.server.ExportException;
 import java.util.ArrayList;
 
 public class Server {
@@ -39,7 +41,11 @@ public class Server {
     }
 
     private static class ClientHandler extends Thread{
+
         Socket socket;
+        Person logedInUser;
+        final String status ="status";
+        final String successful ="successful";
         ObjectOutputStream clientOutputStream;
         ObjectInputStream clientInputStream;
 
@@ -63,8 +69,23 @@ public class Server {
             while (true){
                 try {
                     command = getMessage();
-                    if(command.get("commandType").equals("register")){
-                        register(command);
+                    switch ((String) command.get("commandType")){
+                        case "register":
+                            register(command);
+                            break;
+                        case "get good by ID":
+                            getGoodForSeller(command);
+                            break;
+                        case "get product buyers by id":
+                            getProductBuyers(command);
+                            break;
+                        case "get category by name":
+                            getCategoryByName(command);
+                            break;
+                        case "edit product":
+                            editProduct(command);
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
                 }
                 catch (SecurityException e){
@@ -73,14 +94,80 @@ public class Server {
             }
         }
 
+        private void editProduct(JSONObject command) {
+            Message message = new Message();
+            try {
+                Good good = SellerController.viewProduct((Seller) logedInUser, (String) command.get("productId"));
+                message.put("good",good);
+                message.put(status,successful);
+//                input.put("good", good);
+//                input.put("goodName", goodName.getText().trim());
+//                input.put("companyName", companyName.getText().trim());
+//                input.put("price", Integer.parseInt(price.getText().trim()));
+//                input.put("explanatiopn", explanation.getText().trim());
+//                input.put("category", category);
+//                input.put("properties", properties);
+//                Client.sendMessage("edit product", input);
+//                Message message = Client.getMessage();
+//                if (message.get("status").equals("successful")) {
+//                    showConfirmationAlert("edit product completed successfully");
+//                }
+            } catch ( InvalidIDException e) {
+                message.put(status, "InvalidIDException");
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getCategoryByName(JSONObject command) {
+            Message message = new Message();
+            try {
+                Category category = CategoryController.getCategoryByName((String) command.get("categoryName"));
+                message.put("category",category);
+                message.put(status,successful);
+            } catch (CategoryNotFindException e) {
+                message.put(status, "CategoryNotFindException");
+            } finally {
+                sendMessage(message);
+            }
+
+        }
+
+        private void getProductBuyers(JSONObject command) {
+            Message message = new Message();
+            try {
+                ArrayList<String> allBuyers = SellerController.viewProductBuyers((Seller) logedInUser, (String) command.get("productId"));
+                message.put("allBuyers",allBuyers);
+                message.put(status,successful);
+            } catch ( InvalidIDException e) {
+                message.put(status, "InvalidIDException");
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+
+        private void getGoodForSeller(JSONObject command)  {
+            Message message = new Message();
+            try {
+                Good good = SellerController.viewProduct((Seller) logedInUser, (String) command.get("productId"));
+                message.put("good",good);
+                message.put(status,successful);
+            } catch ( InvalidIDException e) {
+                message.put(status, "InvalidIDException");
+            } finally {
+                sendMessage(message);
+            }
+
+        }
         private void register(JSONObject command)  {
             Message message = new Message();
             try {
                AccountController.register((String) command.get("username"),(String) command.get("userType"),(String) command.get("password"));
-               message.put("status","successful");
+               message.put(status,successful);
            }
            catch (DuplicateUsernameException e) {
-                message.put("status","duplicate username exception");
+                message.put(status,"duplicate username exception");
            }
             finally {
                 sendMessage(message);
