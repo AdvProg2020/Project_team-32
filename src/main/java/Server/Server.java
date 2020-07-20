@@ -97,7 +97,9 @@ public class Server {
                         case "add new product":
                             addNewGood(command);
                             break;
-
+                        case "remove product":
+                            removeProduct(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -105,6 +107,18 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void removeProduct(JSONObject command) {
+            Message message = new Message();
+            try {
+                SellerController.removeProduct((Seller)logedInUser, (String) command.get("productId"));
+                message.put(status,successful);
+            } catch ( InvalidIDException e) {
+                message.put(status, "InvalidIDException");
+            } finally {
+                sendMessage(message);
             }
         }
 
@@ -151,8 +165,6 @@ public class Server {
                 sendMessage(message);
             }
         }
-
-
 
         private void editProduct(JSONObject command) {
             Message message = new Message();
