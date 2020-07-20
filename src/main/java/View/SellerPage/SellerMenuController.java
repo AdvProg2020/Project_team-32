@@ -150,20 +150,6 @@ public class SellerMenuController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.fixSounds();
-
-        URL infoTabURL = null;
-        try {
-            infoTabURL = new File("src\\main\\resources\\GUIFiles\\personal-info.fxml").toURI().toURL();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            userMangerTab.setContent(FXMLLoader.load(infoTabURL));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
         // company name
         companyNameLabel.setText(((Seller) AccountController.loggedInUser).getFactoryName());
 
@@ -188,13 +174,13 @@ public class SellerMenuController implements Initializable {
         viewProductBuyers.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                HashMap<String , Object> inputs = new HashMap<>();
-                inputs.put("productId",productID.getText());
-                Client.sendMessage("get product buyers by id",inputs);
+                HashMap<String, Object> inputs = new HashMap<>();
+                inputs.put("productId", productID.getText());
+                Client.sendMessage("get product buyers by id", inputs);
                 Message message = Client.getMessage();
-                if (message.get("status").equals("successful")){
+                if (message.get("status").equals("successful")) {
                     makeBuyersTable(manageProductPane, (ArrayList<String>) message.get("allBuyers"));
-                }else if (message.get("status").equals("InvalidIDException")){
+                } else if (message.get("status").equals("InvalidIDException")) {
                     showErrorAlert("wrong product id");
                 }
             }
@@ -232,9 +218,7 @@ public class SellerMenuController implements Initializable {
             }
         });
 
-
         //remove product
-
 
         RemoveProductButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -246,12 +230,11 @@ public class SellerMenuController implements Initializable {
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
                     showConfirmationAlert("you removed good successfully");
-                }else  if (message.get("status").equals("successful")){
+                } else if (message.get("status").equals("successful")) {
                     showErrorAlert("InvalidIDException");
                 }
             }
         });
-
 
         //view off individual
 
@@ -265,7 +248,7 @@ public class SellerMenuController implements Initializable {
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
                     viewIndividualOff((Off) message.get("off"), manageOffPane);
-                }else  if (message.get("status").equals("InvalidIDException")){
+                } else if (message.get("status").equals("InvalidIDException")) {
                     showErrorAlert("InvalidIDException");
                 }
 
@@ -283,8 +266,8 @@ public class SellerMenuController implements Initializable {
                 Client.sendMessage("edit off", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
-                    editOff((Off) message.get("off"),manageOffPane);
-                }else  if (message.get("status").equals("InvalidIDException")){
+                    editOff((Off) message.get("off"), manageOffPane);
+                } else if (message.get("status").equals("InvalidIDException")) {
                     showErrorAlert("InvalidIDException");
                 }
             }
@@ -307,106 +290,150 @@ public class SellerMenuController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
 
-                //view balance
-
-                if (newTab.equals(balanceTab)) {
+                if (newTab.equals(userMangerTab)) {
+                    userManagerTabOnClick(userMangerTab);
+                } else if (newTab.equals(balanceTab)) {
                     balanceLable.setText("remaining money :" + ((Seller) AccountController.loggedInUser).getCredit() + "Tomans");
-                }
-                // off view tab
-                else if (newTab.equals(offsTab)) {
-                    ArrayList<Off> offs = ((Seller) AccountController.loggedInUser).getOffs();
-                    TableView offTable = new TableView();
-                    offTable.setPrefWidth(640);
-                    TableColumn<String, Off> offIdColumn = new TableColumn<>("off ID");
-                    offIdColumn.setCellValueFactory(new PropertyValueFactory<>("OffID"));
-                    offIdColumn.prefWidthProperty().bind(offTable.widthProperty().multiply(1));
-                    offTable.getColumns().add(offIdColumn);
-                    for (Off off : offs) {
-                        offTable.getItems().add(off);
+                } else if (newTab.equals(offsTab)) {
+                    HashMap<String, Object> input = new HashMap<>();
+                    Client.sendMessage("get seller off list", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        setAllOffs((ArrayList<Off>) message.get("off list"), manageOffPane);
                     }
-                    manageOffPane.getChildren().clear();
-                    manageOffPane.getChildren().add(offTable);
-                }
-                // manage product tab
-                else if (newTab.equals(manageProductTab)) {
-                    TableView productTable = new TableView();
-                    productTable.setPrefWidth(650);
-                    TableColumn<String, Good> goodNameProductTab = new TableColumn<>("good name");
-                    TableColumn<String, Good> goodIdProductTab = new TableColumn<>("good ID");
-                    goodNameProductTab.setCellValueFactory(new PropertyValueFactory<>("Name"));
-                    goodIdProductTab.setCellValueFactory(new PropertyValueFactory<>("GoodID"));
-                    productTable.getColumns().addAll(goodNameProductTab, goodIdProductTab);
-                    goodNameProductTab.prefWidthProperty().bind(productTable.widthProperty().multiply(0.5));
-                    goodIdProductTab.prefWidthProperty().bind(productTable.widthProperty().multiply(0.5));
-//                    goodNameProductTab.setResizable(false);
-//                    goodIdProductTab.setResizable(false);
-
-                    for (Good sellingGood : ((Seller) AccountController.loggedInUser).getSellingGoods()) {
-                        productTable.getItems().add(sellingGood);
+                } else if (newTab.equals(manageProductTab)) {
+                    HashMap<String, Object> input = new HashMap<>();
+                    Client.sendMessage("get seller product list", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        setAllProducts((ArrayList<Good>) message.get("product list"), manageProductPane);
                     }
-                    manageProductPane.getChildren().clear();
-                    manageProductPane.getChildren().add(productTable);
-                }
-                // sales history
-                else if (newTab.equals(salesHIstoryTab)) {
-                    tableColumn1.setCellValueFactory(new PropertyValueFactory<>("logID"));
-                    tableColumn2.setCellValueFactory(new PropertyValueFactory<>("buyerUserNmae"));
-                    tableColumn3.setCellValueFactory(new PropertyValueFactory<>("pricePaid"));
-                    tableColumn4.setCellValueFactory(new PropertyValueFactory<>("amountReducedForOff"));
-
-                    tableColumn1.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
-                    tableColumn2.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
-                    tableColumn3.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
-                    tableColumn4.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
-                    tableColumn1.setResizable(false);
-                    tableColumn2.setResizable(false);
-                    tableColumn3.setResizable(false);
-                    tableColumn4.setResizable(false);
-                    for (SellLog allSellingLog : ((Seller) AccountController.loggedInUser).getAllSellingLogs()) {
-                        tableView.getItems().add(allSellingLog);
+                } else if (newTab.equals(salesHIstoryTab)) {
+                    HashMap<String, Object> input = new HashMap<>();
+                    Client.sendMessage("get seller selllog list", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        setSalesHistoryTable((ArrayList<SellLog>) message.get("selllog list"), tableColumn1, tableColumn2, tableColumn3, tableColumn4, tableView);
                     }
-                }
-                //show categories
-                else if (newTab.equals(showCategoryTab)) {
-                    ArrayList<Category> categories = SellerController.showCategory(((Seller) AccountController.loggedInUser));
-                    ArrayList<String> categoryNames = new ArrayList<>();
-                    for (Category category : categories) {
-                        categoryNames.add(category.getName());
+                } else if (newTab.equals(showCategoryTab)) {
+                    HashMap<String, Object> input = new HashMap<>();
+                    Client.sendMessage("get seller category list", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        setAllCategories((ArrayList<Category>) message.get("category list"));
                     }
-                    ObservableList<String> details = FXCollections.observableArrayList(categoryNames);
-                    categoryColumn = new TableColumn<>();
-                    categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
-                    categoryColumn.prefWidthProperty().bind(categoryTable.widthProperty().multiply(1));
-                    categoryColumn.setResizable(false);
-                    categoryTable.getColumns().clear();
-                    categoryTable.getColumns().add(categoryColumn);
-                    categoryTable.setItems(details);
                 } else if (newTab.equals(logOutTab)) {
-                    URL url = null;
-                    try {
-                        url = new File("src\\main\\resources\\GUIFiles\\logout-page.fxml").toURI().toURL();
-                        logOutTab.setContent(FXMLLoader.load(url));
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    logOutTabOnClick(logOutTab);
                 } else if (newTab.equals(offsPageTab)) {
-                    try {
-                        URL url = new File("src\\main\\resources\\GUIFiles\\OffsPage.fxml").toURI().toURL();
-                        offsPageTab.setContent(FXMLLoader.load(url));
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
+                    offsPageTabOnClick(offsPageTab);
                 }
 
             }
         });
 
 
+    }
+
+    private static void userManagerTabOnClick(Tab userMangerTab) {
+        URL infoTabURL = null;
+        try {
+            infoTabURL = new File("src\\main\\resources\\GUIFiles\\personal-info.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            userMangerTab.setContent(FXMLLoader.load(infoTabURL));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void offsPageTabOnClick(Tab offsPageTab) {
+        try {
+            URL url = new File("src\\main\\resources\\GUIFiles\\OffsPage.fxml").toURI().toURL();
+            offsPageTab.setContent(FXMLLoader.load(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void logOutTabOnClick(Tab logOutTab) {
+        URL url = null;
+        try {
+            url = new File("src\\main\\resources\\GUIFiles\\logout-page.fxml").toURI().toURL();
+            logOutTab.setContent(FXMLLoader.load(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setAllCategories(ArrayList<Category> categories) {
+        ArrayList<String> categoryNames = new ArrayList<>();
+        for (Category category : categories) {
+            categoryNames.add(category.getName());
+        }
+        ObservableList<String> details = FXCollections.observableArrayList(categoryNames);
+        categoryColumn = new TableColumn<>();
+        categoryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
+        categoryColumn.prefWidthProperty().bind(categoryTable.widthProperty().multiply(1));
+        categoryColumn.setResizable(false);
+        categoryTable.getColumns().clear();
+        categoryTable.getColumns().add(categoryColumn);
+        categoryTable.setItems(details);
+    }
+
+    private static void setSalesHistoryTable(ArrayList<SellLog> sellLogArrayList, TableColumn<String, SellLog> tableColumn1, TableColumn<String, SellLog> tableColumn2, TableColumn<Float, SellLog> tableColumn3, TableColumn<Float, SellLog> tableColumn4, TableView tableView) {
+        tableColumn1.setCellValueFactory(new PropertyValueFactory<>("logID"));
+        tableColumn2.setCellValueFactory(new PropertyValueFactory<>("buyerUserNmae"));
+        tableColumn3.setCellValueFactory(new PropertyValueFactory<>("pricePaid"));
+        tableColumn4.setCellValueFactory(new PropertyValueFactory<>("amountReducedForOff"));
+
+        tableColumn1.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+        tableColumn2.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
+        tableColumn3.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+        tableColumn4.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
+        tableColumn1.setResizable(false);
+        tableColumn2.setResizable(false);
+        tableColumn3.setResizable(false);
+        tableColumn4.setResizable(false);
+        for (SellLog allSellingLog : sellLogArrayList) {
+            tableView.getItems().add(allSellingLog);
+        }
+    }
+
+    private static void setAllProducts(ArrayList<Good> selingGoods, Pane manageProductPane) {
+        TableView productTable = new TableView();
+        productTable.setPrefWidth(650);
+        TableColumn<String, Good> goodNameProductTab = new TableColumn<>("good name");
+        TableColumn<String, Good> goodIdProductTab = new TableColumn<>("good ID");
+        goodNameProductTab.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        goodIdProductTab.setCellValueFactory(new PropertyValueFactory<>("GoodID"));
+        productTable.getColumns().addAll(goodNameProductTab, goodIdProductTab);
+        goodNameProductTab.prefWidthProperty().bind(productTable.widthProperty().multiply(0.5));
+        goodIdProductTab.prefWidthProperty().bind(productTable.widthProperty().multiply(0.5));
+        for (Good sellingGood : selingGoods) {
+            productTable.getItems().add(sellingGood);
+        }
+        manageProductPane.getChildren().clear();
+        manageProductPane.getChildren().add(productTable);
+    }
+
+    private static void setAllOffs(ArrayList<Off> offs, Pane manageOffPane) {
+        TableView offTable = new TableView();
+        offTable.setPrefWidth(640);
+        TableColumn<String, Off> offIdColumn = new TableColumn<>("off ID");
+        offIdColumn.setCellValueFactory(new PropertyValueFactory<>("OffID"));
+        offIdColumn.prefWidthProperty().bind(offTable.widthProperty().multiply(1));
+        offTable.getColumns().add(offIdColumn);
+        for (Off off : offs) {
+            offTable.getItems().add(off);
+        }
+        manageOffPane.getChildren().clear();
+        manageOffPane.getChildren().add(offTable);
     }
 
     private static void addOff(Pane manageOffPane) {
@@ -444,7 +471,7 @@ public class SellerMenuController implements Initializable {
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
                     showConfirmationAlert("you successfully made a add off request");
-                }else  if (message.get("status").equals("InvalidPatternException")){
+                } else if (message.get("status").equals("InvalidPatternException")) {
                     showErrorAlert("entered pattern is wrong");
                 }
 //                    request = SellerController.makeRequest( inputString.trim(), "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
@@ -496,8 +523,8 @@ public class SellerMenuController implements Initializable {
     }
 
     private static void addProduct(Good good_addProduct, Pane addProductPane, TextField addProductID_Label) {
-        if (good_addProduct != null)  addProduct_exsistingProduct(good_addProduct, addProductPane);
-         else addProduct_newProduct(addProductPane, addProductID_Label);
+        if (good_addProduct != null) addProduct_exsistingProduct(good_addProduct, addProductPane);
+        else addProduct_newProduct(addProductPane, addProductID_Label);
     }
 
     private static void addProduct_newProduct(Pane addProductPane, TextField addProductID_Label) {
@@ -548,12 +575,12 @@ public class SellerMenuController implements Initializable {
                 }
                 HashMap<String, Object> input = new HashMap<>();
                 input.put("goodId", addProductID_Label.getText().trim());
-                input.put("goodName",goodName.getText().trim());
-                input.put("companyName",companyName.getText().trim());
-                input.put("price",Integer.parseInt(price.getText().trim()));
-                input.put("explanatiopn" , explanation.getText().trim());
-                input.put("category",category);
-                input.put("properties",properties);
+                input.put("goodName", goodName.getText().trim());
+                input.put("companyName", companyName.getText().trim());
+                input.put("price", Integer.parseInt(price.getText().trim()));
+                input.put("explanatiopn", explanation.getText().trim());
+                input.put("category", category);
+                input.put("properties", properties);
                 Client.sendMessage("add new product ", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
@@ -586,7 +613,7 @@ public class SellerMenuController implements Initializable {
                 if (price > 0) {
                     HashMap<String, Object> input = new HashMap<>();
                     input.put("price", price);
-                    input.put("good",good_addProduct);
+                    input.put("good", good_addProduct);
                     Client.sendMessage("add existing good", input);
                     Message message = Client.getMessage();
                     if (message.get("status").equals("successful")) {
@@ -653,12 +680,12 @@ public class SellerMenuController implements Initializable {
                 }
                 HashMap<String, Object> input = new HashMap<>();
                 input.put("good", good);
-                input.put("goodName",goodName.getText().trim());
-                input.put("companyName",companyName.getText().trim());
-                input.put("price",Integer.parseInt(price.getText().trim()));
-                input.put("explanatiopn" , explanation.getText().trim());
-                input.put("category",category);
-                input.put("properties",properties);
+                input.put("goodName", goodName.getText().trim());
+                input.put("companyName", companyName.getText().trim());
+                input.put("price", Integer.parseInt(price.getText().trim()));
+                input.put("explanatiopn", explanation.getText().trim());
+                input.put("category", category);
+                input.put("properties", properties);
                 Client.sendMessage("edit product", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
@@ -677,8 +704,8 @@ public class SellerMenuController implements Initializable {
     }
 
     private static void showConfirmationAlert(String text) {
-        Alert alert =  new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText( text);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(text);
         alert.show();
     }
 
@@ -714,7 +741,8 @@ public class SellerMenuController implements Initializable {
         manageProductPane.getChildren().clear();
         manageProductPane.getChildren().add(productTable);
     }
-    private static void makeBuyersTable(Pane manageProductPane , ArrayList<String> allBuyers){
+
+    private static void makeBuyersTable(Pane manageProductPane, ArrayList<String> allBuyers) {
         ObservableList<String> details = FXCollections.observableArrayList(allBuyers);
         TableView<String> buyersTable = new TableView<>();
         TableColumn<String, String> col1 = new TableColumn<>("Buyers");
@@ -726,6 +754,7 @@ public class SellerMenuController implements Initializable {
         manageProductPane.getChildren().clear();
         manageProductPane.getChildren().add(buyersTable);
     }
+
     private static void editOff(Off off, Pane manageOffPane) {
         TextField goods = new TextField("enter goods in this order GoodId1,goodid2,.. ");
         final String[] date1 = new String[1];
