@@ -206,7 +206,7 @@ public class SellerMenuController implements Initializable {
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
                     showConfirmationAlert("you removed good successfully");
-                } else if (message.get("status").equals("successful")) {
+                } else if (message.get("status").equals("InvalidIDException")) {
                     showErrorAlert("InvalidIDException");
                 }
             }

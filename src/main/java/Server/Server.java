@@ -8,7 +8,6 @@ import Server.Controller.Exeptions.InvalidIDException;
 import Server.Controller.GoodController;
 import Server.Controller.SellerController;
 import Server.Model.*;
-import View.Client;
 import org.json.simple.*;
 
 import java.io.*;
@@ -100,6 +99,8 @@ public class Server {
                         case "remove product":
                             removeProduct(command);
                             break;
+                        case "view individual off":
+                            sendIndividualOff(command);
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -107,6 +108,19 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void sendIndividualOff(JSONObject command) {
+            Message message = new Message();
+            try {
+                Off off = SellerController.getInddividualOff((Seller)logedInUser, (String) command.get("offId"));
+                message.put("off",off);
+                message.put(status,successful);
+            } catch ( InvalidIDException e) {
+                message.put(status, "InvalidIDException");
+            } finally {
+                sendMessage(message);
             }
         }
 

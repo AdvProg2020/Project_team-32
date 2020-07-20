@@ -69,7 +69,7 @@ public class SellerController {
         }
         return categories;
     }
-    public static Off showInddividualOff(Seller seller , String ID) throws InvalidIDException{
+    public static Off getInddividualOff(Seller seller , String ID) throws InvalidIDException{
         for (Off off : seller.getOffs()) {
             if(off.getOffID().equals(ID)){
                 return off;
