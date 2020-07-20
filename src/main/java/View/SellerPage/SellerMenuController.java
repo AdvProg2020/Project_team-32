@@ -554,7 +554,7 @@ public class SellerMenuController implements Initializable {
                 input.put("explanatiopn", explanation.getText().trim());
                 input.put("category", category);
                 input.put("properties", properties);
-                Client.sendMessage("add new product ", input);
+                Client.sendMessage("add new product", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
                     showConfirmationAlert("edit product completed successfully");

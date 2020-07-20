@@ -8,6 +8,7 @@ import Server.Controller.Exeptions.InvalidIDException;
 import Server.Controller.GoodController;
 import Server.Controller.SellerController;
 import Server.Model.*;
+import View.Client;
 import org.json.simple.*;
 
 import java.io.*;
@@ -86,6 +87,17 @@ public class Server {
                             break;
                         case "edit product":
                             editProduct(command);
+                            break;
+                        case "get good by ID from allGoods":
+                            goodFromAllGoods(command);
+                            break;
+                        case "add existing good":
+                            addExistingGood(command);
+                            break;
+                        case "add new product":
+                            addNewGood(command);
+                            break;
+
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -95,6 +107,52 @@ public class Server {
                 }
             }
         }
+
+        private void addNewGood(JSONObject command) {
+            Message message = new Message();
+            try {
+                String categoryName = ((Category)command.get("category")).getName();
+                Category category =Category.getCategoryByName(categoryName);
+                String goodID = (String)command.get("goodId");
+                String goodName = (String)command.get("goodName");
+                String companyName=(String)command.get("companyName");
+                int price = (int)command.get("price");
+                String explanatiopn = (String)command.get("explanatiopn");
+                HashMap<String,String> properties = (HashMap<String, String>)command.get("properties");
+                GoodController.getGoodController().AddProduct(goodID, goodName, companyName,
+                        price, explanatiopn, properties, (Seller)logedInUser, category);
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+
+        }
+
+        private void addExistingGood(JSONObject command) {
+            Message message = new Message();
+            try {
+                Good good= Good.getGoodFromAllGoods(((Good) command.get("good")).getGoodID());
+                int price = (int)command.get("price");
+                good.addSellerAndPrice(logedInUser.getUserName(), price);
+                ((Seller)logedInUser).getSellingGoods().add(good);
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void goodFromAllGoods(JSONObject command) {
+            Message message = new Message();
+            try {
+                Good good = Good.getGoodFromAllGoods((String) command.get("productId"));
+                message.put("good",good);
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+
 
         private void editProduct(JSONObject command) {
             Message message = new Message();
@@ -117,7 +175,6 @@ public class Server {
                 sendMessage(message);
             }
         }
-
 
         private void getCategoryByName(JSONObject command) {
             Message message = new Message();
