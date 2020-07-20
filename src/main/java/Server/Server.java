@@ -1,12 +1,10 @@
 package Server;
 
-import Server.Controller.AccountController;
-import Server.Controller.CategoryController;
+import Server.Controller.*;
 import Server.Controller.Exeptions.CategoryNotFindException;
 import Server.Controller.Exeptions.DuplicateUsernameException;
 import Server.Controller.Exeptions.InvalidIDException;
-import Server.Controller.GoodController;
-import Server.Controller.SellerController;
+import Server.Controller.Exeptions.InvalidPatternException;
 import Server.Model.*;
 import org.json.simple.*;
 
@@ -99,8 +97,15 @@ public class Server {
                         case "remove product":
                             removeProduct(command);
                             break;
-                        case "view individual off":
+                        case "get individual off":
                             sendIndividualOff(command);
+                            break;
+                        case "edit off":
+                            editOff(command);
+                            break;
+                        case "add off":
+                            addOff(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -108,6 +113,36 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void addOff(JSONObject command) {
+            Message message = new Message();
+            try {
+                String inputString =(String) command.get("inputString");
+                String pattern =(String)command.get("pattern");
+                String request = SellerController.makeRequest( inputString,pattern);
+                RequestController.addOffRequest(request.trim(), (Seller)logedInUser);
+                message.put(status,successful);
+            } catch ( InvalidPatternException e) {
+                message.put(status, "InvalidPatternException");
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void editOff(JSONObject command) {
+            Message message = new Message();
+            try {
+                String inputString =(String) command.get("inputString");
+                String pattern =(String)command.get("pattern");
+                String request = SellerController.makeRequest(inputString,pattern);
+                RequestController.addEditOffRequest(request, (Seller)logedInUser);
+                message.put(status,successful);
+            } catch ( InvalidPatternException e) {
+                message.put(status, "InvalidPatternException");
+            } finally {
+                sendMessage(message);
             }
         }
 

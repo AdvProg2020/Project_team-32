@@ -217,7 +217,7 @@ public class SellerMenuController implements Initializable {
 //                Off off = SellerController.showInddividualOff(((Seller) AccountController.loggedInUser), offID.getText().trim());
                 HashMap<String, Object> input = new HashMap<>();
                 input.put("offId", offID.getText().trim());
-                Client.sendMessage("view individual off", input);
+                Client.sendMessage("get individual off", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
                     viewIndividualOff((Off) message.get("off"), manageOffPane);
@@ -233,7 +233,7 @@ public class SellerMenuController implements Initializable {
                 //                    Off off = SellerController.checkOffID(((Seller) AccountController.loggedInUser).getOffs(), offID.getText().trim());
                 HashMap<String, Object> input = new HashMap<>();
                 input.put("offId", offID.getText().trim());
-                Client.sendMessage("edit off", input);
+                Client.sendMessage("get individual off", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
                     editOff((Off) message.get("off"), manageOffPane);
@@ -440,7 +440,7 @@ public class SellerMenuController implements Initializable {
                 HashMap<String, Object> inputs = new HashMap<>();
                 inputs.put("inputString", inputString.trim());
                 inputs.put("pattern", "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
-                Client.sendMessage("make add off request", inputs);
+                Client.sendMessage("add off", inputs);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
                     showConfirmationAlert("you successfully made a add off request");
@@ -756,7 +756,7 @@ public class SellerMenuController implements Initializable {
                 HashMap<String, Object> inputs = new HashMap<>();
                 inputs.put("inputString", inputString.trim());
                 inputs.put("pattern", "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
-                Client.sendMessage("make edit off request", inputs);
+                Client.sendMessage("edit off", inputs);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
                     showConfirmationAlert("you successfully made a request");
