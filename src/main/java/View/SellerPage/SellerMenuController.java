@@ -258,31 +258,15 @@ public class SellerMenuController implements Initializable {
         viewOffButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                try {
-                    Off off = SellerController.showInddividualOff(((Seller) AccountController.loggedInUser), offID.getText().trim());
-                    TableView offTable = new TableView();
-                    offTable.setPrefWidth(640);
-                    offTable.setLayoutY(20);
-                    TableColumn<String, Off> offID = new TableColumn<>("off ID");
-                    TableColumn<String, Off> initialDate = new TableColumn<>("initial Date");
-                    TableColumn<String, Off> exposeDate = new TableColumn<>("Expopse Date");
-                    TableColumn<String, Off> discountPercent = new TableColumn<>("discount");
-                    offID.setCellValueFactory(new PropertyValueFactory<>("OffID"));
-                    initialDate.setCellValueFactory(new PropertyValueFactory<>("InitialDateString"));
-                    exposeDate.setCellValueFactory(new PropertyValueFactory<>("ExposeDateString"));
-                    discountPercent.setCellValueFactory(new PropertyValueFactory<>("DiscountPercentString"));
-
-                    offID.prefWidthProperty().bind(offTable.widthProperty().multiply(0.3));
-                    initialDate.prefWidthProperty().bind(offTable.widthProperty().multiply(0.3));
-                    exposeDate.prefWidthProperty().bind(offTable.widthProperty().multiply(0.2));
-                    discountPercent.prefWidthProperty().bind(offTable.widthProperty().multiply(0.2));
-
-                    offTable.getColumns().addAll(offID, initialDate, exposeDate, discountPercent);
-                    offTable.getItems().add(off);
-                    manageOffPane.getChildren().clear();
-                    manageOffPane.getChildren().add(offTable);
-                } catch (InvalidIDException e) {
-                    e.printStackTrace();
+//                Off off = SellerController.showInddividualOff(((Seller) AccountController.loggedInUser), offID.getText().trim());
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("offId", offID.getText().trim());
+                Client.sendMessage("view individual off", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    viewIndividualOff((Off) message.get("off"), manageOffPane);
+                }else  if (message.get("status").equals("InvalidIDException")){
+                    showErrorAlert("InvalidIDException");
                 }
 
             }
@@ -293,66 +277,16 @@ public class SellerMenuController implements Initializable {
         editOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                try {
-                    Off off = SellerController.checkOffID(((Seller) AccountController.loggedInUser).getOffs(), offID.getText().trim());
-                    TextField goods = new TextField("enter goods in this order GoodId1,goodid2,.. ");
-                    final String[] date1 = new String[1];
-                    final String[] date2 = new String[1];
-                    DatePicker firstDate = new DatePicker();
-                    DatePicker lastDate = new DatePicker();
-                    firstDate.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            date1[0] = String.valueOf(firstDate.getValue()).replaceAll("-", ",");
-                        }
-                    });
-                    lastDate.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            date2[0] = String.valueOf(lastDate.getValue()).replaceAll("-", ",");
-                        }
-                    });
-                    TextField offPercent = new TextField("enter off percent");
-                    Button confirm = new Button("confrim");
-                    confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            String input = off.getOffID() + " " + goods.getText().trim();
-                            input += " " + date1[0] + " " + date2[0] + " " + offPercent.getText().trim();
-
-                            String request = null;
-                            try {
-                                request = SellerController.makeRequest(null, input.trim(), "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
-                                RequestController.addEditOffRequest(request, ((Seller) AccountController.loggedInUser));
-                                System.out.println("edit request sent");
-                            } catch (InvalidPatternException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    });
-                    GridPane gridPane = new GridPane();
-                    gridPane.setLayoutX(100);
-                    gridPane.setLayoutY(50);
-                    gridPane.setHgap(10);
-                    gridPane.setVgap(20);
-                    ColumnConstraints cc = new ColumnConstraints();
-                    cc.setPrefWidth(400);
-                    gridPane.getColumnConstraints().add(cc);
-                    gridPane.setAlignment(Pos.TOP_CENTER);
-                    gridPane.add(goods, 0, 0);
-                    gridPane.add(firstDate, 0, 1);
-                    gridPane.add(lastDate, 0, 2);
-                    gridPane.add(offPercent, 0, 3);
-                    gridPane.add(confirm, 0, 4);
-                    manageOffPane.getChildren().clear();
-                    manageOffPane.getChildren().addAll(gridPane);
-
-                } catch (InvalidIDException e) {
-                    e.printStackTrace();
+                //                    Off off = SellerController.checkOffID(((Seller) AccountController.loggedInUser).getOffs(), offID.getText().trim());
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("offId", offID.getText().trim());
+                Client.sendMessage("edit off", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    editOff((Off) message.get("off"),manageOffPane);
+                }else  if (message.get("status").equals("InvalidIDException")){
+                    showErrorAlert("InvalidIDException");
                 }
-
             }
         });
 
@@ -361,63 +295,7 @@ public class SellerMenuController implements Initializable {
         addOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                TextField offID = new TextField("off ID");
-                TextField goods = new TextField("enter goods in this order GoodId1,goodid2,.. ");
-                final String[] date1 = new String[1];
-                final String[] date2 = new String[1];
-                DatePicker firstDate = new DatePicker();
-                firstDate.setMinWidth(400);
-                DatePicker lastDate = new DatePicker();
-                lastDate.setMinWidth(400);
-                firstDate.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        date1[0] = String.valueOf(firstDate.getValue()).replaceAll("-", ",");
-                    }
-                });
-                lastDate.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        date2[0] = String.valueOf(lastDate.getValue()).replaceAll("-", ",");
-                    }
-                });
-                TextField offPercent = new TextField("enter off percent");
-                Button confirm = new Button("confrim");
-                confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        String input = offID.getText().trim() + " " + goods.getText().trim();
-                        input += " " + date1[0] + " " + date2[0] + " " + offPercent.getText().trim();
-                        String request = null;
-                        try {
-                            request = SellerController.makeRequest(null, input.trim(), "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
-                            RequestController.addOffRequest(request.trim(), ((Seller) AccountController.loggedInUser));
-                            System.out.println("off added");
-                        } catch (InvalidPatternException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-
-                GridPane gridPane = new GridPane();
-                gridPane.setLayoutX(100);
-                gridPane.setLayoutY(50);
-                gridPane.setHgap(10);
-                gridPane.setVgap(20);
-                ColumnConstraints cc = new ColumnConstraints();
-                cc.setPrefWidth(400);
-                gridPane.getColumnConstraints().add(cc);
-                gridPane.setAlignment(Pos.TOP_CENTER);
-                gridPane.add(offID, 0, 0);
-                gridPane.add(goods, 0, 1);
-                gridPane.add(firstDate, 0, 2);
-                gridPane.add(lastDate, 0, 3);
-                gridPane.add(offPercent, 0, 4);
-                gridPane.add(confirm, 0, 5);
-                manageOffPane.getChildren().clear();
-                manageOffPane.getChildren().addAll(gridPane);
-
+                addOff(manageOffPane);
             }
         });
 
@@ -529,6 +407,92 @@ public class SellerMenuController implements Initializable {
         });
 
 
+    }
+
+    private static void addOff(Pane manageOffPane) {
+        TextField offID = new TextField("off ID");
+        TextField goods = new TextField("enter goods in this order GoodId1,goodid2,.. ");
+        final String[] date1 = new String[1];
+        final String[] date2 = new String[1];
+        DatePicker firstDate = new DatePicker();
+        firstDate.setMinWidth(400);
+        DatePicker lastDate = new DatePicker();
+        lastDate.setMinWidth(400);
+        firstDate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                date1[0] = String.valueOf(firstDate.getValue()).replaceAll("-", ",");
+            }
+        });
+        lastDate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                date2[0] = String.valueOf(lastDate.getValue()).replaceAll("-", ",");
+            }
+        });
+        TextField offPercent = new TextField("enter off percent");
+        Button confirm = new Button("confrim");
+        confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String inputString = offID.getText().trim() + " " + goods.getText().trim();
+                inputString += " " + date1[0] + " " + date2[0] + " " + offPercent.getText().trim();
+                HashMap<String, Object> inputs = new HashMap<>();
+                inputs.put("inputString", inputString.trim());
+                inputs.put("pattern", "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
+                Client.sendMessage("make add off request", inputs);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    showConfirmationAlert("you successfully made a add off request");
+                }else  if (message.get("status").equals("InvalidPatternException")){
+                    showErrorAlert("entered pattern is wrong");
+                }
+//                    request = SellerController.makeRequest( inputString.trim(), "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
+//                    RequestController.addOffRequest(request.trim(), ((Seller) AccountController.loggedInUser));
+            }
+        });
+
+        GridPane gridPane = new GridPane();
+        gridPane.setLayoutX(100);
+        gridPane.setLayoutY(50);
+        gridPane.setHgap(10);
+        gridPane.setVgap(20);
+        ColumnConstraints cc = new ColumnConstraints();
+        cc.setPrefWidth(400);
+        gridPane.getColumnConstraints().add(cc);
+        gridPane.setAlignment(Pos.TOP_CENTER);
+        gridPane.add(offID, 0, 0);
+        gridPane.add(goods, 0, 1);
+        gridPane.add(firstDate, 0, 2);
+        gridPane.add(lastDate, 0, 3);
+        gridPane.add(offPercent, 0, 4);
+        gridPane.add(confirm, 0, 5);
+        manageOffPane.getChildren().clear();
+        manageOffPane.getChildren().addAll(gridPane);
+    }
+
+    private static void viewIndividualOff(Off off, Pane manageOffPane) {
+        TableView offTable = new TableView();
+        offTable.setPrefWidth(640);
+        offTable.setLayoutY(20);
+        TableColumn<String, Off> offID = new TableColumn<>("off ID");
+        TableColumn<String, Off> initialDate = new TableColumn<>("initial Date");
+        TableColumn<String, Off> exposeDate = new TableColumn<>("Expopse Date");
+        TableColumn<String, Off> discountPercent = new TableColumn<>("discount");
+        offID.setCellValueFactory(new PropertyValueFactory<>("OffID"));
+        initialDate.setCellValueFactory(new PropertyValueFactory<>("InitialDateString"));
+        exposeDate.setCellValueFactory(new PropertyValueFactory<>("ExposeDateString"));
+        discountPercent.setCellValueFactory(new PropertyValueFactory<>("DiscountPercentString"));
+
+        offID.prefWidthProperty().bind(offTable.widthProperty().multiply(0.3));
+        initialDate.prefWidthProperty().bind(offTable.widthProperty().multiply(0.3));
+        exposeDate.prefWidthProperty().bind(offTable.widthProperty().multiply(0.2));
+        discountPercent.prefWidthProperty().bind(offTable.widthProperty().multiply(0.2));
+
+        offTable.getColumns().addAll(offID, initialDate, exposeDate, discountPercent);
+        offTable.getItems().add(off);
+        manageOffPane.getChildren().clear();
+        manageOffPane.getChildren().add(offTable);
     }
 
     private static void addProduct(Good good_addProduct, Pane addProductPane, TextField addProductID_Label) {
@@ -761,5 +725,61 @@ public class SellerMenuController implements Initializable {
         buyersTable.setPrefWidth(640);
         manageProductPane.getChildren().clear();
         manageProductPane.getChildren().add(buyersTable);
+    }
+    private static void editOff(Off off, Pane manageOffPane) {
+        TextField goods = new TextField("enter goods in this order GoodId1,goodid2,.. ");
+        final String[] date1 = new String[1];
+        final String[] date2 = new String[1];
+        DatePicker firstDate = new DatePicker();
+        DatePicker lastDate = new DatePicker();
+        firstDate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                date1[0] = String.valueOf(firstDate.getValue()).replaceAll("-", ",");
+            }
+        });
+        lastDate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                date2[0] = String.valueOf(lastDate.getValue()).replaceAll("-", ",");
+            }
+        });
+        TextField offPercent = new TextField("enter off percent");
+        Button confirm = new Button("confrim");
+        confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String inputString = off.getOffID() + " " + goods.getText().trim();
+                inputString += " " + date1[0] + " " + date2[0] + " " + offPercent.getText().trim();
+                HashMap<String, Object> inputs = new HashMap<>();
+                inputs.put("inputString", inputString.trim());
+                inputs.put("pattern", "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
+                Client.sendMessage("make edit off request", inputs);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    showConfirmationAlert("you successfully made a request");
+                } else if (message.get("status").equals("InvalidPatternException")) {
+                    showErrorAlert("your pattern for input is wrong");
+                }
+//                    request = SellerController.makeRequest( inputString.trim(), "(\\S+) (\\S+,)+ (\\d+),(\\d+),(\\d+) (\\d+),(\\d+),(\\d+) (\\d+)");
+//                    RequestController.addEditOffRequest(request, ((Seller) AccountController.loggedInUser));
+            }
+        });
+        GridPane gridPane = new GridPane();
+        gridPane.setLayoutX(100);
+        gridPane.setLayoutY(50);
+        gridPane.setHgap(10);
+        gridPane.setVgap(20);
+        ColumnConstraints cc = new ColumnConstraints();
+        cc.setPrefWidth(400);
+        gridPane.getColumnConstraints().add(cc);
+        gridPane.setAlignment(Pos.TOP_CENTER);
+        gridPane.add(goods, 0, 0);
+        gridPane.add(firstDate, 0, 1);
+        gridPane.add(lastDate, 0, 2);
+        gridPane.add(offPercent, 0, 3);
+        gridPane.add(confirm, 0, 4);
+        manageOffPane.getChildren().clear();
+        manageOffPane.getChildren().addAll(gridPane);
     }
 }

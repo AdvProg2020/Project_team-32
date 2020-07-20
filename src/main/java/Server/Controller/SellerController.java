@@ -88,7 +88,7 @@ public class SellerController {
             if(good.getGoodID().equals(goodID)) return good;
         }throw new InvalidIDException();
     }
-    public static String makeRequest(String request ,String input , String pattern) throws InvalidPatternException{
+    public static String makeRequest(String input , String pattern) throws InvalidPatternException{
         if(Pattern.compile(pattern).matcher(input).matches()) {
             return input;
         }
