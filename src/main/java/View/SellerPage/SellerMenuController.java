@@ -248,7 +248,6 @@ public class SellerMenuController implements Initializable {
                 addOff(manageOffPane);
             }
         });
-
         sellerTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
@@ -257,6 +256,7 @@ public class SellerMenuController implements Initializable {
                     userManagerTabOnClick(userMangerTab);
                 } else if (newTab.equals(balanceTab)) {
                     balanceLable.setText("remaining money :" + ((Seller) AccountController.loggedInUser).getCredit() + "Tomans");
+                    //todo i should read the doc again for this part
                 } else if (newTab.equals(offsTab)) {
                     HashMap<String, Object> input = new HashMap<>();
                     Client.sendMessage("get seller off list", input);

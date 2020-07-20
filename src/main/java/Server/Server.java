@@ -106,6 +106,18 @@ public class Server {
                         case "add off":
                             addOff(command);
                             break;
+                        case "get seller off list":
+                            getSellerOffList(command);
+                            break;
+                        case "get seller product list":
+                            getSellerProductList(command);
+                            break;
+                        case "get seller category list":
+                            getSellerCategoryList(command);
+                            break;
+                        case "get seller company name":
+                            getSellerCompanyName(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -113,6 +125,46 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void getSellerCompanyName(JSONObject command) {
+            Message message = new Message();
+            try {
+                message.put("company name",((Seller)logedInUser).getFactoryName());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getSellerCategoryList(JSONObject command) {
+            Message message = new Message();
+            try {
+                message.put("category list",SellerController.showCategory((Seller)logedInUser));
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getSellerProductList(JSONObject command) {
+            Message message = new Message();
+            try {
+                message.put("product list",((Seller)logedInUser).getSellingGoods());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getSellerOffList(JSONObject command) {
+            Message message = new Message();
+            try {
+                message.put("off list",((Seller)logedInUser).getOffs());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
             }
         }
 
