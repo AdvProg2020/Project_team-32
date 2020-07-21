@@ -1,5 +1,7 @@
 package Server.Model;
 
+import Server.Controller.Exeptions.MultipleAuctionException;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,7 +13,16 @@ public class Seller extends Person {
     private ArrayList<Off> offs;
     private ArrayList<SellLog> allSellingLogs;
     private static ArrayList<Seller> allSellers = new ArrayList<>();
+    private Auction auction;
 
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public void setAuction(Auction auction) throws MultipleAuctionException {
+        if (auction!=null) this.auction = auction;
+        else throw new MultipleAuctionException();
+    }
 
     public static void seller(Seller seller){
         seller.factoryName = "apple";

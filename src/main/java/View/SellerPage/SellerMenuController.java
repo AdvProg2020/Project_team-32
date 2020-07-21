@@ -35,6 +35,7 @@ public class SellerMenuController implements Initializable {
 
     public Tab logOutTab;
     public Tab offsPageTab;
+    public Tab auctionTab;
     @FXML
     TabPane sellerTabPane;
     @FXML
@@ -138,6 +139,7 @@ public class SellerMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         this.fixSounds();
         viewProductButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

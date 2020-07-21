@@ -27,7 +27,7 @@ public class Client extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        URL url = new File("src/main/resources/GUIFiles/RegisterPage.fxml").toURI().toURL();
+        URL url = new File("src\\main\\resources\\GUIFiles\\Seller-fxml-pages\\SellerMenu.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("Shop");
         primaryStage.setScene(new Scene(root,788,688));

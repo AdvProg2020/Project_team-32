@@ -1,14 +1,12 @@
 package Server;
 
 import Server.Controller.*;
-import Server.Controller.Exeptions.CategoryNotFindException;
-import Server.Controller.Exeptions.DuplicateUsernameException;
-import Server.Controller.Exeptions.InvalidIDException;
-import Server.Controller.Exeptions.InvalidPatternException;
+import Server.Controller.Exeptions.*;
 import Server.Model.*;
 import org.json.simple.*;
 
 import java.io.*;
+import java.lang.SecurityException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -118,6 +116,8 @@ public class Server {
                         case "get seller company name":
                             getSellerCompanyName(command);
                             break;
+                        case "set auction":
+                            setSellerAuction(command);
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -125,6 +125,20 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void setSellerAuction(JSONObject command) {
+            Message message = new Message();
+            try {
+                Good good = ((Seller)logedInUser).getGoodByID((String) command.get("goodID"));
+                int port = (int) command.get("port");
+                ((Seller)logedInUser).setAuction(new Auction((Seller)logedInUser,good,port));
+                message.put(status,successful);
+            } catch ( MultipleAuctionException e) {
+                message.put(status, "MultipleAuctionException");
+            } finally {
+                sendMessage(message);
             }
         }
 
