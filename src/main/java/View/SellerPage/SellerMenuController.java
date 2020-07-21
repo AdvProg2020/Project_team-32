@@ -302,11 +302,28 @@ public class SellerMenuController implements Initializable {
                     }
 
                 }
+                else if (newTab.equals(auctionTab)){
+                    auctionTabOnClick(auctionTab);
+                }
 
             }
         });
 
 
+    }
+
+    private void auctionTabOnClick(Tab auctionTab) {
+        URL auctionTabURL = null;
+        try {
+            auctionTabURL = new File("src\\main\\resources\\GUIFiles\\Seller-fxml-pages\\auctionFXML.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            auctionTab.setContent(FXMLLoader.load(auctionTabURL));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void userManagerTabOnClick(Tab userMangerTab) {
