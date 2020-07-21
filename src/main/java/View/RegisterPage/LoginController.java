@@ -64,11 +64,11 @@ public class LoginController implements Initializable {
             inputs.put("password", passwordField.getText());
 
             Client.sendMessage("login", inputs);
-
+            System.out.println("salam");
             Message serverAnswer = Client.getMessage();
-
+            System.out.println(serverAnswer.get("status"));
             if (serverAnswer.get("status").equals("successful")) {
-
+                System.out.println("hhehehe");
                 try {
                     URL url = null;
                     if (serverAnswer.get("account type").equals("boss")) {

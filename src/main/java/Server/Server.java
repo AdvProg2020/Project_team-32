@@ -71,6 +71,9 @@ public class Server {
                         case "register":
                             register(command);
                             break;
+                        case "login":
+                            login(command);
+                            break;
                         case "get good by ID":
                             getGoodForSeller(command);
                             break;
@@ -118,6 +121,10 @@ public class Server {
                             break;
                         case "set auction":
                             setSellerAuction(command);
+                            break;
+                        case "get seller selllog list":
+                            getSelllogList(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -125,6 +132,16 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void getSelllogList(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("selllog list",((Seller)logedInUser).getAllSellingLogs());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
             }
         }
 
