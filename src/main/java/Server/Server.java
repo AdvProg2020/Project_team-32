@@ -41,7 +41,7 @@ public class Server {
     private static class ClientHandler extends Thread{
 
         Socket socket;
-        Person loggedInUser;
+        Person logedInUser;
         final String status ="status";
         final String successful ="successful";
         ObjectOutputStream clientOutputStream;
@@ -70,9 +70,6 @@ public class Server {
                     switch ((String) command.get("commandType")){
                         case "register":
                             register(command);
-                            break;
-                        case "login":
-                            login(command);
                             break;
                         case "get good by ID":
                             getGoodForSeller(command);
@@ -119,6 +116,8 @@ public class Server {
                         case "get seller company name":
                             getSellerCompanyName(command);
                             break;
+                        case "set auction":
+                            setSellerAuction(command);
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -132,15 +131,15 @@ public class Server {
         private void login(JSONObject command) {
             Message message = new Message();
             try {
-                loggedInUser = AccountController.login((String) command.get("username"),(String) command.get("password"));
+                logedInUser = AccountController.login((String) command.get("username"),(String) command.get("password"));
                 message.put(status, successful);
-                if(loggedInUser instanceof Boss){
+                if(logedInUser instanceof Boss){
                     message.put("account type", "boss");
                 }
-                else if(loggedInUser instanceof Seller){
+                else if(logedInUser instanceof Seller){
                     message.put("account type", "seller");
                 }
-                else if(loggedInUser instanceof Customer){
+                else if(logedInUser instanceof Customer){
                     message.put("account type", "customer");
                 }
             } catch (WrongPasswordException e) {
@@ -153,10 +152,24 @@ public class Server {
             }
         }
 
+        private void setSellerAuction(JSONObject command) {
+            Message message = new Message();
+            try {
+                Good good = ((Seller)logedInUser).getGoodByID((String) command.get("goodID"));
+                int port = (int) command.get("port");
+                ((Seller)logedInUser).setAuction(new Auction((Seller)logedInUser,good,port));
+                message.put(status,successful);
+            } catch ( MultipleAuctionException e) {
+                message.put(status, "MultipleAuctionException");
+            } finally {
+                sendMessage(message);
+            }
+        }
+
         private void getSellerCompanyName(JSONObject command) {
             Message message = new Message();
             try {
-                message.put("company name",((Seller)loggedInUser).getFactoryName());
+                message.put("company name",((Seller)logedInUser).getFactoryName());
                 message.put(status,successful);
             } finally {
                 sendMessage(message);
@@ -166,7 +179,7 @@ public class Server {
         private void getSellerCategoryList(JSONObject command) {
             Message message = new Message();
             try {
-                message.put("category list",SellerController.showCategory((Seller)loggedInUser));
+                message.put("category list",SellerController.showCategory((Seller)logedInUser));
                 message.put(status,successful);
             } finally {
                 sendMessage(message);
@@ -176,7 +189,7 @@ public class Server {
         private void getSellerProductList(JSONObject command) {
             Message message = new Message();
             try {
-                message.put("product list",((Seller)loggedInUser).getSellingGoods());
+                message.put("product list",((Seller)logedInUser).getSellingGoods());
                 message.put(status,successful);
             } finally {
                 sendMessage(message);
@@ -186,7 +199,7 @@ public class Server {
         private void getSellerOffList(JSONObject command) {
             Message message = new Message();
             try {
-                message.put("off list",((Seller)loggedInUser).getOffs());
+                message.put("off list",((Seller)logedInUser).getOffs());
                 message.put(status,successful);
             } finally {
                 sendMessage(message);
@@ -199,7 +212,7 @@ public class Server {
                 String inputString =(String) command.get("inputString");
                 String pattern =(String)command.get("pattern");
                 String request = SellerController.makeRequest( inputString,pattern);
-                RequestController.addOffRequest(request.trim(), (Seller)loggedInUser);
+                RequestController.addOffRequest(request.trim(), (Seller)logedInUser);
                 message.put(status,successful);
             } catch ( InvalidPatternException e) {
                 message.put(status, "InvalidPatternException");
@@ -214,7 +227,7 @@ public class Server {
                 String inputString =(String) command.get("inputString");
                 String pattern =(String)command.get("pattern");
                 String request = SellerController.makeRequest(inputString,pattern);
-                RequestController.addEditOffRequest(request, (Seller)loggedInUser);
+                RequestController.addEditOffRequest(request, (Seller)logedInUser);
                 message.put(status,successful);
             } catch ( InvalidPatternException e) {
                 message.put(status, "InvalidPatternException");
@@ -226,7 +239,7 @@ public class Server {
         private void sendIndividualOff(JSONObject command) {
             Message message = new Message();
             try {
-                Off off = SellerController.getInddividualOff((Seller)loggedInUser, (String) command.get("offId"));
+                Off off = SellerController.getInddividualOff((Seller)logedInUser, (String) command.get("offId"));
                 message.put("off",off);
                 message.put(status,successful);
             } catch ( InvalidIDException e) {
@@ -239,7 +252,7 @@ public class Server {
         private void removeProduct(JSONObject command) {
             Message message = new Message();
             try {
-                SellerController.removeProduct((Seller)loggedInUser, (String) command.get("productId"));
+                SellerController.removeProduct((Seller)logedInUser, (String) command.get("productId"));
                 message.put(status,successful);
             } catch ( InvalidIDException e) {
                 message.put(status, "InvalidIDException");
@@ -260,7 +273,7 @@ public class Server {
                 String explanatiopn = (String)command.get("explanatiopn");
                 HashMap<String,String> properties = (HashMap<String, String>)command.get("properties");
                 GoodController.getGoodController().AddProduct(goodID, goodName, companyName,
-                        price, explanatiopn, properties, (Seller)loggedInUser, category);
+                        price, explanatiopn, properties, (Seller)logedInUser, category);
                 message.put(status,successful);
             } finally {
                 sendMessage(message);
@@ -273,8 +286,8 @@ public class Server {
             try {
                 Good good= Good.getGoodFromAllGoods(((Good) command.get("good")).getGoodID());
                 int price = (int)command.get("price");
-                good.addSellerAndPrice(loggedInUser.getUserName(), price);
-                ((Seller)loggedInUser).getSellingGoods().add(good);
+                good.addSellerAndPrice(logedInUser.getUserName(), price);
+                ((Seller)logedInUser).getSellingGoods().add(good);
                 message.put(status,successful);
             } finally {
                 sendMessage(message);
@@ -297,7 +310,7 @@ public class Server {
             try {
                 String goodID =((Good)command.get("good")).getGoodID();
                 String categoryName =((Category) command.get("category")).getName();
-                Good good = ((Seller)loggedInUser).getGoodByID(goodID);
+                Good good = ((Seller)logedInUser).getGoodByID(goodID);
                 Category category = CategoryController.getCategoryByName(categoryName);
                 String goodName = (String) command.get("goodName");
                 String companyName =(String)command.get("companyName");
@@ -305,7 +318,7 @@ public class Server {
                 String explanations = (String) command.get("explanatiopn");
                 HashMap<String,String> properties = (HashMap<String, String>)command.get("properties");
                 GoodController.getGoodController().editProduct(good, goodName, companyName, price
-                        , (Seller)loggedInUser, explanations, category, properties);
+                        , (Seller)logedInUser, explanations, category, properties);
                 message.put(status,successful);
             } catch ( CategoryNotFindException e) {
                 message.put(status, "CategoryNotFindException");
@@ -331,7 +344,7 @@ public class Server {
         private void getProductBuyers(JSONObject command) {
             Message message = new Message();
             try {
-                ArrayList<String> allBuyers = SellerController.viewProductBuyers((Seller) loggedInUser, (String) command.get("productId"));
+                ArrayList<String> allBuyers = SellerController.viewProductBuyers((Seller) logedInUser, (String) command.get("productId"));
                 message.put("allBuyers",allBuyers);
                 message.put(status,successful);
             } catch ( InvalidIDException e) {
@@ -345,7 +358,7 @@ public class Server {
         private void getGoodForSeller(JSONObject command)  {
             Message message = new Message();
             try {
-                Good good = SellerController.viewProduct((Seller) loggedInUser, (String) command.get("productId"));
+                Good good = SellerController.viewProduct((Seller) logedInUser, (String) command.get("productId"));
                 message.put("good",good);
                 message.put(status,successful);
             } catch ( InvalidIDException e) {
@@ -360,7 +373,6 @@ public class Server {
             try {
                AccountController.register((String) command.get("username"),(String) command.get("userType"),(String) command.get("password"));
                message.put(status,successful);
-               System.out.println("heeeey");
            }
            catch (DuplicateUsernameException e) {
                 message.put(status,"duplicate username exception");

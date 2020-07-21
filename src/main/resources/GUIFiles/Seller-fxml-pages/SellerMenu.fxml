@@ -103,5 +103,6 @@
 
         <Tab fx:id="offsPageTab" closable="false" />
         <Tab fx:id="logOutTab" closable="false" />
+        <Tab fx:id="auctionTab" closable="false"/>
     </tabs>
 </TabPane>

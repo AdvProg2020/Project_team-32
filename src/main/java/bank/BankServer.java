@@ -3,21 +3,29 @@ package bank;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
+
 import org.json.simple.JSONObject;
 
 public class BankServer {
-	
+	//TODO port should assign
 	private static int port;
-	
-	
+	private static List<Integer> notUsedTokens;
+	private static List<Integer> usedTokens;
+
+
+	//TODO by ali sharifi
+	//this part should remove
+    static {
+        System.out.println("i am initializing");
+        notUsedTokens = new ArrayList<>(10000);
+        usedTokens = new LinkedList<>();
+        for (int i = 1; i <= 10000; i++) {
+            notUsedTokens.add(i);
+        }
+        Collections.shuffle(notUsedTokens);
+    }
+
 	private static class InvalidToken extends Exception {
 		
 	}
@@ -39,7 +47,7 @@ public class BankServer {
 		private String username;
 		private String password;
 		private int accountId;
-		private List<Token> allTokens;
+		private final List<Token> allTokens;
 		private Token currentToken;
 		private List<Receipt> receiptsWithThisAccountAsSource = new LinkedList<>();
 		private List<Receipt> receiptssWithThisAccountAsDestination = new LinkedList<>();
@@ -61,22 +69,25 @@ public class BankServer {
 		}
 		
 		static ValidatingTokenStatus checkToken(int accountId, String token) {
-			for(Token t : Account.allAccounts.get(accountId - 1).allTokens) {
+		    for(Token t : Account.allAccounts.get(accountId - 1).allTokens) {
 				if(t.token.equals(token)) {
-					if(Account.allAccounts.get(accountId - 1).currentToken == t)
-						return ValidatingTokenStatus.valid;
-					else {
+					if(Account.allAccounts.get(accountId - 1).currentToken == t && Account.allAccounts.get(accountId - 1).currentToken.expirationDate.after(new Date())){
+                        return ValidatingTokenStatus.valid;
+                    } else {
 						return ValidatingTokenStatus.expired;
 					}
 				}
 			}
-			
+
 			return ValidatingTokenStatus.invalid;
 		}
 		
 		static int getAccountIdByToken(String token) throws ExpiredToken, InvalidToken {
 			for(Account account: allAccounts) {
 				if(account.currentToken.token.equals(token)) {
+				    if(account.currentToken.expirationDate.before(new Date())) {
+				        throw new ExpiredToken();
+                    }
 					return account.accountId;
 				}
 				for(Token t : account.allTokens) {
@@ -96,7 +107,7 @@ public class BankServer {
 	private enum ValidatingTokenStatus {
 		valid, invalid, expired
 	}
-	
+
 	private static class Token {
 		
 		private String token;
@@ -244,7 +255,7 @@ public class BankServer {
 		}
 		
 	}
-	
+
 	private static class MoveReceipt extends Receipt {
 
 		public MoveReceipt(ReceiptTypes type, int money, int sourceId, int destId, String description) {
@@ -267,12 +278,23 @@ public class BankServer {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		startListeningOnPort();
+	    //TODO loading notUsedTokens and usedTokens from database
+        if(notUsedTokens == null) {
+            System.out.println("i am initializing");
+            notUsedTokens = new ArrayList<>(10000);
+            usedTokens = new LinkedList<>();
+            for (int i = 1; i <= 10000; i++) {
+                notUsedTokens.add(i);
+            }
+            Collections.shuffle(notUsedTokens);
+        }
+	    startListeningOnPort();
 	}
 	
 	public static void startListeningOnPort() throws IOException {
 		ServerSocket serverSocket = new ServerSocket(port);
 		while(true) {
+		    System.out.println("i am waiting for client");
 			new HandleClientThread(serverSocket.accept()).start();
 		}
 	}
@@ -287,28 +309,35 @@ public class BankServer {
 				scanner = new Scanner(socket.getInputStream());
 				formatter = new Formatter(socket.getOutputStream());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
 		@Override
 		public void run() {
+		    System.out.println("client connected");
 			String command;
 			while(!(command = scanner.nextLine()).equals("exit")) {
 				String[] commandParts = command.split(" ");
-				if(commandParts[0].equals("create_account")) {
-					format(createAccount(commandParts));
-				} else if(commandParts[0].equals("get_token")) {
-					format(getToken(commandParts) + "" );
-				} else if(commandParts[0].equals("create_receipt")) {
-					format(createReceipt(commandParts));
-				} else if(commandParts[0].equals("get_transactions")) {
-					format(getTransactions(commandParts));
-				} else if(commandParts[0].equals("pay")) {
-					format(pay(commandParts));
-				} else if(commandParts[0].equals("getBalance")) {
-					format(getBalance(commandParts));
+				switch (commandParts[0]) {
+					case "create_account":
+						format(createAccount(commandParts));
+						break;
+					case "get_token":
+						format(getToken(commandParts) + "");
+						break;
+					case "create_receipt":
+						format(createReceipt(commandParts));
+						break;
+					case "get_transactions":
+						format(getTransactions(commandParts));
+						break;
+					case "pay":
+						format(pay(commandParts));
+						break;
+					case "getBalance":
+						format(getBalance(commandParts));
+						break;
 				}
 				
 				// TODO checking number of parameters in each of states
@@ -358,8 +387,8 @@ public class BankServer {
 		int money;
 		int sourceId;
 		int destId;
-		
-		
+
+
 		if(type == null) {
 			return "invalid receipt type";
 		}
@@ -402,7 +431,7 @@ public class BankServer {
 		if(type == ReceiptTypes.deposit) {
 			if(Account.checkToken(destId, token) == ValidatingTokenStatus.invalid) {
 				return "token is invalid";
-			} 
+			}
 			if(Account.checkToken(destId, token) == ValidatingTokenStatus.expired) {
 				return "token expired";
 			}
@@ -433,7 +462,6 @@ public class BankServer {
 		try {
 			String answer = "";
 			int accountId = Account.getAccountIdByToken(token);
-			
 			if(type.matches("\\d+")) {
 				for(Receipt receipt : Receipt.getAllReceiptsWithAccount(accountId)) {
 					if(receipt.receiptId == Integer.parseInt(type)) {
@@ -463,7 +491,6 @@ public class BankServer {
 					answer += "*";
 				}
 				break;
-				
 			}
 			
 			return answer;
@@ -517,10 +544,13 @@ public class BankServer {
 	}
 	
 	public static String generateToken(Account account) {
-		Random random = new Random();
-		Token token = new Token( random.nextInt(1000) + "");
+		int random = notUsedTokens.get(1);
+		notUsedTokens.remove(random);
+		usedTokens.add(random);
+	    Token token = new Token( random + "");
 		account.addToken(token);
 		return token.token;
 	}
-
 }
+
+//TODO expiring data

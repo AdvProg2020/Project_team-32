@@ -53,7 +53,7 @@ public class CreateReceiptTest {
 		String[] arg1 = new String[] {
 				"", "ali", "sharifi", "alisharifi", "ali", "ali"
 		};
-		BankServer.createAccount(arg1);
+		System.out.println(BankServer.createAccount(arg1));
 		
 		String[] arg2 = new String[] {
 				"", "hasan", "hosseini", "hasanHosseini", "55", "55"
