@@ -3,10 +3,7 @@ package View.RegisterPage;
 import Server.Controller.AccountController;
 import Server.Controller.Exeptions.UserDoesNotExistException;
 import Server.Controller.Exeptions.WrongPasswordException;
-import Server.Model.Boss;
-import Server.Model.Customer;
-import Server.Model.Person;
-import Server.Model.Seller;
+import Server.Model.*;
 import View.Client;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,6 +19,7 @@ import javafx.scene.control.TextField;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -35,56 +33,72 @@ public class LoginController implements Initializable {
         usernameField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(newValue) resetField(usernameField);
+                if (newValue) resetField(usernameField);
             }
         });
         passwordField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(newValue) resetField(passwordField);
+                if (newValue) resetField(passwordField);
             }
         });
     }
 
     public void resetField(Node field) {
         field.getStyleClass().remove("inputChoiceError");
-        if(field instanceof TextField) {
+        if (field instanceof TextField) {
             ((TextField) field).setText("");
         }
     }
 
     public void login(ActionEvent actionEvent) {
-        if(usernameField.getText().equals("")){
+        if (usernameField.getText().equals("")) {
             usernameField.getStyleClass().add("inputChoiceError");
             usernameField.setText("Can't be empty");
-        }
-        else if(passwordField.getText().equals("")){
+        } else if (passwordField.getText().equals("")) {
             passwordField.getStyleClass().add("inputChoiceError");
-        }
-        else{
-            try {
-                Person person = AccountController.login(usernameField.getText(),passwordField.getText());
-                URL url = null;
-                if(person instanceof Boss){
-                    url = new File("src\\main\\resources\\GUIFiles\\manager-tab-pane.fxml").toURI().toURL();
+        } else {
+
+            HashMap<String, Object> inputs = new HashMap<>();
+            inputs.put("username", usernameField.getText());
+            inputs.put("password", passwordField.getText());
+
+            Client.sendMessage("login", inputs);
+
+            Message serverAnswer = Client.getMessage();
+
+            if (serverAnswer.get("status").equals("successful")) {
+
+                try {
+                    URL url = null;
+                    if (serverAnswer.get("account type").equals("boss")) {
+                        url = new File("src\\main\\resources\\GUIFiles\\manager-tab-pane.fxml").toURI().toURL();
+                    } else if (serverAnswer.get("account type").equals("customer")) {
+                        url = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CustomerPage.fxml").toURI().toURL();
+                    } else if (serverAnswer.get("account type").equals("seller")) {
+                        url = new File("src\\main\\resources\\GUIFiles\\Seller-fxml-pages\\SellerMenu.fxml").toURI().toURL();
+                    }
+
+                    //set scene
+                    Scene scene = null;
+                    scene = new Scene(FXMLLoader.load(url));
+                    Client.primaryStage.setScene(scene);
+
+                } catch (IOException e) {
+                    System.err.println("error in loading scene.");
+                    e.printStackTrace();
                 }
-                else if(person instanceof Customer){
-                    url = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CustomerPage.fxml").toURI().toURL();
-                }
-                else if(person instanceof Seller){
-                    url = new File("src\\main\\resources\\GUIFiles\\Seller-fxml-pages\\SellerMenu.fxml").toURI().toURL();
-                }
-                Scene scene = new Scene(FXMLLoader.load(url));
-                Client.primaryStage.setScene(scene);
-            } catch (WrongPasswordException e) {
+
+
+            } else if (serverAnswer.get("status").equals("wrong password")) {
                 usernameField.getStyleClass().add("inputChoiceError");
                 usernameField.setText("Wrong Password");
-            } catch (UserDoesNotExistException e) {
+
+            } else if (serverAnswer.get("status").equals("user does not exist")) {
                 usernameField.getStyleClass().add("inputChoiceError");
                 usernameField.setText("Username Does'nt Exist");
-            } catch (IOException e) {
-                System.err.println("error in load files.");
             }
+
         }
     }
 }

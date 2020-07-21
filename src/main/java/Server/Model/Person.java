@@ -26,6 +26,7 @@ public abstract class Person implements Serializable {
     protected float credit;
 
     public static boolean hasPersonByUserName(String userName) {
+        System.out.println(allPersons);
         for (Person person : allPersons) {
             if (person.userName.equals(userName)) {
                 return true;
@@ -107,6 +108,7 @@ public abstract class Person implements Serializable {
     }
 
     public static Person getPersonByUserName(String userName) throws UserDoesNotExistException {
+        System.out.println(allPersons);
         for (Person person : allPersons) {
             if (person.userName.equals(userName)) {
                 return person;

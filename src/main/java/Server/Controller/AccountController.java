@@ -14,6 +14,8 @@ public class AccountController {
     public static Person loggedInUser;
 
     public static void register(String userName, String accountType, String passWord) throws DuplicateUsernameException {
+        System.out.println("salam");
+        System.out.println(userName + " " + accountType + " " + passWord);
         if (!Person.hasPersonByUserName(userName)) {
             if (accountType.equals("Customer")) {
                 new Customer(userName, passWord);
@@ -30,12 +32,11 @@ public class AccountController {
         person = Person.getPersonByUserName(username);
         if (!person.getPassWord().equals(password))
             throw new WrongPasswordException();
-        if (person instanceof Customer) {
+        /*if (person instanceof Customer) {
             ((Customer) person).setShoppingBaskets(((Guest) loggedInUser).getShoppingBaskets());
-        }
-        ((Guest) loggedInUser).clearShoppingBaskets();
-        loggedInUser = person;
-        System.out.println(loggedInUser);
+        }*/
+        //TODO out of comment
+        //((Guest) loggedInUser).clearShoppingBaskets();
         return person;
     }
 
