@@ -5,10 +5,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="paneClass" prefHeight="700" prefWidth="700" stylesheets="@balancePage.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.BalanceController">
+<AnchorPane fx:id="paneClass" prefHeight="700" prefWidth="700" stylesheets="@balancePage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.BalanceController">
    <children>
-      <Label fx:id="balance" layoutX="286.0" layoutY="146.0" prefHeight="48.0" prefWidth="128.0" text="balance" />
-      <TextField fx:id="textBalance" layoutX="275.0" layoutY="218.0" prefHeight="78.0" prefWidth="149.0" />
-      <Button fx:id="applyButton" layoutX="286.0" layoutY="322.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="128.0" text="apply" />
+      <Label fx:id="balance" layoutX="203.0" layoutY="151.0" prefHeight="48.0" prefWidth="128.0" text="balance" />
+      <TextField fx:id="textBalance" layoutX="202.0" layoutY="220.0" prefHeight="56.0" prefWidth="139.0" />
+      <Button fx:id="addButton" layoutX="363.0" layoutY="246.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="128.0" text="add money" />
+      <Button fx:id="takeMoneyButton" layoutX="363.0" layoutY="185.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="128.0" text="take money" />
    </children>
 </AnchorPane>

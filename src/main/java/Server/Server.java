@@ -148,6 +148,10 @@ public class Server {
                             break;
                         case "get individual buylog":
                             getIndividualBuylog(command);
+                            break;
+                        case "getCredit":
+                            getCredit(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -155,6 +159,16 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void getCredit(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("credit",logedInUser.getCredit());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
             }
         }
 

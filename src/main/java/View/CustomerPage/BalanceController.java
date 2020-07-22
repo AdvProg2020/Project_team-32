@@ -3,6 +3,9 @@ package View.CustomerPage;
 import Server.Controller.AccountController;
 import Server.Controller.Controller;
 import Server.Model.Customer;
+import Server.Model.Message;
+import View.Client;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class BalanceController implements Initializable {
@@ -26,20 +30,35 @@ public class BalanceController implements Initializable {
 
     @FXML
     private TextField textBalance;
-
     @FXML
-    private Button applyButton;
+    private  Button takeMoneyButton;
+    @FXML
+    private Button addButton;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         balance.setOnMouseEntered(event -> Controller.sound(1));
-        balance.setText(String.valueOf(((Customer) AccountController.loggedInUser).getCredit()));
-        applyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        if (AccountController.loggedInUser instanceof Customer){
+            takeMoneyButton.setVisible(false);
+        }
+        Client.sendMessage("getCredit", null);
+        Message message = Client.getMessage();
+        if (message.get("status").equals("successful")) {
+            balance.setText(String.valueOf((float)message.get("credit")));
+        }
+        addButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ((Customer)AccountController.loggedInUser).setCredit(((Customer) AccountController.loggedInUser).getCredit()+Float.parseFloat(textBalance.getText()));
-                balance.setText(String.valueOf(((Customer) AccountController.loggedInUser).getCredit()));
-                System.out.println("wdhaifudbj");
+//                ((Customer)AccountController.loggedInUser).setCredit(((Customer) AccountController.loggedInUser).getCredit()+Float.parseFloat(textBalance.getText()));
+//                balance.setText(String.valueOf(((Customer) AccountController.loggedInUser).getCredit()));
+//                System.out.println("wdhaifudbj");
+                //todo bank server get and send
+            }
+        });
+        takeMoneyButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //todo bank server get and send
             }
         });
     }
