@@ -164,12 +164,60 @@ public class Server {
                         case "getCredit":
                             getCredit(command);
                             break;
+                        case "get discounted price":
+                            getDiscountedPrice(command);
+                            break;
+                        case "pay by wallet":
+                            payByWallet(command);
+                            break;
+                        case "get discount percent":
+                            getDiscountPercent(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
                 } catch (SecurityException e) {
                     //TODO
                 }
+            }
+        }
+
+        private void getDiscountPercent(JSONObject command) {
+            Message message = new Message();
+            try {
+                String discountID = (String) command.get("id");
+                message.put("discount percent",PurchaseController.getDiscountPercent(discountID, (Customer)loggedInUser));
+                message.put(status, successful);
+            } catch (DiscountNotUsableException e) {
+                e.printStackTrace();
+            } catch (InvalidIDException e) {
+                e.printStackTrace();
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void payByWallet(JSONObject command) {
+            Message message = new Message();
+            try {
+                float a =(float)command.get("price");
+                float b =(float)command.get("discount");
+                PurchaseController.payCommand((Customer)loggedInUser, a, b);
+                message.put(status, successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getDiscountedPrice(JSONObject command) {
+            Message message = new Message();
+            try {
+                float a =(float)command.get("price");
+                float b =(float)command.get("discount");
+                message.put("discounted price",PurchaseController.getPriceDiscounted(a,b));
+                message.put(status, successful);
+            } finally {
+                sendMessage(message);
             }
         }
 
