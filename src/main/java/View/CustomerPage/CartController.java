@@ -4,6 +4,7 @@ import Server.Controller.PurchaseController;
 import Server.Controller.AccountController;
 import Server.Controller.Controller;
 import Server.Model.*;
+import View.Client;
 import View.IndividualGoodPage.IndividualGoodPageFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +26,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class CartController implements Initializable {
@@ -49,107 +49,31 @@ public class CartController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        purchase.setOnMouseEntered(event -> Controller.sound(1));
-        viewProduct.setOnMouseEntered(event -> Controller.sound(1));
-        totalPrice.setOnMouseEntered(event -> Controller.sound(2));
-        increaseIMG.setOnMouseEntered(event -> Controller.sound(0));
-        decreaseIMG.setOnMouseEntered(event -> Controller.sound(0));
-        purchase.setOnMouseClicked(event -> Controller.sound(3));
-        purchase.setOnMouseClicked(event -> Controller.sound(3));
-//        AccountController.loggedInUser = new Customer("yasin", "123");
-//        Customer customer = ((Customer) AccountController.loggedInUser);
-//        Seller seller = new Seller("mamad", "2");
-//        Good sib = new Good("sib", "1", seller, null, null, null, null, 100);
-//        Good porteghal = new Good("porthgal", "2", seller, null, null, null, null, 200);
-//        customer.getShoppingBaskets().add(new ShoppingBasket(sib, seller));
-//        customer.getShoppingBaskets().add(new ShoppingBasket(porteghal, seller));
-
-
-        goodIDColumn.setCellValueFactory(new PropertyValueFactory<>("GoodID"));
-        goodNameColumn.setCellValueFactory(new PropertyValueFactory<>("GoodName"));
-        numberColumn.setCellValueFactory(new PropertyValueFactory<>("Number"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("Price"));
-
-        ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
-
-        for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
-            Good good = shoppingBasket.getGood();
-            int price = good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
-            goodsList.add(new rowInfo(good.getGoodID(), good.getName(), shoppingBasket.getQuantity(), price));
-        }
-        cartTable.setItems(goodsList);
-
-
-        try {
-            URL url = new File("src\\main\\resources\\GUIFiles\\CustomerIcons\\icons8-add-100.png").toURI().toURL();
-            increaseIMG.setImage(new Image(String.valueOf(url)));
-            url = new File("src\\main\\resources\\GUIFiles\\CustomerIcons\\icons8-minus-100.png").toURI().toURL();
-            decreaseIMG.setImage(new Image(String.valueOf(url)));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
+        fixSound();
+        cartInitialize();
         increaseIMG.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String chosenID = cartTable.getSelectionModel().getSelectedItem().getGoodID();
-                for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
-                    if (shoppingBasket.getGood().getGoodID().equals(chosenID)) {
-                        shoppingBasket.setQuantity(shoppingBasket.getQuantity() + 1);
-                        System.out.println("salam1");
-                        break;
-                    }
-                }
-                cartTable.getItems().clear();
-                ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
-                for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
-                    Good good = shoppingBasket.getGood();
-                    int price = good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
-                    goodsList.add(new rowInfo(good.getGoodID(), good.getName(), shoppingBasket.getQuantity(), price));
-                }
-                cartTable.setItems(goodsList);
-            }
-        });
-        viewProduct.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                //TODO
+                increaseObj();
             }
         });
         decreaseIMG.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String chosenID = cartTable.getSelectionModel().getSelectedItem().getGoodID();
-                ShoppingBasket toRemove = null;
-                for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
-                    if (shoppingBasket.getGood().getGoodID().equals(chosenID)) {
-                        shoppingBasket.setQuantity(shoppingBasket.getQuantity() - 1);
-                        System.out.println("salam2");
-                        if (shoppingBasket.getQuantity() == 0) {
-                            toRemove = shoppingBasket;
-                        }
-                        break;
-                    }
-                }
-                if (toRemove != null) {
-                    ((Customer) AccountController.loggedInUser).getShoppingBaskets().remove(toRemove);
-                }
-                cartTable.getItems().clear();
-                ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
-                for (ShoppingBasket shoppingBasket : ((Customer) AccountController.loggedInUser).getShoppingBaskets()) {
-                    Good good = shoppingBasket.getGood();
-                    int price = good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
-                    goodsList.add(new rowInfo(good.getGoodID(), good.getName(), shoppingBasket.getQuantity(), price));
-                }
-                cartTable.setItems(goodsList);
+                decreaseObj();
             }
         });
         totalPrice.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 PurchaseController.passTime();
-                float fPrice = PurchaseController.calculatePrice(((Customer) AccountController.loggedInUser).getShoppingBaskets());
-                totalPrice.setText(String.valueOf(fPrice));
+                HashMap<String, Object> input = new HashMap<>();
+                Client.sendMessage("get shoppingBasket price", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    float fPrice = (float) message.get("price");
+                    totalPrice.setText(String.valueOf(fPrice));
+                }
             }
         });
         purchase.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -172,19 +96,146 @@ public class CartController implements Initializable {
             }
         });
         viewProduct.setOnMouseClicked(e -> {
-            try {
-                Stage window = new Stage();
-                String goodID = cartTable.getSelectionModel().getSelectedItem().getGoodID();
-                Good good = Good.getGoodById(goodID);
+            viewProductPage();
+        });
+    }
+
+    private void viewProductPage() {
+        try {
+            Stage window = new Stage();
+            String goodID = cartTable.getSelectionModel().getSelectedItem().getGoodID();
+            HashMap<String, Object> input = new HashMap<>();
+            input.put("productId", goodID);
+            Client.sendMessage("get good by ID from allGoods", input);
+            Message message = Client.getMessage();
+            if (message.get("status").equals("successful")) {
+                Good good = (Good) message.get("good");
                 Scene scene = new Scene(IndividualGoodPageFactory.createGoodPage(good));
                 window.setScene(scene);
                 window.setTitle(good.getName() + " page");
                 window.showAndWait();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
+            } else if (message.get("status").equals("")) {
 
+            }
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    private void decreaseObj() {
+        String chosenID = cartTable.getSelectionModel().getSelectedItem().getGoodID();
+        HashMap<String, Object> input = new HashMap<>();
+        Client.sendMessage("get shoppingBasket list", input);
+        Message message = Client.getMessage();
+        if (message.get("status").equals("successful")) {
+            for (ShoppingBasket shoppingBasket : (ArrayList<ShoppingBasket>) message.get("shoppingBasket list")) {
+                if (shoppingBasket.getGood().getGoodID().equals(chosenID)) {
+                    input = new HashMap<>();
+                    input.put("shoppingBasket", shoppingBasket);
+                    Client.sendMessage("decrease quantity shoppingBasket", input);
+                    message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        new Alert(Alert.AlertType.CONFIRMATION).show();
+                        cartTable.getItems().clear();
+                        ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
+                        input = new HashMap<>();
+                        Client.sendMessage("get shoppingBasket list", input);
+                        message = Client.getMessage();
+                        if (message.get("status").equals("successful")) {
+                            for (ShoppingBasket shoppingBasket1 : (ArrayList<ShoppingBasket>) message.get("shoppingBasket list")) {
+                                Good good = shoppingBasket1.getGood();
+                                int price = good.getSellerAndPrices().get(shoppingBasket1.getSeller().getUserName());
+                                goodsList.add(new rowInfo(good.getGoodID(), good.getName(), shoppingBasket1.getQuantity(), price));
+                            }
+                            cartTable.setItems(goodsList);
+                        }
+                    }
+                    break;
+                }
+            }
+        } else if (message.get("status").equals("InvalidIDException")) {
+            new Alert(Alert.AlertType.ERROR).show();
+        }
+    }
+
+    private void increaseObj() {
+        String chosenID = cartTable.getSelectionModel().getSelectedItem().getGoodID();
+        HashMap<String, Object> input = new HashMap<>();
+        Client.sendMessage("get shoppingBasket list", input);
+        Message message = Client.getMessage();
+        if (message.get("status").equals("successful")) {
+            for (ShoppingBasket shoppingBasket : (ArrayList<ShoppingBasket>) message.get("shoppingBasket list")) {
+                if (shoppingBasket.getGood().getGoodID().equals(chosenID)) {
+                    input = new HashMap<>();
+                    message.put("shoppingBasket", shoppingBasket);
+                    Client.sendMessage("increase quantity shoppingBasket", input);
+                    message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        new Alert(Alert.AlertType.CONFIRMATION).show();
+                        cartTable.getItems().clear();
+                        ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
+                        input = new HashMap<>();
+                        Client.sendMessage("get shoppingBasket list", input);
+                        message = Client.getMessage();
+                        if (message.get("status").equals("successful")) {
+                            for (ShoppingBasket shoppingBasket2 : (ArrayList<ShoppingBasket>) message.get("shoppingBasket list")) {
+                                Good good = shoppingBasket2.getGood();
+                                int price = good.getSellerAndPrices().get(shoppingBasket2.getSeller().getUserName());
+                                goodsList.add(new rowInfo(good.getGoodID(), good.getName(), shoppingBasket2.getQuantity(), price));
+                            }
+                            cartTable.setItems(goodsList);
+                        } else if (message.get("status").equals("InvalidIDException")) {
+                            new Alert(Alert.AlertType.ERROR).show();
+                        }
+                    } else if (message.get("status").equals("InvalidIDException")) {
+                        new Alert(Alert.AlertType.ERROR).show();
+                    }
+                    break;
+                }
+            }
+        } else if (message.get("status").equals("InvalidIDException")) {
+            new Alert(Alert.AlertType.ERROR).show();
+        }
+    }
+
+    private void fixSound() {
+        purchase.setOnMouseEntered(event -> Controller.sound(1));
+        viewProduct.setOnMouseEntered(event -> Controller.sound(1));
+        totalPrice.setOnMouseEntered(event -> Controller.sound(2));
+        increaseIMG.setOnMouseEntered(event -> Controller.sound(0));
+        decreaseIMG.setOnMouseEntered(event -> Controller.sound(0));
+        purchase.setOnMouseClicked(event -> Controller.sound(3));
+        purchase.setOnMouseClicked(event -> Controller.sound(3));
+    }
+
+    private void cartInitialize() {
+        try {
+            URL url = new File("src\\main\\resources\\GUIFiles\\CustomerIcons\\icons8-add-100.png").toURI().toURL();
+            increaseIMG.setImage(new Image(String.valueOf(url)));
+            url = new File("src\\main\\resources\\GUIFiles\\CustomerIcons\\icons8-minus-100.png").toURI().toURL();
+            decreaseIMG.setImage(new Image(String.valueOf(url)));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        goodIDColumn.setCellValueFactory(new PropertyValueFactory<>("GoodID"));
+        goodNameColumn.setCellValueFactory(new PropertyValueFactory<>("GoodName"));
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("Number"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("Price"));
+
+        ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
+        HashMap<String, Object> input = new HashMap<>();
+        Client.sendMessage("get shoppingBasket list", input);
+        Message message = Client.getMessage();
+        if (message.get("status").equals("successful")) {
+            for (ShoppingBasket shoppingBasket : (ArrayList<ShoppingBasket>) message.get("shoppingBasket list")) {
+                Good good = shoppingBasket.getGood();
+                int price = good.getSellerAndPrices().get(shoppingBasket.getSeller().getUserName());
+                goodsList.add(new rowInfo(good.getGoodID(), good.getName(), shoppingBasket.getQuantity(), price));
+            }
+            cartTable.setItems(goodsList);
+        } else if (message.get("status").equals("InvalidIDException")) {
+            new Alert(Alert.AlertType.ERROR).show();
+        }
 
     }
 

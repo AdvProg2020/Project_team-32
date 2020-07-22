@@ -125,6 +125,18 @@ public class Server {
                         case "get seller selllog list":
                             getSelllogList(command);
                             break;
+                        case "get shoppingBasket list":
+                            getShoppingBasketList(command);
+                            break;
+                        case "increase quantity shoppingBasket":
+                            increaseQuantityShoppingBasket(command);
+                            break;
+                        case "decrease quantity shoppingBasket":
+                            decreaseQuantityShoppingBasket(command);
+                            break;
+                        case "get shoppingBasket price":
+                            getShoppingBasketPrice(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -132,6 +144,62 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void getShoppingBasketPrice(JSONObject command) {
+            Message message=new Message();
+            try {
+                float fPrice = PurchaseController.calculatePrice(((Customer)logedInUser).getShoppingBaskets());
+                message.put("price",fPrice);
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void decreaseQuantityShoppingBasket(JSONObject command) {
+            Message message=new Message();
+            try {
+                ShoppingBasket toRemove =null;
+                ShoppingBasket shoppingBasket = (ShoppingBasket) message.get("shoppingBasket");
+                for (ShoppingBasket basket : ((Customer) logedInUser).getShoppingBaskets()) {
+                    if (shoppingBasket.getGood().getGoodID().equals(shoppingBasket.getGood().getGoodID())){
+                        basket.setQuantity(basket.getQuantity() - 1);
+                        if (basket.getQuantity()==0) toRemove=basket;
+                        break;
+                    }
+                }
+                if (toRemove!=null) ((Customer)logedInUser).getShoppingBaskets().remove(toRemove);
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void increaseQuantityShoppingBasket(JSONObject command) {
+            Message message=new Message();
+            try {
+                ShoppingBasket shoppingBasket = (ShoppingBasket) message.get("shoppingBasket");
+                for (ShoppingBasket basket : ((Customer) logedInUser).getShoppingBaskets()) {
+                    if (shoppingBasket.getGood().getGoodID().equals(shoppingBasket.getGood().getGoodID())){
+                        basket.setQuantity(basket.getQuantity() + 1);
+                        break;
+                    }
+                }
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getShoppingBasketList(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("shoppingBasket list",((Customer)logedInUser).getShoppingBaskets());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
             }
         }
 
