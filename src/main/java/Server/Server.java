@@ -12,8 +12,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 public class Server {
 
@@ -272,8 +270,7 @@ public class Server {
         private void getCustomerDiscounts(JSONObject command) {
             Message message=new Message();
             try {
-
-                message.put("discounts",loggedInUser.getDiscounts());
+                message.put("discounts",((Customer)loggedInUser).getDiscounts());
                 message.put(status,successful);
             } finally {
                 sendMessage(message);
@@ -599,9 +596,8 @@ public class Server {
 
         private void sendMessage(Message message) {
             try {
-                System.out.println("this shet is from server send message  "+message);
                 clientOutputStream.writeObject(message);
-//                clientOutputStream.flush();
+                clientOutputStream.flush();
                 clientOutputStream.reset();
             } catch (IOException e) {
                 System.err.println("can't send message.");
