@@ -38,9 +38,8 @@ public class UserManagerPageController implements Initializable {
     }
 
     private ArrayList<Person> getAllPerson() {
-        Client.sendMessage("get all persons",new HashMap<>());
+        Client.sendMessage("get all persons", new HashMap<>());
         Message serverAnswer = Client.getMessage();
-        System.out.println(serverAnswer);
         return (ArrayList<Person>) serverAnswer.get("all persons");
     }
 
@@ -85,10 +84,14 @@ public class UserManagerPageController implements Initializable {
 
             if (passwordResult.isPresent()) {
                 password = passwordResult.get();
-                try {
-                    BossController.createManager(username, password);
-                    updateTable();
-                } catch (DuplicateUsernameException e) {
+
+                HashMap<String, Object> inputs = new HashMap<>();
+                inputs.put("username", username);
+                inputs.put("password", password);
+                Client.sendMessage("create manager", inputs);
+                Message serverAnswer = Client.getMessage();
+                updateTable();
+                if (serverAnswer.get("status").equals("duplicate username")) {
                     new Alert(Alert.AlertType.WARNING, "username is already taken.").show();
                 }
             }

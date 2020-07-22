@@ -175,7 +175,6 @@ public class Server {
 
         private void getAllPersons() {
             Message serverAnswer = new Message();
-            System.out.println(Person.allPersons);
             serverAnswer.put("all persons", Person.allPersons);
             sendMessage(serverAnswer);
         }
