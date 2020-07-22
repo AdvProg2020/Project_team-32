@@ -79,7 +79,8 @@ public class OrdersController implements Initializable {
         rateVbox.setVisible(false);
         logCol.setCellValueFactory(new PropertyValueFactory<>("LogID"));
         ObservableList<BuyLog> logList = FXCollections.observableArrayList();
-        Client.sendMessage("get buylogs", null);
+        HashMap<String, Object> input = new HashMap<>();
+        Client.sendMessage("get buylogs", input);
         Message message = Client.getMessage();
         if (message.get("status").equals("successful")) {
             for (BuyLog buyLog : (ArrayList<BuyLog>)message.get("buyLogs")) {

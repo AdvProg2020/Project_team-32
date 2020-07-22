@@ -65,7 +65,7 @@ public class Client extends Application {
 
         try {
             clientOutputStream.writeObject(message);
-            clientOutputStream.flush();
+            clientOutputStream.reset();
         } catch (IOException e) {
             System.err.println("error in write message.");
         }

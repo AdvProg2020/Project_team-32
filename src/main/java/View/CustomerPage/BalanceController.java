@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class BalanceController implements Initializable {
     public AnchorPane paneClass;
@@ -41,7 +42,8 @@ public class BalanceController implements Initializable {
         if (AccountController.loggedInUser instanceof Customer){
             takeMoneyButton.setVisible(false);
         }
-        Client.sendMessage("getCredit", null);
+        HashMap<String, Object> input = new HashMap<>();
+        Client.sendMessage("getCredit", input);
         Message message = Client.getMessage();
         if (message.get("status").equals("successful")) {
             balance.setText(String.valueOf((float)message.get("credit")));

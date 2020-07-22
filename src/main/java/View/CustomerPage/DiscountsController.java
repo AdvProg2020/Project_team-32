@@ -49,11 +49,13 @@ public class DiscountsController implements Initializable {
         maxAmount_col.setCellValueFactory(new PropertyValueFactory<>("MaxAmountString"));
         count_col.setCellValueFactory(new PropertyValueFactory<>("UseCountString"));
         ObservableList<Discount> discountList = FXCollections.observableArrayList();
-
-        Client.sendMessage("get customer discounts", null);
+        HashMap<String, Object> input = new HashMap<>();
+        Client.sendMessage("get customer discounts", input);
+        System.out.println("fuck");
         Message message = Client.getMessage();
+        System.out.println(message);
         if (message.get("status").equals("successful")) {
-            for (Discount discount : (ArrayList<Discount>)message.get("discounts")) {
+            for (Discount discount : ((HashMap<Discount,Integer>)message.get("discounts")).keySet()) {
                 discountList.add(discount);
             }
             discountTable.getItems().clear();
