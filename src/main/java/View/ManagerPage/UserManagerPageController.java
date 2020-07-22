@@ -3,13 +3,17 @@ package View.ManagerPage;
 import Server.Controller.AccountController;
 import Server.Controller.BossController;
 import Server.Controller.Exeptions.DuplicateUsernameException;
+import Server.Model.Message;
 import Server.Model.Person;
+import View.Client;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -29,20 +33,33 @@ public class UserManagerPageController implements Initializable {
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("passWord"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneID"));
-        usersTable.setItems(FXCollections.observableArrayList(Person.allPersons));
+        System.out.println("initial table");
+        updateTable();
     }
 
-    public void remove(){
-        if(usersTable.getSelectionModel().getSelectedItem() != null){
-            AccountController.deleteUser(usersTable.getSelectionModel().getSelectedItem());
+    private ArrayList<Person> getAllPerson() {
+        Client.sendMessage("get all persons",new HashMap<>());
+        Message serverAnswer = Client.getMessage();
+        System.out.println(serverAnswer);
+        return (ArrayList<Person>) serverAnswer.get("all persons");
+    }
+
+    public void remove() {
+        if (usersTable.getSelectionModel().getSelectedItem() != null) {
+            HashMap<String, Object> inputs = new HashMap<>();
+            inputs.put("username", usersTable.getSelectionModel().getSelectedItem().getUserName());
+            Client.sendMessage("remove user", inputs);
+            Message serverAnswer = Client.getMessage();
+            if (serverAnswer.get("status").equals("username does not exist exception")) {
+                new Alert(Alert.AlertType.WARNING, "user does not exist.").show();
+            }
             updateTable();
-        }
-        else {
-            new Alert(Alert.AlertType.WARNING,"Should select a user.").show();
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Should select a user.").show();
         }
     }
 
-    public void addManager(){
+    public void addManager() {
 
         String username;
         String password;
@@ -59,20 +76,20 @@ public class UserManagerPageController implements Initializable {
         //to get username
         Optional<String> usernameResult = usernameDialog.showAndWait();
 
-        if(usernameResult.isPresent()){ //check if button ok clicked
+        if (usernameResult.isPresent()) { //check if button ok clicked
 
             username = usernameResult.get();
 
             //to get password
             Optional<String> passwordResult = passwordDialog.showAndWait();
 
-            if(passwordResult.isPresent()){
+            if (passwordResult.isPresent()) {
                 password = passwordResult.get();
                 try {
-                    BossController.createManager(username,password);
+                    BossController.createManager(username, password);
                     updateTable();
                 } catch (DuplicateUsernameException e) {
-                    new Alert(Alert.AlertType.WARNING,"username is already taken.").show();
+                    new Alert(Alert.AlertType.WARNING, "username is already taken.").show();
                 }
             }
 
@@ -81,9 +98,9 @@ public class UserManagerPageController implements Initializable {
     }
 
 
-    public void updateTable(){
+    public void updateTable() {
         usersTable.getItems().clear();
-        usersTable.getItems().addAll(FXCollections.observableArrayList(Person.allPersons));
+        usersTable.getItems().addAll(FXCollections.observableArrayList(getAllPerson()));
     }
 
 }

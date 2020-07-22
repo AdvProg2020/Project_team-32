@@ -13,8 +13,7 @@ import java.util.Date;
 public class Controller {
     private static Date date = null;
 
-    public static boolean isBossCreated;
-
+    private static boolean isBossCreated;
 
     public static void initialize(){
         (new Thread() {
@@ -142,4 +141,11 @@ public class Controller {
         mediaPlayer.play();
     }
 
+    public static void setIsBossCreated(boolean isBossCreated) {
+        Controller.isBossCreated = isBossCreated;
+    }
+
+    public static boolean hasBossCreated() {
+        return isBossCreated;
+    }
 }

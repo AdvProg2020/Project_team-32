@@ -14,8 +14,6 @@ public class AccountController {
     public static Person loggedInUser;
 
     public static void register(String userName, String accountType, String passWord) throws DuplicateUsernameException {
-        System.out.println("salam");
-        System.out.println(userName + " " + accountType + " " + passWord);
         if (!Person.hasPersonByUserName(userName)) {
             if (accountType.equals("Customer")) {
                 new Customer(userName, passWord);
@@ -40,7 +38,8 @@ public class AccountController {
         return person;
     }
 
-    public static void deleteUser(Person person) {
+    public static void deleteUser(String username) throws UserDoesNotExistException {
+        Person person = Person.getPersonByUserName(username);
         Person.allPersons.remove(person);
         if (person instanceof Seller) {
             ArrayList<Good> goods = ((Seller) person).getSellingGoods();
@@ -48,10 +47,6 @@ public class AccountController {
                 good.removeSeller((Seller) person);
             }
         }
-    }
-
-    public static Person getUser(String username) throws UserDoesNotExistException {
-        return Person.getPersonByUserName(username);
     }
 
     public static ArrayList<Customer> getAllCustomer() {

@@ -3,6 +3,8 @@ package View;
 import Server.Controller.Controller;
 import Server.Controller.BossController;
 import Server.Controller.Exeptions.DuplicateUsernameException;
+import Server.Model.Message;
+import Server.Server;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -12,6 +14,7 @@ import javafx.scene.control.TextInputDialog;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -26,7 +29,7 @@ public class MainPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
-        while (!Controller.isBossCreated){
+        while (!isBossCreated()) {
             addManager();
         }
 
@@ -49,7 +52,13 @@ public class MainPageController implements Initializable {
         }
     }
 
-    public void addManager(){
+    private boolean isBossCreated() {
+        Client.sendMessage("get boss status",new HashMap<>());
+        Message serverAnswer = Client.getMessage();
+        return (boolean) serverAnswer.get("boss status");
+    }
+
+    public void addManager() {
 
         String username;
         String password;
@@ -66,26 +75,27 @@ public class MainPageController implements Initializable {
         //to get username
         Optional<String> usernameResult = usernameDialog.showAndWait();
 
-        if(usernameResult.isPresent()){ //check if button ok clicked
+        if (usernameResult.isPresent()) { //check if button ok clicked
 
             username = usernameResult.get();
 
             //to get password
             Optional<String> passwordResult = passwordDialog.showAndWait();
 
-            if(passwordResult.isPresent()){
+            if (passwordResult.isPresent()) {
                 password = passwordResult.get();
-                try {
-                   BossController.createManager(username,password);
-                   Controller.isBossCreated = true;
-                } catch (DuplicateUsernameException e) {
-                    new Alert(Alert.AlertType.WARNING,"username is already taken.").show();
+                HashMap<String, Object> inputs = new HashMap<>();
+                inputs.put("username", username);
+                inputs.put("password", password);
+                Client.sendMessage("create manager", inputs);
+                Message serverAnswer = Client.getMessage();
+                if (serverAnswer.get("status").equals("duplicate username")) {
+                    new Alert(Alert.AlertType.WARNING, "username is already taken.").show();
                 }
             }
 
         }
 
     }
-
 
 }

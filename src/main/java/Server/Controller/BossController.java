@@ -17,6 +17,7 @@ public class BossController {
     public static void createManager(String username, String password) throws DuplicateUsernameException {
         if (!Person.hasPersonByUserName(username)) {
             new Boss(username, password);
+            Controller.setIsBossCreated(true);
         } else {
             throw new DuplicateUsernameException();
         }
