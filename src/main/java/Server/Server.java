@@ -137,6 +137,33 @@ public class Server {
                         case "get seller selllog list":
                             getSelllogList(command);
                             break;
+                        case "get shoppingBasket list":
+                            getShoppingBasketList(command);
+                            break;
+                        case "increase quantity shoppingBasket":
+                            increaseQuantityShoppingBasket(command);
+                            break;
+                        case "decrease quantity shoppingBasket":
+                            decreaseQuantityShoppingBasket(command);
+                            break;
+                        case "get shoppingBasket price":
+                            getShoppingBasketPrice(command);
+                            break;
+                        case "get customer discounts":
+                            getCustomerDiscounts(command);
+                            break;
+                        case"get buylogs":
+                            getBuylogs(command);
+                            break;
+                        case "rate":
+                            rate(command);
+                            break;
+                        case "get individual buylog":
+                            getIndividualBuylog(command);
+                            break;
+                        case "getCredit":
+                            getCredit(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -185,6 +212,123 @@ public class Server {
                 message.put(status, "username does not exist exception");
             }
             finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getCredit(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("credit",loggedInUser.getCredit());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getIndividualBuylog(JSONObject command) {
+            Message message=new Message();
+            try {
+                BuyLog log =CustomerController.getBugLogWithId((String)command.get("ID"),(Customer)loggedInUser);
+                message.put("buylog",log);
+                message.put(status,successful);
+            } catch ( InvalidIDException e) {
+                message.put(status,"InvalidIDException");
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void rate(JSONObject command) {
+
+            Message message=new Message();
+            try {
+                String id = (String)command.get("IDrate");
+                int point =(int)command.get("pointRate");
+                CustomerController.rateProduct(id,point,(Customer)loggedInUser);
+                message.put("buyLogs",((Customer)loggedInUser).getAllBuyLogs());
+                message.put(status,successful);
+            } catch ( RateException e) {
+                message.put(status,"RateException");
+            } finally {
+                sendMessage(message);
+            }
+
+
+        }
+
+        private void getBuylogs(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("buyLogs",((Customer)loggedInUser).getAllBuyLogs());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getCustomerDiscounts(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("discounts",((Customer)loggedInUser).getDiscounts());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getShoppingBasketPrice(JSONObject command) {
+            Message message=new Message();
+            try {
+                float fPrice = PurchaseController.calculatePrice(((Customer)loggedInUser).getShoppingBaskets());
+                message.put("price",fPrice);
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void decreaseQuantityShoppingBasket(JSONObject command) {
+            Message message=new Message();
+            try {
+                ShoppingBasket toRemove =null;
+                ShoppingBasket shoppingBasket = (ShoppingBasket) message.get("shoppingBasket");
+                for (ShoppingBasket basket : ((Customer) loggedInUser).getShoppingBaskets()) {
+                    if (shoppingBasket.getGood().getGoodID().equals(shoppingBasket.getGood().getGoodID())){
+                        basket.setQuantity(basket.getQuantity() - 1);
+                        if (basket.getQuantity()==0) toRemove=basket;
+                        break;
+                    }
+                }
+                if (toRemove!=null) ((Customer)loggedInUser).getShoppingBaskets().remove(toRemove);
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void increaseQuantityShoppingBasket(JSONObject command) {
+            Message message=new Message();
+            try {
+                ShoppingBasket shoppingBasket = (ShoppingBasket) message.get("shoppingBasket");
+                for (ShoppingBasket basket : ((Customer) loggedInUser).getShoppingBaskets()) {
+                    if (shoppingBasket.getGood().getGoodID().equals(shoppingBasket.getGood().getGoodID())){
+                        basket.setQuantity(basket.getQuantity() + 1);
+                        break;
+                    }
+                }
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getShoppingBasketList(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("shoppingBasket list",((Customer)loggedInUser).getShoppingBaskets());
+                message.put(status,successful);
+            } finally {
                 sendMessage(message);
             }
         }

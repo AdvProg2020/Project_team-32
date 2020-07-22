@@ -6,6 +6,8 @@ import Server.Controller.CustomerController;
 import Server.Controller.Exeptions.InvalidIDException;
 import Server.Model.BuyLog;
 import Server.Model.Customer;
+import Server.Model.Message;
+import View.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -17,6 +19,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class OrdersController implements Initializable {
@@ -69,6 +73,72 @@ public class OrdersController implements Initializable {
     private VBox rateVbox;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        fixSounds();
+
+        orderVBox.setVisible(false);
+        rateVbox.setVisible(false);
+        logCol.setCellValueFactory(new PropertyValueFactory<>("LogID"));
+        ObservableList<BuyLog> logList = FXCollections.observableArrayList();
+        Client.sendMessage("get buylogs", null);
+        Message message = Client.getMessage();
+        if (message.get("status").equals("successful")) {
+            for (BuyLog buyLog : (ArrayList<BuyLog>)message.get("buyLogs")) {
+                logList.add(buyLog);
+            }
+            table.setItems(logList);
+        }
+
+        ratePageButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                table.setVisible(false);
+                rateVbox.setVisible(true);
+                rateButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        HashMap<String,Object> input = new HashMap<>();
+                        input.put("IDrate",IdTextField.getText().trim());
+                        input.put("pointRate",Integer.parseInt(rateTextFied.getText().trim()));
+                        Client.sendMessage("rate", input);
+                        Message message = Client.getMessage();
+                        if (message.get("status").equals("successful")) {
+                            new Alert(Alert.AlertType.CONFIRMATION).show();
+                        }else if (message.get("status").equals("RateException")){
+                            Alert alert =new Alert(Alert.AlertType.ERROR);
+                            alert.setContentText("RateException");
+                            alert.show();                        }
+                    }
+                });
+            }
+        });
+        orderShowPageButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //                    BuyLog log =CustomerController.getBugLogWithId(IdTextField.getText().trim(),((Customer)AccountController.loggedInUser));
+                HashMap<String,Object> input = new HashMap<>();
+                input.put("ID",IdTextField.getText().trim());
+                Client.sendMessage("get individual buylog", input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")) {
+                    BuyLog log = (BuyLog) message.get("buylog");
+                    table.setVisible(false);
+                    orderVBox.setVisible(true);
+                    LogID_VBox.setText("log ID :"+log.getLogID());
+                    date_VBox.setText("date: "+log.getDate().toString());
+                    goodName_VBox.setText("good's Name: "+log.getGoodsBought().getName());
+                    seller_VBox.setText("seller name: "+log.getSellerUserName());
+                    price_VBox.setText("price paid: "+log.getPricePaid());
+                }else if (message.get("status").equals("InvalidIDException")){
+                    Alert alert =new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("InvalidIDException");
+                    alert.show();
+                }
+
+            }
+        });
+    }
+
+    private void fixSounds() {
         orderShowPageButton.setOnMouseClicked(event -> Controller.sound(3));
         rateButton.setOnMouseClicked(event -> Controller.sound(3));
         ratePageButton.setOnMouseClicked(event -> Controller.sound(3));
@@ -84,54 +154,5 @@ public class OrdersController implements Initializable {
         LogID_VBox.setOnMouseEntered(event -> Controller.sound(2));
         rateResult.setOnMouseEntered(event -> Controller.sound(2));
         result_Label.setOnMouseEntered(event -> Controller.sound(2));
-
-
-
-
-        orderVBox.setVisible(false);
-        rateVbox.setVisible(false);
-        logCol.setCellValueFactory(new PropertyValueFactory<>("LogID"));
-        ObservableList<BuyLog> logList = FXCollections.observableArrayList();
-        for (BuyLog buyLog : ((Customer) AccountController.loggedInUser).getAllBuyLogs()) {
-            logList.add(buyLog);
-        }
-        table.setItems(logList);
-        ratePageButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                table.setVisible(false);
-                rateVbox.setVisible(true);
-                rateButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        try {
-                            CustomerController.rateProduct(IdTextField.getText().trim(), Integer.parseInt(rateTextFied.getText().trim()), ((Customer)AccountController.loggedInUser));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            rateResult.setText("you have entered wrong ID or wrong Rate number");
-                        }
-                    }
-                });
-            }
-        });
-        orderShowPageButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try{
-                    BuyLog log =CustomerController.getBugLogWithId(IdTextField.getText().trim(),((Customer)AccountController.loggedInUser));
-                    table.setVisible(false);
-                    orderVBox.setVisible(true);
-                    LogID_VBox.setText("log ID :"+log.getLogID());
-                    date_VBox.setText("date: "+log.getDate().toString());
-                    goodName_VBox.setText("good's Name: "+log.getGoodsBought().getName());
-                    seller_VBox.setText("seller name: "+log.getSellerUserName());
-                    price_VBox.setText("price paid: "+log.getPricePaid());
-                }
-                catch (InvalidIDException e){
-                    System.out.println("Invalid ID");
-                    result_Label.setText("invalid ID");
-                }
-            }
-        });
     }
 }

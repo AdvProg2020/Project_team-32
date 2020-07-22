@@ -1,6 +1,7 @@
 package Server.Controller;
 
 import Server.Controller.Exeptions.InvalidIDException;
+import Server.Controller.Exeptions.RateException;
 import Server.Model.*;
 
 // import org.graalvm.compiler.nodes.extended.OSRStartNode;
@@ -17,14 +18,14 @@ public class CustomerController {
         throw new InvalidIDException();
     }
 
-    public static void rateProduct(String goodId, int point, Customer customer) throws Exception {
+    public static void rateProduct(String goodId, int point, Customer customer) throws RateException {
         for (BuyLog log : customer.getAllBuyLogs()) {
             if(log.getGoodsBought().getGoodID().equals(goodId) && point>0 && point<6){
                 log.getGoodsBought().setPoint(point);
                 return;
             }
         }
-        throw new Exception();
+        throw new RateException();
     }
 
     public static String showProducts(Person person) {
