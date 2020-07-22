@@ -140,6 +140,14 @@ public class Server {
                         case "get customer discounts":
                             getCustomerDiscounts(command);
                             break;
+                        case"get buylogs":
+                            getBuylogs(command);
+                            break;
+                        case "rate":
+                            rate(command);
+                            break;
+                        case "get individual buylog":
+                            getIndividualBuylog(command);
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -147,6 +155,47 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void getIndividualBuylog(JSONObject command) {
+            Message message=new Message();
+            try {
+                BuyLog log =CustomerController.getBugLogWithId((String)command.get("ID"),(Customer)logedInUser);
+                message.put("buylog",log);
+                message.put(status,successful);
+            } catch ( InvalidIDException e) {
+                message.put(status,"InvalidIDException");
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void rate(JSONObject command) {
+
+            Message message=new Message();
+            try {
+                String id = (String)command.get("IDrate");
+                int point =(int)command.get("pointRate");
+                CustomerController.rateProduct(id,point,(Customer)logedInUser);
+                message.put("buyLogs",((Customer)logedInUser).getAllBuyLogs());
+                message.put(status,successful);
+            } catch ( RateException e) {
+                message.put(status,"RateException");
+            } finally {
+                sendMessage(message);
+            }
+
+
+        }
+
+        private void getBuylogs(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("buyLogs",((Customer)logedInUser).getAllBuyLogs());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
             }
         }
 
