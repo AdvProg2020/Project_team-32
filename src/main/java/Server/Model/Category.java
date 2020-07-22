@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Category implements Serializable {
 
     private static ArrayList<Category> allCategories = new ArrayList<>();
-    public static Category rootCategory;
+    public static Category rootCategory = new Category(null, null, null);
     private String name;
     private ArrayList<Category> subCategory;
     private ArrayList<Good> categoryProduct;

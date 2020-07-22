@@ -18,7 +18,7 @@ public class FilterItemFactory {
         checkBox.setOnAction(e -> {
             if(checkBox.isSelected()) {
                 try {
-                    filterable.filter(filterLable.getText(), controller.valueOfFileter());
+                    filterable.filter(filterLable.getText(), controller.valueOfFilter());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

@@ -14,10 +14,9 @@ public class BankServer {
 	private static List<Integer> usedTokens;
 
 
-	//TODO by ali sharifi
-	//this part should remove
+	//TODO by ali shari
+
     static {
-        System.out.println("i am initializing");
         notUsedTokens = new ArrayList<>(10000);
         usedTokens = new LinkedList<>();
         for (int i = 1; i <= 10000; i++) {
@@ -25,6 +24,9 @@ public class BankServer {
         }
         Collections.shuffle(notUsedTokens);
     }
+
+    //this part should remove
+
 
 	private static class InvalidToken extends Exception {
 		
@@ -321,28 +323,51 @@ public class BankServer {
 				String[] commandParts = command.split(" ");
 				switch (commandParts[0]) {
 					case "create_account":
+					    if (commandParts.length != 6) {
+                            System.out.println("invalid input");
+                            break;
+                        }
 						format(createAccount(commandParts));
 						break;
 					case "get_token":
+                        if (commandParts.length != 3) {
+                            System.out.println("invalid input");
+                            break;
+                        }
 						format(getToken(commandParts) + "");
 						break;
 					case "create_receipt":
+                        if (commandParts.length != 7) {
+                            System.out.println("invalid input");
+                            break;
+                        }
 						format(createReceipt(commandParts));
 						break;
 					case "get_transactions":
+                        if (commandParts.length != 3) {
+                            System.out.println("invalid input");
+                            break;
+                        }
 						format(getTransactions(commandParts));
 						break;
 					case "pay":
+                        if (commandParts.length != 2) {
+                            System.out.println("invalid input");
+                            break;
+                        }
 						format(pay(commandParts));
 						break;
 					case "getBalance":
+                        if (commandParts.length != 2) {
+                            System.out.println("invalid input");
+                            break;
+                        }
 						format(getBalance(commandParts));
 						break;
+                    default:
+                        System.out.println("invalid input");
 				}
-				
-				// TODO checking number of parameters in each of states
 			}
-			
 		}
 		
 		private void format(String msg) {
@@ -350,7 +375,7 @@ public class BankServer {
 			formatter.flush();
 		}
 	}
-	
+
 	public static String createAccount(String[] commandParts) {
 		String firstname = commandParts[1];
 		String lastname = commandParts[2];
@@ -542,7 +567,7 @@ public class BankServer {
 			return "token is invalid";
 		}
 	}
-	
+
 	public static String generateToken(Account account) {
 		int random = notUsedTokens.get(1);
 		notUsedTokens.remove(random);
@@ -553,4 +578,4 @@ public class BankServer {
 	}
 }
 
-//TODO expiring data
+//TODO expiring date -> done by ali sharifi
