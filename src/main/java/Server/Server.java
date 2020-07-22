@@ -598,6 +598,7 @@ public class Server {
             try {
                 clientOutputStream.writeObject(message);
                 clientOutputStream.flush();
+                clientOutputStream.reset();
             } catch (IOException e) {
                 System.err.println("can't send message.");
                 e.printStackTrace();
