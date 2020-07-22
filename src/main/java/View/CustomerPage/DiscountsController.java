@@ -3,6 +3,8 @@ package View.CustomerPage;
 import Server.Controller.AccountController;
 import Server.Model.Customer;
 import Server.Model.Discount;
+import Server.Model.Message;
+import View.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +14,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class DiscountsController implements Initializable {
@@ -45,11 +49,16 @@ public class DiscountsController implements Initializable {
         maxAmount_col.setCellValueFactory(new PropertyValueFactory<>("MaxAmountString"));
         count_col.setCellValueFactory(new PropertyValueFactory<>("UseCountString"));
         ObservableList<Discount> discountList = FXCollections.observableArrayList();
-        for (Discount discount : ((Customer) AccountController.loggedInUser).getDiscounts().keySet()) {
-            discountList.add(discount);
+
+        Client.sendMessage("get customer discounts", null);
+        Message message = Client.getMessage();
+        if (message.get("status").equals("successful")) {
+            for (Discount discount : (ArrayList<Discount>)message.get("discounts")) {
+                discountList.add(discount);
+            }
+            discountTable.getItems().clear();
+            discountTable.getItems().addAll(discountList);
         }
-        discountTable.getItems().clear();
-        discountTable.getItems().addAll(discountList);
 
     }
 }

@@ -137,6 +137,9 @@ public class Server {
                         case "get shoppingBasket price":
                             getShoppingBasketPrice(command);
                             break;
+                        case "get customer discounts":
+                            getCustomerDiscounts(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -144,6 +147,16 @@ public class Server {
                 catch (SecurityException e){
                     //TODO
                 }
+            }
+        }
+
+        private void getCustomerDiscounts(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("discounts",((Customer)logedInUser).getDiscounts());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
             }
         }
 
