@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 
 public class BankServer {
 	//TODO port should assign
-	private static int port;
+	private static int port = 4200;
 	private static List<Integer> notUsedTokens;
 	private static List<Integer> usedTokens;
 
@@ -357,7 +357,7 @@ public class BankServer {
                         }
 						format(pay(commandParts));
 						break;
-					case "getBalance":
+					case "get_balance":
                         if (commandParts.length != 2) {
                             System.out.println("invalid input");
                             break;
