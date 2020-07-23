@@ -44,7 +44,7 @@ public class Server {
     }
 
     private static class ClientHandler extends Thread {
-
+        BankServer bankServer;
         Socket socket;
         Person loggedInUser;
         final String status = "status";
@@ -66,7 +66,8 @@ public class Server {
         }
 
 
-        public void handleCommands() {
+        private void handleCommands() {
+            bankServer = new BankServer();
             JSONObject command;
             while (true) {
                 try {
@@ -240,8 +241,12 @@ public class Server {
                         case "get allAuctions":
                             getAllAuctions(command);
                             break;
-//                        case "pay by bank":
-//                            payByBank(command);
+                        case "transfer from bank to purse":
+                            transferFromBankToPurse(command);
+                            break;
+                        case "transfer from purse to bank":
+                            transferFromPurseToBank(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -338,7 +343,7 @@ public class Server {
             return "aaaa";
         }
 
-        private static String handleAccountID() {
+        private String handleAccountID() {
             if (bankServer.getAccountID() == -1) {
                 String message = "create_account " + Client.user.getFirstName() + " " + Client.user.getLastName()
                         + " " + Client.user.getUserName() + " " + Client.user.getPassWord() + " " + Client.user.getPassWord();
