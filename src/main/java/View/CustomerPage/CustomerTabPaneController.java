@@ -23,6 +23,7 @@ public class CustomerTabPaneController implements Initializable {
     public Tab logOutTab;
     public Tab offsPageTab;
     public Tab goodsPageTab;
+    public Tab auctionTab;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,6 +35,7 @@ public class CustomerTabPaneController implements Initializable {
         URL logOutURL = null;
         URL goodsPageURL = null;
         URL offsPageURL =null;
+        URL auctionPageURL =null;
         try {
             infoPaneUrl = new File("src\\main\\resources\\GUIFiles\\personal-info.fxml").toURI().toURL();
             cartPageURL = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CartPage.fxml").toURI().toURL();
@@ -43,6 +45,7 @@ public class CustomerTabPaneController implements Initializable {
             logOutURL = new File("src\\main\\resources\\GUIFiles\\logout-page.fxml").toURI().toURL();
             goodsPageURL = new File("src\\main\\resources\\GUIFiles\\GoodsPage.fxml").toURI().toURL();
             offsPageURL= new File("src\\main\\resources\\GUIFiles\\OffsPage.fxml").toURI().toURL();
+            auctionPageURL = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\AuctionPage.fxml").toURI().toURL();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -55,6 +58,7 @@ public class CustomerTabPaneController implements Initializable {
         URL finalLogOut = logOutURL;
         URL finalGoodsPageURL = goodsPageURL;
         URL finalOffsPageURL = offsPageURL;
+        URL finalAuctionPageURL = auctionPageURL;
         tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {;
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
@@ -81,6 +85,8 @@ public class CustomerTabPaneController implements Initializable {
                         goodsPageTab.setContent(FXMLLoader.load(finalGoodsPageURL));
                     }else if (newTab.equals(offsPageTab)){
                         offsPageTab.setContent(FXMLLoader.load(finalOffsPageURL));
+                    }else if (newTab.equals(auctionTab)){
+                        auctionTab.setContent(FXMLLoader.load(finalAuctionPageURL));
                     }
                 }catch (IOException e){
                     e.printStackTrace();
