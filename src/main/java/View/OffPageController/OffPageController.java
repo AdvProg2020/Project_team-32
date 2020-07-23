@@ -1,8 +1,10 @@
 package View.OffPageController;
 
+import Server.Controller.GoodController;
 import Server.Controller.OffController;
 import Server.Model.Category;
 import Server.Model.Good;
+import View.Client;
 import View.Updatable;
 import View.goodsPage.FilterItemFactory;
 import View.goodsPage.GoodIconFactory;
@@ -10,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -40,9 +44,9 @@ public class OffPageController implements Initializable, Updatable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //categoriesTreeView1.setRoot(Category.rootCategory.getCategory());
-        TreeItem<String> category = new TreeItem<>("Categories");
-        Category.rootCategory.getCategory(category);
+        TreeItem<String> category = new TreeItem<>("category");
+        Client.sendMessage("get all categories for good page", new HashMap<>());
+        ((Category) Client.getMessage().get("category")).getCategory(category);
         categoriesTreeView1.setRoot(category);
         categoriesTreeView1.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -55,12 +59,21 @@ public class OffPageController implements Initializable, Updatable {
                     Label filterByGeneralProperties = new Label("General Properties");
 
                     FiltersVBox1.getChildren().add(filterByCategoryProperties);
-                    for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
-                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), OffController.getOffController()));
+
+                    HashMap<String, Object> arg1 = new HashMap<>();
+                    arg1.put("selected category", selectedCategory);
+                    Client.sendMessage("get special properties", arg1);
+                    List<String> specialProperties = (List<String>) Client.getMessage().get("special properties");
+                    for (String property : specialProperties) {
+                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), GoodController.getGoodController()));
                     }
+
                     FiltersVBox1.getChildren().add(filterByGeneralProperties);
-                    for (String property : Category.getGeneralProperties()) {
-                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), OffController.getOffController()));
+
+                    Client.sendMessage("get general properties", arg1);
+                    List<String> generalProperties = (List<String>)Client.getMessage().get("general properties");
+                    for (String property : generalProperties) {
+                        FiltersVBox1.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), GoodController.getGoodController()));
                     }
                 }
             }
@@ -80,17 +93,21 @@ public class OffPageController implements Initializable, Updatable {
         firstColumnGoods1.getChildren().clear();
         secondColumnGood1.getChildren().clear();
 
-        for (int i = 0; i < OffController.getOffController().getSelectedGoods().size(); i++) {
+        List<Good> selectedGoods;
+        Client.sendMessage("get selected goods in off controller", new HashMap<>());
+        selectedGoods = (List<Good>) Client.getMessage().get("selected goods");
+
+        for (int i = 0; i < selectedGoods.size(); i++) {
             if (i % 2 == 0) {
-                firstColumnGoods1.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
+                firstColumnGoods1.getChildren().add(GoodIconFactory.createIcon(selectedGoods.get(i)));
             } else {
-                secondColumnGood1.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
+                secondColumnGood1.getChildren().add(GoodIconFactory.createIcon(selectedGoods.get(i)));
             }
         }
     }
 
     @Override
-    public String valueOfFileter() {
+    public String valueOfFilter() {
         final String[] returnedValue = new String[1];
         Stage window = new Stage();
         window.setTitle("enter value of filter");

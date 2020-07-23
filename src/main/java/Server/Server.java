@@ -5,13 +5,13 @@ import Server.Controller.Exeptions.*;
 import Server.Model.*;
 import org.json.simple.*;
 
-import javax.naming.ldap.Control;
 import java.io.*;
 import java.lang.SecurityException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Server {
 
@@ -173,6 +173,21 @@ public class Server {
                         case "get discount percent":
                             getDiscountPercent(command);
                             break;
+                        case "get all categories for good page":
+                            getAllCategoriesForGoodPage(command);
+                            break;
+                        case "get special properties":
+                            getSpecialProperties(command);
+                            break;
+                        case "get general properties":
+                            getGeneralProperties(command);
+                            return;
+                        case "get selected goods":
+                            getSelectedGoodsInGoodController();
+                            break;
+                        case "get selected goods in off controller":
+                            getSelectedGoodsInOffController();
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -181,6 +196,43 @@ public class Server {
                 }
             }
         }
+
+        private void getSelectedGoodsInOffController() {
+            Message message = new Message();
+            message.put("selected goods", OffController.getOffController().getSelectedGoods());
+            sendMessage(message);
+        }
+
+        private void getSelectedGoodsInGoodController() {
+            Message message = new Message();
+            message.put("selected goods", GoodController.getGoodController().getSelectedGoods());
+            sendMessage(message);
+        }
+
+        private void getGeneralProperties(JSONObject command) {
+            Message message = new Message();
+            List<String> properties = Category.getGeneralProperties();
+            message.put("special properties", properties);
+            sendMessage(message);
+
+        }
+
+        private void getSpecialProperties(JSONObject command) {
+            Message message = new Message();
+            String selectedCategory = (String) command.get("selected category");
+            List<String> properties = Category.getCategoryByName(selectedCategory).getSpecialProperties();
+            message.put("special properties", properties);
+            sendMessage(message);
+        }
+
+        private void getAllCategoriesForGoodPage(JSONObject command) {
+            Message message = new Message();
+            //TreeItem<String> category = new TreeItem<>("category");
+            //Category.rootCategory.getCategory(category);
+            message.put("category", Category.rootCategory);
+            sendMessage(message);
+        }
+
 
         private void getDiscountPercent(JSONObject command) {
             Message message = new Message();

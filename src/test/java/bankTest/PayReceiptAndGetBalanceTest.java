@@ -55,7 +55,7 @@ public class PayReceiptAndGetBalanceTest {
 	}
 	
 	@Test
-	public void payWithdrawTest() {
+		public void payWithdrawTest() {
 		String[] accountArg1 = new String[] {
 				"", "ali", "sharifi", "alisharifi", "ali", "ali"
 		};

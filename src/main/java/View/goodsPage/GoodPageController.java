@@ -3,11 +3,17 @@ package View.goodsPage;
 import Server.Controller.GoodController;
 import Server.Model.Category;
 import Server.Model.Good;
+import View.Client;
 import View.Updatable;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.Socket;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -38,12 +44,16 @@ public class GoodPageController implements Initializable, Updatable {
     @FXML
     private VBox secondColumnGood;
     @FXML CheckBox checkBox;
+
+
+    private ObjectInputStream inputStream;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         FiltersVBox.setAlignment(Pos.TOP_CENTER);
-
-        TreeItem<String> category = new TreeItem<>("Categories");
-        Category.rootCategory.getCategory(category);
+        TreeItem<String> category = new TreeItem<>("category");
+        Client.sendMessage("get all categories for good page", new HashMap<>());
+        ((Category) Client.getMessage().get("category")).getCategory(category);
         categoriesTreeView.setRoot(category);
         categoriesTreeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -56,11 +66,17 @@ public class GoodPageController implements Initializable, Updatable {
                     Label filterByGeneralProperties = new Label("General Properties");
                     FiltersVBox.getChildren().add(filters);
                     FiltersVBox.getChildren().add(filterByCategoryProperties);
-                    for (String property : Category.getCategoryByName(selectedCategory).getSpecialProperties()) {
+                    HashMap<String, Object> arg1 = new HashMap<>();
+                    arg1.put("selected category", selectedCategory);
+                    Client.sendMessage("get special properties", arg1);
+                    List<String> specialProperties = (List<String>) Client.getMessage().get("special properties");
+                    for (String property : specialProperties) {
                         FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), GoodController.getGoodController()));
                     }
                     FiltersVBox.getChildren().add(filterByGeneralProperties);
-                    for (String property : Category.getGeneralProperties()) {
+                    Client.sendMessage("get general properties", arg1);
+                    List<String> generalProperties = (List<String>)Client.getMessage().get("general properties");
+                    for (String property : generalProperties) {
                         FiltersVBox.getChildren().add(FilterItemFactory.createFilterItem(property, getController(), GoodController.getGoodController()));
                     }
                 }
@@ -81,20 +97,22 @@ public class GoodPageController implements Initializable, Updatable {
         secondColumnGood.setSpacing(10);
         firstColumnGoods.getChildren().clear();
         secondColumnGood.getChildren().clear();
-        for (int i = 0; i < GoodController.getGoodController().getSelectedGoods().size(); i++) {
+
+        List<Good> selectedGoods;
+        Client.sendMessage("get selected goods", new HashMap<>());
+        selectedGoods = (List<Good>) Client.getMessage().get("selected goods");
+
+        for (int i = 0; i < selectedGoods.size(); i++) {
             if (i % 2 == 0) {
-                firstColumnGoods.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
+                firstColumnGoods.getChildren().add(GoodIconFactory.createIcon(selectedGoods.get(i)));
             } else {
-                secondColumnGood.getChildren().add(GoodIconFactory.createIcon(Good.getAllGoods().get(i)));
+                secondColumnGood.getChildren().add(GoodIconFactory.createIcon(selectedGoods.get(i)));
             }
-        }
-        for (Good good : GoodController.getGoodController().getSelectedGoods()) {
-            System.out.println(good);
         }
     }
 
     @Override
-    public String valueOfFileter() {
+    public String valueOfFilter() {
         final String[] returnedValue = new String[1];
         Stage window = new Stage();
         window.setTitle("enter value of filter");
