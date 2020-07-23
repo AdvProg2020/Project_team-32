@@ -4,10 +4,12 @@ import Server.Controller.CategoryController;
 import Server.Controller.Exeptions.CategoryNotFindException;
 import Server.Controller.Exeptions.DuplicateCategoryException;
 import Server.Model.Category;
+import View.Client;
 import View.ManagerPage.AddEditCategoryPageController;
 import View.ManagerPage.CategoryManagerController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 
 import java.io.File;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ChangeCategoryPane extends Pane {
 
@@ -73,19 +76,40 @@ public class ChangeCategoryPane extends Pane {
     public void makeCategory(String name, String parentName, ArrayList<String> properties) {
 
         if (!isEditPane) {
-            try {
-                CategoryController.addCategory(name, properties, parentName);
-            } catch (CategoryNotFindException e) {
-                System.err.println("can't find parent");
-            } catch (DuplicateCategoryException e) {
-                System.err.println("duplicate name");
-            }
+            addCategory(name, properties, parentName);
         } else {
-            CategoryController.editCategory(categoryToChange, name, properties);
+            editCategory(categoryToChange, name, properties);
         }
 
         parentController.closeStage();
         parentController.updateTable();
 
+    }
+
+    private void editCategory(Category categoryToChange, String name, ArrayList<String> properties) {
+        HashMap<String , Object> inputs = new HashMap<>();
+        inputs.put("name", name);
+        inputs.put("properties",properties);
+        inputs.put("curName", categoryToChange.getName());
+        Client.sendMessage("edit category", inputs);
+        String serverAnswer = (String) Client.getMessage().get("status");
+        if(serverAnswer.equals("category not find")){
+            new Alert(Alert.AlertType.WARNING, "Category Not Find.").show();
+        }
+    }
+
+    private void addCategory(String name, ArrayList<String> properties, String parentName) {
+        HashMap<String , Object> inputs = new HashMap<>();
+        inputs.put("name", name);
+        inputs.put("properties",properties);
+        inputs.put("parentName", parentName);
+        Client.sendMessage("add category",inputs);
+        String serverAnswer = (String) Client.getMessage().get("status");
+        if(serverAnswer.equals("category not find")){
+            new Alert(Alert.AlertType.WARNING, "Category Not Find.").show();
+        }
+        else if(serverAnswer.equals("duplicate category")){
+            new Alert(Alert.AlertType.WARNING, "Duplicate Category").show();
+        }
     }
 }

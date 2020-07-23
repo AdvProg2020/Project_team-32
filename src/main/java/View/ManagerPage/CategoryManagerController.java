@@ -2,7 +2,11 @@ package View.ManagerPage;
 
 import Server.Controller.CategoryController;
 import Server.Model.Category;
+import Server.Model.Message;
+import Server.Server;
+import View.Client;
 import View.ManagerPage.GUIModels.ChangeCategoryPane;
+import com.sun.org.apache.xpath.internal.objects.XObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -13,6 +17,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class CategoryManagerController implements Initializable {
@@ -38,14 +44,25 @@ public class CategoryManagerController implements Initializable {
 
     public void updateTable() {
         categoryTable.getItems().clear();
-        categoryTable.getItems().addAll(Category.getAllCategories());
+        categoryTable.getItems().addAll(getAllCategories());
     }
 
+    private Collection<? extends Category> getAllCategories() {
+        Client.sendMessage("get all categories", new HashMap<>());
+        Message serverAnswer = Client.getMessage();
+        return (Collection<? extends Category>) serverAnswer.get("all categories");
+    }
 
 
     public void remove(ActionEvent actionEvent) {
         if(categoryTable.getSelectionModel().getSelectedItem() != null){
-            CategoryController.removeCategory(categoryTable.getSelectionModel().getSelectedItem());
+            HashMap<String , Object> inputs = new HashMap<>();
+            inputs.put("category name", categoryTable.getSelectionModel().getSelectedItem().getName());
+            Client.sendMessage("remove category",inputs);
+            Message serverAnswer = Client.getMessage();
+            if(serverAnswer.get("status").equals("category not find")){
+                new Alert(Alert.AlertType.WARNING,"Category not find.").show();
+            }
             updateTable();
         }
         else {
