@@ -154,6 +154,15 @@ public class Server {
                         case "add off":
                             addOff(command);
                             break;
+                        case "get all requests":
+                            getAllRequests();
+                            break;
+                        case "remove request":
+                            removeRequest(command);
+                            break;
+                        case "accept request":
+                            acceptRequest(command);
+                            break;
                         case "change information":
                             changeInformation(command);
                             break;
@@ -238,6 +247,31 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void acceptRequest(JSONObject command) {
+            Request request = RequestController.getRequestByIndex((int) command.get("request index"));
+            Message serverAnswer = new Message();
+            try {
+                RequestController.acceptRequest(request);
+                serverAnswer.put(status,successful);
+            } catch (Exception e) {
+                serverAnswer.put(status,"error");
+            }
+            finally {
+                sendMessage(serverAnswer);
+            }
+        }
+
+        private void removeRequest(JSONObject command) {
+            Request request = RequestController.getRequestByIndex((int) command.get("request index"));
+            RequestController.removeRequest(request);
+        }
+
+        private void getAllRequests() {
+            Message serverAnswer = new Message();
+            serverAnswer.put("all requests", RequestController.getAllRequest());
+            sendMessage(serverAnswer);
         }
 
         private void changeInformation(JSONObject command) {
