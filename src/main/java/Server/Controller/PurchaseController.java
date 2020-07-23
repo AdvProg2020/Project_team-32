@@ -49,12 +49,19 @@ public class PurchaseController {
     public static float getPriceDiscounted(float finalPrice, float discountPercent){
         return finalPrice*((100-discountPercent)/100);
     }
-    public static void payCommand(Customer customer, float finalPrice, float discountPercent){
-        customer.setCredit(customer.getCredit()-finalPrice);
+    public static void payCommand(Customer customer, float finalPrice, float discountPercent, boolean isBank,String address,String phoneNumber){
+        if (isBank){
+            customer.setCredit(customer.getCredit()-finalPrice);
+        }
+
         for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
-            customer.getAllBuyLogs().add(new BuyLog(Integer.toString(customer.getAllBuyLogs().size()),
+            BuyLog buyLog =new BuyLog(Integer.toString(customer.getAllBuyLogs().size()),
                     new Date(),finalPrice,discountPercent,shoppingBasket.getGood(),
-                    shoppingBasket.getSeller().getUserName() , "registered"));
+                    shoppingBasket.getSeller().getUserName() , "registered");
+            customer.getAllBuyLogs().add(buyLog);
+
+            //todo add this to boss buylogs
+
             float offPercent = 0;
             for (Off off : shoppingBasket.getSeller().getOffs()) {
                 for (Good good : off.getGoodsForOff()) {
@@ -68,7 +75,7 @@ public class PurchaseController {
             Seller seller = shoppingBasket.getSeller();
             seller.getAllSellingLogs().add(new SellLog(Integer.toString(seller.getAllSellingLogs().size()),new Date()
                     ,pricePaidToSeller,offPercent,shoppingBasket.getGood(),customer.getUserName(),"registered"));
-            shoppingBasket.getSeller().setCredit(shoppingBasket.getSeller().getCredit()+pricePaidToSeller);
+            shoppingBasket.getSeller().setCredit(shoppingBasket.getSeller().getCredit()+pricePaidToSeller *(100 - Boss.getWage())/100);
         }
         customer.getShoppingBaskets().clear();
     }
