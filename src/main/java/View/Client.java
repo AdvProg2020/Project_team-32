@@ -1,22 +1,16 @@
 package View;
 
-import Server.Controller.*;
 import Server.Model.*;
-import Server.Server;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.json.simple.*;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Client extends Application {
 
@@ -24,7 +18,6 @@ public class Client extends Application {
     public static Stage primaryStage;
     public static Person user;
     private static Socket clientSocket;
-    public  static BankServer bankServer;
     private static ObjectInputStream clientInputStream;
     private static ObjectOutputStream clientOutputStream;
 
@@ -41,7 +34,7 @@ public class Client extends Application {
 
     public static void main(String[] args) {
         connectToServer();
-        bankServer = new BankServer();
+
         launch(args);
     }
 

@@ -78,27 +78,26 @@ public class PurchaseControllerFXML implements Initializable {
                     randomPercent(discountPercent, random, totalPrice);
 
                 if (bankPayCheckBox.isSelected()) {
-                    String result= bankServer(totalPrice,"move");
-                    if (result.equals("done successfully")){
-                        HashMap<String, Object> input = new HashMap<>();
-                        input.put("type","bank");
-                        input.put("address",address);
-                        input.put("phoneNumber",phoneNumber);
-                        input.put("price",totalPrice[0]);
-                        input.put("discount",discountPercent[0]);
-                        Client.sendMessage("pay", input);
-                        Message message = Client.getMessage();
-                        if (message.get("status").equals("successful")) {
-                            showConfirm("you have successfully bought this thing");
-                            noDisResult.setText("you have succesfully bought things");
-                        }
+                    HashMap<String, Object> input = new HashMap<>();
+                    input.put("transferType", "move");
+                    input.put("type", "bank");
+                    input.put("address", address);
+                    input.put("phoneNumber", phoneNumber);
+                    input.put("price", totalPrice[0]);
+                    input.put("discount", discountPercent[0]);
+                    Client.sendMessage("pay", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        showConfirm("you have successfully bought this thing");
+                        noDisResult.setText("you have succesfully bought things");
                     }
+
                     //todo when buying is successful
                 } else {
                     HashMap<String, Object> input = new HashMap<>();
-                    input.put("type","wallet");
-                    input.put("address",address);
-                    input.put("phoneNumber",phoneNumber);
+                    input.put("type", "wallet");
+                    input.put("address", address);
+                    input.put("phoneNumber", phoneNumber);
                     input.put("price", totalPrice[0]);
                     input.put("discount", discountPercent[0]);
                     Client.sendMessage("pay", input);
@@ -118,7 +117,7 @@ public class PurchaseControllerFXML implements Initializable {
                 Client.sendMessage("get discount percent", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
-                    checkDiscount(message, discountPercent, totalPrice,address,phoneNumber);
+                    checkDiscount(message, discountPercent, totalPrice, address, phoneNumber);
                 } else if (message.get("status").equals("DiscountNotUsableException")) {
                     showError(Alert.AlertType.ERROR, "DiscountNotUsableException");
                 } else if (message.get("status").equals("InvalidIDException")) {
@@ -126,77 +125,6 @@ public class PurchaseControllerFXML implements Initializable {
                 }
             }
         });
-    }
-
-    public String bankServer(float[] totalPrice , String transferType) {
-        String result1 = handleAccountID();
-        if (result1 != null) return result1;
-        Client.bankServer.sendMessageToBank("get_token "+Client.user.getUserName()+" "+Client.user.getPassWord());
-        String result = Client.bankServer.getMessageFromBank();
-        String[] temp = result.split(" ");
-        if (temp.length==1){
-            Client.bankServer.setServerToken(result);
-            String home = null;
-            String destination=null;
-            if (transferType.equals("move")){
-                home = String.valueOf(Client.bankServer.getAccountID());
-                destination ="1";
-            }else if (transferType.equals("withdraw")){
-                home = String.valueOf(Client.bankServer.getAccountID());
-                destination="-1";
-            } else if (transferType.equals("deposit")) {
-                home="-1";
-                destination = String.valueOf(Client.bankServer.getAccountID());
-            }
-            result = Client.bankServer.getServerToken()+" "+transferType+" "+totalPrice[0]+" "+
-                    home+" "+destination+" "+"boleshit";
-            Client.bankServer.sendMessageToBank(result);
-            String recipt = Client.bankServer.getMessageFromBank();
-            temp =recipt.split(" ");
-            if (temp.length ==1) {
-                Client.bankServer.sendMessageToBank("pay " + recipt);
-                String output = Client.bankServer.getMessageFromBank();
-                if (output.equals("done successfully")) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText("payed by bank macount succcessfully");
-                    alert.show();
-                    return "done successfully";
-                } else if (output.equals("source account does not have enough money")) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("source account does not have enough money");
-                    alert.show();
-                } else {
-                    System.out.println(output);
-                    return output;
-                }
-            }else {
-                System.out.println(recipt);
-                return recipt;
-            }
-        }else {
-            System.out.println(result);
-            return result;
-        }
-        return "aaaa";
-    }
-
-    private static String handleAccountID() {
-        if (Client.bankServer.getAccountID() == -1){
-            String message ="create_account "+Client.user.getFirstName()+" "+Client.user.getLastName()
-                    +" "+Client.user.getUserName()+" "+Client.user.getPassWord()+" "+Client.user.getPassWord();
-            Client.bankServer.sendMessageToBank(message);
-            String result =Client.bankServer.getMessageFromBank();
-            String[] temp = result.split(" ");
-            if (temp.length==1){
-                Client.bankServer.setAccountID(Integer.parseInt(result));
-            }
-            else {
-                System.out.println(result);
-                return result;
-            }
-
-        }
-        return null;
     }
 
 
@@ -237,37 +165,35 @@ public class PurchaseControllerFXML implements Initializable {
         if (message.get("status").equals("successful")) {
             totalPrice[0] = (float) message.get("discounted price");
             disVBox.setVisible(true);
-            EventHandler eventHandler = makeEventHandler(discountPercent, totalPrice ,address,phone);
+            EventHandler eventHandler = makeEventHandler(discountPercent, totalPrice, address, phone);
             disPay.setOnMouseClicked(eventHandler);
         }
     }
 
-    private EventHandler makeEventHandler(float[] discountPercent, float[] totalPrice, String address,String phoneNumber) {
+    private EventHandler makeEventHandler(float[] discountPercent, float[] totalPrice, String address, String phoneNumber) {
         return new EventHandler() {
             @Override
             public void handle(Event event) {
                 if (bankPayCheckBox.isSelected()) {
-                    String result = bankServer(totalPrice,"move");
-                    if (result.equals("done successfully")){
-                        HashMap<String, Object> input = new HashMap<>();
-                        input.put("type","bank");
-                        input.put("address",address);
-                        input.put("phoneNumber",phoneNumber);
-                        input.put("price",totalPrice[0]);
-                        input.put("discount",discountPercent[0]);
-                        Client.sendMessage("pay", input);
-                        Message message = Client.getMessage();
-                        if (message.get("status").equals("successful")) {
-                            showConfirm("you have successfully bought this thing");
-                            noDisResult.setText("you have succesfully bought things");
-                        }
+                    HashMap<String, Object> input = new HashMap<>();
+                    input.put("transferType", "move");
+                    input.put("type", "bank");
+                    input.put("address", address);
+                    input.put("phoneNumber", phoneNumber);
+                    input.put("price", totalPrice[0]);
+                    input.put("discount", discountPercent[0]);
+                    Client.sendMessage("pay", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        showConfirm("you have successfully bought this thing");
+                        noDisResult.setText("you have succesfully bought things");
                     }
                     //todo
                 } else {
                     HashMap<String, Object> input = new HashMap<>();
-                    input.put("type","wallet");
-                    input.put("address",address);
-                    input.put("phoneNumber",phoneNumber);
+                    input.put("type", "wallet");
+                    input.put("address", address);
+                    input.put("phoneNumber", phoneNumber);
                     input.put("price", totalPrice[0]);
                     input.put("discount", discountPercent[0]);
                     Client.sendMessage("pay", input);
