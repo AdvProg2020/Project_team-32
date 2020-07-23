@@ -24,4 +24,12 @@ public class Boss extends Person {
     private void editDiscount(Discount discount) {
 
     }
+
+    public static int getLeastMoney() {
+        return leastMoney;
+    }
+
+    public static int getWage() {
+        return wage;
+    }
 }

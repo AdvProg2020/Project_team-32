@@ -167,8 +167,8 @@ public class Server {
                         case "get discounted price":
                             getDiscountedPrice(command);
                             break;
-                        case "pay by wallet":
-                            payByWallet(command);
+                        case "pay":
+                            pay(command);
                             break;
                         case "get discount percent":
                             getDiscountPercent(command);
@@ -191,6 +191,8 @@ public class Server {
                         case "get allAuctions":
                             getAllAuctions(command);
                             break;
+//                        case "pay by bank":
+//                            payByBank(command);
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -258,12 +260,16 @@ public class Server {
             }
         }
 
-        private void payByWallet(JSONObject command) {
+        private void pay(JSONObject command) {
             Message message = new Message();
             try {
-                float a =(float)command.get("price");
-                float b =(float)command.get("discount");
-                PurchaseController.payCommand((Customer)loggedInUser, a, b);
+                Boolean bool =false;
+                if (command.get("type").equals("bank")) bool=true;
+                String phoneNumber = (String)command.get("phoneNumber");
+                String address = (String) command.get("address");
+                float price =(float)command.get("price");
+                float discountPercent =(float)command.get("discount");
+                PurchaseController.payCommand((Customer)loggedInUser, price, discountPercent,bool,address,phoneNumber);
                 message.put(status, successful);
             } finally {
                 sendMessage(message);
