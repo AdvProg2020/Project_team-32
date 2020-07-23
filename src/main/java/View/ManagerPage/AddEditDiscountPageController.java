@@ -3,7 +3,9 @@ package View.ManagerPage;
 
 import Server.Controller.AccountController;
 import Server.Model.Customer;
+import Server.Model.Message;
 import Server.Model.Person;
+import View.Client;
 import View.ManagerPage.GUIModels.ChangeDiscountPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,6 +18,7 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class AddEditDiscountPageController implements Initializable {
@@ -46,9 +49,10 @@ public class AddEditDiscountPageController implements Initializable {
 
     private void setVBoxContent(){
 
-        ArrayList<Customer> user = AccountController.getAllCustomer();
 
-        System.out.println(user);
+        Client.sendMessage("get all customer", new HashMap<>());
+        Message serverAnswer = Client.getMessage();
+        ArrayList<Customer> user = (ArrayList<Customer>) serverAnswer.get("all customers");
 
         for (Customer customer : user) {
             CheckBox checkBox = new CheckBox(customer.getUserName());

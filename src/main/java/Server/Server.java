@@ -10,6 +10,7 @@ import java.lang.SecurityException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -85,6 +86,21 @@ public class Server {
                             break;
                         case "get all persons":
                             getAllPersons();
+                            break;
+                        case "get all discounts":
+                            getAllDiscounts();
+                            break;
+                        case "remove discount":
+                            removeDiscount(command);
+                            break;
+                        case "get all customers":
+                            getAllCustomers();
+                            break;
+                        case "create discount":
+                            createDiscount(command);
+                            break;
+                        case "edit discount":
+                            editDiscount(command);
                             break;
                         case "get good by ID":
                             getGoodForSeller(command);
@@ -198,6 +214,65 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void editDiscount(JSONObject command) {
+            Date exposeDate = (Date) command.get("date");
+            String discountId = (String) command.get("discountId");
+            int maxDiscountAmount = (int) command.get("maxDiscountAmount");
+            int percentInt = (int) command.get("percentInt");
+            String curDiscountId = (String) command.get("curDiscountId");
+            Message message = new Message();
+            try {
+                BossController.editDiscount(exposeDate,discountId,maxDiscountAmount,percentInt,curDiscountId);
+                message.put(status, successful);
+            } catch (DiscountDoesNotExistException e) {
+                message.put(status, "discount does not exist");
+            }
+            finally {
+                sendMessage(message);
+            }
+        }
+
+        private void createDiscount(JSONObject command) {
+
+            //TODO check customers
+
+            Date exposeDate = (Date) command.get("date");
+            String discountId = (String) command.get("discountId");
+            int maxDiscountAmount = (int) command.get("maxDiscountAmount");
+            int percentInt = (int) command.get("percentInt");
+            int useNumber = (int) command.get("useNumber");
+            ArrayList<Customer> customers = (ArrayList<Customer>) command.get("customers");
+            BossController.createDiscount(exposeDate, discountId, maxDiscountAmount, percentInt, useNumber, customers);
+            Message message = new Message();
+            message.put(status, successful);
+            sendMessage(message);
+        }
+
+        private void getAllCustomers() {
+            Message message = new Message();
+            message.put("all customers",  AccountController.getAllCustomer());
+            sendMessage(message);
+        }
+
+        private void removeDiscount(JSONObject command) {
+            Message message = new Message();
+            try {
+                BossController.removeDiscount((String) command.get("discountId"));
+                message.put(status, successful);
+            } catch (DiscountDoesNotExistException e) {
+                message.put(status, "discount does not exist");
+            }
+            finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getAllDiscounts() {
+            Message message = new Message();
+            message.put("all discounts", BossController.getAllDiscount());
+            sendMessage(message);
         }
 
         private void getAllAuctions(JSONObject command) {

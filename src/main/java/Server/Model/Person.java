@@ -146,4 +146,8 @@ public abstract class Person implements Serializable {
     public void addDiscount(Discount discount, int useNumber) {
         discounts.put(discount,useNumber);
     }
+
+    public void removeDiscount(Discount discount) {
+        discounts.remove(discount);
+    }
 }
