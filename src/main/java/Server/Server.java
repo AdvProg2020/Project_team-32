@@ -78,8 +78,14 @@ public class Server {
                         case "remove user":
                             removeUser(command);
                             break;
+                        case "get all categories":
+                            getAllCategories();
+                            break;
                         case "create manager":
                             createManager(command);
+                            break;
+                        case "add category":
+                            addCategory(command);
                             break;
                         case "get boss status":
                             getBossStatus();
@@ -89,6 +95,9 @@ public class Server {
                             break;
                         case "get all discounts":
                             getAllDiscounts();
+                            break;
+                        case "edit category":
+                            editCategory(command);
                             break;
                         case "remove discount":
                             removeDiscount(command);
@@ -101,6 +110,9 @@ public class Server {
                             break;
                         case "edit discount":
                             editDiscount(command);
+                            break;
+                        case "remove category":
+                            removeCategory(command);
                             break;
                         case "get good by ID":
                             getGoodForSeller(command);
@@ -216,6 +228,62 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void editCategory(JSONObject command) {
+            String curName = (String) command.get("curName");
+            String name = (String) command.get("name");
+            ArrayList<String> properties = (ArrayList<String>) command.get("properties");
+            Message serverAnswer = new Message();
+            try {
+                Category categoryToChange = CategoryController.getCategoryByName(curName);
+                CategoryController.editCategory(categoryToChange,name,properties);
+                serverAnswer.put(status, successful);
+            } catch (CategoryNotFindException e) {
+                serverAnswer.put(status, "category not find");
+            }
+            finally {
+                sendMessage(serverAnswer);
+            }
+        }
+
+        private void addCategory(JSONObject command) {
+            String categoryName = (String) command.get("name");
+            ArrayList<String> properties = (ArrayList<String>) command.get("properties");
+            String parentName = (String) command.get("parentName");
+            Message serverAnswer = new Message();
+            try {
+                CategoryController.addCategory(categoryName, properties, parentName);
+                serverAnswer.put(status, successful);
+            } catch (CategoryNotFindException e) {
+                serverAnswer.put(status, "category not find");
+            } catch (DuplicateCategoryException e) {
+                serverAnswer.put(status, "duplicate category");
+            }
+            finally {
+                sendMessage(serverAnswer);
+            }
+        }
+
+        private void removeCategory(JSONObject command) {
+            String categoryName = (String) command.get("category name");
+            Message serverAnswer = new Message();
+            try {
+                Category category = CategoryController.getCategoryByName(categoryName);
+                CategoryController.removeCategory(category);
+                serverAnswer.put(status,successful);
+            } catch (CategoryNotFindException e) {
+                serverAnswer.put(status,"category not find");
+            }
+            finally {
+                sendMessage(serverAnswer);
+            }
+        }
+
+        private void getAllCategories() {
+            Message serverAnswer = new Message();
+            serverAnswer.put("all categories", Category.getAllCategories());
+            sendMessage(serverAnswer);
         }
 
         private void editDiscount(JSONObject command) {
