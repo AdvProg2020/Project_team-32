@@ -9,6 +9,7 @@ import java.io.*;
 import java.lang.SecurityException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -105,6 +106,12 @@ public class Server {
                         case "get all customers":
                             getAllCustomers();
                             break;
+                        case "get loggedInUser":
+                            getLoggedInUser();
+                            break;
+                        case "set imageUrl":
+                            setImageUrl(command);
+                            break;
                         case "create discount":
                             createDiscount(command);
                             break;
@@ -146,6 +153,9 @@ public class Server {
                             break;
                         case "add off":
                             addOff(command);
+                            break;
+                        case "change information":
+                            changeInformation(command);
                             break;
                         case "get seller off list":
                             getSellerOffList(command);
@@ -228,6 +238,26 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void changeInformation(JSONObject command) {
+            String email = (String) command.get("email");
+            String phone = (String) command.get("phone");
+            String lastName = (String) command.get("lastName");
+            String firstName = (String) command.get("firstName");
+            if(loggedInUser != null)
+               AccountController.changeInformation(email,phone,firstName,lastName,loggedInUser);
+        }
+
+        private void setImageUrl(JSONObject command) {
+            if(loggedInUser != null)
+                loggedInUser.setImageUrl((URL) command.get("imageUrl"));
+        }
+
+        private void getLoggedInUser() {
+            Message serverAnswer = new Message();
+            serverAnswer.put("user", loggedInUser);
+            sendMessage(serverAnswer);
         }
 
         private void editCategory(JSONObject command) {

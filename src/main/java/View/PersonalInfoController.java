@@ -2,6 +2,7 @@ package View;
 
 import Server.Controller.AccountController;
 import Server.Model.Guest;
+import Server.Model.Message;
 import Server.Model.Person;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class PersonalInfoController implements Initializable {
@@ -39,7 +41,9 @@ public class PersonalInfoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Person user = AccountController.loggedInUser;
+
+        Person user = getLoggedInUser();
+
         if(user!=null && !(user instanceof Guest)){
             passwordText.setText(user.getPassWord());
             usernameText.setText(user.getUserName());
@@ -50,6 +54,7 @@ public class PersonalInfoController implements Initializable {
             emailText.setText(user.getEmail());
             imageView.setImage(new Image(String.valueOf(user.getImageUrl())));
         }
+
         emailText.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -89,7 +94,7 @@ public class PersonalInfoController implements Initializable {
                 try {
                     File selectedFile = fileChooser.showOpenDialog(stage);
                     URL image = selectedFile.toURI().toURL();
-                    AccountController.loggedInUser.setImageUrl(image);
+                    setImageUrl(image);
                     imageView.setImage(new Image(String.valueOf(image)));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -98,6 +103,17 @@ public class PersonalInfoController implements Initializable {
             }
         });
 
+    }
+
+    private void setImageUrl(URL image) {
+        HashMap<String, Object> inputs = new HashMap<>();
+        inputs.put("imageUrl", image);
+        Client.sendMessage("set imageUrl",inputs);
+    }
+
+    private Person getLoggedInUser() {
+        Client.sendMessage("get loggedInUser",new HashMap<>());
+        return (Person) Client.getMessage().get("user");
     }
 
     private void resetFields(TextField field) {
@@ -135,14 +151,14 @@ public class PersonalInfoController implements Initializable {
         if(!textValidation(emailText.getText(),".+@.+\\..+") || !textValidation(phoneText.getText(),"\\d+"))
             return;
 
-        Person user = AccountController.loggedInUser;
-        if(user != null){
-            //change user information
-            user.setEmail(emailText.getText());
-            user.setPhoneID(phoneText.getText());
-            user.setFirstName(firstNameText.getText());
-            user.setLastName(lastNameText.getText());
-        }
+
+        //change user information
+        HashMap<String, Object> inputs = new HashMap<>();
+        inputs.put("email",emailText.getText());
+        inputs.put("phone",phoneText.getText());
+        inputs.put("lastName",lastNameText.getText());
+        inputs.put("firstName",firstNameText.getText());
+        Client.sendMessage("change information",inputs);
 
         //reset text fields to disable mode
         lastNameText.setDisable(true);

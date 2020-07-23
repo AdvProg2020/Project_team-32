@@ -79,4 +79,11 @@ public class AccountController {
         }
         return customersList;
     }
+
+    public static void changeInformation(String email, String phone, String firstName, String lastName,Person user) {
+        user.setEmail(email);
+        user.setPhoneID(phone);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+    }
 }
