@@ -188,6 +188,9 @@ public class Server {
                         case "get selected goods in off controller":
                             getSelectedGoodsInOffController();
                             break;
+                        case "get allAuctions":
+                            getAllAuctions(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -195,6 +198,12 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void getAllAuctions(JSONObject command) {
+            Message message = new Message();
+            message.put("allAuctions", Auction.getAuctions());
+            sendMessage(message);
         }
 
         private void getSelectedGoodsInOffController() {
