@@ -78,7 +78,7 @@ public class PurchaseControllerFXML implements Initializable {
                     randomPercent(discountPercent, random, totalPrice);
 
                 if (bankPayCheckBox.isSelected()) {
-                    String result= bankServer(totalPrice);
+                    String result= bankServer(totalPrice,"move");
                     if (result.equals("done successfully")){
                         HashMap<String, Object> input = new HashMap<>();
                         input.put("type","bank");
@@ -128,7 +128,7 @@ public class PurchaseControllerFXML implements Initializable {
         });
     }
 
-    private String bankServer(float[] totalPrice) {
+    public String bankServer(float[] totalPrice , String transferType) {
         String result1 = handleAccountID();
         if (result1 != null) return result1;
         Client.bankServer.sendMessageToBank("get_token "+Client.user.getUserName()+" "+Client.user.getPassWord());
@@ -136,8 +136,20 @@ public class PurchaseControllerFXML implements Initializable {
         String[] temp = result.split(" ");
         if (temp.length==1){
             Client.bankServer.setServerToken(result);
-            result = Client.bankServer.getServerToken()+" "+"move "+totalPrice[0]+" "+
-                    Client.bankServer.getAccountID()+" "+"1 "+" boleshit";
+            String home = null;
+            String destination=null;
+            if (transferType.equals("move")){
+                home = String.valueOf(Client.bankServer.getAccountID());
+                destination ="1";
+            }else if (transferType.equals("withdraw")){
+                home = String.valueOf(Client.bankServer.getAccountID());
+                destination="-1";
+            } else if (transferType.equals("deposit")) {
+                home="-1";
+                destination = String.valueOf(Client.bankServer.getAccountID());
+            }
+            result = Client.bankServer.getServerToken()+" "+transferType+" "+totalPrice[0]+" "+
+                    home+" "+destination+" "+"boleshit";
             Client.bankServer.sendMessageToBank(result);
             String recipt = Client.bankServer.getMessageFromBank();
             temp =recipt.split(" ");
@@ -235,7 +247,7 @@ public class PurchaseControllerFXML implements Initializable {
             @Override
             public void handle(Event event) {
                 if (bankPayCheckBox.isSelected()) {
-                    String result = bankServer(totalPrice);
+                    String result = bankServer(totalPrice,"move");
                     if (result.equals("done successfully")){
                         HashMap<String, Object> input = new HashMap<>();
                         input.put("type","bank");

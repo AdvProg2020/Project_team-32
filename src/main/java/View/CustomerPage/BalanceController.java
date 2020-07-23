@@ -4,11 +4,14 @@ import Server.Controller.AccountController;
 import Server.Controller.Controller;
 import Server.Model.Customer;
 import Server.Model.Message;
+import Server.Server;
+import View.BankServer;
 import View.Client;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -21,6 +24,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+
+import static View.CustomerPage.PurchaseControllerFXML.handleAccountID;
 
 public class BalanceController implements Initializable {
     public AnchorPane paneClass;
@@ -51,15 +56,46 @@ public class BalanceController implements Initializable {
         addButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-//                ((Customer)AccountController.loggedInUser).setCredit(((Customer) AccountController.loggedInUser).getCredit()+Float.parseFloat(textBalance.getText()));
-//                balance.setText(String.valueOf(((Customer) AccountController.loggedInUser).getCredit()));
-//                System.out.println("wdhaifudbj");
-                //todo bank server get and send
+                float[] price = new float[1];
+                price[0] = Float.parseFloat(textBalance.getText().trim());
+                PurchaseControllerFXML purchaseControllerFXML = new PurchaseControllerFXML();
+                String result =   purchaseControllerFXML.bankServer(price,"withdraw");
+                if (result.equals("done successfully")){
+                    HashMap<String, Object> input = new HashMap<>();
+                    input.put("price",price[0]);
+                    Client.sendMessage("transfer from bank to purse", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setContentText("you added money to your purse");
+                        alert.show();
+                        balance.setText(String.valueOf((float)message.get("credit")));
+                    }
+                }
+                    //todo bank server get and send
             }
         });
         takeMoneyButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                float[] price = new float[1];
+                price[0] = Float.parseFloat(textBalance.getText().trim());
+                PurchaseControllerFXML purchaseControllerFXML = new PurchaseControllerFXML();
+                String result =   purchaseControllerFXML.bankServer(price,"deposit");
+                if (result.equals("done successfully")){
+                    HashMap<String, Object> input = new HashMap<>();
+                    input.put("price",price[0]);
+                    Client.sendMessage("transfer from purse to bank", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setContentText("you picked money from your purse");
+                        alert.show();
+                        balance.setText(String.valueOf((float)message.get("credit")));
+                    }else {
+                        System.out.println("you dont have enough reamining money in  your purse");
+                    }
+                }
                 //todo bank server get and send
             }
         });
