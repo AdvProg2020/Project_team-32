@@ -2,6 +2,8 @@ package View.ManagerPage;
 
 import Server.Controller.GoodController;
 import Server.Model.Good;
+import Server.Model.Message;
+import View.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -10,6 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ProductManagerPageController implements Initializable {
@@ -28,13 +32,20 @@ public class ProductManagerPageController implements Initializable {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("goodStatus"));
 
         //set table item
-        productsTable.getItems().addAll(Good.getAllGoods());
+        updateTable();
 
     }
 
     public void remove(ActionEvent actionEvent) {
         if(productsTable.getSelectionModel().getSelectedItem() != null){
-            GoodController.getGoodController().deleteGood(productsTable.getSelectionModel().getSelectedItem());
+
+            HashMap<String , Object> inputs = new HashMap<>();
+            inputs.put("product id",productsTable.getSelectionModel().getSelectedItem().getGoodID());
+            Client.sendMessage("remove product by manager",inputs);
+            Message serverAnswer = Client.getMessage();
+            if(serverAnswer.get("status").equals("null pointer exception")){
+                new Alert(Alert.AlertType.WARNING, "product does not exist.").show();
+            }
             updateTable();
         }
         else {
@@ -44,6 +55,13 @@ public class ProductManagerPageController implements Initializable {
 
     private void updateTable() {
         productsTable.getItems().clear();
-        productsTable.getItems().addAll(Good.getAllGoods());
+        productsTable.getItems().addAll(getAllGoods());
     }
+
+    private ArrayList<Good> getAllGoods(){
+        Client.sendMessage("get all goods",new HashMap<>());
+        Message serverAnswer = Client.getMessage();
+        return (ArrayList<Good>) serverAnswer.get("all goods");
+    }
+
 }

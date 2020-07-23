@@ -67,4 +67,16 @@ public class AccountController {
     public static void logout() {
         loggedInUser = new Guest();
     }
+
+    public static ArrayList<Customer> getCustomers(ArrayList<Customer> customers) {
+        ArrayList<Customer> customersList = new ArrayList<>();
+        for (Customer customer : customers) {
+            try {
+                customersList.add((Customer) Person.getPersonByUserName(customer.getUserName()));
+            } catch (UserDoesNotExistException e) {
+                System.err.println("customer does not exist " + customer.getUserName());
+            }
+        }
+        return customersList;
+    }
 }

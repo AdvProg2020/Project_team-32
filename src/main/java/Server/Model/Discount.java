@@ -1,6 +1,7 @@
 package Server.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Discount implements Serializable {
@@ -11,14 +12,20 @@ public class Discount implements Serializable {
     private int discountPercent;
     private int maxAmount;
     private int useCount;
+    private ArrayList<Customer> users;
 
-    public Discount(String discountID, Date exposeDate, int discountPercent, int maxAmount, int useCount) {
+    public Discount(String discountID, Date exposeDate, int discountPercent, int maxAmount, int useCount, ArrayList<Customer> users) {
         this.discountID = discountID;
         this.initialDate = new Date();
         this.exposeDate = exposeDate;
         this.discountPercent = discountPercent;
         this.maxAmount = maxAmount;
         this.useCount = useCount;
+        this.users = users;
+    }
+
+    public ArrayList<Customer> getUsers() {
+        return users;
     }
 
     public String getDiscountID() {
