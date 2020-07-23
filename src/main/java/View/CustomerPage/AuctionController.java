@@ -10,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import java.beans.EventHandler;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;

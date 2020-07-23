@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import sun.tools.jar.CommandLine;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -77,7 +78,7 @@ public class PurchaseControllerFXML implements Initializable {
                     randomPercent(discountPercent, random, totalPrice);
 
                 if (bankPayCheckBox.isSelected()) {
-                    //todo
+                    String result= bankServer(totalPrice,discountPercent);
                 } else {
                     HashMap<String, Object> input = new HashMap<>();
                     input.put("price", totalPrice[0]);
@@ -108,6 +109,64 @@ public class PurchaseControllerFXML implements Initializable {
             }
         });
     }
+
+    private String bankServer(float[] totalPrice, float[] discountPercent) {
+        if (Client.bankServer.getAccountID() == -1){
+            String message ="create_account "+Client.user.getFirstName()+" "+Client.user.getLastName()
+                    +" "+Client.user.getUserName()+" "+Client.user.getPassWord()+" "+Client.user.getPassWord();
+            Client.bankServer.sendMessageToBank(message);
+            String result =Client.bankServer.getMessageFromBank();
+            if (result.equals("passwords do not match")){
+                System.out.println("passwords do not match");
+            }else if (result.equals("username is not available")){
+                System.out.println("username is not available");
+            }else {
+                Client.bankServer.setAccountID(Integer.parseInt(result));
+            }
+        }
+        Client.bankServer.sendMessageToBank("get_token "+Client.user.getUserName()+" "+Client.user.getPassWord());
+        String result = Client.bankServer.getMessageFromBank();
+        if (result.equals("invalid username or password")){
+            System.out.println("invalid username or password");
+        }
+        else {
+            Client.bankServer.setServerToken(result);
+            result = Client.bankServer.getServerToken()+" "+"move "+totalPrice[0]+" "+
+                    Client.bankServer.getAccountID()+" "+"1 "+" boleshit";
+            Client.bankServer.sendMessageToBank(result);
+            String recipt = Client.bankServer.getMessageFromBank();
+            String[] temp =recipt.split(" ");
+            if (temp.length ==1) {
+                Client.bankServer.sendMessageToBank("pay " + recipt);
+                String output = Client.bankServer.getMessageFromBank();
+                if (output.equals("done successfully")) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("payed by bank macount succcessfully");
+                    alert.show();
+                    return "done successfully";
+                } else if (output.equals("invalid receipt id")) {
+                    System.out.println("invalid receipt id");
+                } else if (output.equals("receipt is paid before")) {
+                    System.out.println("receipt is paid before");
+                } else if (output.equals("source account does not have enough money")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("source account does not have enough money");
+                    alert.show();
+                } else if (output.equals("invalid account id")) {
+                    System.out.println("invalid account id");
+
+                }
+            }else {
+                System.out.println(recipt);
+                return recipt;
+            }
+
+
+        }
+
+        return "aaaa";
+    }
+
 
     private void randomPercent(float[] discountPercent, int random, float[] totalPrice) {
         discountPercent[0] = (random % 20);

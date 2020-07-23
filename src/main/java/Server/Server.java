@@ -478,7 +478,9 @@ public class Server {
             try {
                 Good good = ((Seller) loggedInUser).getGoodByID((String) command.get("goodID"));
                 int port = (int) command.get("port");
-                ((Seller) loggedInUser).setAuction(new Auction((Seller) loggedInUser, good, port));
+                String ID="sss";
+                //todo make id for auctions;
+                ((Seller) loggedInUser).setAuction(new Auction(ID,(Seller) loggedInUser, good, port));
                 message.put(status, successful);
             } catch (MultipleAuctionException e) {
                 message.put(status, "MultipleAuctionException");

@@ -14,13 +14,17 @@ import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Client extends Application {
 
     private final static int PORT_NUMBER = 2020;
     public static Stage primaryStage;
+    public static Person user;
     private static Socket clientSocket;
+    public  static BankServer bankServer;
     private static ObjectInputStream clientInputStream;
     private static ObjectOutputStream clientOutputStream;
 
@@ -30,13 +34,14 @@ public class Client extends Application {
         URL url = new File("src/main/resources/GUIFiles/main-page.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("Shop");
-        primaryStage.setScene(new Scene(root,788,688));
+        primaryStage.setScene(new Scene(root, 788, 688));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
 
     public static void main(String[] args) {
         connectToServer();
+        bankServer = new BankServer();
         launch(args);
     }
 
@@ -51,7 +56,7 @@ public class Client extends Application {
         }
     }
 
-    public static void sendMessage(String commandType, HashMap<String , Object> inputs){
+    public static void sendMessage(String commandType, HashMap<String, Object> inputs) {
 
         Message message = new Message();
 
@@ -73,7 +78,7 @@ public class Client extends Application {
 
     }
 
-    public static Message getMessage(){
+    public static Message getMessage() {
         Message message = new Message();
         try {
             message = (Message) clientInputStream.readObject();
@@ -88,6 +93,8 @@ public class Client extends Application {
         //TODO
         return null;
     }
+
+
 
 
 }
