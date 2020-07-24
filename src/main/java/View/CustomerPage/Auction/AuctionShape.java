@@ -9,12 +9,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 
 public class AuctionShape extends  Pane{
     private AuctionShapeController auctionShapeController;
     private String ID;
-    public AuctionShape(String name, String seller,String ID ) {
+    private Date date;
+    public AuctionShape(String name, String seller,String ID ,Date date) {
         this.ID =ID;
+        this.date=date;
         URL url = null;
         try {
             url = new File("src\\sample\\ShapeFXML.fxml").toURI().toURL();
@@ -33,6 +36,14 @@ public class AuctionShape extends  Pane{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }
 

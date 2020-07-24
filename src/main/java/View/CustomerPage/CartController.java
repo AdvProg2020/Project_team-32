@@ -221,7 +221,6 @@ public class CartController implements Initializable {
         goodNameColumn.setCellValueFactory(new PropertyValueFactory<>("GoodName"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("Number"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("Price"));
-
         ObservableList<rowInfo> goodsList = FXCollections.observableArrayList();
         HashMap<String, Object> input = new HashMap<>();
         Client.sendMessage("get shoppingBasket list", input);
@@ -236,6 +235,7 @@ public class CartController implements Initializable {
         } else if (message.get("status").equals("InvalidIDException")) {
             new Alert(Alert.AlertType.ERROR).show();
         }
+
 
     }
 

@@ -971,10 +971,10 @@ public class Server {
             Message message = new Message();
             try {
                 Good good = ((Seller) loggedInUser).getGoodByID((String) command.get("goodID"));
-                int port = (int) command.get("port");
                 String ID="sss";
+                Date date = new Date();
                 //todo make id for auctions;
-                ((Seller) loggedInUser).setAuction(new Auction(ID,(Seller) loggedInUser, good, port));
+                ((Seller) loggedInUser).setAuction(new Auction(ID,(Seller) loggedInUser, good,date));
                 message.put(status, successful);
             } catch (MultipleAuctionException e) {
                 message.put(status, "MultipleAuctionException");

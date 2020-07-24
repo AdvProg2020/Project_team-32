@@ -1,38 +1,46 @@
 package Server.Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Auction {
     private static ArrayList<Auction> auctions = new ArrayList<>();
     private  String ID;
     private Seller seller;
     private Good good;
-    private int port;
-
-    public Auction(String ID,Seller seller, Good good, int port) {
+    private Date expire;
+    private String buyerUserName;
+    private  int price;
+    public Auction(String ID,Seller seller, Good good,Date expire  ) {
         this.ID =ID;
         this.seller = seller;
         this.good = good;
-        this.port = port;
+        this.expire =expire;
         auctions.add(this);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    ServerSocket serverSocket = new ServerSocket(port);
-//                    while (true){
-//                        Socket socket = serverSocket.accept();
-//                        new Thread()
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
     }
 
     public String getID() {
         return ID;
+    }
+
+    public Date getExpire() {
+        return expire;
+    }
+
+    public String getBuyerUserName() {
+        return buyerUserName;
+    }
+
+    public void setBuyerUserName(String buyerUserName) {
+        this.buyerUserName = buyerUserName;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public static ArrayList<Auction> getAuctions() {
@@ -47,7 +55,4 @@ public class Auction {
         return good;
     }
 
-    public int getPort() {
-        return port;
-    }
 }
