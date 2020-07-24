@@ -730,6 +730,7 @@ public class Server {
             Message message=new Message();
             try {
                 message.put("discounts",((Customer)loggedInUser).getDiscounts());
+                System.out.println(message);
                 message.put(status,successful);
             } finally {
                 sendMessage(message);
