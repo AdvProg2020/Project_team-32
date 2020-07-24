@@ -289,12 +289,12 @@ public class Server {
         private void removeFormShoppingBasket(JSONObject command) {
             List<ShoppingBasket> toRemove = (List<ShoppingBasket>) command.get("list");
             for (ShoppingBasket basket : toRemove) {
-                ((ShoppingBasketable)AccountController.loggedInUser).getShoppingBaskets().removeIf(e -> e.getId() == basket.getId());
+                ((ShoppingBasketable)loggedInUser).getShoppingBaskets().removeIf(e -> e.getId() == basket.getId());
             }
         }
 
         private void addToShoppingBaskets(JSONObject command) {
-            ((ShoppingBasketable)AccountController.loggedInUser).getShoppingBaskets().add((ShoppingBasket) command.get("shopping basket"));
+            ((ShoppingBasketable)loggedInUser).getShoppingBaskets().add((ShoppingBasket) command.get("shopping basket"));
         }
 
 
@@ -844,7 +844,17 @@ public class Server {
         private void getShoppingBasketList(JSONObject command) {
             Message message=new Message();
             try {
-                message.put("shoppingBasket list",((ShoppingBasketable)loggedInUser).getShoppingBaskets());
+                message.put("shoppingBasket list",((Customer)loggedInUser).getShoppingBaskets());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void getShoppingBasketList2(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("shoppingBasket list",((Guest)loggedInUser).getShoppingBaskets());
                 message.put(status,successful);
             } finally {
                 sendMessage(message);
