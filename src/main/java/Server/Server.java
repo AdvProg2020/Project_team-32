@@ -115,6 +115,12 @@ public class Server {
                         case "set imageUrl":
                             setImageUrl(command);
                             break;
+                        case "remove product by manager":
+                            removeProductByManager(command);
+                            break;
+                        case "get all goods":
+                            getAllGoods();
+                            break;
                         case "create discount":
                             createDiscount(command);
                             break;
@@ -254,6 +260,28 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void removeProductByManager(JSONObject command) {
+            Message serverAnswer = new Message();
+            Good goodToRemove = Good.getGoodById((String) command.get("product id"));
+            try {
+                GoodController.getGoodController().deleteGood(goodToRemove);
+                serverAnswer.put(status,successful);
+            }
+            catch (NullPointerException e){
+                serverAnswer.put(status,"null pointer exception");
+            }
+            finally {
+                sendMessage(serverAnswer);
+            }
+
+        }
+
+        private void getAllGoods() {
+            Message serverAnswer = new Message();
+            serverAnswer.put("all goods",Good.getAllGoods());
+            sendMessage(serverAnswer);
         }
 
         private void transferFromPurseToBank(JSONObject command) {
