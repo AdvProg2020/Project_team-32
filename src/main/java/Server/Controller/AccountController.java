@@ -68,15 +68,17 @@ public class AccountController {
         loggedInUser = new Guest();
     }
 
-    public static ArrayList<Customer> getCustomers(ArrayList<Customer> customers) {
+    public static ArrayList<Customer> getCustomers(ArrayList<String> customers) {
+        System.out.println(customers);
         ArrayList<Customer> customersList = new ArrayList<>();
-        for (Customer customer : customers) {
+        for (String customer : customers) {
             try {
-                customersList.add((Customer) Person.getPersonByUserName(customer.getUserName()));
+                customersList.add((Customer) Person.getPersonByUserName(customer));
             } catch (UserDoesNotExistException e) {
-                System.err.println("customer does not exist " + customer.getUserName());
+                System.err.println("customer does not exist " + customer);
             }
         }
+        System.out.println(customersList);
         return customersList;
     }
 

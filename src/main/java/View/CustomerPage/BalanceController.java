@@ -52,15 +52,16 @@ public class BalanceController implements Initializable {
         addButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                float[] price = new float[1];
-                price[0] = Float.parseFloat(textBalance.getText().trim());
+                float price =Float.parseFloat(textBalance.getText().trim());
 //                PurchaseControllerFXML purchaseControllerFXML = new PurchaseControllerFXML();
 //                String result =   purchaseControllerFXML.bankServer(price,"withdraw");
                 HashMap<String, Object> input = new HashMap<>();
-                input.put("price", price[0]);
+                input.put("price", price);
                 input.put("transferType", "withdraw");
+                System.out.println("message sent to server : "+ price +"  withdraw");
                 Client.sendMessage("transfer from bank to purse", input);
                 Message message = Client.getMessage();
+                System.out.println("message get from server : "+ message);
                 if (message.get("status").equals("successful")) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("you added money to your purse");

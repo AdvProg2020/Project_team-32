@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public  class BankServer {
 
-    public final static int BANK_SERVER_PORT_NUMBER = 4200;
+    public final static int BANK_SERVER_PORT_NUMBER = 4299;
 
     private  Scanner bankScanner;
     private  Formatter bankFormatter;
