@@ -1,0 +1,15 @@
+#hbox1{
+    -fx-background-color: transparent;
+    -fx-border-radius: 10;
+    -fx-border-color: wheat;
+}
+.pane{
+    -fx-background-color: transparent;
+}
+
+.label{
+    -fx-background-color: transparent;
+}
+.pane:hover{
+    -fx-opacity: 0.7;
+}

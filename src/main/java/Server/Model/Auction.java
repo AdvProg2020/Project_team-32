@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 public class Auction {
     private static ArrayList<Auction> auctions = new ArrayList<>();
+    private  String ID;
     private Seller seller;
     private Good good;
     private int port;
 
-    public Auction(Seller seller, Good good, int port) {
+    public Auction(String ID,Seller seller, Good good, int port) {
+        this.ID =ID;
         this.seller = seller;
         this.good = good;
         this.port = port;
@@ -27,6 +29,10 @@ public class Auction {
 //                }
 //            }
 //        }).start();
+    }
+
+    public String getID() {
+        return ID;
     }
 
     public static ArrayList<Auction> getAuctions() {

@@ -28,7 +28,7 @@ public class BossController {
     }
 
     public static void createDiscount(Date exposeDate, String discountId, int maxAmount, int percent, int numberOfUse, ArrayList<Customer> users) {
-        Discount discount = new Discount(discountId, exposeDate, percent, maxAmount, numberOfUse);
+        Discount discount = new Discount(discountId, exposeDate, percent, maxAmount, numberOfUse, users);
         allDiscount.add(discount);
         System.out.println(users.size());
         for (Customer user : users) {
@@ -45,15 +45,19 @@ public class BossController {
         throw new DiscountDoesNotExistException();
     }
 
-    public static void editDiscount(Date exposeDate, String discountId, int maxAmount, int percent, Discount discount) {
+    public static void editDiscount(Date exposeDate, String discountId, int maxAmount, int percent, String curDiscountId) throws DiscountDoesNotExistException {
+        Discount discount = getDiscountById(curDiscountId);
         discount.setDiscountID(discountId);
         discount.setExposeDate(exposeDate);
         discount.setDiscountPercent(percent);
         discount.setMaxAmount(maxAmount);
     }
 
-    public static void removeDiscount(Discount discount) {
+    public static void removeDiscount(String discountId) throws DiscountDoesNotExistException {
+        Discount discount = getDiscountById(discountId);
         allDiscount.remove(discount);
-        //TODO , should remove from costumer list
+        for (Customer customer : discount.getUsers()) {
+            customer.removeDiscount(discount);
+        }
     }
 }

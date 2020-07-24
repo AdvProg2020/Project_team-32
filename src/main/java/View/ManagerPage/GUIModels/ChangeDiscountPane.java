@@ -3,10 +3,13 @@ package View.ManagerPage.GUIModels;
 import Server.Controller.BossController;
 import Server.Model.Customer;
 import Server.Model.Discount;
+import Server.Model.Message;
+import View.Client;
 import View.ManagerPage.AddEditDiscountPageController;
 import View.ManagerPage.DiscountManagerPageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 
 import java.io.File;
@@ -18,6 +21,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ChangeDiscountPane extends Pane {
 
@@ -66,7 +70,6 @@ public class ChangeDiscountPane extends Pane {
     private void setDiscountAmount(Discount discount) {
 
         //set discount amount
-
         controller.percentAmountLabel.setText("" + discount.getDiscountPercent() + "%");
         controller.percentAmountPicker.setValue(discount.getDiscountPercent());
 
@@ -93,14 +96,40 @@ public class ChangeDiscountPane extends Pane {
         int percentInt = (int) percent;
 
         if (!isEditPane) {
-            BossController.createDiscount(date, discountId, maxDiscountAmount, percentInt, useNumber, customers);
+            createDiscount(date, discountId, maxDiscountAmount, percentInt, useNumber, customers);
         }
         else {
-            BossController.editDiscount(date, discountId, maxDiscountAmount, percentInt, discountToChange);
+            editDiscount(date, discountId, maxDiscountAmount, percentInt, discountToChange);
         }
 
         parentController.closeStage();
         parentController.updateTable();
 
+    }
+
+    private void editDiscount(Date date, String discountId, int maxDiscountAmount, int percentInt, Discount discountToChange) {
+        HashMap<String , Object> inputs = new HashMap<>();
+        inputs.put("date", date);
+        inputs.put("discountId", discountId);
+        inputs.put("maxDiscountAmount", maxDiscountAmount);
+        inputs.put("percentInt", percentInt);
+        inputs.put("curDiscountId", discountToChange.getDiscountID());
+        Client.sendMessage("edit discount", inputs);
+        Message serverAnswer = Client.getMessage();
+        if(!serverAnswer.get("status").equals("successful")){
+            new Alert(Alert.AlertType.WARNING, "discount does not exist.").show();
+        }
+    }
+
+    private void createDiscount(Date date, String discountId, int maxDiscountAmount, int percentInt, int useNumber, ArrayList<Customer> customers) {
+        HashMap<String , Object> inputs = new HashMap<>();
+        inputs.put("date", date);
+        inputs.put("discountId", discountId);
+        inputs.put("maxDiscountAmount", maxDiscountAmount);
+        inputs.put("percentInt", percentInt);
+        inputs.put("useNumber", useNumber);
+        inputs.put("customers", customers);
+        Client.sendMessage("create discount", inputs);
+        Client.getMessage();
     }
 }

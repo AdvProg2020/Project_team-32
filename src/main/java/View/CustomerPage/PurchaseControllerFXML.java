@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import sun.tools.jar.CommandLine;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -77,12 +78,29 @@ public class PurchaseControllerFXML implements Initializable {
                     randomPercent(discountPercent, random, totalPrice);
 
                 if (bankPayCheckBox.isSelected()) {
-                    //todo
+                    HashMap<String, Object> input = new HashMap<>();
+                    input.put("transferType", "move");
+                    input.put("type", "bank");
+                    input.put("address", address);
+                    input.put("phoneNumber", phoneNumber);
+                    input.put("price", totalPrice[0]);
+                    input.put("discount", discountPercent[0]);
+                    Client.sendMessage("pay", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        showConfirm("you have successfully bought this thing");
+                        noDisResult.setText("you have succesfully bought things");
+                    }
+
+                    //todo when buying is successful
                 } else {
                     HashMap<String, Object> input = new HashMap<>();
+                    input.put("type", "wallet");
+                    input.put("address", address);
+                    input.put("phoneNumber", phoneNumber);
                     input.put("price", totalPrice[0]);
-                    input.put("discount", discountPercent);
-                    Client.sendMessage("pay by wallet", input);
+                    input.put("discount", discountPercent[0]);
+                    Client.sendMessage("pay", input);
                     Message message = Client.getMessage();
                     if (message.get("status").equals("successful")) {
                         showConfirm("you have successfully bought this thing");
@@ -99,7 +117,7 @@ public class PurchaseControllerFXML implements Initializable {
                 Client.sendMessage("get discount percent", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
-                    checkDiscount(message, discountPercent, totalPrice);
+                    checkDiscount(message, discountPercent, totalPrice, address, phoneNumber);
                 } else if (message.get("status").equals("DiscountNotUsableException")) {
                     showError(Alert.AlertType.ERROR, "DiscountNotUsableException");
                 } else if (message.get("status").equals("InvalidIDException")) {
@@ -108,6 +126,7 @@ public class PurchaseControllerFXML implements Initializable {
             }
         });
     }
+
 
     private void randomPercent(float[] discountPercent, int random, float[] totalPrice) {
         discountPercent[0] = (random % 20);
@@ -135,7 +154,7 @@ public class PurchaseControllerFXML implements Initializable {
         }
     }
 
-    private void checkDiscount(Message message, float[] discountPercent, float[] totalPrice) {
+    private void checkDiscount(Message message, float[] discountPercent, float[] totalPrice, String address, String phone) {
         HashMap<String, Object> input;
         discountPercent[0] = (float) message.get("discount percent");
         input = new HashMap<>();
@@ -146,22 +165,38 @@ public class PurchaseControllerFXML implements Initializable {
         if (message.get("status").equals("successful")) {
             totalPrice[0] = (float) message.get("discounted price");
             disVBox.setVisible(true);
-            EventHandler eventHandler = makeEventHandler(discountPercent, totalPrice);
+            EventHandler eventHandler = makeEventHandler(discountPercent, totalPrice, address, phone);
             disPay.setOnMouseClicked(eventHandler);
         }
     }
 
-    private EventHandler makeEventHandler(float[] discountPercent, float[] totalPrice) {
+    private EventHandler makeEventHandler(float[] discountPercent, float[] totalPrice, String address, String phoneNumber) {
         return new EventHandler() {
             @Override
             public void handle(Event event) {
                 if (bankPayCheckBox.isSelected()) {
+                    HashMap<String, Object> input = new HashMap<>();
+                    input.put("transferType", "move");
+                    input.put("type", "bank");
+                    input.put("address", address);
+                    input.put("phoneNumber", phoneNumber);
+                    input.put("price", totalPrice[0]);
+                    input.put("discount", discountPercent[0]);
+                    Client.sendMessage("pay", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        showConfirm("you have successfully bought this thing");
+                        noDisResult.setText("you have succesfully bought things");
+                    }
                     //todo
                 } else {
                     HashMap<String, Object> input = new HashMap<>();
+                    input.put("type", "wallet");
+                    input.put("address", address);
+                    input.put("phoneNumber", phoneNumber);
                     input.put("price", totalPrice[0]);
-                    input.put("discount", discountPercent);
-                    Client.sendMessage("pay by wallet", input);
+                    input.put("discount", discountPercent[0]);
+                    Client.sendMessage("pay", input);
                     Message message = Client.getMessage();
                     if (message.get("status").equals("successful")) {
                         showConfirm("you have successfully bought this thing");

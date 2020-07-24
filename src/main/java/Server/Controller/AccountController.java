@@ -67,4 +67,23 @@ public class AccountController {
     public static void logout() {
         loggedInUser = new Guest();
     }
+
+    public static ArrayList<Customer> getCustomers(ArrayList<Customer> customers) {
+        ArrayList<Customer> customersList = new ArrayList<>();
+        for (Customer customer : customers) {
+            try {
+                customersList.add((Customer) Person.getPersonByUserName(customer.getUserName()));
+            } catch (UserDoesNotExistException e) {
+                System.err.println("customer does not exist " + customer.getUserName());
+            }
+        }
+        return customersList;
+    }
+
+    public static void changeInformation(String email, String phone, String firstName, String lastName,Person user) {
+        user.setEmail(email);
+        user.setPhoneID(phone);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+    }
 }

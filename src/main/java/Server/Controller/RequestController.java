@@ -134,4 +134,8 @@ public class RequestController {
         request.getSeller().makeOff(off);
         System.out.println("add soff succesful");
     }
+
+    public static Request getRequestByIndex(int requestIndex) {
+        return allRequest.get(requestIndex);
+    }
 }

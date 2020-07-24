@@ -2,6 +2,8 @@ package View.ManagerPage;
 
 import Server.Controller.BossController;
 import Server.Model.Discount;
+import Server.Model.Message;
+import View.Client;
 import View.ManagerPage.GUIModels.ChangeDiscountPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -14,7 +16,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class DiscountManagerPageController implements Initializable {
@@ -39,7 +43,7 @@ public class DiscountManagerPageController implements Initializable {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("discountID"));
 
         //initial table items
-        discountsTable.getItems().addAll(BossController.getAllDiscount());
+        updateTable();
 
         stageToShow = new Stage();
 
@@ -47,13 +51,25 @@ public class DiscountManagerPageController implements Initializable {
 
     public void updateTable() {
         discountsTable.getItems().clear();
-        discountsTable.getItems().addAll(BossController.getAllDiscount());
+        discountsTable.getItems().addAll(getAllDiscount());
+    }
+
+    private ArrayList<Discount> getAllDiscount() {
+        Client.sendMessage("get all discounts", new HashMap<>());
+        Message serverAnswer = Client.getMessage();
+        return (ArrayList<Discount>) serverAnswer.get("all discounts");
     }
 
 
     public void remove(ActionEvent actionEvent) {
         if (discountsTable.getSelectionModel().getSelectedItem() != null) {
-            BossController.removeDiscount(discountsTable.getSelectionModel().getSelectedItem());
+            HashMap<String , Object> inputs = new HashMap<>();
+            inputs.put("discountId", discountsTable.getSelectionModel().getSelectedItem().getDiscountID());
+            Client.sendMessage("remove discount", inputs);
+            Message serverAnswer = Client.getMessage();
+            if(serverAnswer.get("status").equals("discount does not exist")){
+                new Alert(Alert.AlertType.WARNING, "discount does not exist.").show();
+            }
             updateTable();
         } else {
             new Alert(Alert.AlertType.WARNING, "Should select a discount.").show();
