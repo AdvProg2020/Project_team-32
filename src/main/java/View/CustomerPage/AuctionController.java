@@ -37,7 +37,7 @@ public class AuctionController implements Initializable {
                 auctionShape.setOnMouseClicked(new javafx.event.EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-
+                        //todo
                     }
                 });
             }
