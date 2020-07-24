@@ -266,6 +266,18 @@ public class Server {
                         case "get person by id":
                             getPersonById(command);
                             break;
+                        case "get wage":
+                            getWage(command);
+                            break;
+                        case "get limit":
+                            getLimit(command);
+                            break;
+                        case "set wage":
+                            setWage(command);
+                            break;
+                        case "set limit":
+                            setLimit(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -273,6 +285,44 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void setLimit(JSONObject command) {
+            Message message = new Message();
+            String  limitString = (String) command.get("limit");
+            if (limitString.matches("\\d+")){
+                Boss.setLeastMoney(Integer.parseInt(limitString));
+                message.put(status,successful);
+            }else {
+                message.put(status,"wrong input");
+            }
+            sendMessage(message);
+        }
+
+        private void setWage(JSONObject command) {
+            Message message = new Message();
+            String  wageString = (String) command.get("wage");
+            if (wageString.matches("\\d{1}")){
+                Boss.setWage(Integer.parseInt(wageString));
+                message.put(status,successful);
+            }else {
+                message.put(status,"wrong input");
+            }
+            sendMessage(message);
+        }
+
+        private void getLimit(JSONObject command) {
+            Message message = new Message();
+            message.put("limit",Boss.getLeastMoney());
+            message.put(status,successful);
+            sendMessage(message);
+        }
+
+        private void getWage(JSONObject command) {
+            Message message = new Message();
+            message.put("wage",Boss.getWage());
+            message.put(status,successful);
+            sendMessage(message);
         }
 
         private void getPersonById(JSONObject command) {

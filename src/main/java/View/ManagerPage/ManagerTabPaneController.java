@@ -19,6 +19,7 @@ public class ManagerTabPaneController implements Initializable {
     public Tab requestManagerTab;
     public Tab categoryManagerTab;
     public Tab logoutTab;
+    public Tab bankLimitsTab;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,6 +33,8 @@ public class ManagerTabPaneController implements Initializable {
             URL categoryManagerUrl = new File("src\\main\\resources\\GUIFiles\\category-manager.fxml").toURI().toURL();
             URL requestManagerUrl = new File("src\\main\\resources\\GUIFiles\\request-manager-page.fxml").toURI().toURL();
             URL logoutUrl = new File("src\\main\\resources\\GUIFiles\\logout-page.fxml").toURI().toURL();
+            URL bankLimitsUrl = new File("src\\main\\resources\\GUIFiles\\BankLimits.fxml").toURI().toURL();
+
 
             //set tab's contents
             discountManagerTab.setContent(FXMLLoader.load(discountMangerUrl));
@@ -41,6 +44,7 @@ public class ManagerTabPaneController implements Initializable {
             categoryManagerTab.setContent(FXMLLoader.load(categoryManagerUrl));
             requestManagerTab.setContent(FXMLLoader.load(requestManagerUrl));
             logoutTab.setContent(FXMLLoader.load(logoutUrl));
+            bankLimitsTab.setContent(FXMLLoader.load(bankLimitsUrl));
 
 
         } catch (IOException e) {

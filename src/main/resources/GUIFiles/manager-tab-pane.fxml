@@ -11,6 +11,7 @@
     <Tab fx:id="requestManagerTab" closable="false" />
     <Tab fx:id="categoryManagerTab" closable="false" />
     <Tab fx:id="infoTab" closable="false" />
+    <Tab fx:id="bankLimitsTab" closable="false"/>
     <Tab fx:id="logoutTab" closable="false"/>
   </tabs>
 </TabPane>
