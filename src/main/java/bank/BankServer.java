@@ -774,6 +774,7 @@ public class BankServer {
         }
 
         for(Account a: Account.allAccounts) {
+            System.out.println(a.username + " " + a.currentToken.token);
             a.loadingAllTokens();
         }
 
@@ -791,4 +792,5 @@ public class BankServer {
         }
 
     }
+
 }

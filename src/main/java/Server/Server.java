@@ -253,6 +253,18 @@ public class Server {
                         case "transfer from purse to bank":
                             transferFromPurseToBank(command);
                             break;
+                        case "add comment":
+                            addComment(command);
+                            break;
+                        case "add to shopping baskets":
+                            addToShoppingBaskets(command);
+                            break;
+                        case "remove from shopping basket":
+                            removeFormShoppingBasket(command);
+                            break;
+                        case "get person by id":
+                            getPersonById(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -260,6 +272,35 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void getPersonById(JSONObject command) {
+            Message message = new Message();
+            try {
+                message.put("person", Person.getPersonByUserName((String) command.get("id")));
+            } catch (UserDoesNotExistException e) {
+                e.printStackTrace();
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void removeFormShoppingBasket(JSONObject command) {
+            List<ShoppingBasket> toRemove = (List<ShoppingBasket>) command.get("list");
+            for (ShoppingBasket basket : toRemove) {
+                ((ShoppingBasketable)AccountController.loggedInUser).getShoppingBaskets().removeIf(e -> e.getId() == basket.getId());
+            }
+        }
+
+        private void addToShoppingBaskets(JSONObject command) {
+            ((ShoppingBasketable)AccountController.loggedInUser).getShoppingBaskets().add((ShoppingBasket) command.get("shopping basket"));
+        }
+
+
+        private void addComment(JSONObject command) {
+            Good good = (Good) command.get("good");
+            Comment comment = (Comment) command.get("comment");
+            good.getAllComments().add(comment);
         }
 
         private void removeProductByManager(JSONObject command) {
@@ -786,7 +827,7 @@ public class Server {
         private void getShoppingBasketList(JSONObject command) {
             Message message=new Message();
             try {
-                message.put("shoppingBasket list",((Customer)loggedInUser).getShoppingBaskets());
+                message.put("shoppingBasket list",((ShoppingBasketable)loggedInUser).getShoppingBaskets());
                 message.put(status,successful);
             } finally {
                 sendMessage(message);

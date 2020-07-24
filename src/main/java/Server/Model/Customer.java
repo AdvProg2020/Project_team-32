@@ -2,7 +2,7 @@ package Server.Model;
 
 import java.util.ArrayList;
 
-public class Customer extends Person {
+public class Customer extends Person implements ShoppingBasketable{
 
     private ArrayList<BuyLog> allBuyLogs;
 
@@ -15,6 +15,7 @@ public class Customer extends Person {
         this.shoppingBaskets = new ArrayList<ShoppingBasket>();
     }
 
+    @Override
     public ArrayList<ShoppingBasket> getShoppingBaskets() {
         return shoppingBaskets;
     }

@@ -3,7 +3,7 @@ package Server.Model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Logs implements Serializable {
+public abstract class Logs implements Serializable, Storable {
     protected String logID;
     protected Date date;
     protected float pricePaid;
