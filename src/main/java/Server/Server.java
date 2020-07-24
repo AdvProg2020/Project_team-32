@@ -6,7 +6,7 @@ import Server.Model.*;
 import Server.Model.Chat.ChatBox;
 import Server.Model.Chat.ChatMessage;
 import View.Client;
-import javafx.scene.control.Alert;
+
 import org.json.simple.*;
 
 import java.io.*;
@@ -21,8 +21,9 @@ import java.util.List;
 
 public class Server {
 
-    private final static int PORT_NUMBER = 2020;
+    private final static int PORT_NUMBER = 2026;
     private static ServerSocket serverSocket;
+    private static int shopBankID = -1;
     private static ArrayList<Socket> allConnectedSockets = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -218,7 +219,7 @@ public class Server {
                         case "get customer discounts":
                             getCustomerDiscounts(command);
                             break;
-                        case"get buylogs":
+                        case "get buylogs":
                             getBuylogs(command);
                             break;
                         case "rate":
@@ -263,6 +264,30 @@ public class Server {
                         case "transfer from purse to bank":
                             transferFromPurseToBank(command);
                             break;
+                        case "add comment":
+                            addComment(command);
+                            break;
+                        case "add to shopping baskets":
+                            addToShoppingBaskets(command);
+                            break;
+                        case "remove from shopping basket":
+                            removeFormShoppingBasket(command);
+                            break;
+                        case "get person by id":
+                            getPersonById(command);
+                            break;
+                        case "get wage":
+                            getWage(command);
+                            break;
+                        case "get limit":
+                            getLimit(command);
+                            break;
+                        case "set wage":
+                            setWage(command);
+                            break;
+                        case "set limit":
+                            setLimit(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -289,17 +314,82 @@ public class Server {
             chatBox.add(messageToAdd);
         }
 
+        private void setLimit(JSONObject command) {
+            Message message = new Message();
+            String  limitString = (String) command.get("limit");
+            if (limitString.matches("\\d+")){
+                Boss.setLeastMoney(Integer.parseInt(limitString));
+                message.put(status,successful);
+            }else {
+                message.put(status,"wrong input");
+            }
+            sendMessage(message);
+        }
+
+        private void setWage(JSONObject command) {
+            Message message = new Message();
+            String  wageString = (String) command.get("wage");
+            if (wageString.matches("\\d{1}")){
+                Boss.setWage(Integer.parseInt(wageString));
+                message.put(status,successful);
+            }else {
+                message.put(status,"wrong input");
+            }
+            sendMessage(message);
+        }
+
+        private void getLimit(JSONObject command) {
+            Message message = new Message();
+            message.put("limit",Boss.getLeastMoney());
+            message.put(status,successful);
+            sendMessage(message);
+        }
+
+        private void getWage(JSONObject command) {
+            Message message = new Message();
+            message.put("wage",Boss.getWage());
+            message.put(status,successful);
+            sendMessage(message);
+        }
+
+        private void getPersonById(JSONObject command) {
+            Message message = new Message();
+            try {
+                message.put("person", Person.getPersonByUserName((String) command.get("id")));
+            } catch (UserDoesNotExistException e) {
+                e.printStackTrace();
+            } finally {
+                sendMessage(message);
+            }
+        }
+
+        private void removeFormShoppingBasket(JSONObject command) {
+            List<ShoppingBasket> toRemove = (List<ShoppingBasket>) command.get("list");
+            for (ShoppingBasket basket : toRemove) {
+                ((ShoppingBasketable)loggedInUser).getShoppingBaskets().removeIf(e -> e.getId() == basket.getId());
+            }
+        }
+
+        private void addToShoppingBaskets(JSONObject command) {
+            ((ShoppingBasketable)loggedInUser).getShoppingBaskets().add((ShoppingBasket) command.get("shopping basket"));
+        }
+
+
+        private void addComment(JSONObject command) {
+            Good good = (Good) command.get("good");
+            Comment comment = (Comment) command.get("comment");
+            good.getAllComments().add(comment);
+        }
+
         private void removeProductByManager(JSONObject command) {
             Message serverAnswer = new Message();
             Good goodToRemove = Good.getGoodById((String) command.get("product id"));
             try {
                 GoodController.getGoodController().deleteGood(goodToRemove);
-                serverAnswer.put(status,successful);
-            }
-            catch (NullPointerException e){
-                serverAnswer.put(status,"null pointer exception");
-            }
-            finally {
+                serverAnswer.put(status, successful);
+            } catch (NullPointerException e) {
+                serverAnswer.put(status, "null pointer exception");
+            } finally {
                 sendMessage(serverAnswer);
             }
 
@@ -336,21 +426,24 @@ public class Server {
             String transferType = (String) command.get("transferType");
             float price = (float) command.get("price");
             String result = bankServer(price, transferType);
+            System.out.println("bankserver : " +result );
             if (result.equals("done successfully")) {
                 loggedInUser.setCredit(loggedInUser.getCredit()+price);
                 message.put("credit",loggedInUser.getCredit());
                 message.put(status, successful);
             } else {
                 message.put(status, "error");
-                sendMessage(message);
+
             }
+            sendMessage(message);
         }
 
         public String bankServer(float totalPrice, String transferType) {
             String result1 = handleAccountID();
             if (result1 != null) return result1;
-            bankServer.sendMessageToBank("get_token " + Client.user.getUserName() + " " + Client.user.getPassWord());
+            bankServer.sendMessageToBank("get_token " + loggedInUser.getUserName() + " " + loggedInUser.getPassWord());
             String result = bankServer.getMessageFromBank();
+            System.out.println(" get tokent result : " + result);
             String[] temp = result.split(" ");
             if (temp.length == 1) {
                 bankServer.setServerToken(result);
@@ -358,7 +451,7 @@ public class Server {
                 String destination = null;
                 if (transferType.equals("move")) {
                     home = String.valueOf(bankServer.getAccountID());
-                    destination = "1";
+                    destination = String.valueOf(shopBankID);
                 } else if (transferType.equals("withdraw")) {
                     home = String.valueOf(bankServer.getAccountID());
                     destination = "-1";
@@ -366,23 +459,21 @@ public class Server {
                     home = "-1";
                     destination = String.valueOf(bankServer.getAccountID());
                 }
-                result = bankServer.getServerToken() + " " + transferType + " " + totalPrice + " " +
+                result = "create_receipt " + bankServer.getServerToken() + " " + transferType + " " + (int) totalPrice + " " +
                         home + " " + destination + " " + "boleshit";
+                System.out.println("create_receipt sent to bankserver : " + result);
                 bankServer.sendMessageToBank(result);
                 String recipt = bankServer.getMessageFromBank();
+                System.out.println("receipt answer : " + recipt);
                 temp = recipt.split(" ");
                 if (temp.length == 1) {
                     bankServer.sendMessageToBank("pay " + recipt);
                     String output = bankServer.getMessageFromBank();
                     if (output.equals("done successfully")) {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setContentText("payed by bank macount succcessfully");
-                        alert.show();
+                        System.out.println("payed by bank macount succcessfully");
                         return "done successfully";
                     } else if (output.equals("source account does not have enough money")) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("source account does not have enough money");
-                        alert.show();
+                        System.out.println("source account does not have enough money");
                     } else {
                         System.out.println(output);
                         return output;
@@ -400,15 +491,17 @@ public class Server {
 
         private String handleAccountID() {
             if (bankServer.getAccountID() == -1) {
-                String message = "create_account " + Client.user.getFirstName() + " " + Client.user.getLastName()
-                        + " " + Client.user.getUserName() + " " + Client.user.getPassWord() + " " + Client.user.getPassWord();
+                String message = "create_account " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName()
+                        + " " + loggedInUser.getUserName() + " " + loggedInUser.getPassWord() + " " + loggedInUser.getPassWord();
                 bankServer.sendMessageToBank(message);
+                System.out.println(message);
                 String result = bankServer.getMessageFromBank();
                 String[] temp = result.split(" ");
                 if (temp.length == 1) {
                     bankServer.setAccountID(Integer.parseInt(result));
-                } else {
                     System.out.println(result);
+                } else {
+                    System.out.println(" handle account : " + result);
                     return result;
                 }
             }
@@ -421,11 +514,10 @@ public class Server {
             Message serverAnswer = new Message();
             try {
                 RequestController.acceptRequest(request);
-                serverAnswer.put(status,successful);
+                serverAnswer.put(status, successful);
             } catch (Exception e) {
-                serverAnswer.put(status,"error");
-            }
-            finally {
+                serverAnswer.put(status, "error");
+            } finally {
                 sendMessage(serverAnswer);
             }
         }
@@ -446,12 +538,12 @@ public class Server {
             String phone = (String) command.get("phone");
             String lastName = (String) command.get("lastName");
             String firstName = (String) command.get("firstName");
-            if(loggedInUser != null)
-               AccountController.changeInformation(email,phone,firstName,lastName,loggedInUser);
+            if (loggedInUser != null)
+                AccountController.changeInformation(email, phone, firstName, lastName, loggedInUser);
         }
 
         private void setImageUrl(JSONObject command) {
-            if(loggedInUser != null)
+            if (loggedInUser != null)
                 loggedInUser.setImageUrl((URL) command.get("imageUrl"));
         }
 
@@ -468,12 +560,11 @@ public class Server {
             Message serverAnswer = new Message();
             try {
                 Category categoryToChange = CategoryController.getCategoryByName(curName);
-                CategoryController.editCategory(categoryToChange,name,properties);
+                CategoryController.editCategory(categoryToChange, name, properties);
                 serverAnswer.put(status, successful);
             } catch (CategoryNotFindException e) {
                 serverAnswer.put(status, "category not find");
-            }
-            finally {
+            } finally {
                 sendMessage(serverAnswer);
             }
         }
@@ -678,8 +769,22 @@ public class Server {
             String password = (String) command.get("password");
             Message serverAnswer = new Message();
             try {
-                BossController.createManager(username,password);
-                serverAnswer.put(status,successful);
+                BossController.createManager(username, password);
+                if (shopBankID ==-1 ) {
+                    String message = "create_account " + null + " " + null
+                            + " " +  username+ " " + password + " " + password;
+                    bankServer.sendMessageToBank(message);
+                    System.out.println(message);
+                    String result = bankServer.getMessageFromBank();
+                    String[] temp = result.split(" ");
+                    if (temp.length == 1) {
+                        shopBankID = Integer.parseInt(result);
+                        System.out.println(result);
+                    } else {
+                        System.out.println(" handle account : " + result);
+                    }
+                }
+                serverAnswer.put(status, successful);
             } catch (DuplicateUsernameException e) {
                 serverAnswer.put(status,"duplicate username");
             }
@@ -820,6 +925,16 @@ public class Server {
             }
         }
 
+        private void getShoppingBasketList2(JSONObject command) {
+            Message message=new Message();
+            try {
+                message.put("shoppingBasket list",((Guest)loggedInUser).getShoppingBaskets());
+                message.put(status,successful);
+            } finally {
+                sendMessage(message);
+            }
+        }
+
         private void getSelllogList(JSONObject command) {
             Message message = new Message();
             try {
@@ -835,6 +950,7 @@ public class Server {
             try {
                 loggedInUser = AccountController.login((String) command.get("username"), (String) command.get("password"));
                 message.put(status, successful);
+                message.put("user",loggedInUser);
                 if (loggedInUser instanceof Boss) {
                     message.put("account type", "boss");
                 } else if (loggedInUser instanceof Seller) {

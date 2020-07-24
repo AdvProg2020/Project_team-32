@@ -1,5 +1,9 @@
 package Server.Model;
 
+import Server.Database.Database;
+import Server.Database.DatabaseType;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SellLog extends Logs {
@@ -8,12 +12,13 @@ public class SellLog extends Logs {
     private String buyerUserNmae;
     private String postStatus;
 
-    public SellLog(String logID, Date date, float pricePaid, float amountReducedForOff, Good soldGood, String buyerUserNmae, String postStatus) {
+    public SellLog(String logID, Date date, float pricePaid, float amountReducedForOff, Good soldGood, String buyerUserName, String postStatus) {
         super(logID, date, pricePaid);
         this.amountReducedForOff = amountReducedForOff;
         this.soldGood = soldGood;
-        this.buyerUserNmae = buyerUserNmae;
+        this.buyerUserNmae = buyerUserName;
         this.postStatus = postStatus;
+        store();
     }
 
     public String getBuyerUserNmae() {
@@ -35,5 +40,22 @@ public class SellLog extends Logs {
                 ", date=" + date +
                 ", pricePaid=" + pricePaid +
                 '}';
+    }
+
+    @Override
+    public void store() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-mm-dd hh:mm:ss");
+        String s = "INSERT INTO sellLogs " +
+                "VALUES ('" + logID + "', '" +
+                simpleDateFormat.format(date) + "', " +
+                pricePaid + ", " + amountReducedForOff + ", '" +
+                soldGood.getGoodID() + "', '" + buyerUserNmae + "', '" +
+                postStatus + "');";
+        Database.getInstance(DatabaseType.logsDatabase).update(s);
+    }
+
+    @Override
+    public void update() {
+
     }
 }

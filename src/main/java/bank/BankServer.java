@@ -12,7 +12,7 @@ import java.util.*;
 import org.json.simple.JSONObject;
 
 public class BankServer {
-    private static int port = 4200;
+    private static int port = 4299;
     private static List<Integer> unusedTokens;
     private static List<Integer> usedTokens;
     private static Connection c;
@@ -509,7 +509,9 @@ public class BankServer {
         String username = commandParts[3];
         String password = commandParts[4];
         String repeatedPassword = commandParts[5];
-
+        System.out.println("firstnmae: "+firstname);
+        System.out.println("laastName: "+lastname);
+        System.out.println("username: " +username);
         if(!repeatedPassword.equals(password)) {
             return "passowrds do not match";
         }
@@ -774,6 +776,7 @@ public class BankServer {
         }
 
         for(Account a: Account.allAccounts) {
+            System.out.println(a.username + " " + a.currentToken.token);
             a.loadingAllTokens();
         }
 
@@ -791,4 +794,5 @@ public class BankServer {
         }
 
     }
+
 }

@@ -1,15 +1,25 @@
 package Server.Model;
 
+import Server.Database.Database;
+import Server.Database.DatabaseType;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Good implements Serializable {
+public class Good implements Serializable, Storable {
     public static ArrayList<Good> confirmedGoods = new ArrayList<>();
     private static ArrayList<Good> allGoods = new ArrayList<>();
     private String name;
     private String goodID;
     private Status goodStatus;
+
+
+
     private enum Status implements Serializable {MAKE_REQUEST, EDIT_REQUEST, CONFIRMED}
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
     private ArrayList<Seller> sellers;
@@ -20,12 +30,8 @@ public class Good implements Serializable {
     private HashMap<String, String> properties;
     private String imageAddress;
     private ArrayList<Comment> allComments = new ArrayList<>();
-
-
     private int numberOfRates;
-
     private int numberOfViews; //this should set after any view
-
     public int getNumberOfViews() {
         return numberOfViews;
     }
@@ -56,6 +62,29 @@ public class Good implements Serializable {
         this.properties.put("company name", companyName);
         this.properties.put("name", name);
         // TODO ali sharifi
+    }
+
+    @Override
+    public void store() {
+    }
+
+
+    public Good(String name, String goodID, String companyName, String explanation, float point, String imageAddress, int numberOfRates, int numberOfViews) {
+        this.name = name;
+        this.goodID = goodID;
+        this.companyName = companyName;
+        this.explanation = explanation;
+        this.point = point;
+        this.imageAddress = imageAddress;
+        this.numberOfRates = numberOfRates;
+        this.numberOfViews = numberOfViews;
+    }
+
+
+
+    @Override
+    public void update() {
+
     }
 
     public void editInfo(Good editGood, Seller seller) {
@@ -210,5 +239,21 @@ public class Good implements Serializable {
 
     public void setImageAddress(String imageAddress) {
         this.imageAddress = imageAddress;
+    }
+
+    public static ArrayList<Good> getConfirmedGoods() {
+        return confirmedGoods;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public int getNumberOfRates() {
+        return numberOfRates;
     }
 }

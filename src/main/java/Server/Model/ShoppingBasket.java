@@ -4,14 +4,20 @@ import java.io.Serializable;
 
 public class ShoppingBasket implements Serializable {
 
+    private static int numberOfShoppingBasketsCreatedYet = 0;
+
+
     private Good good;
     private Seller seller;
     private int quantity;
+    private int id;
 
     public ShoppingBasket(Good good, Seller seller) {
         this.good = good;
         this.seller = seller;
         this.quantity = 1;
+        numberOfShoppingBasketsCreatedYet += 1;
+        this.id = numberOfShoppingBasketsCreatedYet;
     }
 
     public Good getGood() {
@@ -36,5 +42,9 @@ public class ShoppingBasket implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
     }
 }
