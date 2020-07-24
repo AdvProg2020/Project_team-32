@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 
-<TabPane fx:id="sellerTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="799.0" side="LEFT" stylesheets="@SellerTabPane-Style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SellerPage.SellerMenuController">
+<TabPane fx:id="sellerTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="799.0" side="LEFT" stylesheets="@SellerTabPane-Style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SellerPage.SellerMenuController">
     <tabs>
         <Tab fx:id="userMangerTab" closable="false">
 
@@ -94,15 +94,11 @@
             </AnchorPane>
         </Tab>
         <Tab fx:id="balanceTab" closable="false">
-            <AnchorPane>
-                <children>
-                    <Label fx:id="balanceLable" layoutX="93.0" layoutY="164.0" prefHeight="60.0" prefWidth="334.0" text="your money:" />
-                </children>
-            </AnchorPane>
+            <AnchorPane />
         </Tab>
 
         <Tab fx:id="offsPageTab" closable="false" />
         <Tab fx:id="logOutTab" closable="false" />
-        <Tab fx:id="auctionTab" closable="false"/>
+        <Tab fx:id="auctionTab" closable="false" />
     </tabs>
 </TabPane>

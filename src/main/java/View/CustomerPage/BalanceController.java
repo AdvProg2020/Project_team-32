@@ -40,7 +40,9 @@ public class BalanceController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         balance.setOnMouseEntered(event -> Controller.sound(1));
-        if (AccountController.loggedInUser instanceof Customer) {
+//        System.out.println(AccountController.loggedInUser);
+//        System.out.println(" ()()())( "+ Client.user);
+        if (Client.user instanceof Customer) {
             takeMoneyButton.setVisible(false);
         }
         HashMap<String, Object> input = new HashMap<>();

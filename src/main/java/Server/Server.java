@@ -4,7 +4,7 @@ import Server.Controller.*;
 import Server.Controller.Exeptions.*;
 import Server.Model.*;
 import View.Client;
-import javafx.scene.control.Alert;
+
 import org.json.simple.*;
 
 import java.io.*;
@@ -356,8 +356,9 @@ public class Server {
                 message.put(status, successful);
             } else {
                 message.put(status, "error");
-                sendMessage(message);
+
             }
+            sendMessage(message);
         }
 
         public String bankServer(float totalPrice, String transferType) {
@@ -392,14 +393,10 @@ public class Server {
                     bankServer.sendMessageToBank("pay " + recipt);
                     String output = bankServer.getMessageFromBank();
                     if (output.equals("done successfully")) {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setContentText("payed by bank macount succcessfully");
-                        alert.show();
+                        System.out.println("payed by bank macount succcessfully");
                         return "done successfully";
                     } else if (output.equals("source account does not have enough money")) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("source account does not have enough money");
-                        alert.show();
+                        System.out.println("source account does not have enough money");
                     } else {
                         System.out.println(output);
                         return output;
@@ -876,6 +873,7 @@ public class Server {
             try {
                 loggedInUser = AccountController.login((String) command.get("username"), (String) command.get("password"));
                 message.put(status, successful);
+                message.put("user",loggedInUser);
                 if (loggedInUser instanceof Boss) {
                     message.put("account type", "boss");
                 } else if (loggedInUser instanceof Seller) {
