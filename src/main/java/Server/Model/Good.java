@@ -1,29 +1,60 @@
 package Server.Model;
 
+import Server.Database.Database;
+import Server.Database.DatabaseType;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Good implements Serializable {
+public class Good implements Serializable, Storable {
     public static ArrayList<Good> confirmedGoods = new ArrayList<>();
     private static ArrayList<Good> allGoods = new ArrayList<>();
     private String name;
     private String goodID;
     private Status goodStatus;
+
+
+
     private enum Status implements Serializable {MAKE_REQUEST, EDIT_REQUEST, CONFIRMED}
+    @SerializedName("sellerAndPrices")
+    @Expose
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
+    @SerializedName("sellers")
+    @Expose
     private ArrayList<Seller> sellers;
+    @SerializedName("companyName")
+    @Expose
     private String companyName;
+    @SerializedName("category")
+    @Expose
     private Category category;
+    @SerializedName("explanation")
+    @Expose
     private String explanation;
+    @SerializedName("point")
+    @Expose
     private float point;
+    @SerializedName("properties")
+    @Expose
     private HashMap<String, String> properties;
+    @SerializedName("imageAddress")
+    @Expose
     private String imageAddress;
+    @SerializedName("allComments")
+    @Expose
     private ArrayList<Comment> allComments = new ArrayList<>();
 
-
+    @SerializedName("numberOfRates")
+    @Expose
     private int numberOfRates;
 
+    @SerializedName("bumberOfViews")
+    @Expose
     private int numberOfViews; //this should set after any view
 
     public int getNumberOfViews() {
@@ -56,6 +87,43 @@ public class Good implements Serializable {
         this.properties.put("company name", companyName);
         this.properties.put("name", name);
         // TODO ali sharifi
+        store();
+    }
+
+    @Override
+    public void store() {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        /*
+        String s = "INSERT INTO good " +
+                "VALUES ('" + name + "', '" + goodID + "', '" +
+                gson.toJson(goodStatus) + "', '" + companyName + "', '" + explanation +
+                "', '" + gson.toJson(sellerAndPrices) + "', '" + gson.toJson(sellers) + "', '" +
+                gson.toJson(properties) +  "');";
+
+         */
+        String s = "INSERT INTO goods " +
+                "VALUES ('" + gson.toJson(this, Good.class) + "');";
+        Database.getInstance(DatabaseType.goodsDatabase).update(s);
+    }
+
+
+    public Good(String name, String goodID, String companyName, String explanation, float point, String imageAddress, int numberOfRates, int numberOfViews) {
+        this.name = name;
+        this.goodID = goodID;
+        this.companyName = companyName;
+        this.explanation = explanation;
+        this.point = point;
+        this.imageAddress = imageAddress;
+        this.numberOfRates = numberOfRates;
+        this.numberOfViews = numberOfViews;
+    }
+
+
+
+    @Override
+    public void update() {
+
     }
 
     public void editInfo(Good editGood, Seller seller) {
@@ -210,5 +278,21 @@ public class Good implements Serializable {
 
     public void setImageAddress(String imageAddress) {
         this.imageAddress = imageAddress;
+    }
+
+    public static ArrayList<Good> getConfirmedGoods() {
+        return confirmedGoods;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public int getNumberOfRates() {
+        return numberOfRates;
     }
 }

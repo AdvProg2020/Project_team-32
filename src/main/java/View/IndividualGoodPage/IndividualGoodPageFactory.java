@@ -1,8 +1,7 @@
 package View.IndividualGoodPage;
 
-import Server.Controller.AccountController;
-import Server.Controller.Exeptions.UserDoesNotExistException;
 import Server.Model.*;
+import View.Client;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class IndividualGoodPageFactory {
 
@@ -84,8 +85,13 @@ public class IndividualGoodPageFactory {
                 Button submit = new Button("submit");
                 submit.setOnAction(f -> {
                     try {
-                        good.getAllComments().add(new Comment(AccountController.loggedInUser.getUserName(),good,commentFiled.getText(),"sending","aa"));
-                        comments.getChildren().add(CommentFactory.getComment(AccountController.loggedInUser.getUserName(),commentFiled.getText(), true ));
+                        Client.sendMessage("get loggedInUser", new HashMap<>());
+                        Person loggedInUser = (Person) Client.getMessage().get("user");
+                        HashMap<String, Object> arg = new HashMap<>();
+                        arg.put("comment", new Comment(loggedInUser.getUserName(),good,commentFiled.getText(),"sending","aa"));
+                        arg.put("good", good);
+                        Client.sendMessage("add comment", arg);
+                        comments.getChildren().add(CommentFactory.getComment(loggedInUser.getUserName(),commentFiled.getText(), true ));
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
@@ -101,53 +107,65 @@ public class IndividualGoodPageFactory {
                 checkBox.setText(s + " : " + good.getSellerAndPrices().get(s));
 
                 checkBox.setOnAction(e -> {
+                    
+                    Client.sendMessage("get loggedInUser", new HashMap<>());
+                    Person loggedInUser = (Person) Client.getMessage().get("user");
                     if (checkBox.isSelected()) {
-
-                        if (AccountController.loggedInUser instanceof Guest) {
-                            Guest guest = ((Guest) AccountController.loggedInUser);
+                        if (loggedInUser instanceof Guest) {
+                            Guest guest = ((Guest) loggedInUser);
                             for (ShoppingBasket shoppingBasket : guest.getShoppingBaskets()) {
                                 if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
                                     break;
                                 }
                             }
-                            try {
-                                guest.getShoppingBaskets().add(new ShoppingBasket(good, (Seller) Seller.getPersonByUserName(s)));
-                            } catch (UserDoesNotExistException userDoesNotExistException) {
-                                userDoesNotExistException.printStackTrace();
-                            }
-                        } else if (AccountController.loggedInUser instanceof Customer) {
-                            Customer customer = ((Customer) AccountController.loggedInUser);
+                            
+                            HashMap<String, Object> arg2 = new HashMap<>();
+                            arg2.put("id", s);
+                            Client.sendMessage("get person by id" ,arg2);
+                            Seller seller = ((Seller)Client.getMessage().get("person"));
+                            HashMap<String, Object> arg1 = new HashMap<>();
+                            arg1.put("shopping basket", new ShoppingBasket(good, seller));
+                            Client.sendMessage("add to shopping baskets", new HashMap<>());
+                        } else if (loggedInUser instanceof Customer) {
+                            Customer customer = ((Customer) loggedInUser);
                             for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
                                 if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
                                     break;
                                 }
                             }
-                            try {
-                                customer.getShoppingBaskets().add(new ShoppingBasket(good, (Seller) Seller.getPersonByUserName(s)));
-                            } catch (UserDoesNotExistException userDoesNotExistException) {
-                                userDoesNotExistException.printStackTrace();
-                            }
+                            HashMap<String, Object> arg2 = new HashMap<>();
+                            arg2.put("id", s);
+                            Client.sendMessage("get person by id" ,arg2);
+                            Seller seller = ((Seller)Client.getMessage().get("person"));
+                            HashMap<String, Object> arg1 = new HashMap<>();
+                            arg1.put("shopping basket", new ShoppingBasket(good, seller));
+                            Client.sendMessage("add to shopping baskets", new HashMap<>());
+                            
                         }
 
                     } else if (!checkBox.isSelected()){
-                        if (AccountController.loggedInUser instanceof Guest) {
-                            Guest guest = ((Guest) AccountController.loggedInUser);
+                        if (loggedInUser instanceof Guest) {
+                            Guest guest = ((Guest) loggedInUser);
                             ArrayList<ShoppingBasket> toRemove = new ArrayList<>();
                             for (ShoppingBasket shoppingBasket : guest.getShoppingBaskets()) {
                                 if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
                                     toRemove.add(shoppingBasket);
                                 }
                             }
-                            guest.getShoppingBaskets().remove(toRemove);
-                        } else if (AccountController.loggedInUser instanceof Customer) {
-                            Customer customer = ((Customer) AccountController.loggedInUser);
+                            HashMap<String, Object> arg2 = new HashMap<>();
+                            arg2.put("list", toRemove);
+                            Client.sendMessage("remove from shopping basket", arg2);
+                        } else if (loggedInUser instanceof Customer) {
+                            Customer customer = ((Customer) loggedInUser);
                             ArrayList<ShoppingBasket> toRemove = new ArrayList<>();
                             for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
                                 if (shoppingBasket.getGood().getGoodID().equals(good.getGoodID())) {
                                     toRemove.add(shoppingBasket);
                                 }
                             }
-                            customer.getShoppingBaskets().remove(toRemove);
+                            HashMap<String, Object> arg2 = new HashMap<>();
+                            arg2.put("list", toRemove);
+                            Client.sendMessage("remove from shopping basket", arg2);
                         }
                     }
                 });

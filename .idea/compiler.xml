@@ -11,11 +11,11 @@
         <module name="Project_team-32" />
         <module name="proje" />
         <module name="new" />
-        <module name="Project_team-32-Phase3" />
+        <module name="Project" />
         <module name="Project_team-" />
         <module name="APproject" />
         <module name="Project_team-32A" />
-        <module name="Project" />
+        <module name="Project_team-32-Phase3" />
       </profile>
     </annotationProcessing>
   </component>

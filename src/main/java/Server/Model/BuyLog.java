@@ -1,5 +1,9 @@
 package Server.Model;
 
+import Server.Database.Database;
+import Server.Database.DatabaseType;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BuyLog extends Logs {
@@ -15,6 +19,7 @@ public class BuyLog extends Logs {
         this.goodsBought = goodsBought;
         this.sellerUserName = sellerUserName;
         this.deliveryStatus = deliveryStatus;
+        this.store();
     }
 
     @Override
@@ -27,10 +32,6 @@ public class BuyLog extends Logs {
                 '}';
     }
 
-    public float getDiscountMade() {
-        return discountMade;
-    }
-
     public Good getGoodsBought() {
         return goodsBought;
     }
@@ -39,7 +40,20 @@ public class BuyLog extends Logs {
         return sellerUserName;
     }
 
-    public String getDeliveryStatus() {
-        return deliveryStatus;
+    @Override
+    public synchronized void store() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-mm-dd hh:mm:ss");
+        String s = "INSERT INTO buyLogs " +
+                "VALUES ('" + logID + "', '" +
+                simpleDateFormat.format(date) + "', " +
+                pricePaid + ", " + discountMade + ", '" +
+                goodsBought.getGoodID() + "', '" + sellerUserName + "', '" +
+                deliveryStatus + "');";
+        Database.getInstance(DatabaseType.logsDatabase).update(s);
+    }
+
+    @Override
+    public synchronized void update() {
+
     }
 }
