@@ -32,7 +32,6 @@ public class Client extends Application {
         primaryStage.setScene(new Scene(root, 788, 688));
         primaryStage.setResizable(false);
         primaryStage.show();
-        new ChatStage(new ChatBox("123")).show();
     }
 
     public static void main(String[] args) {

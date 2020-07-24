@@ -29,7 +29,7 @@ public class Server {
     public static void main(String[] args) {
         try {
             ChatBox chatBox = new ChatBox("123");
-            chatBox.add(new ChatMessage("salam",new Seller("ahmad","123")));
+           chatBox.add(new ChatMessage("salam",new Seller("ahmad","123")));
             serverSocket = new ServerSocket(PORT_NUMBER);
             waitForClient();
         } catch (IOException e) {

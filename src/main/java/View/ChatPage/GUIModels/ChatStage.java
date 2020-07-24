@@ -5,6 +5,7 @@ import Server.Model.Chat.ChatBox;
 import Server.Model.Chat.ChatMessage;
 import View.ChatPage.ChatPageController;
 import View.Client;
+import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,11 +26,13 @@ public class ChatStage extends Stage {
     private ChatPageController controller;
     private Parent chatPage;
     private ChatBox chatBox;
-    private Runnable pageUpdater;
+    private AnimationTimer pageUpdater;
+    private double time;
 
     public ChatStage(ChatBox chatBox) {
 
         this.chatBox = chatBox;
+        time = 0 ;
 
         URL url = null;
         try {
@@ -63,39 +66,37 @@ public class ChatStage extends Stage {
         initialVBoxContent();
 
         //set thread for updating
-        pageUpdater = new Thread() {
+        pageUpdater = new AnimationTimer() {
             @Override
-            public void run() {
-                while (true) {
-                    try {
-                        System.out.println("hey");
-                        Thread.currentThread().sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    updatePage();
-                }
+            public void handle(long now) {
+                updatePage();
             }
         };
-        pageUpdater.run();
+        pageUpdater.start();
 
     }
 
     private void updatePage() {
-        ChatBox newChatBos = getMessagesFromServer();
-        for (int i = chatBox.size(); i < newChatBos.size(); i++) {
-            addMessage(newChatBos.get(i));
+        time += 0.015;
+        if(time > 2) {
+            System.out.println("hey");;
+            ChatBox newChatBos = getMessagesFromServer();
+            for (int i = chatBox.size(); i < newChatBos.size(); i++) {
+                addMessage(newChatBos.get(i));
+            }
+            chatBox = newChatBos;
+            time = 0;
         }
-        chatBox = newChatBos;
     }
 
     private void endStage() {
+        pageUpdater.stop();
         System.out.println("stage closed");
     }
 
     private void initialVBoxContent() {
 
-        ChatBox chatBox = getMessagesFromServer();
+        chatBox = getMessagesFromServer();
         System.out.println(chatBox);
         for (ChatMessage message : chatBox) {
             controller.addMessage(getLabel(message));
@@ -104,7 +105,7 @@ public class ChatStage extends Stage {
     }
 
     private Label getLabel(ChatMessage message) {
-        Label label = new Label(message.getSender().getUserName() + ":\n" + message.getMessage());
+        Label label = new Label(message.getSender().getUserName() + ": " + message.getMessage());
         return label;
     }
 
@@ -117,6 +118,21 @@ public class ChatStage extends Stage {
         inputs.put("chatId", chatBox.getChatId());
         Client.sendMessage("get chat", inputs);
         return (ChatBox) Client.getMessage().get("chat");
+    }
+
+    private static class PageUpdater extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    System.out.println("hey");
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //updatePage();
+            }
+        }
     }
 
 
