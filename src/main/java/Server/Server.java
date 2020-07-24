@@ -514,7 +514,7 @@ public class Server {
             int maxDiscountAmount = (int) command.get("maxDiscountAmount");
             int percentInt = (int) command.get("percentInt");
             int useNumber = (int) command.get("useNumber");
-            ArrayList<Customer> customers = AccountController.getCustomers((ArrayList<Customer>) command.get("customers"));
+            ArrayList<Customer> customers = AccountController.getCustomers((ArrayList<String>) command.get("customers"));
             BossController.createDiscount(exposeDate, discountId, maxDiscountAmount, percentInt, useNumber, customers);
             Message message = new Message();
             message.put(status, successful);

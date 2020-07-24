@@ -62,16 +62,14 @@ public class AddEditDiscountPageController implements Initializable {
 
     }
 
-    private ArrayList<Customer> getVBoxContent(){
+    private ArrayList<String> getVBoxContent(){
 
-        ArrayList<Customer> customers = new ArrayList<>();
+        ArrayList<String> customers = new ArrayList<>();
 
         for (Node child : userPicker.getChildren()) {
             try {
                 if(child instanceof CheckBox && ((CheckBox) child).isSelected()){
-                    Customer customer;
-                    customer = (Customer) Person.getPersonByUserName(((CheckBox) child).getText());
-                    customers.add(customer);
+                    customers.add(((CheckBox) child).getText());
                 }
             }
             catch (Exception e){

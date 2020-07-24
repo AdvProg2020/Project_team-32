@@ -88,7 +88,7 @@ public class ChangeDiscountPane extends Pane {
     }
 
 
-    public void makeDiscount(LocalDate exposeDate, String discountId, String maxAmount, double percent, ArrayList<Customer> customers, String numberOfUse) {
+    public void makeDiscount(LocalDate exposeDate, String discountId, String maxAmount, double percent, ArrayList<String> customers, String numberOfUse) {
 
         Date date = Date.from(exposeDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         int maxDiscountAmount = Integer.parseInt(maxAmount);
@@ -121,7 +121,7 @@ public class ChangeDiscountPane extends Pane {
         }
     }
 
-    private void createDiscount(Date date, String discountId, int maxDiscountAmount, int percentInt, int useNumber, ArrayList<Customer> customers) {
+    private void createDiscount(Date date, String discountId, int maxDiscountAmount, int percentInt, int useNumber, ArrayList<String> customers) {
         HashMap<String , Object> inputs = new HashMap<>();
         inputs.put("date", date);
         inputs.put("discountId", discountId);
