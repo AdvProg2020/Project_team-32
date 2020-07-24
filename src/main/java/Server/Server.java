@@ -3,6 +3,8 @@ package Server;
 import Server.Controller.*;
 import Server.Controller.Exeptions.*;
 import Server.Model.*;
+import Server.Model.Chat.ChatBox;
+import Server.Model.Chat.ChatMessage;
 import View.Client;
 import javafx.scene.control.Alert;
 import org.json.simple.*;
@@ -25,6 +27,8 @@ public class Server {
 
     public static void main(String[] args) {
         try {
+            ChatBox chatBox = new ChatBox("123");
+            chatBox.add(new ChatMessage("salam",new Seller("ahmad","123")));
             serverSocket = new ServerSocket(PORT_NUMBER);
             waitForClient();
         } catch (IOException e) {
@@ -157,6 +161,12 @@ public class Server {
                         case "get individual off":
                             sendIndividualOff(command);
                             break;
+                        case "send message":
+                            sendChatMessage(command);
+                            break;
+                        case "get chat":
+                            getChat(command);
+                            break;
                         case "edit off":
                             editOff(command);
                             break;
@@ -260,6 +270,23 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void getChat(JSONObject command) {
+            String chatId = (String) command.get("chatId");
+            ChatBox chatBox = ChatBox.getChatBosFromId(chatId);
+            System.out.println(chatBox);
+            Message serverAnswer = new Message();
+            serverAnswer.put("chat",chatBox);
+            sendMessage(serverAnswer);
+        }
+
+        private void sendChatMessage(JSONObject command) {
+            String chatId = (String) command.get("chatId");
+            ChatBox chatBox = ChatBox.getChatBosFromId(chatId);
+            String message = (String) command.get("message");
+            ChatMessage messageToAdd = new ChatMessage(message, loggedInUser);
+            chatBox.add(messageToAdd);
         }
 
         private void removeProductByManager(JSONObject command) {
