@@ -12,7 +12,7 @@ import java.util.*;
 import org.json.simple.JSONObject;
 
 public class BankServer {
-    private static int port = 4200;
+    private static int port = 4299;
     private static List<Integer> unusedTokens;
     private static List<Integer> usedTokens;
     private static Connection c;

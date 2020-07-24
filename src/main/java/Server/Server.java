@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Server {
 
-    private final static int PORT_NUMBER = 2020;
+    private final static int PORT_NUMBER = 2026;
     private static ServerSocket serverSocket;
     private static ArrayList<Socket> allConnectedSockets = new ArrayList<>();
 
@@ -309,6 +309,7 @@ public class Server {
             String transferType = (String) command.get("transferType");
             float price = (float) command.get("price");
             String result = bankServer(price, transferType);
+            System.out.println("bankserver : " +result );
             if (result.equals("done successfully")) {
                 loggedInUser.setCredit(loggedInUser.getCredit()+price);
                 message.put("credit",loggedInUser.getCredit());
@@ -322,8 +323,9 @@ public class Server {
         public String bankServer(float totalPrice, String transferType) {
             String result1 = handleAccountID();
             if (result1 != null) return result1;
-            bankServer.sendMessageToBank("get_token " + Client.user.getUserName() + " " + Client.user.getPassWord());
+            bankServer.sendMessageToBank("get_token " + loggedInUser.getUserName() + " " + loggedInUser.getPassWord());
             String result = bankServer.getMessageFromBank();
+            System.out.println(" get tokent result : "+result);
             String[] temp = result.split(" ");
             if (temp.length == 1) {
                 bankServer.setServerToken(result);
@@ -373,15 +375,15 @@ public class Server {
 
         private String handleAccountID() {
             if (bankServer.getAccountID() == -1) {
-                String message = "create_account " + Client.user.getFirstName() + " " + Client.user.getLastName()
-                        + " " + Client.user.getUserName() + " " + Client.user.getPassWord() + " " + Client.user.getPassWord();
+                String message = "create_account " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName()
+                        + " " + loggedInUser.getUserName() + " " + loggedInUser.getPassWord() + " " + loggedInUser.getPassWord();
                 bankServer.sendMessageToBank(message);
                 String result = bankServer.getMessageFromBank();
                 String[] temp = result.split(" ");
                 if (temp.length == 1) {
                     bankServer.setAccountID(Integer.parseInt(result));
                 } else {
-                    System.out.println(result);
+                    System.out.println(" handle account : "+result);
                     return result;
                 }
             }
