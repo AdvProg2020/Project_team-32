@@ -132,7 +132,7 @@ public class PurchaseControllerFXML implements Initializable {
         discountPercent[0] = (random % 20);
         HashMap<String, Object> input = new HashMap<>();
         input.put("price", totalPrice[0]);
-        input.put("discount", discountPercent);
+        input.put("discount", discountPercent[0]);
         Client.sendMessage("get discounted price", input);
         Message message = Client.getMessage();
         if (message.get("status").equals("successful")) {

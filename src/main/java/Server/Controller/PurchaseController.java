@@ -50,7 +50,7 @@ public class PurchaseController {
         return finalPrice*((100-discountPercent)/100);
     }
     public static void payCommand(Customer customer, float finalPrice, float discountPercent, boolean isBank,String address,String phoneNumber){
-        if (isBank){
+        if (!isBank){
             customer.setCredit(customer.getCredit()-finalPrice);
         }
 

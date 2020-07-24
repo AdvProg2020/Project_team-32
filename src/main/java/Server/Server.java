@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Server {
 
-    private final static int PORT_NUMBER = 2026;
+    private final static int PORT_NUMBER = 2126;
     private static ServerSocket serverSocket;
     private static int shopBankID = -1;
     private static ArrayList<Socket> allConnectedSockets = new ArrayList<>();
@@ -912,9 +912,9 @@ public class Server {
             Message message=new Message();
             try {
                 ShoppingBasket toRemove =null;
-                ShoppingBasket shoppingBasket = (ShoppingBasket) message.get("shoppingBasket");
+                ShoppingBasket shoppingBasket = (ShoppingBasket) command.get("shoppingBasket");
                 for (ShoppingBasket basket : ((Customer) loggedInUser).getShoppingBaskets()) {
-                    if (shoppingBasket.getGood().getGoodID().equals(shoppingBasket.getGood().getGoodID())){
+                    if (shoppingBasket.getGood().getGoodID().equals(basket.getGood().getGoodID())){
                         basket.setQuantity(basket.getQuantity() - 1);
                         if (basket.getQuantity()==0) toRemove=basket;
                         break;
@@ -930,15 +930,18 @@ public class Server {
         private void increaseQuantityShoppingBasket(JSONObject command) {
             Message message=new Message();
             try {
-                ShoppingBasket shoppingBasket = (ShoppingBasket) message.get("shoppingBasket");
+                ShoppingBasket shoppingBasket = (ShoppingBasket) command.get("shoppingBasket");
+                System.out.println(shoppingBasket.getGood().getGoodID());
                 for (ShoppingBasket basket : ((Customer) loggedInUser).getShoppingBaskets()) {
-                    if (shoppingBasket.getGood().getGoodID().equals(shoppingBasket.getGood().getGoodID())){
+                    if (shoppingBasket.getGood().getGoodID().equals(basket.getGood().getGoodID())){
                         basket.setQuantity(basket.getQuantity() + 1);
                         break;
                     }
                 }
+                System.out.println(command);
                 message.put(status,successful);
             } finally {
+                System.out.println(message);
                 sendMessage(message);
             }
         }

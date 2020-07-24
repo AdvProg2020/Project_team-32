@@ -167,7 +167,7 @@ public class CartController implements Initializable {
             for (ShoppingBasket shoppingBasket : (ArrayList<ShoppingBasket>) message.get("shoppingBasket list")) {
                 if (shoppingBasket.getGood().getGoodID().equals(chosenID)) {
                     input = new HashMap<>();
-                    message.put("shoppingBasket", shoppingBasket);
+                    input.put("shoppingBasket", shoppingBasket);
                     Client.sendMessage("increase quantity shoppingBasket", input);
                     message = Client.getMessage();
                     if (message.get("status").equals("successful")) {
