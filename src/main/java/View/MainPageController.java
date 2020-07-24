@@ -60,6 +60,8 @@ public class MainPageController implements Initializable {
 
     public void addManager() {
 
+
+
         String username;
         String password;
 

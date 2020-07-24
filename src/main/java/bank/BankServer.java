@@ -509,7 +509,9 @@ public class BankServer {
         String username = commandParts[3];
         String password = commandParts[4];
         String repeatedPassword = commandParts[5];
-
+        System.out.println("firstnmae: "+firstname);
+        System.out.println("laastName: "+lastname);
+        System.out.println("username: " +username);
         if(!repeatedPassword.equals(password)) {
             return "passowrds do not match";
         }
