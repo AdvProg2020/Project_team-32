@@ -21,42 +21,17 @@ public class Good implements Serializable, Storable {
 
 
     private enum Status implements Serializable {MAKE_REQUEST, EDIT_REQUEST, CONFIRMED}
-    @SerializedName("sellerAndPrices")
-    @Expose
     private HashMap<String, Integer> sellerAndPrices = new HashMap<String, Integer>();
-    @SerializedName("sellers")
-    @Expose
     private ArrayList<Seller> sellers;
-    @SerializedName("companyName")
-    @Expose
     private String companyName;
-    @SerializedName("category")
-    @Expose
     private Category category;
-    @SerializedName("explanation")
-    @Expose
     private String explanation;
-    @SerializedName("point")
-    @Expose
     private float point;
-    @SerializedName("properties")
-    @Expose
     private HashMap<String, String> properties;
-    @SerializedName("imageAddress")
-    @Expose
     private String imageAddress;
-    @SerializedName("allComments")
-    @Expose
     private ArrayList<Comment> allComments = new ArrayList<>();
-
-    @SerializedName("numberOfRates")
-    @Expose
     private int numberOfRates;
-
-    @SerializedName("bumberOfViews")
-    @Expose
     private int numberOfViews; //this should set after any view
-
     public int getNumberOfViews() {
         return numberOfViews;
     }
@@ -87,24 +62,10 @@ public class Good implements Serializable, Storable {
         this.properties.put("company name", companyName);
         this.properties.put("name", name);
         // TODO ali sharifi
-        store();
     }
 
     @Override
     public void store() {
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        /*
-        String s = "INSERT INTO good " +
-                "VALUES ('" + name + "', '" + goodID + "', '" +
-                gson.toJson(goodStatus) + "', '" + companyName + "', '" + explanation +
-                "', '" + gson.toJson(sellerAndPrices) + "', '" + gson.toJson(sellers) + "', '" +
-                gson.toJson(properties) +  "');";
-
-         */
-        String s = "INSERT INTO goods " +
-                "VALUES ('" + gson.toJson(this, Good.class) + "');";
-        Database.getInstance(DatabaseType.goodsDatabase).update(s);
     }
 
 
