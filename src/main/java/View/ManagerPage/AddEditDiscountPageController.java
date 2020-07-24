@@ -50,7 +50,7 @@ public class AddEditDiscountPageController implements Initializable {
     private void setVBoxContent(){
 
 
-        Client.sendMessage("get all customer", new HashMap<>());
+        Client.sendMessage("get all customers", new HashMap<>());
         Message serverAnswer = Client.getMessage();
         ArrayList<Customer> user = (ArrayList<Customer>) serverAnswer.get("all customers");
 
