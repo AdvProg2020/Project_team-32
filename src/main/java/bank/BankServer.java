@@ -3,30 +3,20 @@ package bank;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
-
 import org.json.simple.JSONObject;
 
 public class BankServer {
-    //TODO port should assign
     private static int port = 4200;
-    private static List<Integer> notUsedTokens;
+    private static List<Integer> unusedTokens;
     private static List<Integer> usedTokens;
-
-
-    //TODO by ali shari
-
-    static {
-        notUsedTokens = new ArrayList<>(10000);
-        usedTokens = new LinkedList<>();
-        for (int i = 1; i <= 10000; i++) {
-            notUsedTokens.add(i);
-        }
-        Collections.shuffle(notUsedTokens);
-    }
-
-    //this part should remove
-
+    private static Connection c;
+    private static Statement s;
 
     private static class InvalidToken extends Exception {
 
@@ -40,7 +30,59 @@ public class BankServer {
 
     }
 
-    private static class Account {
+    private static void updateDatabase(String stmt) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:db.db");
+            c.setAutoCommit(false);
+            s = c.createStatement();
+            s.executeUpdate(stmt);
+            s.close();
+            c.commit();
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static ResultSet readFromDatabase(String stmt) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:db.db");
+            c.setAutoCommit(false);
+            ResultSet rs = c.createStatement().executeQuery(stmt);
+            return rs;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static void initializingUsedAndUnusedTokens() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:db.db");
+            c.setAutoCommit(false);
+            s = c.createStatement();
+            for(int i = 0; i < 10000; i++) {
+                s.executeUpdate("INSERT INTO unused_tokens "
+                        + "VALUES (" + unusedTokens.get(i) + ");");
+            }
+            s.close();
+            c.commit();
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static interface Storable {
+        void store();
+        void update();
+    }
+
+    private static class Account implements Storable{
 
         private static List<Account> allAccounts = new ArrayList<>();
 
@@ -54,6 +96,7 @@ public class BankServer {
         private List<Receipt> receiptsWithThisAccountAsSource = new LinkedList<>();
         private List<Receipt> receiptssWithThisAccountAsDestination = new LinkedList<>();
         private int money = 1000;
+
 
         public Account(String firstname, String lastname, String username, String password ) {
             this.firstname = firstname;
@@ -102,25 +145,77 @@ public class BankServer {
             throw new InvalidToken();
         }
 
+        @Override
+        public void store() {
 
+            String s = "INSERT INTO account (firstname, lastname, username, password, accountId, currentToken, money) "
+                    + "VALUES ('" + firstname + "', '" +
+                    lastname + "', '" + username + "', '" +
+                    password + "', " + accountId + ", '" +
+                    currentToken + "', " + money + ");";
+            updateDatabase(s);
+        }
 
+        @Override
+        public void update() {
+            String s = "UPDATE account "
+                    + "SET money=" + money + ", currentToken='" + currentToken.token +
+                    "' Where accountId=" + accountId + ";";
+            updateDatabase(s);
+        }
+
+        public void loadingAllTokens() {
+            for(Token t: Token.allTokens) {
+                if(t.accountId == accountId) {
+                    allTokens.add(t);
+                }
+            }
+        }
     }
 
     private enum ValidatingTokenStatus {
         valid, invalid, expired
     }
 
-    private static class Token {
+    private static class Token implements Storable {
+
+        private static List<Token> allTokens = new LinkedList<>();
 
         private String token;
         private Date expirationDate;
+        private int accountId;
 
-        public Token(String token) {
+        public Token(String token, int accountId) {
             this.token = token;
+            this.accountId = accountId;
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
             cal.add(Calendar.HOUR, 1);
             this.expirationDate = cal.getTime();
+            allTokens.add(this);
+        }
+
+        @Override
+        public void store() {
+            String s = "INSERT INTO token "
+                    + "VALUES ('" + token + "', "+
+                    expirationDate.getTime() + ", " +
+                    accountId + ");";
+            updateDatabase(s);
+        }
+
+        @Override
+        public void update() {
+
+        }
+
+        static Token getToken(String token) {
+            for(Token t : allTokens) {
+                if(t.token.equals(token)) {
+                    return t;
+                }
+            }
+            return null;
         }
 
     }
@@ -128,12 +223,12 @@ public class BankServer {
     private static class ReceiptFactory {
         public static Receipt createReceipt(ReceiptTypes type, int money, int sourceId, int destId, String description) {
             if(type.equals(ReceiptTypes.deposit) ) {
-                return new DepositReceipt(type, money, sourceId, destId, description);
+                return new DepositReceipt(money, sourceId, destId, description);
             } else if (type.equals(ReceiptTypes.withdraw)) {
-                return new WithdrawReceipt(type, money, sourceId, destId, description);
+                return new WithdrawReceipt(money, sourceId, destId, description);
 
             } else  {
-                return new MoveReceipt(type, money, sourceId, destId, description);
+                return new MoveReceipt(money, sourceId, destId, description);
             }
         }
     }
@@ -142,7 +237,7 @@ public class BankServer {
         deposit, withdraw, move
     }
 
-    private static abstract class Receipt {
+    private static abstract class Receipt implements Storable {
         static List<Receipt> allReceipts = new ArrayList<Receipt>();
 
         ReceiptTypes type;
@@ -229,26 +324,47 @@ public class BankServer {
             return object;
         }
 
+        @Override
+        public void store() {
+            String s = "INSERT INTO receipt "
+                    + "VALUES ('" + type + "', " +
+                    money + ", " + sourceId + ", " +
+                    destId + ", " + payStatus + ", '"+
+                    description + "', " + receiptId + ");";
+            updateDatabase(s);
+        }
+
+        @Override
+        public void update() {
+            String s = "UPDATE receipt "
+                    + "SET payStatus=" + payStatus +
+                    " WHERE receiptId=" + receiptId + ";";
+            updateDatabase(s);
+        }
+
+
         public abstract void pay() throws Exception;
 
     }
 
     private static class DepositReceipt extends Receipt {
-        public DepositReceipt(ReceiptTypes type, int money, int sourceId, int destId, String description) {
-            super(type, money, sourceId, destId, description);
+        public DepositReceipt(int money, int sourceId, int destId, String description) {
+            super(ReceiptTypes.deposit , money, sourceId, destId, description);
         }
 
         @Override
         public void pay() throws Exception {
             Account.allAccounts.get(destId - 1).money += money;
+            Account.allAccounts.get(destId - 1).update();
             setPayStatus();
+            update();
         }
 
     }
 
     private static class WithdrawReceipt extends Receipt {
-        public WithdrawReceipt(ReceiptTypes type, int money, int sourceId, int destId, String description) {
-            super(type, money, sourceId, destId, description);
+        public WithdrawReceipt(int money, int sourceId, int destId, String description) {
+            super(ReceiptTypes.withdraw, money, sourceId, destId, description);
         }
 
         @Override
@@ -258,7 +374,9 @@ public class BankServer {
                 throw new NotEnoughMoneyInSourceAccount();
             } else {
                 sourceAccount.money -= money;
+                sourceAccount.update();
                 setPayStatus();
+                update();
             }
 
         }
@@ -267,8 +385,8 @@ public class BankServer {
 
     private static class MoveReceipt extends Receipt {
 
-        public MoveReceipt(ReceiptTypes type, int money, int sourceId, int destId, String description) {
-            super(type, money, sourceId, destId, description);
+        public MoveReceipt(int money, int sourceId, int destId, String description) {
+            super(ReceiptTypes.move, money, sourceId, destId, description);
         }
 
         @Override
@@ -281,22 +399,25 @@ public class BankServer {
                 destAccount = Account.allAccounts.get(destId - 1);
                 sourceAccount.money -= money;
                 destAccount.money += money;
+                sourceAccount.update();
+                destAccount.update();
                 setPayStatus();
+                update();
             }
         }
 
     }
 
     public static void main(String[] args) throws IOException {
-        //TODO loading notUsedTokens and usedTokens from database
-        if(notUsedTokens == null) {
-            System.out.println("i am initializing");
-            notUsedTokens = new ArrayList<>(10000);
+        load();
+        if(unusedTokens.size() == 0) {
+            unusedTokens = new ArrayList<>(10000);
             usedTokens = new LinkedList<>();
             for (int i = 1; i <= 10000; i++) {
-                notUsedTokens.add(i);
+                unusedTokens.add(i);
             }
-            Collections.shuffle(notUsedTokens);
+            Collections.shuffle(unusedTokens);
+            initializingUsedAndUnusedTokens();
         }
         startListeningOnPort();
     }
@@ -304,7 +425,6 @@ public class BankServer {
     public static void startListeningOnPort() throws IOException {
         ServerSocket serverSocket = new ServerSocket(port);
         while(true) {
-            System.out.println("i am waiting for client");
             new HandleClientThread(serverSocket.accept()).start();
         }
     }
@@ -325,49 +445,48 @@ public class BankServer {
 
         @Override
         public void run() {
-            System.out.println("client connected");
             String command;
             while(!(command = scanner.nextLine()).equals("exit")) {
                 String[] commandParts = command.split(" ");
                 switch (commandParts[0]) {
                     case "create_account":
                         if (commandParts.length != 6) {
-                            System.out.println("invalid input");
+                            format("invalid input");
                             break;
                         }
                         format(createAccount(commandParts));
                         break;
                     case "get_token":
                         if (commandParts.length != 3) {
-                            System.out.println("invalid input");
+                            format("invalid input");
                             break;
                         }
                         format(getToken(commandParts) + "");
                         break;
                     case "create_receipt":
                         if (commandParts.length != 7) {
-                            System.out.println("invalid input");
+                            format("invalid input");
                             break;
                         }
                         format(createReceipt(commandParts));
                         break;
                     case "get_transactions":
                         if (commandParts.length != 3) {
-                            System.out.println("invalid input");
+                            format("invalid input");
                             break;
                         }
                         format(getTransactions(commandParts));
                         break;
                     case "pay":
                         if (commandParts.length != 2) {
-                            System.out.println("invalid input");
+                            format("invalid input");
                             break;
                         }
                         format(pay(commandParts));
                         break;
                     case "get_balance":
                         if (commandParts.length != 2) {
-                            System.out.println("invalid input");
+                            format("invalid input");
                             break;
                         }
                         format(getBalance(commandParts));
@@ -400,7 +519,10 @@ public class BankServer {
                 return "username is not available";
             }
         }
-        return new Account(firstname, lastname, username, password).accountId + "";
+
+        Account account = new Account(firstname, lastname, username, password);
+        account.store();
+        return account.accountId + "";
     }
 
     public static String getToken(String[] commandParts) {
@@ -484,7 +606,10 @@ public class BankServer {
 
         String description = commandParts[6];
 
-        return ReceiptFactory.createReceipt(type, money, sourceId, destId, description).receiptId + "";
+        Receipt receipt = ReceiptFactory.createReceipt(type, money, sourceId, destId, description);
+        receipt.store();
+
+        return receipt.receiptId + "";
     }
 
     public static String getTransactions(String[] commandParts) {
@@ -577,13 +702,93 @@ public class BankServer {
     }
 
     public static String generateToken(Account account) {
-        Integer random = notUsedTokens.get(1);
-        notUsedTokens.remove(random);
+        Integer random = unusedTokens.get(1);
+        unusedTokens.remove(random);
         usedTokens.add(random);
-        Token token = new Token( random + "");
+        Token token = new Token( random + "", account.accountId);
         account.addToken(token);
+        token.store();
+        account.update();
+        String s = "INSERT INTO used_tokens "
+                + "VALUES (" + random + ");";
+        updateDatabase(s);
+        s = "DELETE FROM unused_tokens "
+                + "WHERE token=" + random + ";";
+        updateDatabase(s);
         return token.token;
     }
-}
 
-//TODO expiring date -> done by ali sharifi
+    public static void load() {
+        unusedTokens = new ArrayList<>(10000);
+        usedTokens = new LinkedList<>();
+        String s = "SELECT * FROM unused_tokens;";
+        ResultSet rs = readFromDatabase(s);
+        try {
+            while(rs.next()) {
+                unusedTokens.add(rs.getInt("token"));
+            }
+            rs.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        s = "SELECT * FROM used_tokens;";
+        rs = readFromDatabase(s);
+        try {
+            while(rs.next()) {
+                usedTokens.add(rs.getInt("token"));
+            }
+            rs.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        s = "SELECT * FROM token;";
+        rs = readFromDatabase(s);
+        try {
+            while(rs.next()) {
+                Token token = new Token(rs.getString("token"), rs.getInt("account id"));
+                token.expirationDate = rs.getTime("expiration date");
+            }
+            rs.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        s = "SELECT * FROM account ORDER BY accountId;";
+        rs = readFromDatabase(s);
+        try {
+            while(rs.next()) {
+                new Account(rs.getString("firstname"), rs.getString("lastname"), rs.getString("username"),
+                        rs.getString("password")).currentToken = Token.getToken(rs.getString("currentToken"));
+            }
+            rs.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        for(Account a: Account.allAccounts) {
+            a.loadingAllTokens();
+        }
+
+        s = "SELECT * FROM receipt ORDER BY receiptId;";
+        rs = readFromDatabase(s);
+        try {
+            while(rs.next()) {
+                ReceiptFactory.createReceipt(Receipt.getTypeByName(rs.getString("type")), rs.getInt("money"), rs.getInt("sourceId")
+                        , rs.getInt("destId"), rs.getString("description"));
+            }
+            rs.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
