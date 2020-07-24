@@ -73,16 +73,20 @@ public class LoginController implements Initializable {
                     URL url = null;
                     if (serverAnswer.get("account type").equals("boss")) {
                         url = new File("src\\main\\resources\\GUIFiles\\manager-tab-pane.fxml").toURI().toURL();
+                        Client.user= (Boss)serverAnswer.get("user");
                     } else if (serverAnswer.get("account type").equals("customer")) {
                         url = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CustomerPage.fxml").toURI().toURL();
+                        Client.user= (Customer)serverAnswer.get("user");
                     } else if (serverAnswer.get("account type").equals("seller")) {
                         url = new File("src\\main\\resources\\GUIFiles\\Seller-fxml-pages\\SellerMenu.fxml").toURI().toURL();
+                        Client.user= (Seller)serverAnswer.get("user");
                     }
 
                     //set scene
                     Scene scene = null;
                     scene = new Scene(FXMLLoader.load(url));
                     Client.primaryStage.setScene(scene);
+
 
                 } catch (IOException e) {
                     System.err.println("error in loading scene.");

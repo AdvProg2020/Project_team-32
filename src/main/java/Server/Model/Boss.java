@@ -25,6 +25,14 @@ public class Boss extends Person {
 
     }
 
+    public static void setLeastMoney(int leastMoney) {
+        Boss.leastMoney = leastMoney;
+    }
+
+    public static void setWage(int wage) {
+        Boss.wage = wage;
+    }
+
     public static int getLeastMoney() {
         return leastMoney;
     }

@@ -3,8 +3,10 @@ package Server;
 import Server.Controller.*;
 import Server.Controller.Exeptions.*;
 import Server.Model.*;
+import Server.Model.Chat.ChatBox;
+import Server.Model.Chat.ChatMessage;
 import View.Client;
-import javafx.scene.control.Alert;
+
 import org.json.simple.*;
 
 import java.io.*;
@@ -26,6 +28,8 @@ public class Server {
 
     public static void main(String[] args) {
         try {
+            ChatBox chatBox = new ChatBox("123");
+            chatBox.add(new ChatMessage("salam",new Seller("ahmad","123")));
             serverSocket = new ServerSocket(PORT_NUMBER);
             waitForClient();
         } catch (IOException e) {
@@ -158,6 +162,12 @@ public class Server {
                         case "get individual off":
                             sendIndividualOff(command);
                             break;
+                        case "send message":
+                            sendChatMessage(command);
+                            break;
+                        case "get chat":
+                            getChat(command);
+                            break;
                         case "edit off":
                             editOff(command);
                             break;
@@ -269,6 +279,18 @@ public class Server {
                         case "get all comments":
                             getAllComments(command);
                             break;
+                        case "get wage":
+                            getWage(command);
+                            break;
+                        case "get limit":
+                            getLimit(command);
+                            break;
+                        case "set wage":
+                            setWage(command);
+                            break;
+                        case "set limit":
+                            setLimit(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -282,6 +304,61 @@ public class Server {
             Message message = new Message();
             Good good = (Good) command.get("good");
             message.put("all comments" ,Good.getGoodById(good.getGoodID()).getAllComments());
+            sendMessage(message);
+        }
+
+        private void getChat(JSONObject command) {
+            String chatId = (String) command.get("chatId");
+            ChatBox chatBox = ChatBox.getChatBosFromId(chatId);
+            System.out.println(chatBox);
+            Message serverAnswer = new Message();
+            serverAnswer.put("chat",chatBox);
+            sendMessage(serverAnswer);
+        }
+
+        private void sendChatMessage(JSONObject command) {
+            String chatId = (String) command.get("chatId");
+            ChatBox chatBox = ChatBox.getChatBosFromId(chatId);
+            String message = (String) command.get("message");
+            ChatMessage messageToAdd = new ChatMessage(message, loggedInUser);
+            chatBox.add(messageToAdd);
+        }
+
+        private void setLimit(JSONObject command) {
+            Message message = new Message();
+            String  limitString = (String) command.get("limit");
+            if (limitString.matches("\\d+")){
+                Boss.setLeastMoney(Integer.parseInt(limitString));
+                message.put(status,successful);
+            }else {
+                message.put(status,"wrong input");
+            }
+            sendMessage(message);
+        }
+
+        private void setWage(JSONObject command) {
+            Message message = new Message();
+            String  wageString = (String) command.get("wage");
+            if (wageString.matches("\\d{1}")){
+                Boss.setWage(Integer.parseInt(wageString));
+                message.put(status,successful);
+            }else {
+                message.put(status,"wrong input");
+            }
+            sendMessage(message);
+        }
+
+        private void getLimit(JSONObject command) {
+            Message message = new Message();
+            message.put("limit",Boss.getLeastMoney());
+            message.put(status,successful);
+            sendMessage(message);
+        }
+
+        private void getWage(JSONObject command) {
+            Message message = new Message();
+            message.put("wage",Boss.getWage());
+            message.put(status,successful);
             sendMessage(message);
         }
 
@@ -384,8 +461,9 @@ public class Server {
                 message.put(status, successful);
             } else {
                 message.put(status, "error");
-                sendMessage(message);
+
             }
+            sendMessage(message);
         }
 
         public String bankServer(float totalPrice, String transferType) {
@@ -420,14 +498,10 @@ public class Server {
                     bankServer.sendMessageToBank("pay " + recipt);
                     String output = bankServer.getMessageFromBank();
                     if (output.equals("done successfully")) {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setContentText("payed by bank macount succcessfully");
-                        alert.show();
+                        System.out.println("payed by bank macount succcessfully");
                         return "done successfully";
                     } else if (output.equals("source account does not have enough money")) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("source account does not have enough money");
-                        alert.show();
+                        System.out.println("source account does not have enough money");
                     } else {
                         System.out.println(output);
                         return output;
@@ -904,6 +978,7 @@ public class Server {
             try {
                 loggedInUser = AccountController.login((String) command.get("username"), (String) command.get("password"));
                 message.put(status, successful);
+                message.put("user",loggedInUser);
                 if (loggedInUser instanceof Boss) {
                     message.put("account type", "boss");
                 } else if (loggedInUser instanceof Seller) {

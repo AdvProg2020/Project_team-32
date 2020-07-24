@@ -84,8 +84,7 @@ public class SellerMenuController implements Initializable {
     TableView<String> categoryTable;
     @FXML
     TableColumn<String, String> categoryColumn;
-    @FXML
-    Label balanceLable;
+
     @FXML
     TextField addProductID_Label;
     @FXML
@@ -133,7 +132,6 @@ public class SellerMenuController implements Initializable {
 
         //labels
         messageRemoveProduct.setOnMouseEntered(event -> Controller.sound(2));
-        balanceLable.setOnMouseEntered(event -> Controller.sound(2));
         companyNameLabel.setOnMouseEntered(event -> Controller.sound(2));
     }
 
@@ -257,8 +255,7 @@ public class SellerMenuController implements Initializable {
                 if (newTab.equals(userMangerTab)) {
                     userManagerTabOnClick(userMangerTab);
                 } else if (newTab.equals(balanceTab)) {
-                    balanceLable.setText("remaining money :" + ((Seller) AccountController.loggedInUser).getCredit() + "Tomans");
-                    //todo i should read the doc again for this part
+                    balanceTabOnClick(balanceTab );
                 } else if (newTab.equals(offsTab)) {
                     HashMap<String, Object> input = new HashMap<>();
                     Client.sendMessage("get seller off list", input);
@@ -310,6 +307,20 @@ public class SellerMenuController implements Initializable {
         });
 
 
+    }
+
+    private void balanceTabOnClick(Tab balanceTab) {
+        URL balanceTabURL = null;
+        try {
+            balanceTabURL = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\BalancePage.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            balanceTab.setContent(FXMLLoader.load(balanceTabURL));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void auctionTabOnClick(Tab auctionTab) {
