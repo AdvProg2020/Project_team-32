@@ -25,6 +25,7 @@ public class ChatPageController {
         HashMap<String , Object> inputs = new HashMap<>();
         inputs.put("chatId", chatBoxId);
         inputs.put("message", messageInput.getText());
+        messageInput.setText("");
         Client.sendMessage("send message",inputs);
     }
 
