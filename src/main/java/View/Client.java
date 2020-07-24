@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class Client extends Application {
 
-    private final static int PORT_NUMBER = 2046;
+    private final static int PORT_NUMBER = 2026;
     public static Stage primaryStage;
     public static Person user;
     private static Socket clientSocket;
@@ -32,7 +32,6 @@ public class Client extends Application {
         primaryStage.setScene(new Scene(root, 788, 688));
         primaryStage.setResizable(false);
         primaryStage.show();
-//        new ChatStage(new ChatBox("123")).show();
     }
 
     public static void main(String[] args) {

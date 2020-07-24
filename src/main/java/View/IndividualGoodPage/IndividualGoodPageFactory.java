@@ -72,7 +72,12 @@ public class IndividualGoodPageFactory {
             comments.setAlignment(Pos.CENTER);
             comments.setSpacing(10);
             comments.getChildren().add(new Label("Comments"));
-            for (Comment comment : good.getAllComments()) {
+
+            HashMap<String , Object> arg0 = new HashMap<>();
+            arg0.put("good", good);
+            Client.sendMessage("get all comments", arg0);
+            List<Comment> allComments = (List<Comment>) Client.getMessage().get("all comments");
+            for (Comment comment : allComments) {
                 comments.getChildren().add(CommentFactory.getComment(comment.getUserName(), comment.getCommentString(), comment.getCommenterBoughtGood()));
             }
 
@@ -107,7 +112,7 @@ public class IndividualGoodPageFactory {
                 checkBox.setText(s + " : " + good.getSellerAndPrices().get(s));
 
                 checkBox.setOnAction(e -> {
-                    
+
                     Client.sendMessage("get loggedInUser", new HashMap<>());
                     Person loggedInUser = (Person) Client.getMessage().get("user");
                     if (checkBox.isSelected()) {
@@ -122,7 +127,7 @@ public class IndividualGoodPageFactory {
                             HashMap<String, Object> arg2 = new HashMap<>();
                             arg2.put("id", s);
                             Client.sendMessage("get person by id" ,arg2);
-                            Seller seller = ((Seller)Client.getMessage().get("person"));
+                            Seller seller = (Seller)Client.getMessage().get("person");
                             HashMap<String, Object> arg1 = new HashMap<>();
                             arg1.put("shopping basket", new ShoppingBasket(good, seller));
                             Client.sendMessage("add to shopping baskets", new HashMap<>());
@@ -138,8 +143,10 @@ public class IndividualGoodPageFactory {
                             Client.sendMessage("get person by id" ,arg2);
                             Seller seller = ((Seller)Client.getMessage().get("person"));
                             HashMap<String, Object> arg1 = new HashMap<>();
-                            arg1.put("shopping basket", new ShoppingBasket(good, seller));
-                            Client.sendMessage("add to shopping baskets", new HashMap<>());
+                            arg1.put("good", good);
+                            arg1.put("seller", seller);
+                            //arg1.put("shopping basket", new ShoppingBasket(good, seller));
+                            Client.sendMessage("add to shopping baskets", arg1);
                             
                         }
 

@@ -29,7 +29,7 @@ public class Server {
     public static void main(String[] args) {
         try {
             ChatBox chatBox = new ChatBox("123");
-            chatBox.add(new ChatMessage("salam",new Seller("ahmad","123")));
+           chatBox.add(new ChatMessage("salam",new Seller("ahmad","123")));
             serverSocket = new ServerSocket(PORT_NUMBER);
             waitForClient();
         } catch (IOException e) {
@@ -276,6 +276,9 @@ public class Server {
                         case "get person by id":
                             getPersonById(command);
                             break;
+                        case "get all comments":
+                            getAllComments(command);
+                            break;
                         case "get wage":
                             getWage(command);
                             break;
@@ -295,6 +298,13 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void getAllComments(JSONObject command) {
+            Message message = new Message();
+            Good good = (Good) command.get("good");
+            message.put("all comments" ,Good.getGoodById(good.getGoodID()).getAllComments());
+            sendMessage(message);
         }
 
         private void getChat(JSONObject command) {
@@ -354,6 +364,10 @@ public class Server {
 
         private void getPersonById(JSONObject command) {
             Message message = new Message();
+            System.out.println("----------------------------------------\n" +
+                    "get person by id \n" +
+                    (String)command.get("id") + "\n" +
+                    "--------------------------------------");
             try {
                 message.put("person", Person.getPersonByUserName((String) command.get("id")));
             } catch (UserDoesNotExistException e) {
@@ -371,14 +385,28 @@ public class Server {
         }
 
         private void addToShoppingBaskets(JSONObject command) {
-            ((ShoppingBasketable)loggedInUser).getShoppingBaskets().add((ShoppingBasket) command.get("shopping basket"));
+            ShoppingBasket shoppingBasket = (ShoppingBasket) command.get("shopping basket");
+            Good good = (Good) command.get("good");
+            Seller seller = (Seller) command.get("seller");
+            try {
+                ((ShoppingBasketable)loggedInUser).getShoppingBaskets().add(new ShoppingBasket(Good.getGoodById(good.getGoodID()), (Seller)Person.getPersonByUserName(seller.getUserName())));
+            } catch (UserDoesNotExistException e) {
+                e.printStackTrace();
+            }
+            System.out.println("-------------------------------------\n" +
+                    "add to shopping basket \n" +
+                    ((ShoppingBasketable) loggedInUser).getShoppingBaskets() + "\n" +
+                    "-------------------------------------------------");
         }
 
 
         private void addComment(JSONObject command) {
             Good good = (Good) command.get("good");
             Comment comment = (Comment) command.get("comment");
-            good.getAllComments().add(comment);
+            System.out.println("--------------------------------------------------\n" +
+                    comment + "  " + good.getGoodID() +
+                    "----------------------------------------");
+            Good.getGoodById(good.getGoodID()).getAllComments().add(comment);
         }
 
         private void removeProductByManager(JSONObject command) {
