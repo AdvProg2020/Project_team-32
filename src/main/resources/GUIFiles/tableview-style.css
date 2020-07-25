@@ -1,21 +1,33 @@
 .table-view{
     -fx-background-color: #ffcf58;
+    -fx-text-fill: black;
 }
 
 .table-view .column-header , .table-view .filler{
     -fx-background-color: transparent;
     -fx-fit-to-width: true;
     -fx-fit-to-height: true;
+    -fx-text-fill: black;
 }
 
 .table-view .column-header-background {
     -fx-background-color: #FFFFFF;
+    -fx-text-fill: black;
 }
 
 .table-view .column-header .label{
     -fx-font-family: "Comic Sans MS";
+    -fx-text-fill: black;
 }
 
 .table-row-cell:selected{
     -fx-background-color: rgba(255, 190, 21, 0.8);
+}
+.button{
+
+    -fx-text-fill: black;
+    -fx-background-color: white;
+}
+.label{
+    -fx-text-fill: black;
 }
