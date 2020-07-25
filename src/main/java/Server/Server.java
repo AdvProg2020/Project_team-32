@@ -291,6 +291,12 @@ public class Server {
                         case "set limit":
                             setLimit(command);
                             break;
+                        case "update auction":
+                            updateAuction(command);
+                            break;
+                        case "set auction credit":
+                            setAuctionCredit(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -298,6 +304,54 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void setAuctionCredit(JSONObject command) {
+            Message message = new Message();
+            String ID = (String) command.get("id");
+            int credit = (int) command.get("credit");
+            if (credit > loggedInUser.getCredit()){
+                message.put(status,"you don't have enough money in your purse");
+
+            }else {
+                for (Auction auction : Auction.getAuctions()) {
+                    if (auction.getID().equals(ID)){
+                        if (credit>auction.getPrice()){
+                            auction.setBuyerUserName(loggedInUser.getUserName());
+                            auction.setPrice(credit);
+                            message.put("credit",credit);
+                            message.put(status,successful);
+                        }
+                        else {
+                            message.put(status,"you entered less than others");
+                        }
+                        break;
+                    }
+                }
+            }
+            sendMessage(message);
+        }
+
+        private void updateAuction(JSONObject command) {
+            Message message = new Message();
+            String ID = (String) command.get("ID");
+            Auction toRemove = null;
+            for (Auction auction : Auction.getAuctions()) {
+                if (auction.getID().equals(ID)){
+                    toRemove=auction;
+                    break;
+                }
+            }
+            if (toRemove ==null || toRemove.getExpire().before(new Date())){
+                if (toRemove!=null) {
+                    PurchaseController.endAuction(toRemove,(Customer)loggedInUser);
+                }
+                message.put(status,"auction ended");
+
+            }else {
+                message.put("price",toRemove.getPrice());
+            }
+            sendMessage(message);
         }
 
         private void getAllComments(JSONObject command) {
@@ -695,6 +749,7 @@ public class Server {
         private void getAllAuctions(JSONObject command) {
             Message message = new Message();
             message.put("allAuctions", Auction.getAuctions());
+            message.put(status,successful);
             sendMessage(message);
         }
 
@@ -1003,7 +1058,7 @@ public class Server {
             try {
                 Good good = ((Seller) loggedInUser).getGoodByID((String) command.get("goodID"));
                 String ID="sss";
-                Date date = new Date();
+                Date date = (Date) command.get("date");
                 //todo make id for auctions;
                 ((Seller) loggedInUser).setAuction(new Auction(ID,(Seller) loggedInUser, good,date));
                 message.put(status, successful);
@@ -1232,6 +1287,7 @@ public class Server {
 
         private void sendMessage(Message message) {
             try {
+                System.out.println("this is server send massage : "+ message);
                 clientOutputStream.writeObject(message);
                 clientOutputStream.flush();
                 clientOutputStream.reset();

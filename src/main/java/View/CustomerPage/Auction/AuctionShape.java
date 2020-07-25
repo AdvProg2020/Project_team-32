@@ -20,7 +20,7 @@ public class AuctionShape extends  Pane{
         this.date=date;
         URL url = null;
         try {
-            url = new File("src\\sample\\ShapeFXML.fxml").toURI().toURL();
+            url = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\AuctionShape.fxml").toURI().toURL();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -28,7 +28,8 @@ public class AuctionShape extends  Pane{
 
         //set main scene
         try {
-            Image image = new Image("sample\\law.png");
+            URL url1 = new File("src\\main\\resources\\GUIFiles\\CustomerIcons\\law.png").toURI().toURL();
+            Image image = new Image(String.valueOf(url1));
             Parent parent = loader.load();
             this.auctionShapeController = loader.getController();
             getChildren().add(parent);

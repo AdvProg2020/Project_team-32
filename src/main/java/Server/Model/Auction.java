@@ -1,9 +1,10 @@
 package Server.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Auction {
+public class Auction implements Serializable {
     private static ArrayList<Auction> auctions = new ArrayList<>();
     private  String ID;
     private Seller seller;
@@ -16,6 +17,7 @@ public class Auction {
         this.seller = seller;
         this.good = good;
         this.expire =expire;
+        price=0;
         auctions.add(this);
     }
 
@@ -54,5 +56,4 @@ public class Auction {
     public Good getGood() {
         return good;
     }
-
 }

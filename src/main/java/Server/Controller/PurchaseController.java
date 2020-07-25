@@ -59,9 +59,6 @@ public class PurchaseController {
                     new Date(),finalPrice,discountPercent,shoppingBasket.getGood(),
                     shoppingBasket.getSeller().getUserName() , "registered");
             customer.getAllBuyLogs().add(buyLog);
-
-            //todo add this to boss buylogs
-
             float offPercent = 0;
             for (Off off : shoppingBasket.getSeller().getOffs()) {
                 for (Good good : off.getGoodsForOff()) {
@@ -78,6 +75,14 @@ public class PurchaseController {
             shoppingBasket.getSeller().setCredit(shoppingBasket.getSeller().getCredit()+pricePaidToSeller *(100 - Boss.getWage())/100);
         }
         customer.getShoppingBaskets().clear();
+    }
+    public static void endAuction( Auction auction , Customer customer){
+        customer.setCredit(customer.getCredit()-auction.getPrice());
+        auction.getSeller().setCredit(auction.getSeller().getCredit()+auction.getPrice()*(100 - Boss.getWage())/100 );
+        BuyLog buyLog =new BuyLog(String.valueOf(customer.getAllBuyLogs().size()),new Date(), auction.getPrice(),0,auction.getGood(),auction.getSeller().getUserName(),"bought");
+        customer.getAllBuyLogs().add(buyLog);
+        Auction.getAuctions().remove(auction);
+
     }
     public static void passTime(){
         ArrayList<Discount> toRemoveDiscount = new ArrayList<>();

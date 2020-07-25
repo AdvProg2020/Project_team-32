@@ -2,16 +2,19 @@ package View.CustomerPage;
 
 import Server.Model.Message;
 import View.Client;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.AbstractList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -30,12 +33,27 @@ public class SingleAuctionController implements Initializable {
     private Button chatPage;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Thread(new Runnable() {
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                //todo reset  currentprice by time
+                HashMap<String,Object> inout = new HashMap<>();
+                inout.put("ID" ,ID);
+                Client.sendMessage("update auction", inout);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")){
+                    String s = String.valueOf(message.get("price"));
+                    currentPrice.setText(s);
+                }
+                else if (message.get("status").equals("auction ended")){
+                    currentPrice.setText("this auction ended");
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();
+        });
         confirmPrice.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -47,8 +65,14 @@ public class SingleAuctionController implements Initializable {
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")){
                     currentPrice.setText(String.valueOf(message.get("credit")));
-                }else {
-
+                }else if (message.get("status").equals("you don't have enough money in your purse")){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("you don't have enough money in your purse");
+                    alert.show();
+                }else if (message.get("status").equals("you entered less than others")){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("you entered less than others");
+                    alert.show();
                 }
             }
         });
@@ -61,7 +85,6 @@ public class SingleAuctionController implements Initializable {
         });
 
     }
-
     public String getID() {
         return ID;
     }

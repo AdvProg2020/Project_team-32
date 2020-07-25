@@ -70,7 +70,7 @@ public class BankLimitsController implements Initializable {
                 Client.sendMessage("set limit", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
-                    wageLable.setText(limit);
+                    limitLable.setText(limit);
                 } else {
                     showError("wrong input");
                 }

@@ -20,7 +20,8 @@ import java.util.ResourceBundle;
 public class AuctionController implements Initializable {
     @FXML
     private TextField auctionText;
-
+    @FXML
+    private DatePicker datePicker;
     @FXML
     private Button confirmAuction;
 
@@ -43,8 +44,8 @@ public class AuctionController implements Initializable {
             public void handle(ActionEvent event) {
                 String goodID =auctionText.getText().trim();
                 HashMap<String, Object> input = new HashMap<>();
+                input.put("date",datePicker.getValue());
                 input.put("goodID",goodID);
-                input.put("port",9090);
                 Client.sendMessage("set auction", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
