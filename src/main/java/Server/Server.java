@@ -5,6 +5,7 @@ import Server.Controller.Exeptions.*;
 import Server.Model.*;
 import Server.Model.Chat.ChatBox;
 import Server.Model.Chat.ChatMessage;
+import Server.Model.Chat.ChatWithSupporter;
 import View.Client;
 
 import org.json.simple.*;
@@ -246,6 +247,9 @@ public class Server {
                         case "get discount percent":
                             getDiscountPercent(command);
                             break;
+                        case "get chat from supporter":
+                            getChatFromSupporter(command);
+                            break;
                         case "get all categories for good page":
                             getAllCategoriesForGoodPage(command);
                             break;
@@ -309,6 +313,19 @@ public class Server {
                 } catch (SecurityException e) {
                     //TODO
                 }
+            }
+        }
+
+        private void getChatFromSupporter(JSONObject command) {
+            String supporterName = (String) command.get("supporterName");
+            try {
+                Supporter supporter = (Supporter) Person.getPersonByUserName(supporterName);
+                ChatWithSupporter chat = supporter.getChat((Customer) loggedInUser);
+                Message serverAnswer = new Message();
+                serverAnswer.put("chat", chat);
+                sendMessage(serverAnswer);
+            } catch (UserDoesNotExistException e) {
+                e.printStackTrace();
             }
         }
 

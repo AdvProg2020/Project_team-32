@@ -26,8 +26,20 @@ public class ChatBox extends ArrayList<ChatMessage> {
     }
 
     private static String generateId(){
-        String validChar = new String();
-        return null;
+        String validChar = "1234567890";
+        StringBuilder builder = new StringBuilder();
+        String id;
+        while (true) {
+            for (int i = 0; i < 10; i++) {
+                int randomNumber = (int) Math.random() % 10;
+                builder.append(validChar.charAt(randomNumber));
+            }
+            id = builder.toString();
+            if(getChatBosFromId(id) == null){
+                break;
+            }
+        }
+        return id;
     }
 
 }

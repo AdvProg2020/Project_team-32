@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.ShowSupporterPageController">
    <children>
-      <TableView fx:id="supporterTable" layoutX="70.0" layoutY="66.0" prefHeight="561.0" prefWidth="358.0" stylesheets="@../../../resources/GUIFiles/tableview-style.css">
+      <TableView fx:id="supporterTable" layoutX="70.0" layoutY="66.0" prefHeight="561.0" prefWidth="358.0" stylesheets="@../tableview-style.css">
         <columns>
           <TableColumn fx:id="usernameColumn" prefWidth="165.0" text="username" />
           <TableColumn fx:id="statusColumn" prefWidth="190.0" text="status" />
