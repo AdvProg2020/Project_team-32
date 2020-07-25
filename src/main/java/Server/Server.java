@@ -1088,6 +1088,8 @@ public class Server {
                     message.put("account type", "seller");
                 } else if (loggedInUser instanceof Customer) {
                     message.put("account type", "customer");
+                } else if (loggedInUser instanceof Supporter){
+                    message.put("account type", "supporter");
                 }
             } catch (WrongPasswordException e) {
                 message.put(status, "wrong password");

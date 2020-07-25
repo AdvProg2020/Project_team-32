@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SupporterPage.SupporterTabPaneController">
+<tabs>
+    <Tab fx:id="customerTab" closable="false" text="Customer" />
+    <Tab fx:id="logoutTab" closable="false" />
+</tabs>
+   <stylesheets>
+      <URL value="@../tabpane-style.css" />
+   </stylesheets>
+</TabPane>
