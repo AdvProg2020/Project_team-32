@@ -7,6 +7,7 @@ import Server.Model.Message;
 import Server.Model.Person;
 import View.Client;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -106,4 +107,45 @@ public class UserManagerPageController implements Initializable {
         usersTable.getItems().addAll(FXCollections.observableArrayList(getAllPerson()));
     }
 
+    public void addSupporter(ActionEvent actionEvent) {
+
+        String username;
+        String password;
+
+        TextInputDialog usernameDialog = new TextInputDialog();
+        usernameDialog.setHeaderText("enter username:");
+        usernameDialog.setTitle("Create Supporter:");
+
+        TextInputDialog passwordDialog = new TextInputDialog();
+        passwordDialog.setHeaderText("enter password:");
+        passwordDialog.setTitle("Create Supporter:");
+
+
+        //to get username
+        Optional<String> usernameResult = usernameDialog.showAndWait();
+
+        if (usernameResult.isPresent()) { //check if button ok clicked
+
+            username = usernameResult.get();
+
+            //to get password
+            Optional<String> passwordResult = passwordDialog.showAndWait();
+
+            if (passwordResult.isPresent()) {
+                password = passwordResult.get();
+
+                HashMap<String, Object> inputs = new HashMap<>();
+                inputs.put("username", username);
+                inputs.put("password", password);
+                Client.sendMessage("create supporter", inputs);
+                Message serverAnswer = Client.getMessage();
+                updateTable();
+                if (serverAnswer.get("status").equals("duplicate username")) {
+                    new Alert(Alert.AlertType.WARNING, "username is already taken.").show();
+                }
+            }
+
+        }
+
+    }
 }

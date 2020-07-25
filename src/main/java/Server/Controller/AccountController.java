@@ -88,4 +88,19 @@ public class AccountController {
         user.setFirstName(firstName);
         user.setLastName(lastName);
     }
+
+    public static ArrayList<Supporter> getAllSupporters() {
+
+        ArrayList<Person> list = Person.allPersons;
+        ArrayList<Supporter> supporters = new ArrayList<>();
+
+        for (Person person : list) {
+            if (person instanceof Customer) {
+                supporters.add((Supporter) person);
+            }
+        }
+
+        return supporters;
+
+    }
 }

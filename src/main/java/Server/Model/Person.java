@@ -24,6 +24,8 @@ public abstract class Person implements Serializable {
     protected URL imageUrl;
     private HashMap<Discount, Integer> discounts ;
     protected float credit;
+    public enum OnlineStatus {ONLINE,OFFLINE};
+    private OnlineStatus status;
 
     public static boolean hasPersonByUserName(String userName) {
         for (Person person : allPersons) {
@@ -95,6 +97,7 @@ public abstract class Person implements Serializable {
         this.passWord = passWord;
         allPersons.add(this);
         discounts = new HashMap<Discount, Integer>();
+        status = OnlineStatus.OFFLINE;
         try {
             imageUrl = new File("src\\main\\resources\\GUIFiles\\icons\\emptyAvatar.png").toURI().toURL();
         } catch (MalformedURLException e) {
@@ -150,4 +153,13 @@ public abstract class Person implements Serializable {
     public void removeDiscount(Discount discount) {
         discounts.remove(discount);
     }
+
+    public String getStatus() {
+        return status.name();
+    }
+
+    public void setStatus(OnlineStatus status){
+        this.status = status;
+    }
+
 }

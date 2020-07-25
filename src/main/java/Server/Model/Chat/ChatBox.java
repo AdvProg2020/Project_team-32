@@ -7,8 +7,8 @@ public class ChatBox extends ArrayList<ChatMessage> {
     private String chatId;
     private static ArrayList<ChatBox> allChatBoxes = new ArrayList<>();
 
-    public ChatBox(String chatId) {
-        this.chatId = chatId;
+    public ChatBox() {
+        this.chatId = generateId();
         allChatBoxes.add(this);
     }
 
@@ -22,7 +22,11 @@ public class ChatBox extends ArrayList<ChatMessage> {
                 return chatBox;
             }
         }
-        //maybe a new ChatBox
+        return null;
+    }
+
+    private static String generateId(){
+        String validChar = new String();
         return null;
     }
 
