@@ -84,6 +84,9 @@ public class Server {
                         case "login":
                             login(command);
                             break;
+                        case "create supporter":
+                            createSupporter(command);
+                            break;
                         case "remove user":
                             removeUser(command);
                             break;
@@ -179,6 +182,9 @@ public class Server {
                             break;
                         case "remove request":
                             removeRequest(command);
+                            break;
+                        case "get all supporters":
+                            getAllSupporters();
                             break;
                         case "accept request":
                             acceptRequest(command);
@@ -352,6 +358,27 @@ public class Server {
                 message.put("price",toRemove.getPrice());
             }
             sendMessage(message);
+        }
+
+        private void getAllSupporters() {
+            Message serverAnswer = new Message();
+            serverAnswer.put("all supporters",AccountController.getAllSupporters());
+            sendMessage(serverAnswer);
+        }
+
+        private void createSupporter(JSONObject command) {
+            String username = (String) command.get("username");
+            String password = (String) command.get("password");
+            Message serverAnswer = new Message();
+            try{
+                BossController.createSupporter(username, password);
+                serverAnswer.put(status, successful);
+            } catch (DuplicateUsernameException e) {
+                serverAnswer.put(status, "duplicate username");
+            }
+            finally {
+                sendMessage(serverAnswer);
+            }
         }
 
         private void getAllComments(JSONObject command) {
@@ -1287,7 +1314,6 @@ public class Server {
 
         private void sendMessage(Message message) {
             try {
-                System.out.println("this is server send massage : "+ message);
                 clientOutputStream.writeObject(message);
                 clientOutputStream.flush();
                 clientOutputStream.reset();

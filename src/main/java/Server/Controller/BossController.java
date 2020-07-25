@@ -2,10 +2,7 @@ package Server.Controller;
 
 import Server.Controller.Exeptions.DiscountDoesNotExistException;
 import Server.Controller.Exeptions.DuplicateUsernameException;
-import Server.Model.Boss;
-import Server.Model.Customer;
-import Server.Model.Discount;
-import Server.Model.Person;
+import Server.Model.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,4 +57,13 @@ public class BossController {
             customer.removeDiscount(discount);
         }
     }
+
+    public static void createSupporter(String username, String password) throws DuplicateUsernameException {
+        if (!Person.hasPersonByUserName(username)) {
+            new Supporter(username, password);
+        } else {
+            throw new DuplicateUsernameException();
+        }
+    }
+
 }

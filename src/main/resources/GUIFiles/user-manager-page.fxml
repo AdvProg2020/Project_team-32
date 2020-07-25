@@ -22,7 +22,12 @@
             <Font name="Freestyle Script" size="43.0" />
          </font>
       </Text>
-      <Button fx:id="addManagerButton" onAction="#addManager" layoutX="384.0" layoutY="36.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="76.0" stylesheets="@information-page-style.css" />
-      <Button fx:id="removeButton" onAction="#remove" layoutX="482.0" layoutY="37.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" stylesheets="@information-page-style.css" />
+      <Button fx:id="addManagerButton" layoutX="381.0" layoutY="36.0" mnemonicParsing="false" onAction="#addManager" prefHeight="68.0" prefWidth="76.0" stylesheets="@information-page-style.css" />
+      <Button fx:id="removeButton" layoutX="478.0" layoutY="37.0" mnemonicParsing="false" onAction="#remove" prefHeight="70.0" prefWidth="70.0" stylesheets="@information-page-style.css" />
+      <Button layoutX="560.0" layoutY="44.0" mnemonicParsing="false" onAction="#addSupporter" prefHeight="59.0" prefWidth="60.0" text="Supporter">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
