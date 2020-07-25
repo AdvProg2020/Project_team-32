@@ -204,3 +204,6 @@
 .button:focused{
     -fx-focus-color : transparent;
 }
+#auctionTab{
+    -fx-background-image: url("/GUIFiles/CustomerIcons/handsup.png");
+}

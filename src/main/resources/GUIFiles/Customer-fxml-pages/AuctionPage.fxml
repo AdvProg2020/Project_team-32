@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.AuctionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="735.0" stylesheets="@AuctionPageStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.AuctionController">
     <children>
-        <Pane fx:id="auctionPane" prefHeight="400.0" prefWidth="401.0" />
-        <ScrollPane layoutX="401.0" prefHeight="400.0" prefWidth="193.0">
+        <Pane fx:id="auctionPane" prefHeight="605.0" prefWidth="527.0" />
+        <ScrollPane layoutX="524.0" layoutY="-1.0" prefHeight="605.0" prefWidth="218.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="539.0" prefWidth="200.0">
                     <children>

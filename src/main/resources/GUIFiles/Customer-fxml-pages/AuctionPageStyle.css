@@ -1,0 +1,12 @@
+.label{
+    -fx-text-fill: black;
+    -fx-border-color: black;
+}
+.button{
+    -fx-text-fill: black;
+    -fx-border-color: black;
+}
+.text-field{
+    -fx-text-fill: black;
+    -fx-border-color: black;
+}

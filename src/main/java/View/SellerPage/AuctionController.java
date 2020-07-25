@@ -13,7 +13,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -44,7 +48,10 @@ public class AuctionController implements Initializable {
             public void handle(ActionEvent event) {
                 String goodID =auctionText.getText().trim();
                 HashMap<String, Object> input = new HashMap<>();
-                input.put("date",datePicker.getValue());
+                LocalDate localDate = datePicker.getValue();
+                Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+                Date date = Date.from(instant);
+                input.put("date",date);
                 input.put("goodID",goodID);
                 Client.sendMessage("set auction", input);
                 Message message = Client.getMessage();

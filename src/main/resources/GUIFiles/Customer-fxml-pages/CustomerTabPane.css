@@ -189,5 +189,8 @@
 #goodsPageTab{
     -fx-background-image: url("/GUIFiles/icons/icons8-shop-50.png");
 }
+#auctionTab{
+    -fx-background-image: url("/GUIFiles/CustomerIcons/handsup.png");
+}
 
 

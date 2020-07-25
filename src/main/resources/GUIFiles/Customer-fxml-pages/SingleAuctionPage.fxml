@@ -5,12 +5,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.SingleAuctionController">
+<AnchorPane prefHeight="434.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.SingleAuctionController">
    <children>
-      <Label fx:id="currentPrice" layoutX="62.0" layoutY="37.0" prefHeight="41.0" prefWidth="199.0" text="currentPrice" />
-      <TextField fx:id="newPrice" layoutX="55.0" layoutY="104.0" promptText="myPrice" text="enter new value" />
-      <Button fx:id="confirmPrice" layoutX="261.0" layoutY="49.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="95.0" text="confirPrice" />
-      <Button fx:id="chatPage" layoutX="95.0" layoutY="166.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="237.0" text="chatPage" />
+      <Label fx:id="currentPrice" layoutX="37.0" layoutY="93.0" prefHeight="41.0" prefWidth="199.0" text="currentPrice" />
+      <TextField fx:id="newPrice" layoutX="37.0" layoutY="180.0" prefHeight="25.0" prefWidth="199.0" promptText="myPrice" text="enter new value" />
+      <Button fx:id="confirmPrice" layoutX="294.0" layoutY="175.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="95.0" text="confirPrice" />
+      <Button fx:id="chatPage" layoutX="96.0" layoutY="265.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="237.0" text="chatPage" />
    </children>
 </AnchorPane>

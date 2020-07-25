@@ -1,13 +1,14 @@
 #hbox1{
     -fx-background-color: transparent;
     -fx-border-radius: 10;
-    -fx-border-color: wheat;
+    -fx-border-color: black;
 }
 .pane{
     -fx-background-color: transparent;
 }
 
 .label{
+    -fx-text-fill: black;
     -fx-background-color: transparent;
 }
 .pane:hover{
