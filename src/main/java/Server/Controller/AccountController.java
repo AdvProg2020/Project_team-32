@@ -95,7 +95,7 @@ public class AccountController {
         ArrayList<Supporter> supporters = new ArrayList<>();
 
         for (Person person : list) {
-            if (person instanceof Customer) {
+            if (person instanceof Supporter) {
                 supporters.add((Supporter) person);
             }
         }
