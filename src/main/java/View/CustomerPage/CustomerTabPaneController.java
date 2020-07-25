@@ -2,6 +2,7 @@ package View.CustomerPage;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
@@ -24,6 +25,7 @@ public class CustomerTabPaneController implements Initializable {
     public Tab offsPageTab;
     public Tab goodsPageTab;
     public Tab auctionTab;
+    public Tab supporterTab;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,6 +38,7 @@ public class CustomerTabPaneController implements Initializable {
         URL goodsPageURL = null;
         URL offsPageURL =null;
         URL auctionPageURL =null;
+        URL supporterPageURL =null;
         try {
             infoPaneUrl = new File("src\\main\\resources\\GUIFiles\\personal-info.fxml").toURI().toURL();
             cartPageURL = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\CartPage.fxml").toURI().toURL();
@@ -46,6 +49,8 @@ public class CustomerTabPaneController implements Initializable {
             goodsPageURL = new File("src\\main\\resources\\GUIFiles\\GoodsPage.fxml").toURI().toURL();
             offsPageURL= new File("src\\main\\resources\\GUIFiles\\OffsPage.fxml").toURI().toURL();
             auctionPageURL = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\AuctionPage.fxml").toURI().toURL();
+            supporterPageURL = new File("src\\main\\resources\\GUIFiles\\Customer-fxml-pages\\show-supporter-page.fxml").toURI().toURL();
+
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -59,6 +64,7 @@ public class CustomerTabPaneController implements Initializable {
         URL finalGoodsPageURL = goodsPageURL;
         URL finalOffsPageURL = offsPageURL;
         URL finalAuctionPageURL = auctionPageURL;
+        URL finalSupporterPageURL = supporterPageURL;
         tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {;
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
@@ -87,6 +93,8 @@ public class CustomerTabPaneController implements Initializable {
                         offsPageTab.setContent(FXMLLoader.load(finalOffsPageURL));
                     }else if (newTab.equals(auctionTab)){
                         auctionTab.setContent(FXMLLoader.load(finalAuctionPageURL));
+                    }else if (newTab.equals(supporterTab)){
+                        supporterTab.setContent(FXMLLoader.load(finalSupporterPageURL));
                     }
                 }catch (IOException e){
                     e.printStackTrace();
