@@ -4,6 +4,7 @@ import Server.Model.Chat.ChatWithSupporter;
 import Server.Model.Customer;
 import View.ChatPage.GUIModels.CustomerStatusCard;
 import View.Client;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -19,17 +20,26 @@ public class ChatListPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ArrayList<ChatWithSupporter> chats = getChats();
+
+        for (ChatWithSupporter chat : chats) {
+            chatList.getChildren().add(new CustomerStatusCard(chat));
+        }
+    }
+
+    private ArrayList<ChatWithSupporter> getChats() {
+        Client.sendMessage("get chats from supporter",new HashMap<>());
+        return (ArrayList<ChatWithSupporter>) Client.getMessage().get("chats");
+    }
+
+    public void updatePage(ActionEvent actionEvent) {
+
+        chatList.getChildren().clear();
 
         ArrayList<ChatWithSupporter> chats = getChats();
 
         for (ChatWithSupporter chat : chats) {
             chatList.getChildren().add(new CustomerStatusCard(chat));
         }
-
-    }
-
-    private ArrayList<ChatWithSupporter> getChats() {
-        Client.sendMessage("get chats from supporter",new HashMap<>());
-        return (ArrayList<ChatWithSupporter>) Client.getMessage().get("chats");
     }
 }
