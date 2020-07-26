@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="700.0" prefWidth="700.0" stylesheets="@registerPageStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.LogoutPageController">
-
     <children>
         <ImageView fx:id="imageView" fitHeight="700.0" fitWidth="700.0" pickOnBounds="false" preserveRatio="false">
         </ImageView>

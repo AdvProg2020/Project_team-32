@@ -82,7 +82,7 @@ public class LoginController implements Initializable {
                         Client.user= (Seller)serverAnswer.get("user");
                     } else if (serverAnswer.get("account type").equals("supporter")){
                         url = new File("src/main/resources/GUIFiles/SupporterMenu/SupporterTabPane.fxml").toURI().toURL();
-                        Client.user= (Seller)serverAnswer.get("user");
+                        Client.user= (Supporter)serverAnswer.get("user");
                     }
 
                     //set scene

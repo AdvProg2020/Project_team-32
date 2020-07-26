@@ -30,7 +30,7 @@ public class ShowSupporterPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         updateTable();
 
     }

@@ -26,4 +26,7 @@ public class Supporter extends Person {
         return newChat;
     }
 
+    public ArrayList<ChatWithSupporter> getChats() {
+        return chats;
+    }
 }

@@ -29,8 +29,6 @@ public class Server {
 
     public static void main(String[] args) {
         try {
-//            ChatBox chatBox = new ChatBox("123");
-//           chatBox.add(new ChatMessage("salam",new Seller("ahmad","123")));
             serverSocket = new ServerSocket(PORT_NUMBER);
             waitForClient();
         } catch (IOException e) {
@@ -124,6 +122,9 @@ public class Server {
                         case "set imageUrl":
                             setImageUrl(command);
                             break;
+                        case "logout" :
+                            logout();
+                            break;
                         case "remove product by manager":
                             removeProductByManager(command);
                             break;
@@ -213,6 +214,9 @@ public class Server {
                             break;
                         case "get shoppingBasket list":
                             getShoppingBasketList(command);
+                            break;
+                        case "get chats from supporter":
+                            getChatLists();
                             break;
                         case "increase quantity shoppingBasket":
                             increaseQuantityShoppingBasket(command);
@@ -314,6 +318,18 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void logout() {
+            loggedInUser.setStatus(Person.OnlineStatus.OFFLINE);
+            loggedInUser = new Guest();
+        }
+
+        private void getChatLists() {
+            Message serverAnswer = new Message();
+            Supporter supporter = (Supporter) loggedInUser;
+            serverAnswer.put("chats",supporter.getChats());
+            sendMessage(serverAnswer);
         }
 
         private void getChatFromSupporter(JSONObject command) {
@@ -1080,6 +1096,7 @@ public class Server {
             Message message = new Message();
             try {
                 loggedInUser = AccountController.login((String) command.get("username"), (String) command.get("password"));
+                loggedInUser.setStatus(Person.OnlineStatus.ONLINE);
                 message.put(status, successful);
                 message.put("user",loggedInUser);
                 if (loggedInUser instanceof Boss) {

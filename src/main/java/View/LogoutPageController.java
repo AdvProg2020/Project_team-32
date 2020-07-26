@@ -16,6 +16,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class LogoutPageController implements Initializable {
@@ -31,7 +32,7 @@ public class LogoutPageController implements Initializable {
 
     public void signOut(ActionEvent actionEvent) {
 
-        AccountController.logout();
+        Client.sendMessage("logout",new HashMap<>());
         try {
             URL url = new File("src\\main\\resources\\GUIFiles\\main-page.fxml").toURI().toURL();
             Parent parent = FXMLLoader.load(url);

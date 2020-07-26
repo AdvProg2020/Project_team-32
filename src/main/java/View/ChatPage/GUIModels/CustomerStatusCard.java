@@ -1,11 +1,13 @@
 package View.ChatPage.GUIModels;
 
+import Server.Model.Chat.ChatWithSupporter;
 import Server.Model.Customer;
 import View.ChatPage.StartChatCardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,11 +17,12 @@ import java.net.URL;
 public class CustomerStatusCard extends Pane {
 
     private StartChatCardController controller;
-    private Customer customer;
+    private ChatWithSupporter chat;
 
-    public CustomerStatusCard(Customer customer) {
+    public CustomerStatusCard(ChatWithSupporter chat) {
 
-        this.customer = customer;
+        Customer customer = chat.getCustomer();
+        this.chat = chat;
 
         URL url = null;
         try {
@@ -38,15 +41,20 @@ public class CustomerStatusCard extends Pane {
             e.printStackTrace();
         }
 
-        initialPaneFields();
+        initialPaneFields(customer);
+
+        controller.setCard(this);
 
     }
 
-    private void initialPaneFields() {
+    private void initialPaneFields(Customer customer) {
         controller.userImage = new ImageView(String.valueOf(customer.getImageUrl()));
-        //online status
-        // controller.onlineStatus
+        String status = customer.getStatus();
+        controller.onlineStatus.setFill(status.equals("ONLINE")? Paint.valueOf("#008904") : Paint.valueOf("#ea0000"));
         controller.usernameField.setText(customer.getUserName());
     }
 
+    public ChatWithSupporter getChat() {
+        return chat;
+    }
 }

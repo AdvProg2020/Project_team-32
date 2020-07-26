@@ -27,6 +27,7 @@ public class UserManagerPageController implements Initializable {
     public TableColumn<Person, String> emailColumn;
     public TableColumn<Person, String> phoneColumn;
     public TableView<Person> usersTable;
+    public TableColumn<Person, String> statusColumn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,6 +35,7 @@ public class UserManagerPageController implements Initializable {
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("passWord"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneID"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         System.out.println("initial table");
         updateTable();
     }

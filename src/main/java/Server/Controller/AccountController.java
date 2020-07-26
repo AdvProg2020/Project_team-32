@@ -64,10 +64,6 @@ public class AccountController {
 
     }
 
-    public static void logout() {
-        loggedInUser = new Guest();
-    }
-
     public static ArrayList<Customer> getCustomers(ArrayList<String> customers) {
         System.out.println(customers);
         ArrayList<Customer> customersList = new ArrayList<>();

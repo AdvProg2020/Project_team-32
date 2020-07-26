@@ -9,12 +9,13 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ManagerPage.UserManagerPageController">
    <children>
-      <TableView fx:id="usersTable" layoutX="74.0" layoutY="121.0" prefHeight="525.0" prefWidth="551.0" stylesheets="@tableview-style.css">
+      <TableView fx:id="usersTable" layoutX="39.0" layoutY="120.0" prefHeight="525.0" prefWidth="635.0" stylesheets="@tableview-style.css">
         <columns>
           <TableColumn fx:id="usernameColumn" prefWidth="107.0" text="username" />
           <TableColumn fx:id="passwordColumn" prefWidth="115.0" text="password" />
             <TableColumn fx:id="emailColumn" prefWidth="181.0" text="email" />
-            <TableColumn fx:id="phoneColumn" prefWidth="145.0" text="phone number" />
+            <TableColumn fx:id="phoneColumn" prefWidth="117.0" text="phone number" />
+            <TableColumn fx:id="statusColumn" prefWidth="114.0" text="status" />
         </columns>
       </TableView>
       <Text fx:id="welcomeText" fill="#ddab21" layoutX="74.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User manager">

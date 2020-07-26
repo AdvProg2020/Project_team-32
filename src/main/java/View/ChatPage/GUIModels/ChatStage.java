@@ -79,7 +79,6 @@ public class ChatStage extends Stage {
     private void updatePage() {
         time += 0.015;
         if(time > 2) {
-            System.out.println("hey");;
             ChatBox newChatBos = getMessagesFromServer();
             for (int i = chatBox.size(); i < newChatBos.size(); i++) {
                 addMessage(newChatBos.get(i));
@@ -118,21 +117,6 @@ public class ChatStage extends Stage {
         inputs.put("chatId", chatBox.getChatId());
         Client.sendMessage("get chat", inputs);
         return (ChatBox) Client.getMessage().get("chat");
-    }
-
-    private static class PageUpdater extends Thread {
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    System.out.println("hey");
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                //updatePage();
-            }
-        }
     }
 
 
