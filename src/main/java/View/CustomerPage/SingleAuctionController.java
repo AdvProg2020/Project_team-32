@@ -1,6 +1,8 @@
 package View.CustomerPage;
 
+import Server.Model.Chat.ChatBox;
 import Server.Model.Message;
+import View.ChatPage.GUIModels.ChatStage;
 import View.Client;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -33,6 +35,7 @@ public class SingleAuctionController implements Initializable {
     private Button chatPage;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -79,8 +82,18 @@ public class SingleAuctionController implements Initializable {
         chatPage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //todo with maziyar
-
+                HashMap<String,Object> input = new HashMap<>();
+                input.put("id",getID());
+                Client.sendMessage("get chatbox auction",input);
+                Message message = Client.getMessage();
+                if (message.get("status").equals("successful")){
+                    ChatBox chatBox = (ChatBox) message.get("chatbox");
+                    new ChatStage(chatBox).show();
+                }else if (message.get("status").equals("something went wrong")){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("something went wrong");
+                    alert.show();
+                }
             }
         });
 

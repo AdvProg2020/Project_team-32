@@ -1,5 +1,7 @@
 package Server.Model;
 
+import Server.Model.Chat.ChatBox;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,13 +14,20 @@ public class Auction implements Serializable {
     private Date expire;
     private String buyerUserName;
     private  int price;
-    public Auction(String ID,Seller seller, Good good,Date expire  ) {
-        this.ID =ID;
+    private ChatBox chatBox;
+    public Auction(Seller seller, Good good,Date expire  ) {
+        chatBox = new ChatBox();
         this.seller = seller;
         this.good = good;
         this.expire =expire;
         price=0;
+        this.ID =chatBox.getChatId();
         auctions.add(this);
+
+    }
+
+    public ChatBox getChatBox() {
+        return chatBox;
     }
 
     public String getID() {

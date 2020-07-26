@@ -311,6 +311,9 @@ public class Server {
                         case "set auction credit":
                             setAuctionCredit(command);
                             break;
+                        case "get chatbox auction":
+                            getChatboxAuction(command);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + command.get("commandType"));
                     }
@@ -318,6 +321,25 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void getChatboxAuction(JSONObject command) {
+            Message serverAnswer = new Message();
+            String id = (String) command.get("id");
+            System.out.println(command);
+            System.out.println(id);
+            System.out.println("*******************************");
+            for (Auction auction : Auction.getAuctions()) {
+                System.out.println("  ***   "+auction.getID());
+                if (auction.getID().equals(id)){
+                    serverAnswer.put("chatbox",auction.getChatBox());
+                    serverAnswer.put(status,successful);
+                    sendMessage(serverAnswer);
+                    return;
+                }
+            }
+            serverAnswer.put(status,"something went wrong");
+            sendMessage(serverAnswer);
         }
 
         private void logout() {
@@ -1121,10 +1143,8 @@ public class Server {
             Message message = new Message();
             try {
                 Good good = ((Seller) loggedInUser).getGoodByID((String) command.get("goodID"));
-                String ID="sss";
                 Date date = (Date) command.get("date");
-                //todo make id for auctions;
-                ((Seller) loggedInUser).setAuction(new Auction(ID,(Seller) loggedInUser, good,date));
+                ((Seller) loggedInUser).setAuction(new Auction((Seller) loggedInUser, good,date));
                 message.put(status, successful);
             } catch (MultipleAuctionException e) {
                 message.put(status, "MultipleAuctionException");
