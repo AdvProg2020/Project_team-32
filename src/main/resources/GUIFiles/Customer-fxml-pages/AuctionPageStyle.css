@@ -1,12 +1,21 @@
-.label{
-    -fx-text-fill: black;
-    -fx-border-color: black;
+/*.label{*/
+/*    -fx-text-fill: black;*/
+/*    -fx-border-color: black;*/
+/*}*/
+/*.button{*/
+/*    -fx-text-fill: black;*/
+/*    -fx-border-color: black;*/
+/*}*/
+/*.text-field{*/
+/*    -fx-text-fill: black;*/
+/*    -fx-border-color: black;*/
+/*}*/
+#myScroll{
+    -fx-background-color: wheat;
 }
-.button{
-    -fx-text-fill: black;
-    -fx-border-color: black;
+#auctionBox{
+    -fx-background-color: wheat;
 }
-.text-field{
-    -fx-text-fill: black;
-    -fx-border-color: black;
+#auctionPane{
+    -fx-background-color: aliceblue;
 }

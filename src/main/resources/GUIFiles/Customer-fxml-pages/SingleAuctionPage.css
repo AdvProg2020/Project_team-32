@@ -1,0 +1,36 @@
+.text-field{
+    -fx-background-color:#004d4d ;
+    -fx-border-width: 5px;
+    -fx-border-color: #40E0D0;
+    /*-fx-border-style: dashed;*/
+    -fx-text-fill: white;
+    -fx-font-size: 18;
+    -fx-cursor: text;
+}
+.label{
+    -fx-background-color:#004d4d ;
+    -fx-border-width: 5px;
+    -fx-border-color: #40E0D0;
+    /*-fx-border-style: dashed;*/
+    -fx-text-fill: white;
+    -fx-font-size: 18;
+    -fx-label-padding: 10px;
+
+}
+#confirmPrice{
+    -fx-background-size: 80px;
+    -fx-background-radius: 35px;
+    -fx-background-image: url("../CustomerIcons/confirm.png");
+    -fx-cursor: hand;
+}
+#chatPage{
+    -fx-background-color: transparent;
+    -fx-background-image: url("../CustomerIcons/whatsapp.png");
+    -fx-cursor: hand;
+}
+#img{
+    /*-fx-background-color: transparent;*/
+    /*-fx-border-image-width: 1000px;*/
+    -fx-image: url("../CustomerIcons/wave.png");
+
+}
