@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="695.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SupporterPage.ChatListPageController">
+   <children>
+      <Line endX="87.29290771484375" endY="40.0" layoutX="1.0" layoutY="15.0" startX="87.29290771484375" startY="640.0" stroke="#ffab03" strokeWidth="7.0" />
+      <ScrollPane layoutX="109.0" layoutY="67.0" prefHeight="588.0" prefWidth="483.0">
+         <content>
+            <FlowPane fx:id="chatList" alignment="TOP_CENTER" prefHeight="411.0" prefWidth="382.0" />
+         </content>
+      </ScrollPane>
+      <Button id="refreshButton" layoutX="599.0" layoutY="55.0" mnemonicParsing="false" onAction="#updatePage" prefHeight="52.0" prefWidth="52.0" stylesheets="@../information-page-style.css">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <Line endX="77.29290771484375" endY="26.5" layoutX="11.0" layoutY="22.0" startX="578.0" startY="26.5" stroke="#ffab03" strokeWidth="7.0" />
+   </children>
+</AnchorPane>

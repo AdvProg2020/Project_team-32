@@ -8,27 +8,19 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="324.0" prefWidth="281.0"
-            style="-fx-background-color: #ddab21; -fx-background-radius: 20px; -fx-effect: innershadow(gaussian, rgba(0,0,0,0.9),5,0,2,2);     -fx-padding: 5px;   -fx-border-insets: 5px;
-    -fx-background-insets: 5px;"
-            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="View.ChatPage.StartChatCardController">
+<AnchorPane prefHeight="302.0" prefWidth="248.0" style="-fx-background-color: #ddab21; -fx-background-radius: 20px; -fx-effect: innershadow(gaussian, rgba(0,0,0,0.9),5,0,2,2);     -fx-padding: 5px;   -fx-border-insets: 5px;     -fx-background-insets: 5px;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ChatPage.StartChatCardController">
     <children>
-        <ImageView fx:id="userImage" fitHeight="200.0" fitWidth="200.0" layoutX="43.0" layoutY="31.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userImage" fitHeight="163.0" fitWidth="163.0" layoutX="43.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../icons/emptyAvatar.png"/>
+                <Image url="@../icons/emptyAvatar.png" />
             </image>
         </ImageView>
-        <Circle fx:id="onlineStatus" fill="#9e9e9e" layoutX="244.0" layoutY="35.0" radius="11.0" stroke="BLACK"
-                strokeType="INSIDE"/>
-        <Label fx:id="usernameField" layoutX="97.0" layoutY="231.0" text="username" textFill="WHITE">
+        <Circle fx:id="onlineStatus" fill="#9e9e9e" layoutX="206.0" layoutY="31.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+        <Label fx:id="usernameField" layoutX="81.0" layoutY="201.0" text="username" textFill="WHITE">
             <font>
-                <Font name="Comic Sans MS" size="20.0"/>
+                <Font name="Comic Sans MS" size="20.0" />
             </font>
         </Label>
-        <Button layoutX="94.0" layoutY="262.0" mnemonicParsing="false" onAction="#startChat" prefHeight="31.0"
-                prefWidth="66.0" stylesheets="@../registerPageStyle.css" text="start chat"/>
+        <Button layoutX="75.0" layoutY="239.0" mnemonicParsing="false" onAction="#startChat" prefHeight="31.0" prefWidth="66.0" stylesheets="@../registerPageStyle.css" text="start chat" />
     </children>
 </AnchorPane>

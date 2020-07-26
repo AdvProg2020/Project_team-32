@@ -18,7 +18,7 @@ public class SupporterTabPaneController implements Initializable {
         try {
 
             //set URLs
-            URL customerUrl = new File("src/main/resources/GUIFiles/ChatMenu/ChatListPage.fxml").toURI().toURL();
+            URL customerUrl = new File("src/main/resources/GUIFiles/SupporterMenu/ChatListPage.fxml").toURI().toURL();
             URL logoutUrl = new File("src/main/resources/GUIFiles/logout-page.fxml").toURI().toURL();
 
             //set tab's contents

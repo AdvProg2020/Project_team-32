@@ -39,6 +39,22 @@
     -fx-background-image: url("icons/requestIcon.png");
 }
 
+#messagesTab{
+    -fx-background-image: url("icons/messageIcon.png");
+}
+
+#offPageTab{
+    -fx-background-image: url("icons/percentIcon.png");
+}
+
+#productsPageTab{
+    -fx-background-image: url("icons/productIcon.png");
+}
+
+#loginTab{
+    -fx-background-image: url("icons/loginIcon.png");
+}
+
 #categoryManagerTab{
     -fx-background-image: url("icons/categoryIcon.png");
 }
@@ -47,8 +63,16 @@
     -fx-background-image: url("GoodsMenuIcons/categoryIcon1.png");
 }
 
+#registerTab{
+    -fx-background-image: url("icons/registerIcon.png");
+}
+
 #returnToMainMenuTab {
     -fx-background-image: url("GoodsMenuIcons/return.png");
+}
+
+#moneyTab {
+    -fx-background-image: url("icons/bankIcon.png");
 }
 
 .tab {

@@ -4,15 +4,21 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ManagerPage.BankLimitsController">
+<AnchorPane prefHeight="700.0" prefWidth="700.0" stylesheets="@registerPageStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ManagerPage.BankLimitsController">
    <children>
-      <Button fx:id="confirmWage" layoutX="306.0" layoutY="87.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="152.0" text="confirm wage" />
-      <Button fx:id="confirmLimit" layoutX="300.0" layoutY="208.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="163.0" text="confirm limit" />
-      <TextField fx:id="wageText" layoutX="69.0" layoutY="115.0" />
-      <TextField fx:id="limitText" layoutX="69.0" layoutY="216.0" prefHeight="41.0" prefWidth="149.0" />
-      <Label fx:id="wageLable" layoutX="87.0" layoutY="75.0" prefHeight="25.0" prefWidth="113.0" text="current wage" />
-      <Label fx:id="limitLable" layoutX="72.0" layoutY="183.0" prefHeight="17.0" prefWidth="149.0" text="current limit" />
+      <Button fx:id="confirmWage" layoutX="389.0" layoutY="234.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" text="confirm wage" />
+      <Button fx:id="confirmLimit" layoutX="389.0" layoutY="378.0" minHeight="28.0" minWidth="99.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="122.0" text="confirm limit" />
+      <TextField fx:id="wageText" layoutX="174.0" layoutY="238.0" prefHeight="32.0" prefWidth="149.0" styleClass="inputChoice" />
+      <TextField fx:id="limitText" layoutX="180.0" layoutY="372.0" prefHeight="41.0" prefWidth="149.0" styleClass="inputChoice" />
+      <Label fx:id="wageLable" layoutX="174.0" layoutY="213.0" prefHeight="27.0" prefWidth="142.0" text="Current Wage">
+         <font>
+            <Font name="Comic Sans MS" size="19.0" />
+         </font></Label>
+      <Label fx:id="limitLable" layoutX="180.0" layoutY="341.0" prefHeight="17.0" prefWidth="149.0" text="Current Limit">
+         <font>
+            <Font name="Comic Sans MS" size="19.0" />
+         </font></Label>
    </children>
 </AnchorPane>

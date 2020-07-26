@@ -6,7 +6,7 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SupporterPage.SupporterTabPaneController">
 <tabs>
-    <Tab fx:id="customerTab" closable="false" text="Customer" />
+    <Tab id="messagesTab" fx:id="customerTab" closable="false" />
     <Tab fx:id="logoutTab" closable="false" />
 </tabs>
    <stylesheets>
