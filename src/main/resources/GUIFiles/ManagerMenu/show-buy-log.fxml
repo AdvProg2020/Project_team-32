@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="664.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ManagerPage.ShowBuyLogController">
+   <children>
+      <Text fill="#ddab21" layoutX="42.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buy Log" wrappingWidth="134.546875">
+         <font>
+            <Font name="Freestyle Script" size="60.0" />
+         </font>
+      </Text>
+      <Line endX="232.0" layoutX="128.0" layoutY="54.0" startX="-100.0" stroke="#ddab21" strokeWidth="4.0" />
+      <Line endX="-110.5" endY="546.0" layoutX="138.0" layoutY="64.0" startX="-110.5" startY="-9.5" stroke="#ddab21" strokeWidth="4.0" />
+      <Line endX="232.0" layoutX="128.0" layoutY="218.0" startX="-100.0" stroke="#ddab21" strokeWidth="0.5" />
+      <Line endX="232.0" layoutX="128.0" layoutY="289.0" startX="-100.0" stroke="#ddab21" strokeWidth="0.5" />
+      <Line endX="232.0" layoutX="128.0" layoutY="376.0" startX="-100.0" stroke="#ddab21" strokeWidth="0.5" />
+      <Line endX="232.0" layoutX="128.0" layoutY="442.0" startX="-100.0" stroke="#ddab21" strokeWidth="0.5" />
+      <Line endX="232.0" layoutX="128.0" layoutY="511.0" startX="-100.0" stroke="#ddab21" strokeWidth="0.5" />
+      <Text fill="#00000099" layoutX="42.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product:">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font>
+      </Text>
+      <Text fill="#00000099" layoutX="42.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seller:">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font>
+      </Text>
+      <Text fill="#00000099" layoutX="42.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font>
+      </Text>
+      <Text fill="#00000099" layoutX="43.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number:">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font>
+      </Text>
+      <Text fill="#00000099" layoutX="40.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font>
+      </Text>
+      <Text fill="#00000099" layoutX="40.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font>
+      </Text>
+      <Label fx:id="productId" layoutX="42.0" layoutY="184.0" prefHeight="28.0" prefWidth="304.0" style="-fx-background-color: #ddab21;" text="ProductID" textFill="WHITE" />
+      <Label fx:id="sellerUserName" layoutX="42.0" layoutY="250.0" prefHeight="28.0" prefWidth="304.0" style="-fx-background-color: #ddab21;" text="SellerUsername" textFill="WHITE" />
+      <Label fx:id="address" layoutX="42.0" layoutY="316.0" prefHeight="54.0" prefWidth="304.0" style="-fx-background-color: #ddab21;" text="Address" textFill="WHITE" />
+      <Label fx:id="phoneNumber" layoutX="42.0" layoutY="403.0" prefHeight="28.0" prefWidth="304.0" style="-fx-background-color: #ddab21;" text="phoneNumber" textFill="WHITE" />
+      <Label fx:id="price" layoutX="42.0" layoutY="469.0" prefHeight="35.0" prefWidth="304.0" style="-fx-background-color: #ddab21;" text="Price" textFill="WHITE" />
+      <Label fx:id="date" layoutX="42.0" layoutY="534.0" prefHeight="35.0" prefWidth="304.0" style="-fx-background-color: #ddab21;" text="Date" textFill="WHITE" />
+   </children>
+</AnchorPane>

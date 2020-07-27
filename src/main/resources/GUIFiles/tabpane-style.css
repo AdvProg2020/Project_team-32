@@ -23,6 +23,10 @@
     -fx-background-image: url("icons/profileIcon.png");
 }
 
+#buyLogTab{
+    -fx-background-image: url("icons/buyLogIcon.png");
+}
+
 #userMangerTab{
     -fx-background-image: url("icons/userMangerIcon.png");
 }

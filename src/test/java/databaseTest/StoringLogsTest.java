@@ -24,7 +24,7 @@ public class StoringLogsTest {
     public void storingBuyLogs() {
         Good good = mock(Good.class);
         doReturn("hello").when(good).getGoodID();
-        Logs logs = new BuyLog("a", new Date(), 1.2f, 0.6f, good, "alisharifi", "posted");
+        //Logs logs = new BuyLog("a", new Date(), 1.2f, 0.6f, good, "alisharifi", "posted");
     }
 
 }

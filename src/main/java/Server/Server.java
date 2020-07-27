@@ -236,6 +236,12 @@ public class Server {
                         case "rate":
                             rate(command);
                             break;
+                        case "get all buyLogs":
+                            getAllBuyLogs();
+                            break;
+                        case "accept buyLog":
+                            changeBuyLogStatus(command);
+                            break;
                         case "get individual buylog":
                             getIndividualBuylog(command);
                             break;
@@ -321,6 +327,25 @@ public class Server {
                     //TODO
                 }
             }
+        }
+
+        private void changeBuyLogStatus(JSONObject command) {
+            String buyLogId = (String) command.get("buyLogId");
+            BuyLog buyLog = BuyLog.getLogFromId(buyLogId);
+            Message serverAnswer = new Message();
+            if(buyLog != null){
+                buyLog.setDeliveryStatus(BuyLog.DeliveryStatus.SENT);
+            }
+            else {
+                serverAnswer.put(status,"buyLog not find");
+            }
+            sendMessage(serverAnswer);
+        }
+
+        private void getAllBuyLogs() {
+            Message serverAnswer = new Message();
+            serverAnswer.put("all buyLogs",BuyLog.getAllBuyLogs());
+            sendMessage(serverAnswer);
         }
 
         private void getChatboxAuction(JSONObject command) {

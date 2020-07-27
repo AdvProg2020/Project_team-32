@@ -23,7 +23,6 @@ public class Auction implements Serializable {
         price=0;
         this.ID =chatBox.getChatId();
         auctions.add(this);
-
     }
 
     public ChatBox getChatBox() {

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ManagerPage.BuyLogsManagerPageController">
+   <children>
+      <TableView fx:id="buyLogsTable" layoutX="78.0" layoutY="122.0" prefHeight="518.0" prefWidth="557.0" stylesheets="@../tableview-style.css">
+        <columns>
+          <TableColumn fx:id="addressColumn" prefWidth="431.0" text="Address" />
+            <TableColumn fx:id="statusColumn" prefWidth="125.0" text="Status" />
+        </columns>
+      </TableView>
+      <Text fx:id="welcomeText" fill="#ddab21" layoutX="84.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuyLogs manager">
+         <font>
+            <Font name="Freestyle Script" size="43.0" />
+         </font>
+      </Text>
+      <Button id="acceptButton" layoutX="447.0" layoutY="47.0" mnemonicParsing="false" onAction="#acceptBuyLog" prefHeight="65.0" prefWidth="71.0" stylesheets="@../information-page-style.css" />
+      <Button id="showButton" layoutX="528.0" layoutY="48.0" mnemonicParsing="false" onAction="#showBuyLog" prefHeight="65.0" prefWidth="71.0" stylesheets="@../information-page-style.css" />
+   </children>
+</AnchorPane>

@@ -5,12 +5,13 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" side="LEFT" stylesheets="@tabpane-style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ManagerPage.ManagerTabPaneController">
   <tabs>
+    <Tab fx:id="infoTab" closable="false" />
     <Tab fx:id="userMangerTab" closable="false" />
+    <Tab fx:id="categoryManagerTab" closable="false" />
     <Tab fx:id="productManagerTab" closable="false" />
     <Tab fx:id="discountManagerTab" closable="false" />
     <Tab fx:id="requestManagerTab" closable="false" />
-    <Tab fx:id="categoryManagerTab" closable="false" />
-    <Tab fx:id="infoTab" closable="false" />
+    <Tab id="buyLogTab" fx:id="buyLogManagerTab" closable="false" />
     <Tab id="moneyTab" fx:id="bankLimitsTab" closable="false" />
     <Tab fx:id="logoutTab" closable="false" />
   </tabs>
