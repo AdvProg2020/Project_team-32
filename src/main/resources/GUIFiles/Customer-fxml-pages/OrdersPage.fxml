@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane fx:id="paneqqq" prefHeight="678.0" prefWidth="759.0" stylesheets="@orderCss.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.OrdersController">
+<AnchorPane fx:id="paneqqq" prefHeight="678.0" prefWidth="759.0" stylesheets="@orderCss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CustomerPage.OrdersController">
    <children>
       <Button fx:id="orderShowPageButton" layoutX="516.0" layoutY="375.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="150.0" text="show order" />
       <Label fx:id="result_Label" layoutX="516.0" layoutY="129.0" prefHeight="26.0" prefWidth="150.0" text="result" />
@@ -32,8 +32,11 @@
             <Label fx:id="goodName_VBox" prefHeight="40.0" prefWidth="184.0" text="goodname" />
             <Label fx:id="seller_VBox" prefHeight="45.0" prefWidth="184.0" text="seller" />
             <Label fx:id="price_VBox" layoutX="10.0" layoutY="136.0" prefHeight="45.0" prefWidth="184.0" text="price paid" />
+            <Label fx:id="status" layoutX="10.0" layoutY="180.0" prefHeight="45.0" prefWidth="184.0" text="status" />
+            <Label fx:id="address" layoutX="10.0" layoutY="225.0" prefHeight="45.0" prefWidth="184.0" text="address" />
+            <Label fx:id="phoneNumber" layoutX="10.0" layoutY="180.0" prefHeight="45.0" prefWidth="184.0" text="phoneNumber" />
          </children>
       </VBox>
-      <Line endX="-2.20001220703125" endY="493.0" layoutX="487.0" layoutY="87.0" startX="-2.20001220703125" startY="-0.5999984741210938" stroke="#001a66"/>
+      <Line endX="-2.20001220703125" endY="493.0" layoutX="487.0" layoutY="87.0" startX="-2.20001220703125" startY="-0.5999984741210938" stroke="#001a66" />
    </children>
 </AnchorPane>

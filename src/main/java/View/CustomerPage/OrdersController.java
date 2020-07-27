@@ -25,6 +25,9 @@ import java.util.ResourceBundle;
 
 public class OrdersController implements Initializable {
 
+    public Label address;
+    public Label status;
+    public Label phoneNumber;
     @FXML
     private Button orderShowPageButton;
 
@@ -129,7 +132,9 @@ public class OrdersController implements Initializable {
                     goodName_VBox.setText("good's Name: "+log.getGoodsBought().getName());
                     seller_VBox.setText("seller name: "+log.getSellerUserName());
                     price_VBox.setText("price paid: "+log.getPricePaid());
-                    //todo add address and status and
+                    status.setText("delivery status: "+log.getDeliveryStatus().name());
+                    address.setText("address : "+log.getAddress());
+                    phoneNumber.setText("phone number: "+log.getPhoneNumber());
                 }else if (message.get("status").equals("InvalidIDException")){
                     Alert alert =new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("InvalidIDException");
