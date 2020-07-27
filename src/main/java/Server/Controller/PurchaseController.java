@@ -57,7 +57,7 @@ public class PurchaseController {
         for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
             BuyLog buyLog =new BuyLog(Integer.toString(customer.getAllBuyLogs().size()),
                     new Date(),finalPrice,discountPercent,shoppingBasket.getGood(),
-                    shoppingBasket.getSeller().getUserName() , "registered");
+                    shoppingBasket.getSeller().getUserName() , BuyLog.DeliveryStatus.WATING,address,phoneNumber);
             customer.getAllBuyLogs().add(buyLog);
             float offPercent = 0;
             for (Off off : shoppingBasket.getSeller().getOffs()) {
@@ -79,7 +79,7 @@ public class PurchaseController {
     public static void endAuction( Auction auction , Customer customer){
         customer.setCredit(customer.getCredit()-auction.getPrice());
         auction.getSeller().setCredit(auction.getSeller().getCredit()+auction.getPrice()*(100 - Boss.getWage())/100 );
-        BuyLog buyLog =new BuyLog(String.valueOf(customer.getAllBuyLogs().size()),new Date(), auction.getPrice(),0,auction.getGood(),auction.getSeller().getUserName(),"bought");
+        BuyLog buyLog =new BuyLog(String.valueOf(customer.getAllBuyLogs().size()),new Date(), auction.getPrice(),0,auction.getGood(),auction.getSeller().getUserName(), BuyLog.DeliveryStatus.WATING,null,null);
         customer.getAllBuyLogs().add(buyLog);
         Auction.getAuctions().remove(auction);
 

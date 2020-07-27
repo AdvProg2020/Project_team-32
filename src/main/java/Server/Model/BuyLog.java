@@ -11,13 +11,18 @@ public class BuyLog extends Logs {
     private float discountMade;
     private Good goodsBought;
     private String sellerUserName;
-    private String deliveryStatus;
+    private String address ;
+    private String phoneNumber;
+    public enum DeliveryStatus {SENT,WATING};
+    private DeliveryStatus deliveryStatus;
 
-    public BuyLog(String logID, Date date, float pricePaid, float discountMade, Good goodsBought, String sellerUserName, String deliveryStatus) {
+    public BuyLog(String logID, Date date, float pricePaid, float discountMade, Good goodsBought, String sellerUserName, DeliveryStatus deliveryStatus, String address, String phoneNumber) {
         super(logID, date, pricePaid);
         this.discountMade = discountMade;
         this.goodsBought = goodsBought;
         this.sellerUserName = sellerUserName;
+        this.address=address;
+        this.phoneNumber =phoneNumber;
         this.deliveryStatus = deliveryStatus;
         this.store();
     }
@@ -55,5 +60,14 @@ public class BuyLog extends Logs {
     @Override
     public synchronized void update() {
 
+
+    }
+
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
     }
 }

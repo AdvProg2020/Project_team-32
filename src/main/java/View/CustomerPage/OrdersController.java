@@ -129,6 +129,7 @@ public class OrdersController implements Initializable {
                     goodName_VBox.setText("good's Name: "+log.getGoodsBought().getName());
                     seller_VBox.setText("seller name: "+log.getSellerUserName());
                     price_VBox.setText("price paid: "+log.getPricePaid());
+                    //todo add address and status and
                 }else if (message.get("status").equals("InvalidIDException")){
                     Alert alert =new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("InvalidIDException");
