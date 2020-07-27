@@ -17,7 +17,7 @@ public class BuyLog extends Logs {
     private String sellerUserName;
     private String address ;
     private String phoneNumber;
-    public enum DeliveryStatus {SENT,WAITING};
+    public enum DeliveryStatus {SENT,WAITING,FILE};
     private DeliveryStatus deliveryStatus;
 
     public BuyLog(String logID, Date date, float pricePaid, float discountMade, Good goodsBought, String sellerUserName, DeliveryStatus deliveryStatus, String address, String phoneNumber) {
@@ -98,7 +98,7 @@ public class BuyLog extends Logs {
     }
 
     public DeliveryStatus getDeliveryStatus() {
-        return deliveryStatus;
+        return goodsBought instanceof FileProduct ? DeliveryStatus.FILE : deliveryStatus;
     }
 
     public void setDeliveryStatus(DeliveryStatus deliveryStatus) {

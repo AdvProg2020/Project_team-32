@@ -68,20 +68,6 @@ public class Good implements Serializable, Storable {
     public void store() {
     }
 
-
-    public Good(String name, String goodID, String companyName, String explanation, float point, String imageAddress, int numberOfRates, int numberOfViews) {
-        this.name = name;
-        this.goodID = goodID;
-        this.companyName = companyName;
-        this.explanation = explanation;
-        this.point = point;
-        this.imageAddress = imageAddress;
-        this.numberOfRates = numberOfRates;
-        this.numberOfViews = numberOfViews;
-    }
-
-
-
     @Override
     public void update() {
 

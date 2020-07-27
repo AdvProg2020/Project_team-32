@@ -4,11 +4,9 @@ import Server.Controller.Exeptions.GoodDoesNotExistException;
 import Server.Controller.Sort.SortByNumberOfView;
 import Server.Controller.Sort.SortByPoint;
 import Server.Controller.Sort.SortType;
-import Server.Model.Category;
-import Server.Model.Good;
-import Server.Model.Person;
-import Server.Model.Seller;
+import Server.Model.*;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -59,6 +57,11 @@ public class GoodController extends Filterable{
 
     public SortType getCurrentSort() {
         return currentSort;
+    }
+
+    public void AddFileProduct(File file, String productId, String name, String companyName, int price, String explanation, HashMap<String, String> properties, Person seller, Category category) {
+        new FileProduct(name,productId,(Seller) seller,companyName,category,explanation,properties,price,file);
+        RequestController.addProductRequest(productId,(Seller) seller);
     }
 
     public void AddProduct(String productId, String name, String companyName, int price, String explanation, HashMap<String, String> properties, Person seller,Category category) {
