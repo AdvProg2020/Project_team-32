@@ -85,6 +85,7 @@ public class LoginController implements Initializable {
                         Client.user= (Supporter)serverAnswer.get("user");
                     }
 
+                    Client.setToken((String) serverAnswer.get("token"));
                     //set scene
                     Scene scene = null;
                     scene = new Scene(FXMLLoader.load(url));

@@ -21,12 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Server {
-    public static ArrayList<String> allTokens= new ArrayList<>();
+    //public static ArrayList<String> allTokens= new ArrayList<>();
     private final static int PORT_NUMBER = 2126;
     private static final int EXPIRE_TIME = (int) 1e9;
+    private static final String NOT_LOGIN_TOKEN = "NOT_LOGIN";
     private static ServerSocket serverSocket;
     private static int shopBankID = -1;
-    private static ArrayList<Socket> allConnectedSockets = new ArrayList<>();
+    private static HashMap<Socket, String> allConnectedSocketsToken = new HashMap<>();
 
     public static void main(String[] args) {
         try {
@@ -43,7 +44,7 @@ public class Server {
             System.out.println("server waiting for connections...");
             Socket socket = serverSocket.accept();
             System.out.println("client connected.");
-            allConnectedSockets.add(socket);
+            allConnectedSocketsToken.put(socket, NOT_LOGIN_TOKEN);
             new ClientHandler(socket).start();
         }
     }
@@ -56,11 +57,13 @@ public class Server {
         final String successful = "successful";
         ObjectOutputStream clientOutputStream;
         ObjectInputStream clientInputStream;
-        String token =null;
-        Date tokenDate =null;
+        String token;
+        Date tokenDate;
 
         public ClientHandler(Socket socket) throws IOException {
             this.socket = socket;
+            token = NOT_LOGIN_TOKEN;
+            tokenDate = new Date();
             clientInputStream = new ObjectInputStream(socket.getInputStream());
             clientOutputStream = new ObjectOutputStream(socket.getOutputStream());
         }
@@ -255,7 +258,6 @@ public class Server {
                             getDiscountedPrice(command);
                             break;
                         case "pay":
-                            checkToken(command);
                             pay(command);
                             break;
                         case "get discount percent":
@@ -330,7 +332,6 @@ public class Server {
                 } catch (SecurityException e) {
                     //TODO
                 }catch (TokenException e){
-                    //todo logout
                     logout();
                     Message message = new Message();
                     message.put(status,"TokenException");
@@ -381,8 +382,8 @@ public class Server {
         private void logout() {
             loggedInUser.setStatus(Person.OnlineStatus.OFFLINE);
             loggedInUser = new Guest();
-//            token=null;
-//            tokenDate =null;
+            token= NOT_LOGIN_TOKEN;
+            tokenDate = null;
         }
 
         private void getChatLists() {
@@ -1168,7 +1169,8 @@ public class Server {
                 } else if (loggedInUser instanceof Supporter){
                     message.put("account type", "supporter");
                 }
-//                setToken(command);
+                setToken();
+                message.put("token", token);
             } catch (WrongPasswordException e) {
                 message.put(status, "wrong password");
             } catch (UserDoesNotExistException e) {
@@ -1178,7 +1180,7 @@ public class Server {
             }
         }
 
-        private void setToken(JSONObject command) {
+        private void setToken() {
             token = generateToken();
             tokenDate = new Date();
         }
@@ -1190,13 +1192,20 @@ public class Server {
                 byte bytes[] = new byte[20];
                 random.nextBytes(bytes);
                 madeToken = bytes.toString();
-                for (String allToken : allTokens) {
-                    if (allToken.equals(madeToken)) continue;
+                if(checkGeneratedToken(madeToken)) {
+                    break;
                 }
-                break;
             }
-            allTokens.add(madeToken);
             return madeToken;
+        }
+
+        private boolean checkGeneratedToken(String madeToken) {
+            for (String token : allConnectedSocketsToken.values()) {
+                if (token.equals(madeToken)){
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void setSellerAuction(JSONObject command) {
@@ -1440,29 +1449,31 @@ public class Server {
             }
         }
 
-        private JSONObject getMessage() throws SecurityException {
+        private JSONObject getMessage() throws SecurityException, TokenException {
 
             JSONObject jsObject = null;
             try {
                 jsObject = (JSONObject) clientInputStream.readObject();
+                checkToken(jsObject);
+                validateCommand(jsObject);
             } catch (IOException | ClassNotFoundException e) {
                 System.err.println("can't read message");
                 e.printStackTrace();
             }
-            validateCommand();
-            System.out.println(" this shet is from server get message  "+jsObject);
+            System.out.println(" this message is from server get message  "+ jsObject);
             return jsObject;
+
         }
+
         private void checkToken(JSONObject message) throws TokenException {
-            if (token!=null && token==message.get("token") && new Date().compareTo(tokenDate)< EXPIRE_TIME){
+            if ( token.equals(NOT_LOGIN_TOKEN) || (token.equals(message.get("token")) && new Date().compareTo(tokenDate) < EXPIRE_TIME)){
                 tokenDate= new Date();
             }else {
                 throw new TokenException();
             }
-
         }
 
-        private void validateCommand() throws SecurityException {
+        private void validateCommand(JSONObject message) throws SecurityException {
         }
     }
 }

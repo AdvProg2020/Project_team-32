@@ -1,6 +1,8 @@
 package View;
 
 import Server.Controller.AccountController;
+import Server.Model.Guest;
+import Server.Model.Person;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
@@ -37,6 +39,8 @@ public class LogoutPageController implements Initializable {
             URL url = new File("src\\main\\resources\\GUIFiles\\main-page.fxml").toURI().toURL();
             Parent parent = FXMLLoader.load(url);
             Client.primaryStage.setScene(new Scene(parent));
+            Client.user = new Guest();
+            Client.setToken("NOT_LOGIN");
         } catch (IOException e) {
             System.err.println("error loading files.");
         }

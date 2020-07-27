@@ -22,6 +22,7 @@ public class Client extends Application {
     private static Socket clientSocket;
     private static ObjectInputStream clientInputStream;
     private static ObjectOutputStream clientOutputStream;
+    private static String token;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -35,6 +36,7 @@ public class Client extends Application {
     }
 
     public static void main(String[] args) {
+        token = "NOT_LOGIN";
         connectToServer();
         launch(args);
     }
@@ -56,7 +58,7 @@ public class Client extends Application {
 
         message.put("commandType", commandType);
 
-        message.put("token", getToken());
+        message.put("token", token);
 
         for (String key : inputs.keySet()) {
             message.put(key, inputs.get(key));
@@ -76,6 +78,11 @@ public class Client extends Application {
         Message message = new Message();
         try {
             message = (Message) clientInputStream.readObject();
+
+            if(message.containsKey("status") && message.get("status").equals("TokenException")){
+                logout();
+            }
+
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("can't get message");
             e.printStackTrace();
@@ -83,12 +90,19 @@ public class Client extends Application {
         return message;
     }
 
-    private static String getToken() {
-        //TODO
-        return null;
+    private static void logout() {
+        try {
+            URL url = new File("src\\main\\resources\\GUIFiles\\main-page.fxml").toURI().toURL();
+            Parent parent = FXMLLoader.load(url);
+            primaryStage.setScene(new Scene(parent));
+            token = "NOT_LOGIN";
+            user = new Guest();
+        } catch (IOException e) {
+            System.err.println("error loading files.");
+        }
     }
 
-
-
-
+    public static void setToken(String token) {
+        Client.token = token;
+    }
 }
