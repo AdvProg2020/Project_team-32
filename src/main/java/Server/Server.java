@@ -6,7 +6,6 @@ import Server.Model.*;
 import Server.Model.Chat.ChatBox;
 import Server.Model.Chat.ChatMessage;
 import Server.Model.Chat.ChatWithSupporter;
-import View.Client;
 
 import org.json.simple.*;
 
@@ -15,14 +14,16 @@ import java.lang.SecurityException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 public class Server {
-
+    public static ArrayList<String> allTokens= new ArrayList<>();
     private final static int PORT_NUMBER = 2126;
+    private static final int EXPIRE_TIME = (int) 1e9;
     private static ServerSocket serverSocket;
     private static int shopBankID = -1;
     private static ArrayList<Socket> allConnectedSockets = new ArrayList<>();
@@ -55,6 +56,8 @@ public class Server {
         final String successful = "successful";
         ObjectOutputStream clientOutputStream;
         ObjectInputStream clientInputStream;
+        String token =null;
+        Date tokenDate =null;
 
         public ClientHandler(Socket socket) throws IOException {
             this.socket = socket;
@@ -252,6 +255,7 @@ public class Server {
                             getDiscountedPrice(command);
                             break;
                         case "pay":
+                            checkToken(command);
                             pay(command);
                             break;
                         case "get discount percent":
@@ -325,6 +329,13 @@ public class Server {
                     }
                 } catch (SecurityException e) {
                     //TODO
+                }catch (TokenException e){
+                    //todo logout
+                    logout();
+                    Message message = new Message();
+                    message.put(status,"TokenException");
+                    sendMessage(message);
+
                 }
             }
         }
@@ -370,6 +381,8 @@ public class Server {
         private void logout() {
             loggedInUser.setStatus(Person.OnlineStatus.OFFLINE);
             loggedInUser = new Guest();
+//            token=null;
+//            tokenDate =null;
         }
 
         private void getChatLists() {
@@ -1139,7 +1152,7 @@ public class Server {
             }
         }
 
-        private void login(JSONObject command) {
+        private void login(JSONObject command)  {
             Message message = new Message();
             try {
                 loggedInUser = AccountController.login((String) command.get("username"), (String) command.get("password"));
@@ -1155,6 +1168,7 @@ public class Server {
                 } else if (loggedInUser instanceof Supporter){
                     message.put("account type", "supporter");
                 }
+//                setToken(command);
             } catch (WrongPasswordException e) {
                 message.put(status, "wrong password");
             } catch (UserDoesNotExistException e) {
@@ -1162,6 +1176,27 @@ public class Server {
             } finally {
                 sendMessage(message);
             }
+        }
+
+        private void setToken(JSONObject command) {
+            token = generateToken();
+            tokenDate = new Date();
+        }
+
+        private String generateToken() {
+            String madeToken=null;
+            SecureRandom random = new SecureRandom();
+            while (true){
+                byte bytes[] = new byte[20];
+                random.nextBytes(bytes);
+                madeToken = bytes.toString();
+                for (String allToken : allTokens) {
+                    if (allToken.equals(madeToken)) continue;
+                }
+                break;
+            }
+            allTokens.add(madeToken);
+            return madeToken;
         }
 
         private void setSellerAuction(JSONObject command) {
@@ -1406,6 +1441,7 @@ public class Server {
         }
 
         private JSONObject getMessage() throws SecurityException {
+
             JSONObject jsObject = null;
             try {
                 jsObject = (JSONObject) clientInputStream.readObject();
@@ -1416,6 +1452,14 @@ public class Server {
             validateCommand();
             System.out.println(" this shet is from server get message  "+jsObject);
             return jsObject;
+        }
+        private void checkToken(JSONObject message) throws TokenException {
+            if (token!=null && token==message.get("token") && new Date().compareTo(tokenDate)< EXPIRE_TIME){
+                tokenDate= new Date();
+            }else {
+                throw new TokenException();
+            }
+
         }
 
         private void validateCommand() throws SecurityException {
