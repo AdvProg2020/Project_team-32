@@ -158,10 +158,18 @@ public class BankServer {
 
         @Override
         public void update() {
-            String s = "UPDATE account "
-                    + "SET money=" + money + ", currentToken='" + currentToken.token +
-                    "' Where accountId=" + accountId + ";";
-            updateDatabase(s);
+            String s = "";
+            try {
+                s = "UPDATE account "
+                        + "SET money=" + money + ", currentToken='" + currentToken.token +
+                        "' Where accountId=" + accountId + ";";
+            } catch (NullPointerException nullPointerException) {
+                s = "UPDATE account "
+                        + "SET money=" + money + ", currentToken='" + null +
+                        "' Where accountId=" + accountId + ";";
+            } finally {
+                updateDatabase(s);
+            }
         }
 
         public void loadingAllTokens() {
@@ -177,7 +185,7 @@ public class BankServer {
         valid, invalid, expired
     }
 
-    private static class Token implements Storable {
+    public static class Token implements Storable {
 
         private static List<Token> allTokens = new LinkedList<>();
 
@@ -447,7 +455,6 @@ public class BankServer {
         public void run() {
             String command;
             while(!(command = scanner.nextLine()).equals("exit")) {
-                System.out.println("command: "+command);
                 String[] commandParts = command.split(" ");
                 switch (commandParts[0]) {
                     case "create_account":
@@ -499,7 +506,6 @@ public class BankServer {
         }
 
         private void format(String msg) {
-            System.out.println("message: "+msg);
             formatter.format(msg + "\n");
             formatter.flush();
         }
@@ -766,10 +772,15 @@ public class BankServer {
 
         s = "SELECT * FROM account ORDER BY accountId;";
         rs = readFromDatabase(s);
+        Account account;
         try {
             while(rs.next()) {
-                new Account(rs.getString("firstname"), rs.getString("lastname"), rs.getString("username"),
-                        rs.getString("password")).currentToken = Token.getToken(rs.getString("currentToken"));
+                account = new Account(rs.getString("firstname"), rs.getString("lastname"), rs.getString("username"),
+                        rs.getString("password"));
+                account.currentToken = Token.getToken(rs.getString("currentToken"));
+                //new Account(rs.getString("firstname"), rs.getString("lastname"), rs.getString("username"),
+                        //rs.getString("password")).currentToken = Token.getToken(rs.getString("currentToken"));
+                account.money = rs.getInt("money");
             }
             rs.close();
             c.close();
@@ -778,16 +789,17 @@ public class BankServer {
         }
 
         for(Account a: Account.allAccounts) {
-            System.out.println(a.username + " " + a.currentToken.token);
             a.loadingAllTokens();
         }
 
         s = "SELECT * FROM receipt ORDER BY receiptId;";
         rs = readFromDatabase(s);
+        Receipt r;
         try {
             while(rs.next()) {
-                ReceiptFactory.createReceipt(Receipt.getTypeByName(rs.getString("type")), rs.getInt("money"), rs.getInt("sourceId")
+                r = ReceiptFactory.createReceipt(Receipt.getTypeByName(rs.getString("type")), rs.getInt("money"), rs.getInt("sourceId")
                         , rs.getInt("destId"), rs.getString("description"));
+                r.payStatus = rs.getBoolean("payStatus");
             }
             rs.close();
             c.close();
