@@ -20,7 +20,7 @@ public class Main {
 		System.out.println(simpleDateFormat.parse(s));
 
 		try {
-			Socket socket = new Socket("localhost", 4200);
+			Socket socket = new Socket("localhost", 4399);
 			Scanner userScanner = new Scanner(System.in);
 			Scanner serverScanner = new Scanner(socket.getInputStream());
 			Formatter formatter = new Formatter(socket.getOutputStream());

@@ -408,6 +408,7 @@ public class SellerMenuController implements Initializable {
         tableColumn2.setResizable(false);
         tableColumn3.setResizable(false);
         tableColumn4.setResizable(false);
+        tableView.getItems().clear();
         for (SellLog allSellingLog : sellLogArrayList) {
             tableView.getItems().add(allSellingLog);
         }

@@ -5,7 +5,9 @@ import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public  class BankServer {
@@ -16,8 +18,7 @@ public  class BankServer {
     private  Formatter bankFormatter;
     private String serverToken = null;
     private Socket bankSocket = null;
-    private int accountID=-1 ;
-
+    private HashMap<String ,String> allAccounts = new HashMap<>();
     public BankServer() {
         try {
             bankSocket = new Socket("localHost", BANK_SERVER_PORT_NUMBER);
@@ -39,12 +40,8 @@ public  class BankServer {
         return serverToken;
     }
 
-    public int getAccountID() {
-        return accountID;
-    }
-
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
+    public HashMap<String, String> getAllAccounts() {
+        return allAccounts;
     }
 
     public void setServerToken(String serverToken) {

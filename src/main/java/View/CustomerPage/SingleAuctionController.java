@@ -75,6 +75,7 @@ public class SingleAuctionController implements Initializable {
                     alert.setContentText("you don't have enough money in your purse");
                     alert.show();
                 }else if (message.get("status").equals("you entered less than others")){
+                    currentPrice.setText(String.valueOf(message.get("credit")));
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("you entered less than others");
                     alert.show();

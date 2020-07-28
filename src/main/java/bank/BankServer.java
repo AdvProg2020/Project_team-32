@@ -447,6 +447,7 @@ public class BankServer {
         public void run() {
             String command;
             while(!(command = scanner.nextLine()).equals("exit")) {
+                System.out.println("command: "+command);
                 String[] commandParts = command.split(" ");
                 switch (commandParts[0]) {
                     case "create_account":
@@ -498,6 +499,7 @@ public class BankServer {
         }
 
         private void format(String msg) {
+            System.out.println("message: "+msg);
             formatter.format(msg + "\n");
             formatter.flush();
         }

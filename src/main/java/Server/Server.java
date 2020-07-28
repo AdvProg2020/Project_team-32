@@ -372,8 +372,7 @@ public class Server {
                     serverAnswer.put("chatbox", auction.getChatBox());
                     serverAnswer.put(status, successful);
                     sendMessage(serverAnswer);
-                    return;
-                }
+                    return; }
             }
             serverAnswer.put(status, "something went wrong");
             sendMessage(serverAnswer);
@@ -413,6 +412,7 @@ public class Server {
             if (credit > loggedInUser.getCredit()) {
                 message.put(status, "you don't have enough money in your purse");
 
+
             } else {
                 for (Auction auction : Auction.getAuctions()) {
                     if (auction.getID().equals(ID)) {
@@ -422,6 +422,7 @@ public class Server {
                             message.put("credit", credit);
                             message.put(status, successful);
                         } else {
+                            message.put("credit", auction.getPrice());
                             message.put(status, "you entered less than others");
                         }
                         break;
@@ -652,14 +653,14 @@ public class Server {
                 String home = null;
                 String destination = null;
                 if (transferType.equals("move")) {
-                    home = String.valueOf(bankServer.getAccountID());
+                    home = bankServer.getAllAccounts().get(loggedInUser.getUserName());
                     destination = String.valueOf(shopBankID);
                 } else if (transferType.equals("withdraw")) {
-                    home = String.valueOf(bankServer.getAccountID());
+                    home =bankServer.getAllAccounts().get(loggedInUser.getUserName());
                     destination = "-1";
                 } else if (transferType.equals("deposit")) {
                     home = "-1";
-                    destination = String.valueOf(bankServer.getAccountID());
+                    destination = bankServer.getAllAccounts().get(loggedInUser.getUserName());
                 }
                 result = "create_receipt " + bankServer.getServerToken() + " " + transferType + " " + (int) totalPrice + " " +
                         home + " " + destination + " " + "boleshit";
@@ -692,7 +693,7 @@ public class Server {
         }
 
         private String handleAccountID() {
-            if (bankServer.getAccountID() == -1) {
+            if (!bankServer.getAllAccounts().containsKey(loggedInUser.getUserName())) {
                 String message = "create_account " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName()
                         + " " + loggedInUser.getUserName() + " " + loggedInUser.getPassWord() + " " + loggedInUser.getPassWord();
                 bankServer.sendMessageToBank(message);
@@ -700,7 +701,7 @@ public class Server {
                 String result = bankServer.getMessageFromBank();
                 String[] temp = result.split(" ");
                 if (temp.length == 1) {
-                    bankServer.setAccountID(Integer.parseInt(result));
+                    bankServer.getAllAccounts().put(loggedInUser.getUserName(), String.valueOf(Integer.parseInt(result)));
                     System.out.println(result);
                 } else {
                     System.out.println(" handle account : " + result);
