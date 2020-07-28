@@ -561,6 +561,7 @@ public class SellerMenuController implements Initializable {
     }
 
     private static void addProduct_getFields(Category category, TextField addProductID_Label, VBox box, Pane addProductPane, Button fileChooserButton) {
+        fileChooserButton= new Button();
         TextField goodName = new TextField("good name");
         TextField price = new TextField("price");
         TextField companyName = new TextField("company name");
@@ -613,7 +614,7 @@ public class SellerMenuController implements Initializable {
 
             }
         });
-        box.getChildren().addAll(goodName, price, companyName, explanation, confirm);
+        box.getChildren().addAll(fileChooserButton,goodName, price, companyName, explanation, confirm);
         addProductPane.getChildren().clear();
         for (int j = 0; j < category.getSpecialProperties().size(); j++) {
             box.getChildren().add(textFieldProperties[j]);

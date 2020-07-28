@@ -65,6 +65,7 @@ public class Client extends Application {
         }
 
         try {
+
             clientOutputStream.writeObject(message);
             clientOutputStream.flush();
             clientOutputStream.reset();

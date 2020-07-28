@@ -2,6 +2,7 @@ package Server.Controller;
 
 import Server.Controller.Exeptions.DiscountNotUsableException;
 import Server.Controller.Exeptions.InvalidIDException;
+import Server.Controller.Exeptions.NotEnoughMoney;
 import Server.Controller.Exeptions.NotLogedInException;
 import Server.Model.*;
 
@@ -49,11 +50,11 @@ public class PurchaseController {
     public static float getPriceDiscounted(float finalPrice, float discountPercent){
         return finalPrice*((100-discountPercent)/100);
     }
-    public static void payCommand(Customer customer, float finalPrice, float discountPercent, boolean isBank,String address,String phoneNumber){
+    public static void payCommand(Customer customer, float finalPrice, float discountPercent, boolean isBank,String address,String phoneNumber) throws NotEnoughMoney {
         if (!isBank){
+            if (finalPrice>customer.getCredit()) throw new NotEnoughMoney();
             customer.setCredit(customer.getCredit()-finalPrice);
         }
-
         for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
             BuyLog buyLog =new BuyLog(Integer.toString(customer.getAllBuyLogs().size()),
                     new Date(),finalPrice,discountPercent,shoppingBasket.getGood(),

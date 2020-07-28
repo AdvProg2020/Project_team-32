@@ -93,6 +93,8 @@ public class PurchaseControllerFXML implements Initializable {
                         handleFiles(message);
                         showConfirm("you have successfully bought this thing");
                         noDisResult.setText("you have succesfully bought things");
+                    }else if (message.get("status").equals("NotEnoughMoney")){
+                        showError(Alert.AlertType.ERROR,"NotEnoughMoney");
                     }
 
                     //todo when buying is successful
@@ -109,6 +111,8 @@ public class PurchaseControllerFXML implements Initializable {
                         handleFiles(message);
                         showConfirm("you have successfully bought this thing");
                         noDisResult.setText("you have succesfully bought things");
+                    }else if (message.get("status").equals("NotEnoughMoney")){
+                        showError(Alert.AlertType.ERROR,"NotEnoughMoney");
                     }
                 }
             }
@@ -133,9 +137,11 @@ public class PurchaseControllerFXML implements Initializable {
 
     private void handleFiles(Message message) {
         ArrayList<FileProduct> fileProducts =(ArrayList<FileProduct>)message.get("files");
+        System.out.println("filllll;lesssss");
+        System.out.println(message);
         if (fileProducts.size()!=0){
             for (int i = 0; i < fileProducts.size(); i++) {
-                File file1 = new File("Controller\\"+fileProducts.get(i).getGoodID());
+                File file1 = new File("src\\main\\java\\Server\\Controller\\"+fileProducts.get(i).getGoodID());
                 FileInputStream fileInputStream = null;
                 try {
                     fileInputStream = new FileInputStream(fileProducts.get(i).getFile());
@@ -215,6 +221,8 @@ public class PurchaseControllerFXML implements Initializable {
                         handleFiles(message);
                         showConfirm("you have successfully bought this thing");
                         noDisResult.setText("you have succesfully bought things");
+                    }else if (message.get("status").equals("NotEnoughMoney")){
+                        showError(Alert.AlertType.ERROR,"NotEnoughMoney");
                     }
                     //todo
                 } else {
@@ -230,6 +238,8 @@ public class PurchaseControllerFXML implements Initializable {
                         handleFiles(message);
                         showConfirm("you have successfully bought this thing");
                         noDisResult.setText("you have succesfully bought things");
+                    }else if (message.get("status").equals("NotEnoughMoney")){
+                        showError(Alert.AlertType.ERROR,"NotEnoughMoney");
                     }
                 }
             }
