@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class Client extends Application {
 
-    private final static int PORT_NUMBER = 2126;
+    private final static int PORT_NUMBER = 2000;
     public static Stage primaryStage;
     public static Person user;
     private static Socket clientSocket;

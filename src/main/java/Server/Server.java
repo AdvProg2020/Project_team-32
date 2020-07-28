@@ -22,7 +22,7 @@ import java.util.List;
 
 public class Server {
     //public static ArrayList<String> allTokens= new ArrayList<>();
-    private final static int PORT_NUMBER = 2126;
+    private final static int PORT_NUMBER = 2000;
     private static final int EXPIRE_TIME = (int) 1e9;
     private static final String NOT_LOGIN_TOKEN = "NOT_LOGIN";
     private static ServerSocket serverSocket;
