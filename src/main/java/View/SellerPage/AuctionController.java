@@ -46,22 +46,27 @@ public class AuctionController implements Initializable {
         confirmAuction.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String goodID =auctionText.getText().trim();
-                HashMap<String, Object> input = new HashMap<>();
-                LocalDate localDate = datePicker.getValue();
-                Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-                Date date = Date.from(instant);
-                input.put("date",date);
-                input.put("goodID",goodID);
-                Client.sendMessage("set auction", input);
-                Message message = Client.getMessage();
-                if (message.get("status").equals("successful")) {
-                    new Alert(Alert.AlertType.CONFIRMATION).show();
-                }else  if (message.get("status").equals("MultipleAuctionException")){
-                    showError("MultipleAuctionException");
-                }else if (message.get("status").equals("null input")){
-                    showError("null input");
+                if (datePicker.getValue()==null){
+                    showError("null date");
+                }else {
+                    String goodID =auctionText.getText().trim();
+                    HashMap<String, Object> input = new HashMap<>();
+                    LocalDate localDate = datePicker.getValue();
+                    Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+                    Date date = Date.from(instant);
+                    input.put("date",date);
+                    input.put("goodID",goodID);
+                    Client.sendMessage("set auction", input);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")) {
+                        new Alert(Alert.AlertType.CONFIRMATION).show();
+                    }else  if (message.get("status").equals("MultipleAuctionException")){
+                        showError("MultipleAuctionException");
+                    }else if (message.get("status").equals("null input")){
+                        showError("null input");
+                    }
                 }
+
             }
         });
 
