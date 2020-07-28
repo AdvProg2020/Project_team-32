@@ -95,6 +95,8 @@ public class PurchaseControllerFXML implements Initializable {
                         noDisResult.setText("you have succesfully bought things");
                     }else if (message.get("status").equals("NotEnoughMoney")){
                         showError(Alert.AlertType.ERROR,"NotEnoughMoney");
+                    }else if (message.get("status").equals("error")){
+                        showError(Alert.AlertType.ERROR,"error in connecting to server");
                     }
 
                     //todo when buying is successful
@@ -223,10 +225,12 @@ public class PurchaseControllerFXML implements Initializable {
                         noDisResult.setText("you have succesfully bought things");
                     }else if (message.get("status").equals("NotEnoughMoney")){
                         showError(Alert.AlertType.ERROR,"NotEnoughMoney");
+                    }else if (message.get("status").equals("error")){
+                        showError(Alert.AlertType.ERROR,"error in connecting to server");
                     }
                     //todo
                 } else {
-                    HashMap<String, Object> input = new HashMap<>();
+                    HashMap< String , Object > input = new HashMap<>();
                     input.put("type", "wallet");
                     input.put("address", address);
                     input.put("phoneNumber", phoneNumber);

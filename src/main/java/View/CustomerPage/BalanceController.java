@@ -40,8 +40,7 @@ public class BalanceController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         balance.setOnMouseEntered(event -> Controller.sound(1));
-//        System.out.println(AccountController.loggedInUser);
-//        System.out.println(" ()()())( "+ Client.user);
+
         if (Client.user instanceof Customer) {
             takeMoneyButton.setVisible(false);
         }
@@ -55,8 +54,6 @@ public class BalanceController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 float price =Float.parseFloat(textBalance.getText().trim());
-//                PurchaseControllerFXML purchaseControllerFXML = new PurchaseControllerFXML();
-//                String result =   purchaseControllerFXML.bankServer(price,"withdraw");
                 HashMap<String, Object> input = new HashMap<>();
                 input.put("price", price);
                 input.put("transferType", "withdraw");
@@ -69,6 +66,10 @@ public class BalanceController implements Initializable {
                     alert.setContentText("you added money to your purse");
                     alert.show();
                     balance.setText(String.valueOf((float) message.get("credit")));
+                }else if (message.get("status").equals("error")){
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("you dont have enough money in bank");
+                    alert.show();
                 }
                 //todo bank server get and send
             }
@@ -78,9 +79,6 @@ public class BalanceController implements Initializable {
             public void handle(ActionEvent event) {
                 float[] price = new float[1];
                 price[0] = Float.parseFloat(textBalance.getText().trim());
-//                PurchaseControllerFXML purchaseControllerFXML = new PurchaseControllerFXML();
-//                String result = purchaseControllerFXML.bankServer(price, "deposit");
-
                 HashMap<String, Object> input = new HashMap<>();
                 input.put("transferType", "deposit");
                 input.put("price", price[0]);
@@ -95,6 +93,10 @@ public class BalanceController implements Initializable {
                     System.out.println("you dont have enough reamining money in  your purse");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("you dont have enough reamining money in  your purse");
+                    alert.show();
+                }else if (message.get("status").equals("error")){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("somrthing went wrong in connection to server");
                     alert.show();
                 }
 

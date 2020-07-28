@@ -925,10 +925,34 @@ public class Server {
             Message message = new Message();
             Boolean bool = false;
             if (command.get("type").equals("bank")) bool = true;
+            String transferType = (String) command.get("transferType");
             String phoneNumber = (String) command.get("phoneNumber");
             String address = (String) command.get("address");
             float price = (float) command.get("price");
             float discountPercent = (float) command.get("discount");
+            message.put("files", getFileProducts());
+            try {
+                if (bool==true){
+                    String result =  bankServer(price,transferType);
+                    if (!result.equals("done successfully")) {
+                        message.put(status, "error");
+                        sendMessage(message);
+                        return;
+                    }
+                }
+                PurchaseController.payCommand((Customer) loggedInUser, price, discountPercent, bool, address, phoneNumber);
+                message.put(status, successful);
+            } catch (NotEnoughMoney notEnoughMoney) {
+                notEnoughMoney.printStackTrace();
+                message.put(status,"NotEnoughMoney");
+
+            }finally {
+                sendMessage(message);
+            }
+
+        }
+
+        private ArrayList<FileProduct> getFileProducts() {
             ArrayList<FileProduct> fileProducts = new ArrayList<>();
             for (ShoppingBasket shoppingBasket : ((Customer) loggedInUser).getShoppingBaskets()) {
                 if (shoppingBasket.getGood().getIsFile()) {
@@ -939,19 +963,7 @@ public class Server {
                     }
                 }
             }
-            message.put("files", fileProducts);
-            try {
-                PurchaseController.payCommand((Customer) loggedInUser, price, discountPercent, bool, address, phoneNumber);
-                message.put(status, successful);
-
-            } catch (NotEnoughMoney notEnoughMoney) {
-                notEnoughMoney.printStackTrace();
-                message.put(status,"NotEnoughMoney");
-
-            }finally {
-                sendMessage(message);
-            }
-
+            return fileProducts;
         }
 
         private void getDiscountedPrice(JSONObject command) {

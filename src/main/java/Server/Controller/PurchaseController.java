@@ -5,6 +5,7 @@ import Server.Controller.Exeptions.InvalidIDException;
 import Server.Controller.Exeptions.NotEnoughMoney;
 import Server.Controller.Exeptions.NotLogedInException;
 import Server.Model.*;
+import Server.Server;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,6 +55,8 @@ public class PurchaseController {
         if (!isBank){
             if (finalPrice>customer.getCredit()) throw new NotEnoughMoney();
             customer.setCredit(customer.getCredit()-finalPrice);
+        }else {
+
         }
         for (ShoppingBasket shoppingBasket : customer.getShoppingBaskets()) {
             BuyLog buyLog =new BuyLog(Integer.toString(customer.getAllBuyLogs().size()),
