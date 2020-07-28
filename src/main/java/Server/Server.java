@@ -1235,8 +1235,12 @@ public class Server {
             try {
                 Good good = ((Seller) loggedInUser).getGoodByID((String) command.get("goodID"));
                 Date date = (Date) command.get("date");
-                ((Seller) loggedInUser).setAuction(new Auction((Seller) loggedInUser, good, date));
-                message.put(status, successful);
+                if (good==null || date ==null){
+                    message.put(status,"null input");
+                }else {
+                    ((Seller) loggedInUser).setAuction(new Auction((Seller) loggedInUser, good, date));
+                    message.put(status, successful);
+                }
             } catch (MultipleAuctionException e) {
                 message.put(status, "MultipleAuctionException");
             } finally {

@@ -62,23 +62,23 @@ public class SingleAuctionController implements Initializable {
         confirmPrice.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                int price =Integer.parseInt(newPrice.getText());
-                HashMap<String,Object> hashMap = new HashMap<>();
-                hashMap.put("credit",price);
-                hashMap.put("id",getID());
-                Client.sendMessage("set auction credit",hashMap);
-                Message message = Client.getMessage();
-                if (message.get("status").equals("successful")){
-                    currentPrice.setText(String.valueOf(message.get("credit")));
-                }else if (message.get("status").equals("you don't have enough money in your purse")){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("you don't have enough money in your purse");
-                    alert.show();
-                }else if (message.get("status").equals("you entered less than others")){
-                    currentPrice.setText(String.valueOf(message.get("credit")));
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("you entered less than others");
-                    alert.show();
+                String in =newPrice.getText().trim();
+                if (in.matches("\\d+")){
+                    HashMap<String,Object> hashMap = new HashMap<>();
+                    hashMap.put("credit",Integer.parseInt(in));
+                    hashMap.put("id",getID());
+                    Client.sendMessage("set auction credit",hashMap);
+                    Message message = Client.getMessage();
+                    if (message.get("status").equals("successful")){
+                        currentPrice.setText(String.valueOf(message.get("credit")));
+                    }else if (message.get("status").equals("you don't have enough money in your purse")){
+                        showError("you don't have enough money in your purse");
+                    }else if (message.get("status").equals("you entered less than others")){
+                        currentPrice.setText(String.valueOf(message.get("credit")));
+                        showError("you entered less than others");
+                    }
+                }else {
+                    showError("wrong input");
                 }
             }
         });
@@ -101,6 +101,13 @@ public class SingleAuctionController implements Initializable {
         });
 
     }
+
+    private void showError(String value) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(value);
+        alert.show();
+    }
+
     public String getID() {
         return ID;
     }

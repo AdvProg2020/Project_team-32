@@ -58,10 +58,17 @@ public class AuctionController implements Initializable {
                 if (message.get("status").equals("successful")) {
                     new Alert(Alert.AlertType.CONFIRMATION).show();
                 }else  if (message.get("status").equals("MultipleAuctionException")){
-                    new Alert(Alert.AlertType.ERROR).show();
+                    showError("MultipleAuctionException");
+                }else if (message.get("status").equals("null input")){
+                    showError("null input");
                 }
             }
         });
 
+    }
+    private  void showError(String value){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(value);
+        alert.show();
     }
 }
