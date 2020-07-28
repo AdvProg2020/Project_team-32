@@ -60,7 +60,8 @@ public class GoodController extends Filterable{
     }
 
     public void AddFileProduct(File file, String productId, String name, String companyName, int price, String explanation, HashMap<String, String> properties, Person seller, Category category) {
-        new FileProduct(name,productId,(Seller) seller,companyName,category,explanation,properties,price,file);
+        FileProduct fileProduct = new FileProduct(name,productId,(Seller) seller,companyName,category,explanation,properties,price,file);
+        fileProduct.setIsFile(true);
         RequestController.addProductRequest(productId,(Seller) seller);
     }
 

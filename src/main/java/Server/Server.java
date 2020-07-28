@@ -937,6 +937,19 @@ public class Server {
                 float price =(float)command.get("price");
                 float discountPercent =(float)command.get("discount");
                 PurchaseController.payCommand((Customer)loggedInUser, price, discountPercent,bool,address,phoneNumber);
+                // todo this command is risky
+                ArrayList<FileProduct> fileProducts = new ArrayList<>();
+                for (ShoppingBasket shoppingBasket : ((Customer) loggedInUser).getShoppingBaskets()) {
+                    if (shoppingBasket.getGood().getIsFile()){
+//                        fileProducts.add((FileProduct) shoppingBasket.getGood());
+                        for (Good allGood : Good.getAllGoods()) {
+                            if (allGood.getGoodID().equals(shoppingBasket.getGood().getGoodID())){
+                                fileProducts.add((FileProduct )allGood);
+                            }
+                        }
+                    }
+                }
+                message.put("files",fileProducts);
                 message.put(status, successful);
             } finally {
                 sendMessage(message);
@@ -1328,8 +1341,14 @@ public class Server {
                 int price = (int) command.get("price");
                 String explanatiopn = (String) command.get("explanatiopn");
                 HashMap<String, String> properties = (HashMap<String, String>) command.get("properties");
-                GoodController.getGoodController().AddProduct(goodID, goodName, companyName,
-                        price, explanatiopn, properties, (Seller) loggedInUser, category);
+                if (command.containsKey("file")){
+                    GoodController.getGoodController().AddFileProduct((File) command.get("file"),
+                            goodID, goodName, companyName, price, explanatiopn, properties,
+                             loggedInUser, category);
+                }else {
+                    GoodController.getGoodController().AddProduct(goodID, goodName, companyName,
+                            price, explanatiopn, properties,  loggedInUser, category);
+                }
                 message.put(status, successful);
             } finally {
                 sendMessage(message);

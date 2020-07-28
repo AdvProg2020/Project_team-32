@@ -1,6 +1,7 @@
 package View.CustomerPage;
 
 import Server.Controller.Controller;
+import Server.Model.FileProduct;
 import Server.Model.Message;
 import View.Client;
 import javafx.event.Event;
@@ -13,7 +14,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import sun.tools.jar.CommandLine;
 
+import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -34,7 +37,6 @@ public class PurchaseControllerFXML implements Initializable {
     public Label disResult;
     public Button disPay;
     public CheckBox bankPayCheckBox;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fixSounds();
@@ -88,6 +90,7 @@ public class PurchaseControllerFXML implements Initializable {
                     Client.sendMessage("pay", input);
                     Message message = Client.getMessage();
                     if (message.get("status").equals("successful")) {
+                        handleFiles(message);
                         showConfirm("you have successfully bought this thing");
                         noDisResult.setText("you have succesfully bought things");
                     }
@@ -103,6 +106,7 @@ public class PurchaseControllerFXML implements Initializable {
                     Client.sendMessage("pay", input);
                     Message message = Client.getMessage();
                     if (message.get("status").equals("successful")) {
+                        handleFiles(message);
                         showConfirm("you have successfully bought this thing");
                         noDisResult.setText("you have succesfully bought things");
                     }
@@ -125,6 +129,29 @@ public class PurchaseControllerFXML implements Initializable {
                 }
             }
         });
+    }
+
+    private void handleFiles(Message message) {
+        ArrayList<FileProduct> fileProducts =(ArrayList<FileProduct>)message.get("files");
+        if (fileProducts.size()!=0){
+            for (int i = 0; i < fileProducts.size(); i++) {
+                File file1 = new File("Controller\\"+fileProducts.get(i).getGoodID());
+                FileInputStream fileInputStream = null;
+                try {
+                    fileInputStream = new FileInputStream(fileProducts.get(i).getFile());
+                    FileOutputStream fileOutputStream = new FileOutputStream(file1);
+                    int b;
+                    while  ((b=fileInputStream.read()) != -1){
+                        fileOutputStream.write(b);
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            showConfirm("you downloaded files automatically");
+        }
     }
 
 
@@ -185,6 +212,7 @@ public class PurchaseControllerFXML implements Initializable {
                     Client.sendMessage("pay", input);
                     Message message = Client.getMessage();
                     if (message.get("status").equals("successful")) {
+                        handleFiles(message);
                         showConfirm("you have successfully bought this thing");
                         noDisResult.setText("you have succesfully bought things");
                     }
@@ -199,6 +227,7 @@ public class PurchaseControllerFXML implements Initializable {
                     Client.sendMessage("pay", input);
                     Message message = Client.getMessage();
                     if (message.get("status").equals("successful")) {
+                        handleFiles(message);
                         showConfirm("you have successfully bought this thing");
                         noDisResult.setText("you have succesfully bought things");
                     }

@@ -129,6 +129,7 @@ public class IndividualGoodPageFactory {
                             Client.sendMessage("get person by id" ,arg2);
                             Seller seller = (Seller)Client.getMessage().get("person");
                             HashMap<String, Object> arg1 = new HashMap<>();
+//                            arg1.put("isFile",true);
                             arg1.put("shopping basket", new ShoppingBasket(good, seller));
                             Client.sendMessage("add to shopping baskets", new HashMap<>());
                         } else if (loggedInUser instanceof Customer) {

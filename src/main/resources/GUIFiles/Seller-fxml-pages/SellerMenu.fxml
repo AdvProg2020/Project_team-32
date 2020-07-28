@@ -57,7 +57,10 @@
                     <Button fx:id="addProductID_Button" layoutX="394.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="99.0" text="confirm" />
                     <TextField fx:id="addProductID_Label" layoutX="162.0" layoutY="87.0" prefHeight="35.0" prefWidth="182.0" text="product ID" />
                     <Line endX="514.0" layoutX="142.0" layoutY="164.0" startX="-100.0" />
-                    <Pane fx:id="addProductPane" layoutX="41.0" layoutY="186.0" prefHeight="469.0" prefWidth="620.0" />
+                    <Pane fx:id="addProductPane" layoutX="41.0" layoutY="186.0" prefHeight="469.0" prefWidth="620.0">
+                  <children>
+                     <Button fx:id="fileChooserButton" layoutX="507.0" layoutY="380.0" mnemonicParsing="false" text="fileChooser" />
+                  </children></Pane>
                 </children></AnchorPane>
         </Tab>
         <Tab fx:id="removeProductTab" closable="false">

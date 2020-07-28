@@ -17,6 +17,7 @@ public class Good implements Serializable, Storable {
     private String name;
     private String goodID;
     private Status goodStatus;
+    private Boolean isFile = false;
 
 
 
@@ -62,6 +63,14 @@ public class Good implements Serializable, Storable {
         this.properties.put("company name", companyName);
         this.properties.put("name", name);
         // TODO ali sharifi
+    }
+
+    public Boolean getIsFile() {
+        return isFile;
+    }
+
+    public void setIsFile(Boolean file) {
+        isFile = file;
     }
 
     @Override

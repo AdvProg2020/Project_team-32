@@ -18,12 +18,15 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,6 +100,8 @@ public class SellerMenuController implements Initializable {
     TextField IdRemoveProduct;
     @FXML
     Button RemoveProductButton;
+
+    public Button fileChooserButton;
 
     @FXML
     Pane manageOffPane;
@@ -191,7 +196,7 @@ public class SellerMenuController implements Initializable {
                 Client.sendMessage("get good by ID from allGoods", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
-                    addProduct((Good) message.get("good"), addProductPane, addProductID_Label);
+                    addProduct((Good) message.get("good"), addProductPane, addProductID_Label,fileChooserButton);
                 }
 
             }
@@ -525,12 +530,12 @@ public class SellerMenuController implements Initializable {
         manageOffPane.getChildren().add(offTable);
     }
 
-    private static void addProduct(Good good_addProduct, Pane addProductPane, TextField addProductID_Label) {
+    private static void addProduct(Good good_addProduct, Pane addProductPane, TextField addProductID_Label,Button fileChooserButton) {
         if (good_addProduct != null) addProduct_exsistingProduct(good_addProduct, addProductPane);
-        else addProduct_newProduct(addProductPane, addProductID_Label);
+        else addProduct_newProduct(addProductPane, addProductID_Label,fileChooserButton);
     }
 
-    private static void addProduct_newProduct(Pane addProductPane, TextField addProductID_Label) {
+    private static void addProduct_newProduct(Pane addProductPane, TextField addProductID_Label, Button fileChooserButton) {
         addProductPane.getChildren().clear();
         TextField categoryTextField = new TextField("category name");
         Button setCategory = new Button("press to set category");
@@ -547,7 +552,7 @@ public class SellerMenuController implements Initializable {
                 Client.sendMessage("get category by name", input);
                 Message message = Client.getMessage();
                 if (message.get("status").equals("successful")) {
-                    addProduct_getFields((Category) message.get("category"), addProductID_Label, box, addProductPane);
+                    addProduct_getFields((Category) message.get("category"), addProductID_Label, box, addProductPane,fileChooserButton);
                 } else if (message.get("status").equals("CategoryNotFindException")) {
                     showErrorAlert("there is no category with this name");
                 }
@@ -555,12 +560,21 @@ public class SellerMenuController implements Initializable {
         });
     }
 
-    private static void addProduct_getFields(Category category, TextField addProductID_Label, VBox box, Pane addProductPane) {
+    private static void addProduct_getFields(Category category, TextField addProductID_Label, VBox box, Pane addProductPane, Button fileChooserButton) {
         TextField goodName = new TextField("good name");
         TextField price = new TextField("price");
         TextField companyName = new TextField("company name");
         TextField explanation = new TextField("explanation");
         TextField[] textFieldProperties = new TextField[category.getSpecialProperties().size()];
+        final File[] selectedFile = {null};
+        fileChooserButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = new Stage();
+                FileChooser fileChooser = new FileChooser();
+                 selectedFile[0] = fileChooser.showOpenDialog(stage);
+            }
+        });
         HashMap<String, String> properties = new HashMap<>();
         int i = 0;
         for (String specialProperty : category.getSpecialProperties()) {
@@ -577,6 +591,9 @@ public class SellerMenuController implements Initializable {
                     i++;
                 }
                 HashMap<String, Object> input = new HashMap<>();
+                if (selectedFile[0] !=null){
+                    input.put("file",selectedFile[0]);
+                }
                 input.put("goodId", addProductID_Label.getText().trim());
                 input.put("goodName", goodName.getText().trim());
                 input.put("companyName", companyName.getText().trim());

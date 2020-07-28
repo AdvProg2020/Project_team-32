@@ -11,4 +11,12 @@ public class FileProduct extends Good {
         super(name, goodID, seller, companyName, category, explanation, properties, price);
         this.file = file;
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
 }
