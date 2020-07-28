@@ -192,5 +192,7 @@
 #auctionTab{
     -fx-background-image: url("/GUIFiles/CustomerIcons/handsup.png");
 }
-
+#supporterTab{
+    -fx-background-image: url("/GUIFiles/CustomerIcons/technicalSupport.png");
+}
 

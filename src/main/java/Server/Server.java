@@ -931,9 +931,9 @@ public class Server {
             ArrayList<FileProduct> fileProducts = new ArrayList<>();
             for (ShoppingBasket shoppingBasket : ((Customer) loggedInUser).getShoppingBaskets()) {
                 if (shoppingBasket.getGood().getIsFile()) {
-                    for (Good allGood : Good.getAllGoods()) {
-                        if (allGood.getGoodID().equals(shoppingBasket.getGood().getGoodID())) {
-                            fileProducts.add((FileProduct) allGood);
+                    for (Good confirmedGood : Good.getConfirmedGoods()) {
+                        if (confirmedGood.getGoodID().equals(shoppingBasket.getGood().getGoodID())) {
+                            fileProducts.add((FileProduct) confirmedGood);
                         }
                     }
                 }

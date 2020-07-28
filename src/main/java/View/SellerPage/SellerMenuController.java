@@ -561,7 +561,7 @@ public class SellerMenuController implements Initializable {
     }
 
     private static void addProduct_getFields(Category category, TextField addProductID_Label, VBox box, Pane addProductPane, Button fileChooserButton) {
-        fileChooserButton= new Button();
+        fileChooserButton= new Button("choose the file");
         TextField goodName = new TextField("good name");
         TextField price = new TextField("price");
         TextField companyName = new TextField("company name");
