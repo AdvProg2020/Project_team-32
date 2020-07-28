@@ -347,6 +347,7 @@ public class Server {
             Message serverAnswer = new Message();
             if (buyLog != null) {
                 buyLog.setDeliveryStatus(BuyLog.DeliveryStatus.SENT);
+                serverAnswer.put(status, successful);
             } else {
                 serverAnswer.put(status, "buyLog not find");
             }
